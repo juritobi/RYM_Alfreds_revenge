@@ -1,52 +1,56 @@
-# Prerequisites
-*.d
-
-# Object files
-*.o
-*.ko
-*.obj
-*.elf
-
-# Linker output
-*.ilk
-*.map
-*.exp
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Libraries
+*.cpc
+*.tmp
+\#*#
+.#*
+*.html
+*.disabled
+*.bak
+**/sdcc-3.5.5/**/*.asm
+**/img2cpc/Makefile.this
+**/sdcc-3.5.5/share/
+**/winape/
+*.mp3
+*.wav
+*.status
+*.log
+*~
+*.bak
+*.bin
+*.bin.log
+*.binamsdos
+*.binamsdos.log
+build_config.inc
+*.buildtree/
+*.cdt
+download
+*.downloadlog.txt
+*.dsk
+*.ihx
+*.installtree/
 *.lib
-*.a
-*.la
-*.lo
+*.lk
+*.lst
+*.map
+*.noi
+*.opt
+*.ref
+*.rel
+*.rst
+*.sym
+*.tar.bz2
+*.tgz
+*.tmp
+*.voc
+*.o
+bin/
+obj/
 
-# Shared objects (inc. Windows DLLs)
-*.dll
-*.so
-*.so.*
-*.dylib
+printer.txt
+*.dump*_*.dot
+*~HEAD
+*~junk
+*~Junk
 
-# Executables
-*.exe
-*.out
-*.app
-*.i*86
-*.x86_64
-*.hex
-
-# Debug files
-*.dSYM/
-*.su
-*.idb
-*.pdb
-
-# Kernel Module Compile Results
-*.mod*
-*.cmd
-.tmp_versions/
-modules.order
-Module.symvers
-Mkfile.old
-dkms.conf
+*.binamsdos
+*.binamsdos.log
+cpctelera/tools/sdcc-3.5.0/share
