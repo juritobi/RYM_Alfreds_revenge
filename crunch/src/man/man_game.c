@@ -2,6 +2,7 @@
 #include <man/man_ent.h>
 #include <sys/physics.h>
 #include <sys/render.h>
+#include <sprites/char.h>
 
 const u8 sprite[] = {
     0xFF, 0xFF, 0xFF, 0xFF, 
@@ -11,10 +12,10 @@ const ent_t init_player = {
     e_t_physics | e_t_render | e_t_input,
     50,50,
     50,50,
-    1,4,
+    4,32,
     -1,0,
     -1,0,
-    sprite
+    spr_char
 };
 
 void create_ent(){
