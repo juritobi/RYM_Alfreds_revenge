@@ -4,10 +4,6 @@
 #include <sys/render.h>
 #include <sprites/char.h>
 
-const u8 sprite[] = {
-    0xFF, 0xFF, 0xFF, 0xFF, 
-};
-
 const ent_t init_player = {
     e_t_physics | e_t_render | e_t_input,
     50,50,

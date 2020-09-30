@@ -35,8 +35,8 @@
 ##
 #$(eval $(call ADD2PACK,mygraphics,gfx/enemy.bin))
 #$(eval $(call ADD2PACK,mygraphics,gfx/hero.bin))
-#$(eval $(call ADD2PACK,mygraphics,gfx/background.bin))
-#$(eval $(call PACKZX7B,mygraphics,src/))
+$(eval $(call ADD2PACK,lvl0_pack, src/tilemaps/lvl0.bin))
+$(eval $(call PACKZX7B,lvl0_pack,src/tilemaps))
 
 
 

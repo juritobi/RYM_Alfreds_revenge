@@ -49,6 +49,9 @@ $(eval $(call IMG2SP, SET_PALETTE_FW  , $(PALETTE)         ))
 $(eval $(call IMG2SP, CONVERT_PALETTE , $(PALETTE), g_palette ))
 $(eval $(call IMG2SP, CONVERT         , assets/char.png , 16, 32, spr_char))
 
+$(eval $(call IMG2SP, SET_IMG_FORMAT  , zgtiles            ))
+$(eval $(call IMG2SP, CONVERT         , assets/tileset.png , 16, 8, tileset))
+
 ##
 ## OLD MACROS (For compatibility)
 ##
