@@ -17,20 +17,12 @@
 //------------------------------------------------------------------------------
 
 #include <cpctelera.h>
+#include <man/man_game.h>
 
 void main(void) {
-   u8* pvmem;  // Pointer to video memory
+    cpct_disableFirmware();
+    cpct_setBorder(HW_BLACK);
 
-   // Make pvmem point to the byte in video memory where we want
-   // to print our string (coordinates (20, 96) in bytes, (80, 96) in pixels,
-   // as each byte is 4 pixels wide in mode 1)
-   pvmem = cpct_getScreenPtr(CPCT_VMEM_START, 20, 96);
-   // Set Mode 1 Character&String drawing functions to use colours 
-   // 1 (yellow) for foreground and 0 (blue) for background
-   cpct_setDrawCharM1(1, 0);
-   // Draw the actual string where pvmem is pointing
-   cpct_drawStringM1("Welcome to CPCtelera!", pvmem);
-
-   // Loop forever
-   while (1);
+    man_game_init();
+    man_game_play();
 }
