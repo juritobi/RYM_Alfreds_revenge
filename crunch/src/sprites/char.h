@@ -3,8 +3,11 @@
 #define _ASSETS_CHAR_H_
 
 #include <types.h>
-#define SPR_CHAR_W 4
-#define SPR_CHAR_H 32
-extern const u8 spr_char[4 * 32];
+#define SPR_CHAR_0_W 4
+#define SPR_CHAR_0_H 24
+extern const u8 spr_char_0[4 * 24];
+#define SPR_CHAR_1_W 4
+#define SPR_CHAR_1_H 24
+extern const u8 spr_char_1[4 * 24];
 
 #endif
