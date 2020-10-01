@@ -2,6 +2,7 @@
 #include <man/man_ent.h>
 #include <sys/physics.h>
 #include <sys/render.h>
+#include <sys/input.h>
 #include <sprites/char.h>
 #include <sprites/tileset.h>
 #include <tilemaps/lvl0.h>
@@ -9,12 +10,13 @@
 
 const ent_t init_player = {
     e_t_physics | e_t_render | e_t_input,
-    4,168,
-    4,168,
-    4,24,
-    0,0,
-    0,0,
-    spr_char_0
+    4,168,                                  // pos
+    4,168,                                  // pos ant
+    4,24,                                   // ancho - alto
+    0,0,                                    // velocidad
+    0,0,                                    // velocidad anterior
+    spr_char_0                              // esprait
+    
 };
 
 u8 tset[lvl0_pack_size];
