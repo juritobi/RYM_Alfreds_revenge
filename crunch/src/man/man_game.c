@@ -1,6 +1,7 @@
 #include "man_game.h"
 #include <sys/physics.h>
 #include <sys/render.h>
+#include <sys/input.h>
 #include <sys/AI.h>
 #include <man/level.h>
 
@@ -37,6 +38,7 @@ void man_game_init(){
 void man_game_play(){
     while (1){
         sys_AI_update();
+        sys_input_update();
         sys_phy_update();
         sys_ren_update();
         wait(1);
