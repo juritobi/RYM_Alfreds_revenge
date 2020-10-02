@@ -46,6 +46,7 @@ void man_game_init(){
 
 void man_game_play(){
     while (1){
+        sys_input_update();
         sys_phy_update();
         sys_ren_update();
         wait(3);
