@@ -27,6 +27,7 @@ void man_ent_destroy(ent_t* dead_ent){
 void man_ent_init(){
    next_free_ent = ents;
    num_ents = 0;
+   cpct_memset (ents, 0, sizeof(ents));
    invalid_at_end_of_ents = e_t_invalid;
 }
 
@@ -56,18 +57,18 @@ void man_ent_update(){
    }
 }
 
-void man_ent_forall( void (*ptrfunc)(ent_t*)){
+void man_ent_forall(Ptrf_v_ep fun){
    ent_t* res = ents;
    while(res->type != e_t_invalid){
-      ptrfunc(res);
+      fun(res);
       ++res;
    }
 }
-void man_ent_forall_type( void (*ptrfunc)(ent_t*), u8 types){
+void man_ent_forall_type( Ptrf_v_ep fun, u8 types){
    ent_t* res = ents;
    while(res->type != e_t_invalid){
       if((res->type & types) == types){
-         ptrfunc(res);
+         fun(res);
       }
       ++res;
    }

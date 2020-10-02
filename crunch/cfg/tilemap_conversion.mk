@@ -30,14 +30,18 @@
 # Default values
 #$(eval $(call TMX2DATA, SET_ASMVARPREFIX, yes       ))   { yes, no      }
 #$(eval $(call TMX2DATA, SET_USEMACROS   , yes       ))   { yes, no      }
-$(eval $(call TMX2DATA, SET_OUTPUTS     , h bin       ))   #{ bin hs h s c }
+#$(eval $(call TMX2DATA, SET_OUTPUTS     , h bin       ))   #{ bin hs h s c }
 #$(eval $(call TMX2DATA, SET_BASE        , dec       ))   { dec hex bin }
 #$(eval $(call TMX2DATA, SET_BITSPERITEM , 8         ))   { 1, 2, 4, 6, 8 }
-$(eval $(call TMX2DATA, SET_FOLDER      , src/tilemaps      )) 
+#$(eval $(call TMX2DATA, SET_FOLDER      , src/tilemaps      )) 
 #$(eval $(call TMX2DATA, SET_EXTRAPAR    ,           ))	
 # Conversion 
-$(eval $(call TMX2DATA, CONVERT, assets/lvl0.tmx, lvl0 )) 
+#$(eval $(call TMX2DATA, CONVERT, assets/lvl0.tmx, lvl0 )) 
 
+$(eval $(call TMX2DATA, SET_OUTPUTS     , h bin       ))
+$(eval $(call TMX2DATA, SET_FOLDER      , src/tilemaps      ))
+$(eval $(call TMX2DATA, CONVERT, assets/lvl0.tmx, lvl0 )) 
+$(eval $(call TMX2DATA, CONVERT, assets/lvl1.tmx, lvl1 )) 
 
 ##
 ## OLD MACROS (For compatibility)

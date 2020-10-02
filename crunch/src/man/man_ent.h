@@ -10,6 +10,8 @@
 
 #define e_t_dead 0x80
 
+typedef struct et ent_t;
+typedef void (*Ptrf_v_ep)(ent_t*);
 typedef struct et{
    u8 type;
    u8 x, y;
@@ -18,7 +20,8 @@ typedef struct et{
    i8 vx, vy;
    i8 prevvx, prevvy;
    u8* sprite;
-} ent_t;
+   Ptrf_v_ep act;
+};
 
 void man_ent_init();
 void man_ent_update();
@@ -26,5 +29,5 @@ void man_ent_update();
 ent_t* man_ent_create();
 void man_ent_setdead(ent_t* dead_ent);
 
-void man_ent_forall(void (*ptrfunc)(ent_t*));
-void man_ent_forall_type( void (*ptrfunc)(ent_t*), u8 types);
+void man_ent_forall(Ptrf_v_ep fun);
+void man_ent_forall_type(Ptrf_v_ep fun, u8 types);

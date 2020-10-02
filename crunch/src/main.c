@@ -1,6 +1,6 @@
 #include <cpctelera.h>
-#include <man/man_game.h>
 #include <sprites/g_palette.h>
+#include <man/app.h>
 
 void main(void) {
 
@@ -8,6 +8,8 @@ void main(void) {
     cpct_setBorder(HW_BLACK);
     cpct_setPalette(g_palette,4);
 
-    man_game_init();
-    man_game_play();
+    man_app_init();
+    man_app_update();
+    while(1);
+
 }

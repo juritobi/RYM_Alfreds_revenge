@@ -1,29 +1,25 @@
 #include "man_game.h"
-#include <man/man_ent.h>
 #include <sys/physics.h>
 #include <sys/render.h>
-#include <sprites/char.h>
-#include <sprites/tileset.h>
-#include <tilemaps/lvl0.h>
-#include <tilemaps/lvl0_pack.h> 
+#include <sys/AI.h>
+#include <man/level.h>
 
-const ent_t init_player = {
-    e_t_physics | e_t_render | e_t_input,
-    4,168,
-    4,168,
-    4,24,
-    0,0,
-    0,0,
-    spr_char_0
+#include <constants.h>
+
+const lvl_t init_lvl0 = {
+    lvl0_pack_end,      //this
+    0,                  //top
+    lvl1_pack_end,      //right
+    0,                  //right
+    0                   //bot
 };
-
-u8 tset[lvl0_pack_size];
-
-
-void create_ent(){
-    ent_t* e = man_ent_create();
-    cpct_memcpy(e, &init_player, sizeof(ent_t));
-}
+const lvl_t init_lvl1 = {
+    lvl1_pack_end,
+    0,                  
+    lvl0_pack_end,      
+    0,
+    0                   
+};
 
 void wait(u8 n){
     do{
@@ -33,19 +29,16 @@ void wait(u8 n){
 }
 
 void man_game_init(){
-    u8* tset_end= &tset[lvl0_pack_size-1];
-    man_ent_init();
-    create_ent();
 
-    cpct_zx7b_decrunch_s(tset_end, lvl0_pack_end);
-    cpct_etm_setDrawTilemap4x8_ag (lvl0_W, lvl0_H, lvl0_W, tileset_00);
-    cpct_etm_drawTilemap4x8_ag(CPCT_VMEM_START, tset);
+    man_ent_init();
+    man_level_load(lvl1_pack_end);
 }
 
 void man_game_play(){
     while (1){
+        sys_AI_update();
         sys_phy_update();
         sys_ren_update();
-        wait(3);
+        wait(1);
     }
 }
