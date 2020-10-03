@@ -3,39 +3,21 @@
 ent_t ents[10];
 u8 invalid_at_end_of_ents;
 ent_t*  next_free_ent;
-u8    num_ents;
-
-void man_ent_destroy(ent_t* dead_ent){
-   ent_t* de = dead_ent;
-   ent_t* last = next_free_ent;
-   u8 num = num_ents;
-
-   --last;
-   --num;
-   if(de == last){
-      de->type = e_t_invalid;
-   }
-   else{
-      cpct_memcpy(de, last, sizeof(ent_t));
-      last->type = e_t_invalid;
-  }
-
-  next_free_ent = last;
-  num_ents = num;
-}
 
 void man_ent_init(){
    next_free_ent = ents;
-   num_ents = 0;
-   cpct_memset (ents, 0, sizeof(ents));
-   invalid_at_end_of_ents = e_t_invalid;
+   cpct_memset (ents, e_t_invalid, sizeof(ents)+1);
 }
 
 ent_t* man_ent_create(){
    ent_t* res = next_free_ent;
-   u8 num = num_ents;
    next_free_ent = res + 1;
-   num_ents = num +1;
+   return res;
+}
+
+ent_t* man_ent_create_from_template(ent_t* template){
+   ent_t* res = man_ent_create();
+   cpct_memcpy(res, template, sizeof(ent_t));
    return res;
 }
 
@@ -45,16 +27,6 @@ void man_ent_setdead(ent_t* dead_ent){
 }
 
 void man_ent_update(){
-   ent_t* e = ents;
-
-   while(e->type != e_t_invalid){
-      if(e->type & e_t_dead){
-         man_ent_destroy(e);
-      }
-      else{
-         e++;
-      }
-   }
 }
 
 void man_ent_forall(Ptrf_v_ep fun){
@@ -67,8 +39,10 @@ void man_ent_forall(Ptrf_v_ep fun){
 void man_ent_forall_type( Ptrf_v_ep fun, u8 types){
    ent_t* res = ents;
    while(res->type != e_t_invalid){
-      if((res->type & types) == types){
-         fun(res);
+      if(!(res->type & 0x80)){
+         if((res->type & types) == types){
+            fun(res);
+         }
       }
       ++res;
    }

@@ -30,9 +30,7 @@ void wait(u8 n){
 }
 
 void man_game_init(){
-
-    man_ent_init();
-    man_level_load(lvl1_pack_end);
+    man_level_load(lvl0_pack_end);
 }
 
 void man_game_play(){

@@ -7,7 +7,9 @@
 #define e_t_physics 0x02
 #define e_t_input 0x04
 #define e_t_AI 0x08
-
+#define e_t_undefined 0x10
+#define e_t_undefined2 0x20
+#define e_t_spawnable 0x40
 #define e_t_dead 0x80
 
 typedef struct et ent_t;
@@ -27,6 +29,7 @@ void man_ent_init();
 void man_ent_update();
 
 ent_t* man_ent_create();
+ent_t* man_ent_create_from_template(ent_t* template);
 void man_ent_setdead(ent_t* dead_ent);
 
 void man_ent_forall(Ptrf_v_ep fun);
