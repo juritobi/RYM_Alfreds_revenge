@@ -39,7 +39,7 @@ void man_ent_forall(Ptrf_v_ep fun){
 void man_ent_forall_type( Ptrf_v_ep fun, u8 types){
    ent_t* res = ents;
    while(res->type != e_t_invalid){
-      if(!(res->type & 0x80)){
+      if(!(res->type & e_t_dead)){
          if((res->type & types) == types){
             fun(res);
          }

@@ -7,9 +7,9 @@
 #define e_t_physics 0x02
 #define e_t_input 0x04
 #define e_t_AI 0x08
-#define e_t_undefined 0x10
+#define e_t_son 0x10
 #define e_t_undefined2 0x20
-#define e_t_spawnable 0x40
+#define e_t_undefined3 0x40
 #define e_t_dead 0x80
 
 typedef struct et ent_t;
