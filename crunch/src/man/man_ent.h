@@ -19,6 +19,7 @@ typedef struct et{
    u8 w, h;
    i8 vx, vy;
    i8 prevvx, prevvy;
+   i8 jumping;
    u8* sprite;
    Ptrf_v_ep act;
 };
