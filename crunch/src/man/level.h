@@ -11,5 +11,7 @@ typedef struct lvl{
     u8* left;
 };
 
+u8* man_level_get_tilemap();
+
 void man_level_init();
 void man_level_load(u8* map);

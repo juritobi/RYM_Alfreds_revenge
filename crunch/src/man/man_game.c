@@ -3,6 +3,7 @@
 #include <sys/render.h>
 #include <sys/input.h>
 #include <sys/AI.h>
+#include <sys/col.h>
 #include <man/level.h>
 
 #include <constants.h>
@@ -38,6 +39,7 @@ void man_game_play(){
         sys_AI_update();
         sys_input_update();
         sys_phy_update();
+        sys_col_update();
         sys_ren_update();
         wait(1);
     }

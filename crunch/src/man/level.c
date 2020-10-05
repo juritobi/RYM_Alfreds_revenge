@@ -11,7 +11,7 @@ u8 tilemap_start[tilemap_size];
 #define tilemap_end  (tilemap_start + tilemap_size - 1)
 
 const ent_t init_player = {
-    e_t_physics | e_t_render | e_t_input,  //tipo
+    e_t_physics | e_t_render | e_t_input | e_t_col,  //tipo
     4,168,                                  //x,y
     4,168,                                  //prevx, prevy
     4,24,                                   //w,h
@@ -77,4 +77,8 @@ void man_level_load(u8* map){
     e = man_ent_create_from_template(&init_knife);
     e = man_ent_create_from_template(&init_shoot);
     e = man_ent_create_from_template(&init_shoot_son);
+}
+
+u8* man_level_get_tilemap(){
+    return tilemap_start;
 }
