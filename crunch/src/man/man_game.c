@@ -15,6 +15,7 @@ const ent_t init_player = {
     4,24,                                   // ancho - alto
     0,0,                                    // velocidad
     0,0,                                    // velocidad anterior
+    -1,                                     // jumping status
     spr_char_0                              // esprait
     
 };

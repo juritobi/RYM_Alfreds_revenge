@@ -27,6 +27,7 @@ void man_ent_destroy(ent_t* dead_ent){
 void man_ent_init(){
    next_free_ent = ents;
    num_ents = 0;
+   cpct_memset (ents, 0, sizeof(ents));
    invalid_at_end_of_ents = e_t_invalid;
 }
 
