@@ -50,8 +50,8 @@ void man_ent_forall_type( Ptrf_v_ep fun, u8 types){
 
 
 void man_ent_resurrect(ent_t* e, u8 displacement){
-   u8 dsp = displacement;
-   ent_t* puntero = e;
-   ent_t* e_to_res = puntero + dsp;
+   ent_t* e_to_res = e + displacement;
    e_to_res->type &= ~e_t_dead;
+   e_to_res->x = e->x + e_to_res->originalx;
+   e_to_res->y = e->y + e_to_res->originaly;
 }

@@ -14,20 +14,20 @@ const ent_t init_player = {
     e_t_physics | e_t_render | e_t_input | e_t_col,  //tipo
     4,168,                                  //x,y
     4,168,                                  //prevx, prevy
+    4,168,                                  //originalx, originaly
     4,24,                                   //w,h
     0,0,                                    //vx,vy
-    0,0,                                    //prevvx, prevvx
-    -1,
+    -1,                                     //jumping
     spr_char_0,                             //sprite
     0x0000                                  //AI function
 };
 const ent_t init_sword = {
     e_t_dead | e_t_son | e_t_render,            //tipo
     4,0,                                  //parent displacement for sons
-    0,0,                                    //prevx, prevy
+    4,0,                                    //prevx, prevy
+    4,0,                                    //originalx, originaly
     4,24,                                   //w,h
     0,0,                                    //vx,vy
-    0,0,                                    //prevvx, prevvx
     -1,
     spr_char_1,                             //sprite
     0x0000                                  //AI function
@@ -35,10 +35,10 @@ const ent_t init_sword = {
 const ent_t init_knife = {
     e_t_dead | e_t_son | e_t_render | e_t_physics,           //tipo
     4,8,                                  //parent displacement for sons
-    0,0,                                    //prevx, prevy
+    4,8,                                   //prevx, prevy
+    4,8,                                  //parent displacement for sons
     4,8,                                   //w,h
     0,0,                                    //vx,vy
-    0,0,                                    //prevvx, prevvx
     -1,
     spr_char_2,                             //sprite
     0x0000                                  //AI function
@@ -46,20 +46,20 @@ const ent_t init_knife = {
 const ent_t init_shoot = {
     e_t_render | e_t_AI,
     74,176,
-    74,176,                                 
+    74,176,    
+    74,176,                              
     4,16,
     -1,0,
-    0,0,
     -1,
     spr_shooter_0,
     sys_AI_shoot
 };
 const ent_t init_shoot_son = {
     e_t_dead | e_t_son | e_t_physics | e_t_render,
-    4,4,
-    0,0,
+    -2,4,
+    -2,4,
+    -2,4,
     4,8,
-    -1,0,
     -1,0,
     -1,
     spr_p_1,

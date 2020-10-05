@@ -1,7 +1,7 @@
 #include "physics.h"
 #include <man/man_ent.h>
 
-#define rate_of_fire 50
+#define rate_of_fire 100
 u8 shoot_timer;
 
 //character must always be the first entity in the entity array
