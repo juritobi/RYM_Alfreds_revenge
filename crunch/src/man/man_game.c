@@ -2,8 +2,29 @@
 #include <sys/physics.h>
 #include <sys/render.h>
 #include <sys/input.h>
+<<<<<<< HEAD
 #include <sys/AI.h>
 #include <man/level.h>
+=======
+#include <sprites/char.h>
+#include <sprites/tileset.h>
+#include <tilemaps/lvl0.h>
+#include <tilemaps/lvl0_pack.h> 
+
+const ent_t init_player = {
+    e_t_physics | e_t_render | e_t_input,
+    4,168,                                  // pos
+    4,168,                                  // pos ant
+    4,24,                                   // ancho - alto
+    0,0,                                    // velocidad
+    0,0,                                    // velocidad anterior
+    -1,                                     // jumping status
+    spr_char_0                              // esprait
+    
+};
+
+u8 tset[lvl0_pack_size];
+>>>>>>> input
 
 #include <constants.h>
 
