@@ -10,8 +10,12 @@ void sys_ren_draw_tilemap(u8* tilemap){
 
 void sys_ren_one(ent_t* e){
     if(!(e->type & e_t_dead)){
+        u8* prev_pos = cpct_getScreenPtr(CPCT_VMEM_START, e->prevx, e->prevy);
         u8* pos = cpct_getScreenPtr(CPCT_VMEM_START, e->x, e->y);
+        cpct_drawSolidBox (prev_pos, 0xf0, e->w, e->h);
         cpct_drawSprite(e->sprite, pos, e->w, e->h);
+        e->prevx=e->x;
+        e->prevy=e->y;
     }
 }
 
