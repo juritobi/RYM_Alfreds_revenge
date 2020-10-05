@@ -73,10 +73,15 @@ void man_level_load(u8* map){
     
     man_ent_init();
     e = man_ent_create_from_template(&init_player);
+    //sys_ren_first_draw(e);
     e = man_ent_create_from_template(&init_sword);
+    //sys_ren_first_draw(e);
     e = man_ent_create_from_template(&init_knife);
+    //sys_ren_first_draw(e);
     e = man_ent_create_from_template(&init_shoot);
+    //sys_ren_first_draw(e);
     e = man_ent_create_from_template(&init_shoot_son);
+    //sys_ren_first_draw(e);
 }
 
 u8* man_level_get_tilemap(){

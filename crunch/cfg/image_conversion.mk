@@ -28,7 +28,7 @@
 ##
 
 ## 16 colours palette
-PALETTE=0 1 26 3
+PALETTE=1 0 3 26
 
 ## Default values
 #$(eval $(call IMG2SP, SET_MODE        , 0                  ))  { 0, 1, 2 }
@@ -43,7 +43,7 @@ PALETTE=0 1 26 3
 
 $(eval $(call IMG2SP, SET_MODE        , 1                  ))
 $(eval $(call IMG2SP, SET_FOLDER      , src/sprites/               ))
-$(eval $(call IMG2SP, SET_IMG_FORMAT  , sprites            ))
+$(eval $(call IMG2SP, SET_IMG_FORMAT  , sprites           ))
 $(eval $(call IMG2SP, SET_OUTPUT      , c                  ))
 $(eval $(call IMG2SP, SET_PALETTE_FW  , $(PALETTE)         ))
 $(eval $(call IMG2SP, CONVERT_PALETTE , $(PALETTE), g_palette ))
