@@ -38,8 +38,8 @@ void man_game_play(){
     while (1){
         sys_AI_update();
         sys_input_update();
-        sys_phy_update();
         sys_col_update();
+        sys_phy_update();
         sys_ren_update();
         wait(1);
     }
