@@ -34,3 +34,5 @@ void man_ent_setdead(ent_t* dead_ent);
 
 void man_ent_forall(Ptrf_v_ep fun);
 void man_ent_forall_type(Ptrf_v_ep fun, u8 types);
+
+void man_ent_resurrect(ent_t* e, u8 displacement);

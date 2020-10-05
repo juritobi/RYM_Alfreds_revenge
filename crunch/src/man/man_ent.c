@@ -8,26 +8,26 @@ void man_ent_init(){
    next_free_ent = ents;
    cpct_memset (ents, e_t_invalid, sizeof(ents)+1);
 }
+void man_ent_update(){
+}
+
 
 ent_t* man_ent_create(){
    ent_t* res = next_free_ent;
    next_free_ent = res + 1;
    return res;
 }
-
 ent_t* man_ent_create_from_template(ent_t* template){
    ent_t* res = man_ent_create();
    cpct_memcpy(res, template, sizeof(ent_t));
    return res;
 }
-
 void man_ent_setdead(ent_t* dead_ent){
    ent_t* de = dead_ent;
    de->type |= e_t_dead;
 }
 
-void man_ent_update(){
-}
+
 
 void man_ent_forall(Ptrf_v_ep fun){
    ent_t* res = ents;
@@ -46,4 +46,12 @@ void man_ent_forall_type( Ptrf_v_ep fun, u8 types){
       }
       ++res;
    }
+}
+
+
+void man_ent_resurrect(ent_t* e, u8 displacement){
+   u8 dsp = displacement;
+   ent_t* puntero = e;
+   ent_t* e_to_res = puntero + dsp;
+   e_to_res->type &= ~e_t_dead;
 }

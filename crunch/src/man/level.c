@@ -48,12 +48,12 @@ const ent_t init_shoot = {
     -1,0,
     0,0,
     spr_shooter_0,
-    sys_AI_follow
+    sys_AI_shoot
 };
 const ent_t init_shoot_son = {
     e_t_dead | e_t_son | e_t_physics | e_t_render,
-    72,180,
-    72,180,
+    4,4,
+    0,0,
     4,8,
     -1,0,
     -1,0,
