@@ -17,6 +17,7 @@ const ent_t init_player = {
     4,24,                                   //w,h
     0,0,                                    //vx,vy
     0,0,                                    //prevvx, prevvx
+    -1,
     spr_char_0,                             //sprite
     0x0000                                  //AI function
 };
@@ -27,6 +28,7 @@ const ent_t init_sword = {
     4,24,                                   //w,h
     0,0,                                    //vx,vy
     0,0,                                    //prevvx, prevvx
+    -1,
     spr_char_1,                             //sprite
     0x0000                                  //AI function
 };
@@ -37,6 +39,7 @@ const ent_t init_knife = {
     4,8,                                   //w,h
     0,0,                                    //vx,vy
     0,0,                                    //prevvx, prevvx
+    -1,
     spr_char_2,                             //sprite
     0x0000                                  //AI function
 };
@@ -47,6 +50,7 @@ const ent_t init_shoot = {
     4,16,
     -1,0,
     0,0,
+    -1,
     spr_shooter_0,
     sys_AI_shoot
 };
@@ -57,6 +61,7 @@ const ent_t init_shoot_son = {
     4,8,
     -1,0,
     -1,0,
+    -1,
     spr_p_1,
     0x0000
 };
