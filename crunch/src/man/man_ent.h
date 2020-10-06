@@ -28,7 +28,8 @@ typedef struct et{
    u8 originalx, originaly;
    u8 w, h;
    i8 vx, vy;
-   i8 jumping;
+   u8 on_ground; 
+   i8 jumping;    //jump stage
    u8* sprite;
    Ptrf_v_ep act;
    Ptrf_v_ep render;
