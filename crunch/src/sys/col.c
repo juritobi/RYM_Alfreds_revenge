@@ -13,8 +13,8 @@ void sys_col_one(ent_t* e){
     u8* tilemap = man_level_get_tilemap();
 
     u16 array_pos= tile_y*tilemap_W + next_tile;
-
-    u16 nextYpos = (tile_y +4)*tilemap_W + tile_x;
+    u16 nextXpos = down_tile*tilemap_W + next_tile;
+    
     if(tile_x != (e->x-1)/4){
         if(tilemap[array_pos] == 7 || tilemap[array_pos + tilemap_W] == 7 || tilemap[array_pos + tilemap_W +tilemap_W] == 7){
             e->vx = 0;
@@ -56,5 +56,5 @@ saltamos debajo de un bloque blanco -> no poder saltar directamente
 saltar pero en medio del salto haya un bloque blanco -> cancelar el salto y caer al suelo
 saltar y caer en una plataforma -> cancelar el salto y caer en la plataforma SIN QUEDARSE DENTRO DE ELLA POR FAVOR
 saltar de una plataforma al suelo -> acabar el salto y caer hasta el suelo
-andar fuera de una plataforma -> caer hasta el suelo
+andar fuera de una plataforma -> caer hasta el
 */
