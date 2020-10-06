@@ -24,6 +24,7 @@ typedef struct et{
    i8 jumping;
    u8* sprite;
    Ptrf_v_ep act;
+   Ptrf_v_ep render;
 };
 
 void man_ent_init();

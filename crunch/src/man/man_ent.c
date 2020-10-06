@@ -55,5 +55,4 @@ void man_ent_resurrect(ent_t* e, u8 displacement){
    e_to_res->type &= ~e_t_dead;
    e_to_res->x = e->x + e_to_res->originalx;
    e_to_res->y = e->y + e_to_res->originaly;
-   //sys_ren_first_draw(e_to_res);
 }
