@@ -5,7 +5,6 @@
 void sys_ren_draw_tilemap(u8* tilemap){
     cpct_etm_setDrawTilemap4x8_ag(tilemap_W, tilemap_H, tilemap_W, tileset);
     cpct_etm_drawTilemap4x8_ag(CPCT_VMEM_START, tilemap);
-    cpct_setBlendMode (CPCT_BLEND_XOR);
 }
 
 void sys_ren_one(ent_t* e){

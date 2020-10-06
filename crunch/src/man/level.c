@@ -19,7 +19,7 @@ const ent_t init_player = {
     0,0,                                    //vx,vy
     -1,                                     //jumping
     spr_char_0,                             //sprite
-    0x0000                                  //AI function
+    0                                   //AI function
 };
 const ent_t init_sword = {
     e_t_dead | e_t_son | e_t_render,            //tipo
@@ -30,7 +30,7 @@ const ent_t init_sword = {
     0,0,                                    //vx,vy
     -1,
     spr_char_1,                             //sprite
-    0x0000                                  //AI function
+    0                                  //AI function
 };
 const ent_t init_knife = {
     e_t_dead | e_t_son | e_t_render | e_t_physics,           //tipo
@@ -41,7 +41,7 @@ const ent_t init_knife = {
     0,0,                                    //vx,vy
     -1,
     spr_char_2,                             //sprite
-    0x0000                                  //AI function
+    0                                  //AI function
 };
 const ent_t init_shoot = {
     e_t_render | e_t_AI,
@@ -63,7 +63,7 @@ const ent_t init_shoot_son = {
     -1,0,
     -1,
     spr_p_1,
-    0x0000
+    0
 };
 
 void man_level_load(u8* map){
@@ -73,15 +73,12 @@ void man_level_load(u8* map){
     
     man_ent_init();
     e = man_ent_create_from_template(&init_player);
-    //sys_ren_first_draw(e);
+    sys_ren_first_draw(e);
     e = man_ent_create_from_template(&init_sword);
-    //sys_ren_first_draw(e);
     e = man_ent_create_from_template(&init_knife);
-    //sys_ren_first_draw(e);
     e = man_ent_create_from_template(&init_shoot);
-    //sys_ren_first_draw(e);
+    sys_ren_first_draw(e);
     e = man_ent_create_from_template(&init_shoot_son);
-    //sys_ren_first_draw(e);
 }
 
 u8* man_level_get_tilemap(){
