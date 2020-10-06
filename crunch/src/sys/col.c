@@ -22,17 +22,17 @@ void sys_col_one(ent_t* e){
     array_pos = up_tile*tilemap_W + tile_x;
     if(tile_y != (e->y-1)/8){//si voy a cambiar de tile
         if(e->vy<0){
-            if(tilemap[array_pos] !=3 || tilemap[array_pos+ 1] !=3 ){
+            if(tilemap[array_pos] !=3 || (!(tile_x != (e->x-1)/4) && tilemap[array_pos+ 1] !=3 )){
                 e->vy = 0;
             }
         }
         else{
             array_pos = down_tile*tilemap_W + tile_x;
-            if(tilemap[array_pos] == 3 && tilemap[array_pos+1] == 3){
-                e->on_ground = 0;
+            if(tilemap[array_pos] !=3 || (!(tile_x != (e->x-1)/4) && tilemap[array_pos+ 1] !=3 )){
+                e->on_ground = 1;
             }
             else{
-                e->on_ground = 1;
+                e->on_ground = 0;
             }
 
             if(e->on_ground && e->vy>0){
