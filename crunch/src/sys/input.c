@@ -1,7 +1,7 @@
 #include "input.h"
 #include <man/man_ent.h>
 
-const i8 jumptable[10] = {-3, -2, -1, -1 -1, 0, 1, 2, 2, 3};
+const i8 jumptable[10] = {-2, -2, -1, -1 -1, 0, 1, 2, 2, 2};
 
 void sys_input_one(ent_t* ent){
     if (ent->type & e_t_input)
@@ -30,7 +30,7 @@ void sys_input_one(ent_t* ent){
                 ent->vy = jumptable[ent->jumping]*4;
             }
             else{
-                ent->jumping= -1;
+                ent->jumping = -1;
             }
         }
 
