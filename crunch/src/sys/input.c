@@ -36,7 +36,7 @@ void sys_input_one(ent_t* ent){
             else{
                 ent->jumping = -1;
             }
-
+        }
         else if(cpct_isKeyPressed(Key_W) && ent->on_ground){
             ent->jumping++;
             ent->vy = jumptable[ent->jumping]*4;
