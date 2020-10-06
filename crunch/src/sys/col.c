@@ -30,17 +30,18 @@ void sys_col_one(ent_t* e){
                 e->vy = 0;
             }
         }
-        
-            
     }
+
     array_pos = down_tile*tilemap_W + tile_x;
-         
-    if(tilemap[array_pos] == 3 && e->jumping == -1){
-        e->vy = 4;
+    if(tilemap[array_pos] == 3 && tilemap[array_pos+1] == 3){
+        e->on_ground = 0;
     }
-    if(tilemap[array_pos] != 3 && e->vy > 0 ){
-        e->vy = 0;
-        e->jumping == -1;
+    else{
+        e->on_ground = 1;
+    }
+
+    if(e->on_ground && e->vy>0){
+        e->vy=0;
     }
 }
 
