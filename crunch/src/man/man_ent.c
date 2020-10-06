@@ -49,6 +49,28 @@ void man_ent_forall_type( Ptrf_v_ep fun, u8 types){
    }
 }
 
+/*void man_ent_forall_col_type_first( Ptrf_v_ep fun, u8 col_types){
+   ent_t* res = ents;
+   while(res->type != e_t_invalid){
+      if(!(res->type & e_t_dead)){
+         if((res->col_type & col_types) == col_types){
+            fun(res);
+         }
+      }
+      ++res;
+   }
+}
+void man_ent_forall_col_type_second( Ptrf_v_ep fun, u8 col_types){
+   ent_t* res = ents;
+   while(res->type != e_t_invalid){
+      if(!(res->type & e_t_dead)){
+         if((res->col_type & col_types) == col_types){
+            fun(res);
+         }
+      }
+      ++res;
+   }
+}*/
 
 void man_ent_resurrect(ent_t* e, u8 displacement){
    ent_t* e_to_res = e + displacement;

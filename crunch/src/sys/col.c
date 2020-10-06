@@ -38,6 +38,12 @@ void sys_col_one(ent_t* e){
 
 }
 
+
+/*void sys_col_ally(ent_t* ally){
+    man_ent_forall_col_type(sys_col_ally, c_t_enemy|c_t_enemy_breaker);
+}*/
+
 void sys_col_update(){
     man_ent_forall_type(sys_col_one, e_t_col);
+    //man_ent_forall_col_type(sys_col_ally, c_t_ally);
 }

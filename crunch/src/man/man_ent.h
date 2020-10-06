@@ -12,10 +12,17 @@
 #define e_t_undefined3 0x40
 #define e_t_dead 0x80
 
+#define c_t_invalid 0x00
+#define c_t_ally 0x01
+#define c_t_ally_breaker 0x02
+#define c_t_enemy 0x04
+#define c_t_enemy_breaker 0x08
+
 typedef struct et ent_t;
 typedef void (*Ptrf_v_ep)(ent_t*);
 typedef struct et{
    u8 type;
+   u8 col_type;
    u8 x, y;
    u8 prevx, prevy;
    u8 originalx, originaly;

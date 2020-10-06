@@ -12,6 +12,7 @@ u8 tilemap_start[tilemap_size];
 
 const ent_t init_player = {
     e_t_physics | e_t_render | e_t_input | e_t_col,  //tipo
+    c_t_ally,                                //tipo de colision
     4,168,                                  //x,y
     4,168,                                  //prevx, prevy
     4,168,                                  //originalx, originaly
@@ -24,6 +25,7 @@ const ent_t init_player = {
 };
 const ent_t init_sword = {
     e_t_dead | e_t_son | e_t_render,            //tipo
+    c_t_ally_breaker,                        //tipo de colision
     4,0,                                  //parent displacement for sons
     4,0,                                    //prevx, prevy
     4,0,                                    //originalx, originaly
@@ -36,6 +38,7 @@ const ent_t init_sword = {
 };
 const ent_t init_knife = {
     e_t_dead | e_t_son | e_t_render | e_t_physics,           //tipo
+    c_t_ally_breaker
     4,8,                                  //parent displacement for sons
     4,8,                                   //prevx, prevy
     4,8,                                  //parent displacement for sons
@@ -48,6 +51,7 @@ const ent_t init_knife = {
 };
 const ent_t init_shoot = {
     e_t_render | e_t_AI,
+    c_t_enemy,
     74,176,
     74,176,    
     74,176,                              
@@ -60,6 +64,7 @@ const ent_t init_shoot = {
 };
 const ent_t init_shoot_son = {
     e_t_dead | e_t_son | e_t_physics | e_t_render,
+    c_t_enemy_breaker,
     -2,4,
     -2,4,
     -2,4,
