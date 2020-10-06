@@ -1,7 +1,7 @@
 #include "input.h"
 #include <man/man_ent.h>
 
-const i8 jumptable[] = {-2, -2, -2, -2, 0, 0};
+const i8 jumptable[] = {-2, -2, -2, -2, -2, 0, 0};
 
 void sys_input_one(ent_t* ent){
     if (ent->type & e_t_input)
@@ -24,26 +24,16 @@ void sys_input_one(ent_t* ent){
             }
         }
         
-        if(cpct_isKeyPressed(Key_W) && ent->jumping == 0){
-            ent->jumping = 1;
+        if(cpct_isKeyPressed(Key_W) && ent->on_ground && ent->jumping == -1){
+            ent->jumping = 0;
         }
-
         if(ent->jumping != -1){
-            if(ent->jumping < sizeof(jumptable)){
-                ent->jumping++;
-                ent->vy = jumptable[ent->jumping]*4;
-            }
-            else{
-                ent->jumping = -1;
-            }
-        }
-        else if(cpct_isKeyPressed(Key_W) && ent->on_ground){
-            ent->jumping++;
             ent->vy = jumptable[ent->jumping]*4;
+            if(ent->jumping < sizeof(jumptable)-1)
+                ent->jumping++;
+            else
+                ent->jumping = -1;
         }
-
-        
-
     }
 }
 

@@ -12,9 +12,9 @@ u8 tilemap_start[tilemap_size];
 
 const ent_t init_player = {
     e_t_physics | e_t_render | e_t_input | e_t_col,  //tipo
-    4,92,                                  //x,y
-    4,92,                                  //prevx, prevy
-    4,92,                                  //originalx, originaly
+    4,160,                                  //x,y
+    4,160,                                  //prevx, prevy
+    4,160,                                  //originalx, originaly
     4,24,                                   //w,h
     0,0,                                    //vx,vy
     0,-1,                                     //on ground and jumping
