@@ -17,7 +17,7 @@ const ent_t init_player = {
     4,92,                                  //originalx, originaly
     4,24,                                   //w,h
     0,0,                                    //vx,vy
-    -1,                                     //jumping
+    0,                                     //jumping
     spr_char_0,                             //sprite
     0,                                   //AI function
     sys_ren_blend_first                  //render function
