@@ -9,9 +9,6 @@ void man_ent_init(){
    next_free_ent = ents;
    cpct_memset (ents, e_t_invalid, sizeof(ents)+1);
 }
-void man_ent_update(){
-}
-
 
 ent_t* man_ent_create(){
    ent_t* res = next_free_ent;
@@ -55,4 +52,8 @@ void man_ent_resurrect(ent_t* e, u8 displacement){
    e_to_res->type &= ~e_t_dead;
    e_to_res->x = e->x + e_to_res->originalx;
    e_to_res->y = e->y + e_to_res->originaly;
+}
+
+ent_t* man_ent_get_char(){
+   return &ents[0];
 }

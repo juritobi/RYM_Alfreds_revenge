@@ -29,7 +29,6 @@ typedef struct et{
 };
 
 void man_ent_init();
-void man_ent_update();
 
 ent_t* man_ent_create();
 ent_t* man_ent_create_from_template(ent_t* template);
@@ -39,3 +38,5 @@ void man_ent_forall(Ptrf_v_ep fun);
 void man_ent_forall_type(Ptrf_v_ep fun, u8 types);
 
 void man_ent_resurrect(ent_t* e, u8 displacement);
+
+ent_t* man_ent_get_char();
