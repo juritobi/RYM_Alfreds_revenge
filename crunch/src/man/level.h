@@ -9,6 +9,7 @@ typedef struct lvl{
     lvl_t* right;
     lvl_t* bot;
     lvl_t* left;
+    
 };
 
 u8* man_level_get_tilemap();

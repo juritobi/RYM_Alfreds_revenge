@@ -12,6 +12,12 @@
 #define e_t_undefined3 0x40
 #define e_t_dead 0x80
 
+//el tipo aumenta en funcion del numero de entidades que tenga la clase es decir char crea 3 entidades, por eso shoot es es el 3 
+//y shoot crea 2 entidades por eso el siguiente sera 5
+//los dos primero bits indican el numero de entidades que crean
+#define e_c_char 0xC0
+#define e_c_shoot 0x83
+
 typedef struct et ent_t;
 typedef void (*Ptrf_v_ep)(ent_t*);
 typedef struct et{
@@ -27,16 +33,23 @@ typedef struct et{
    Ptrf_v_ep act;
    Ptrf_v_ep render;
 };
+typedef struct entity_class{
+   u8 type;
+   u8 x, y;
+}ent_class;
+
 
 void man_ent_init();
 
-ent_t* man_ent_create();
+void man_ent_create_class(u8 type, u8 x, u8 y);
+
 ent_t* man_ent_create_from_template(ent_t* template);
 void man_ent_setdead(ent_t* dead_ent);
+void man_ent_resurrect(ent_t* e, u8 displacement);
 
 void man_ent_forall(Ptrf_v_ep fun);
 void man_ent_forall_type(Ptrf_v_ep fun, u8 types);
 
-void man_ent_resurrect(ent_t* e, u8 displacement);
+
 
 ent_t* man_ent_get_char();
