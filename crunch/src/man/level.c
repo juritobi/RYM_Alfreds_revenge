@@ -17,6 +17,7 @@ const ent_t init_player = {
     4,160,                                  //originalx, originaly
     4,24,                                   //w,h
     0,0,                                    //vx,vy
+    0,0,                                    //originalvx, originalvy
     0,-1,                                     //on ground and jumping
     spr_char_0,                             //sprite
     0,                                   //AI function
@@ -29,20 +30,22 @@ const ent_t init_sword = {
     4,0,                                    //originalx, originaly
     4,24,                                   //w,h
     0,0,                                    //vx,vy
+    0,0,                                    //originalvx, originalvy
     0,0,                                     //on ground and jumping
     spr_char_1,                             //sprite
     0,                                  //AI function
     sys_ren_blend_first
 };
 const ent_t init_knife = {
-    e_t_dead | e_t_son | e_t_render | e_t_physics,           //tipo
+    e_t_dead | e_t_son | e_t_render | e_t_physics | e_t_col,           //tipo
     4,8,                                  //parent displacement for sons
     4,8,                                   //prevx, prevy
     4,8,                                  //parent displacement for sons
     4,8,                                   //w,h
-    0,0,                                    //vx,vy
+    1,0,                                    //vx,vy
+    1,0,                                    //originalvx, originalvy
     0,0,                                     //on ground and jumping
-    spr_char_2,                             //sprite
+    spr_char_0,                             //sprite
     0,                                  //AI function
     sys_ren_blend_first
 };
@@ -53,18 +56,20 @@ const ent_t init_shoot = {
     74,176,                              
     4,16,
     -1,0,
+    0,0,                                    //originalvx, originalvy
     0,0,                                     //on ground and jumping
     spr_shooter_0,
     sys_AI_shoot,
     sys_ren_blend_first
 };
 const ent_t init_shoot_son = {
-    e_t_dead | e_t_son | e_t_physics | e_t_render,
+    e_t_dead | e_t_son | e_t_physics | e_t_render ,
     -2,4,
     -2,4,
     -2,4,
     4,8,
     -1,0,
+    -1,0,                                    //originalvx, originalvy
     0,0,                                     //on ground and jumping
     spr_p_1,
     0,

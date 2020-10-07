@@ -21,6 +21,7 @@ typedef struct et{
    u8 originalx, originaly;
    u8 w, h;
    i8 vx, vy;
+   u8 originalvx, originalvy;
    u8 on_ground; 
    i8 jumping;    //jump stage
    u8* sprite;
