@@ -15,6 +15,7 @@
 //el tipo aumenta en funcion del numero de entidades que tenga la clase es decir char crea 3 entidades, por eso shoot es es el 3 
 //y shoot crea 2 entidades por eso el siguiente sera 5
 //los dos primero bits indican el numero de entidades que crean
+#define e_c_undefined 0x00
 #define e_c_char 0xC0
 #define e_c_shoot 0x83
 

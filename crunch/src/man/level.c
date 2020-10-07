@@ -6,14 +6,19 @@
 u8 tilemap_start[tilemap_size];
 #define tilemap_end  (tilemap_start + tilemap_size - 1)
 
-void man_level_load(u8* map){
-    ent_t* e;
-    cpct_zx7b_decrunch_s(tilemap_end, map);
+void man_level_load(lvl_t* map){
+    u8 it = 0;
+    ent_class* class = &map->entities[it];
+    
+    cpct_zx7b_decrunch_s(tilemap_end, map->self);
     sys_ren_draw_tilemap(tilemap_start);
     
     man_ent_init();
-    man_ent_create_class(e_c_char, 8,168);
-    man_ent_create_class(e_c_shoot, 70, 176);
+    while(class->type != e_c_undefined){
+        man_ent_create_class(class->type, class->x, class->y);
+        it++;
+        class = &map->entities[it];
+    }
 }
 
 u8* man_level_get_tilemap(){

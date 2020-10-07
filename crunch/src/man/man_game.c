@@ -17,14 +17,28 @@ const lvl_t i_lvl0 = {
     0,                  //top
     &i_lvl1,      //right
     0,                  //bot
-    0                  //left
+    0,                  //left
+    {
+        {e_c_char, 4,168},
+        {e_c_shoot, 70, 176},
+        {0, 0, 0},
+        {0, 0, 0},
+        {0, 0, 0}
+    }
 };
 const lvl_t i_lvl1 = {
     lvl1_pack_end,
     0,                  
     0,      
     0,
-    &i_lvl0                  
+    &i_lvl0,
+    {
+        {e_c_char, 4,168},
+        {e_c_shoot, 50, 100},
+        {0, 0, 0},
+        {0, 0, 0},
+        {0, 0, 0}
+    }                  
 };
 
 lvl_t* actual_level;
@@ -38,12 +52,12 @@ void wait(u8 n){
 
 void man_game_init(){
     actual_level = &i_lvl0;
-    man_level_load(actual_level->self);
+    man_level_load(actual_level);
 }
 
 void man_game_load_level(lvl_t* level_to_load){
     actual_level = level_to_load;
-    man_level_load(actual_level->self);
+    man_level_load(actual_level);
 }
 
 void man_game_check_level_change(){
