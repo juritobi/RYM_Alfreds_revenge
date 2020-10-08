@@ -7,6 +7,7 @@
 /*character-----------------------------------------------------*/
 const ent_t init_player = {
     e_t_physics | e_t_render | e_t_input | e_t_col,  //tipo
+    col_t_ally,                           //tipo de colision cada entidad puede tener un solo tipo
     0,0,                                  //x,y
     0,0,                                  //prevx, prevy
     0,0,                                  //originalx, originaly
@@ -19,6 +20,7 @@ const ent_t init_player = {
 };
 const ent_t init_sword = {
     e_t_dead | e_t_son | e_t_render,            //tipo
+    col_t_ally_breaker,                           //tipo de colision
     4,0,                                  //parent displacement for sons
     4,0,                                    //prevx, prevy
     4,0,                                    //originalx, originaly
@@ -31,6 +33,7 @@ const ent_t init_sword = {
 };
 const ent_t init_knife = {
     e_t_dead | e_t_son | e_t_render | e_t_physics,           //tipo
+    col_t_ally_breaker,                           //tipo de colision
     4,8,                                  //parent displacement for sons
     4,8,                                   //prevx, prevy
     4,8,                                  //parent displacement for sons
@@ -45,6 +48,7 @@ const ent_t init_knife = {
 /*shoot-----------------------------------------------------*/
 const ent_t init_shoot = {
     e_t_render | e_t_AI,
+    col_t_enemy,                           //tipo de colision
     0,0,
     0,0,    
     0,0,                              
@@ -57,6 +61,7 @@ const ent_t init_shoot = {
 };
 const ent_t init_shoot_son = {
     e_t_dead | e_t_son | e_t_physics | e_t_render,
+    col_t_enemy_breaker,                           //tipo de colision
     -2,4,
     -2,4,
     -2,4,
@@ -131,6 +136,23 @@ void man_ent_forall_type( Ptrf_v_ep fun, u8 types){
       ++res;
    }
 }
+void man_ent_forall_col_type( Ptrf_v_epep fun, u8 first_type, u8 second_type){
+   ent_t* ents1 = ents;
+   ent_t* ents2 = ents;
+   while(ents1->type != e_t_invalid){
+      if((!(ents1->type & e_t_dead)) && (ents1->col_type & first_type)){
+
+         while( ents2->type != e_t_invalid ){
+            if(!(ents2->type & e_t_dead) && (ents2->col_type & second_type)) {
+               fun(ents1, ents2);
+            }
+            ++ents2;
+         }
+
+      }
+      ++ents1;
+   }
+}
 
 
 void man_ent_resurrect(ent_t* e, u8 displacement){
@@ -139,7 +161,6 @@ void man_ent_resurrect(ent_t* e, u8 displacement){
    e_to_res->x = e->x + e_to_res->originalx;
    e_to_res->y = e->y + e_to_res->originaly;
 }
-
 ent_t* man_ent_get_char(){
    return &ents[0];
 }

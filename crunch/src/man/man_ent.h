@@ -12,6 +12,12 @@
 #define e_t_undefined3 0x40
 #define e_t_dead 0x80
 
+#define col_t_undefined 0x00
+#define col_t_ally 0x01
+#define col_t_ally_breaker 0x02
+#define col_t_enemy 0x04
+#define col_t_enemy_breaker 0x08
+
 //el tipo aumenta en funcion del numero de entidades que tenga la clase es decir char crea 3 entidades, por eso shoot es es el 3 
 //y shoot crea 2 entidades por eso el siguiente sera 5
 //los dos primero bits indican el numero de entidades que crean
@@ -21,8 +27,10 @@
 
 typedef struct et ent_t;
 typedef void (*Ptrf_v_ep)(ent_t*);
+typedef void (*Ptrf_v_epep)(ent_t*, ent_t*);
 typedef struct et{
    u8 type;
+   u8 col_type;
    u8 x, y;
    u8 prevx, prevy;
    u8 originalx, originaly;
@@ -50,6 +58,8 @@ void man_ent_resurrect(ent_t* e, u8 displacement);
 
 void man_ent_forall(Ptrf_v_ep fun);
 void man_ent_forall_type(Ptrf_v_ep fun, u8 types);
+
+void man_ent_forall_col_type(Ptrf_v_epep fun, u8 first_type, u8 second_type);
 
 
 
