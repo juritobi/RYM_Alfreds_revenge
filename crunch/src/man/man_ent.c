@@ -4,6 +4,7 @@
 #include <sys/AI.h>
 #include <sprites/char.h>
 #include <sprites/shooter.h>
+#include <sprites/zombi.h>
 #include <sprites/proyectile.h>
 /*character-----------------------------------------------------*/
 const ent_t init_player = {
@@ -91,11 +92,11 @@ const ent_t init_zombi = {
     0,0,
     0,0,    
     0,0,                              
-    4,16,
-    -1,0,                                   
-    -1,0,                                    //prev_vx,prev_vy
+    2,24,
+    0,0,                                   
+    0,0,                                    //prev_vx,prev_vy
     0,0,                                   //on ground and jumping
-    spr_shooter_0,
+    spr_zombi_0,
     sys_AI_zombi,
     sys_ren_blend_first,
     man_ent_generic_death
