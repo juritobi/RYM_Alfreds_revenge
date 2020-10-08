@@ -29,3 +29,7 @@ void sys_ren_blend(ent_t* e){
     e->prevx=e->x;
     e->prevy=e->y;
 }
+void sys_ren_kill(ent_t* e){
+    u8* pos = cpct_getScreenPtr(CPCT_VMEM_START, e->x, e->y);
+    cpct_drawSpriteBlended(pos, e->h, e->w, e->sprite);
+}

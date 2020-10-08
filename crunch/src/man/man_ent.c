@@ -114,6 +114,7 @@ ent_t* man_ent_create_from_template(ent_t* template){
 void man_ent_setdead(ent_t* dead_ent){
    ent_t* de = dead_ent;
    de->type |= e_t_dead;
+   sys_ren_kill(de);
 }
 
 
