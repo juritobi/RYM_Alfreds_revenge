@@ -24,6 +24,7 @@
 #define e_c_undefined 0x00
 #define e_c_char 0xC0
 #define e_c_shoot 0x83
+#define e_c_zombi 0x45
 
 typedef struct et ent_t;
 typedef void (*Ptrf_v_ep)(ent_t*);
@@ -33,11 +34,11 @@ typedef struct et{
    u8 col_type;
    u8 x, y;
    u8 prevx, prevy;
-   u8 originalx, originaly;
+   u8 originalx, originaly; ////reusin
    u8 w, h;
    i8 vx, vy;
-   u8 on_ground; 
-   i8 jumping;    //jump stage
+   i8 prev_vx, prev_vy;
+   i8 on_ground, jumping;    //jump stage
    u8* sprite;
    Ptrf_v_ep act;
    Ptrf_v_ep render;

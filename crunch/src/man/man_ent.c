@@ -14,6 +14,7 @@ const ent_t init_player = {
     0,0,                                  //originalx, originaly
     4,24,                                   //w,h
     0,0,                                    //vx,vy
+    0,0,                                    //prev_vx,prev_vy
     0,-1,                                     //on ground and jumping
     spr_char_0,                             //sprite
     0,                                   //AI function
@@ -28,6 +29,7 @@ const ent_t init_sword = {
     4,0,                                    //originalx, originaly
     4,24,                                   //w,h
     0,0,                                    //vx,vy
+    0,0,                                    //prev_vx,prev_vy
     0,-1,                                     //on ground and jumping
     spr_char_1,                             //sprite
     0,                                  //AI function
@@ -42,6 +44,7 @@ const ent_t init_knife = {
     4,8,                                  //parent displacement for sons
     4,8,                                   //w,h
     0,0,                                    //vx,vy
+    0,0,                                    //prev_vx,prev_vy
     0,-1,                                     //on ground and jumping
     spr_char_2,                             //sprite
     0,                                  //AI function
@@ -58,6 +61,7 @@ const ent_t init_shoot = {
     0,0,                              
     4,16,
     0,-1,
+    0,0,                                    //prev_vx,prev_vy
     0,0,                                     //on ground and jumping
     spr_shooter_0,
     sys_AI_shoot,
@@ -72,6 +76,7 @@ const ent_t init_shoot_son = {
     -2,4,
     4,8,
     -1,0,
+    0,0,                                    //prev_vx,prev_vy
     0,-1,                                     //on ground and jumping
     spr_p_1,
     0,
@@ -79,6 +84,22 @@ const ent_t init_shoot_son = {
     man_ent_generic_death
 };
 /*shoot-----------------------------------------------------*/
+/*zombi-----------------------------------------------------*/
+const ent_t init_zombi = {
+    e_t_render | e_t_AI | e_t_col | e_t_physics,
+    col_t_enemy,                           //tipo de colision
+    0,0,
+    0,0,    
+    0,0,                              
+    4,16,
+    -1,0,                                   
+    -1,0,                                    //prev_vx,prev_vy
+    0,0,                                   //on ground and jumping
+    spr_shooter_0,
+    sys_AI_zombi,
+    sys_ren_blend_first,
+    man_ent_generic_death
+};
 
 ent_t ents[20];
 u8 invalid_at_end_of_ents;
