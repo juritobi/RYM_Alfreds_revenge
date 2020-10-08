@@ -41,6 +41,7 @@ typedef struct et{
    u8* sprite;
    Ptrf_v_ep act;
    Ptrf_v_ep render;
+   Ptrf_v_ep death;
 };
 typedef struct entity_class{
    u8 type;
@@ -53,7 +54,6 @@ void man_ent_init();
 void man_ent_create_class(u8 type, u8 x, u8 y);
 
 ent_t* man_ent_create_from_template(ent_t* template);
-void man_ent_setdead(ent_t* dead_ent);
 void man_ent_resurrect(ent_t* e, u8 displacement);
 
 void man_ent_forall(Ptrf_v_ep fun);
@@ -61,6 +61,8 @@ void man_ent_forall_type(Ptrf_v_ep fun, u8 types);
 
 void man_ent_forall_col_type(Ptrf_v_epep fun, u8 first_type, u8 second_type);
 
+void man_ent_char_death(ent_t* dead_ent);
+void man_ent_generic_death(ent_t* dead_ent);
 
 
 ent_t* man_ent_get_char();

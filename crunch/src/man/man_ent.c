@@ -1,4 +1,5 @@
 #include "man_ent.h"
+#include <man/man_game.h>
 #include <sys/render.h>
 #include <sys/AI.h>
 #include <sprites/char.h>
@@ -16,7 +17,8 @@ const ent_t init_player = {
     0,-1,                                     //on ground and jumping
     spr_char_0,                             //sprite
     0,                                   //AI function
-    sys_ren_blend_first                  //render function
+    sys_ren_blend_first,                  //render function
+    man_ent_char_death
 };
 const ent_t init_sword = {
     e_t_dead | e_t_son | e_t_render,            //tipo
@@ -29,7 +31,8 @@ const ent_t init_sword = {
     0,-1,                                     //on ground and jumping
     spr_char_1,                             //sprite
     0,                                  //AI function
-    sys_ren_blend_first
+    sys_ren_blend_first,
+    man_ent_generic_death
 };
 const ent_t init_knife = {
     e_t_dead | e_t_son | e_t_render | e_t_physics,           //tipo
@@ -42,7 +45,8 @@ const ent_t init_knife = {
     0,-1,                                     //on ground and jumping
     spr_char_2,                             //sprite
     0,                                  //AI function
-    sys_ren_blend_first
+    sys_ren_blend_first,
+    man_ent_generic_death
 };
 /*character-----------------------------------------------------*/
 /*shoot-----------------------------------------------------*/
@@ -57,7 +61,8 @@ const ent_t init_shoot = {
     0,0,                                     //on ground and jumping
     spr_shooter_0,
     sys_AI_shoot,
-    sys_ren_blend_first
+    sys_ren_blend_first,
+    man_ent_generic_death
 };
 const ent_t init_shoot_son = {
     e_t_dead | e_t_son | e_t_physics | e_t_render,
@@ -70,7 +75,8 @@ const ent_t init_shoot_son = {
     0,-1,                                     //on ground and jumping
     spr_p_1,
     0,
-    sys_ren_blend_first
+    sys_ren_blend_first,
+    man_ent_generic_death
 };
 /*shoot-----------------------------------------------------*/
 
@@ -111,13 +117,14 @@ ent_t* man_ent_create_from_template(ent_t* template){
    cpct_memcpy(res, template, sizeof(ent_t));
    return res;
 }
-void man_ent_setdead(ent_t* dead_ent){
-   ent_t* de = dead_ent;
-   de->type |= e_t_dead;
-   sys_ren_kill(de);
+
+void man_ent_char_death(ent_t* dead_ent){
+   man_game_exit();
 }
-
-
+void man_ent_generic_death(ent_t* dead_ent){
+   dead_ent->type |= e_t_dead;
+   sys_ren_kill(dead_ent);
+}
 
 void man_ent_forall(Ptrf_v_ep fun){
    ent_t* res = ents;

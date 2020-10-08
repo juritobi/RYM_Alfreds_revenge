@@ -42,6 +42,7 @@ const lvl_t i_lvl1 = {
 };
 
 lvl_t* actual_level;
+u8 in_game;
 
 void wait(u8 n){
     do{
@@ -53,6 +54,7 @@ void wait(u8 n){
 void man_game_init(){
     actual_level = &i_lvl0;
     man_level_load(actual_level, 4,168);
+    in_game = 1;
 }
 
 void man_game_load_level(lvl_t* level_to_load){
@@ -79,11 +81,14 @@ void man_game_check_level_change(){
         player->y = 8;
         man_game_load_level(actual_level->right);
     }
-        
+}
+
+void man_game_exit(){
+    in_game=0;
 }
 
 void man_game_play(){
-    while (1){
+    while (in_game){
         sys_AI_update();
         sys_input_update();
         sys_col_update();

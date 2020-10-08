@@ -46,7 +46,7 @@ void sys_col_one(ent_t* e){
 void sys_col_ally_enemy(ent_t* ally, ent_t* enemy){
     if( !(ally->x+ally->w < enemy->x  ||  ally->x > enemy->x+enemy->w) ){
         if(!(ally->y+ally->h < enemy->y  ||  ally->y > enemy->y+enemy->y) ) {
-            man_ent_setdead(ally);
+            ally->death(ally);
         }
     }
 }
