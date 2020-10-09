@@ -18,6 +18,8 @@ const ent_t init_player = {
    man_ent_char_death,                                         //Ptrf_v_ep death;
    //SONS
    0,0,                                                        //u8 originalx, originaly;
+   //CHARACTERS
+   //5,5,0                                                       //u8 hp, mp, damage;
    //AI
    0,                                                          //Ptrf_v_ep act;
    0,0,                                                        //i8 prev_vx, prev_vy;
@@ -43,6 +45,8 @@ const ent_t init_sword = {
    man_ent_generic_death,                                       //Ptrf_v_ep death;
    //SONS
    4,0,                                                        //u8 originalx, originaly;
+   //CHARACTERS
+   //1,0,1                                                       //u8 hp, mp, damage;
    //AI
    0,                                                          //Ptrf_v_ep act;
    0,0,                                                        //i8 prev_vx, prev_vy;
@@ -68,6 +72,8 @@ const ent_t init_knife = {
    man_ent_generic_death,                                       //Ptrf_v_ep death;
    //SONS
    4,8,                                                        //u8 originalx, originaly;
+   //CHARACTERS
+   //1,0,1                                                       //u8 hp, mp, damage;
    //AI
    0,                                                          //Ptrf_v_ep act;
    0,0,                                                        //i8 prev_vx, prev_vy;
@@ -95,6 +101,8 @@ const ent_t init_shoot = {
    man_ent_generic_death,                                       //Ptrf_v_ep death;
    //SONS
    0,0,                                                        //u8 originalx, originaly;
+   //CHARACTERS
+   //1,0,1                                                       //u8 hp, mp, damage;
    //AI
    sys_AI_shoot,                                               //Ptrf_v_ep act;
    0,0,                                                        //i8 prev_vx, prev_vy;
@@ -120,6 +128,8 @@ const ent_t init_shoot_son = {
    man_ent_generic_death,                                      //Ptrf_v_ep death;
    //SONS
    -2,4,                                                       //u8 originalx, originaly;
+   //CHARACTERS
+   //1,0,1                                                       //u8 hp, mp, damage;
    //AI
    0,                                                          //Ptrf_v_ep act;
    0,0,                                                        //i8 prev_vx, prev_vy;
@@ -148,6 +158,8 @@ const ent_t init_zombi = {
    man_ent_generic_death,                                       //Ptrf_v_ep death;
    //SONS
    0,0,                                                        //u8 originalx, originaly;
+   //CHARACTERS
+   //1,0,1                                                       //u8 hp, mp, damage;
    //AI
    sys_AI_zombi,                                               //Ptrf_v_ep act;
    0,0,                                                        //i8 prev_vx, prev_vy;

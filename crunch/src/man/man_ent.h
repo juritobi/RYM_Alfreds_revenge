@@ -39,6 +39,8 @@ typedef struct et{
    Ptrf_v_ep death;
    //SONS
    u8 originalx, originaly;
+   //CHARACTERS
+   //u8 hp, mp, damage;
    //AI
    Ptrf_v_ep act;
    i8 prev_vx, prev_vy;
