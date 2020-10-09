@@ -6,106 +6,156 @@
 #include <sprites/shooter.h>
 #include <sprites/zombi.h>
 #include <sprites/proyectile.h>
+#include <sprites/sword.h>
 /*character-----------------------------------------------------*/
 const ent_t init_player = {
-    e_t_physics | e_t_render | e_t_input | e_t_col,  //tipo
-    col_t_ally,                           //tipo de colision cada entidad puede tener un solo tipo
-    0,0,                                  //x,y
-    0,0,                                  //prevx, prevy
-    0,0,                                  //originalx, originaly
-    0,0,                                  //memory_pos, prev_memory_pos
-    4,24,                                   //w,h
-    0,0,                                    //vx,vy
-    0,0,                                    //prev_vx,prev_vy
-    0,-1,                                     //on ground and jumping
-    spr_char_0,                             //sprite
-    0,                                   //AI function
-    sys_ren_block,                  //render function
-    man_ent_char_death
+   //generic
+   e_t_physics | e_t_render | e_t_input | e_t_col,             //u8 type;
+   0,0,                                                        //u8 x, y;
+   0,0,                                                        //u8 prevx, prevy;
+   4,24,                                                       //u8 w, h;
+   0,0,                                                        //i8 vx, vy;
+   man_ent_char_death,                                         //Ptrf_v_ep death;
+   //SONS
+   0,0,                                                        //u8 originalx, originaly;
+   //AI
+   0,                                                          //Ptrf_v_ep act;
+   0,0,                                                        //i8 prev_vx, prev_vy;
+   //Input
+   0,0,                                                        //i8 on_ground, jumping;        
+   //Collisions
+   col_t_ally,                                                 //u8 col_type;                  
+   //physics
+   //render
+   spr_char_0,                                                 //u8* sprite;                   
+   0,                                                          //u8* memory_pos;               
+   0,                                                          //u8* prev_memory_pos;          
+   sys_ren_block                                               //Ptrf_v_ep render; 
 };
 const ent_t init_sword = {
-    e_t_dead | e_t_son | e_t_render,            //tipo
-    col_t_ally_breaker,                           //tipo de colision
-    4,0,                                  //parent displacement for sons
-    4,0,                                    //prevx, prevy
-    4,0,                                    //originalx, originaly
-    0,0,                                  //memory_pos, prev_memory_pos
-    4,24,                                   //w,h
-    0,0,                                    //vx,vy
-    0,0,                                    //prev_vx,prev_vy
-    0,-1,                                     //on ground and jumping
-    spr_char_1,                             //sprite
-    0,                                  //AI function
-    sys_ren_blend_first,
-    man_ent_generic_death
+   //generic
+   e_t_dead|e_t_render,                                        //u8 type;
+   0,0,                                                        //u8 x, y;
+   0,0,                                                        //u8 prevx, prevy;
+   4,24,                                                       //u8 w, h;
+   0,0,                                                        //i8 vx, vy;
+   man_ent_generic_death,                                       //Ptrf_v_ep death;
+   //SONS
+   4,0,                                                        //u8 originalx, originaly;
+   //AI
+   0,                                                          //Ptrf_v_ep act;
+   0,0,                                                        //i8 prev_vx, prev_vy;
+   //Input
+   0,0,                                                         //i8 on_ground, jumping;        
+   //Collisions
+   col_t_ally_breaker,                                         //u8 col_type;                  
+   //physics
+   //render
+   spr_sword,                                                  //u8* sprite;                   
+   0,                                                          //u8* memory_pos;               
+   0,                                                          //u8* prev_memory_pos;          
+   sys_ren_blend_first                                         //Ptrf_v_ep render;
 };
 const ent_t init_knife = {
-    e_t_dead | e_t_son | e_t_render | e_t_physics,           //tipo
-    col_t_ally_breaker,                           //tipo de colision
-    4,8,                                  //parent displacement for sons
-    4,8,                                   //prevx, prevy
-    4,8,                                  //parent displacement for sons
-    0,0,                                  //memory_pos, prev_memory_pos
-    4,8,                                   //w,h
-    0,0,                                    //vx,vy
-    0,0,                                    //prev_vx,prev_vy
-    0,-1,                                     //on ground and jumping
-    spr_char_2,                             //sprite
-    0,                                  //AI function
-    sys_ren_block,
-    man_ent_generic_death
+   //generic
+   e_t_dead | e_t_render | e_t_physics | e_t_col,               //u8 type;
+   0,0,                                                        //u8 x, y;
+   0,0,                                                        //u8 prevx, prevy;
+   4,8,                                                        //u8 w, h;
+   1,0,                                                        //i8 vx, vy;
+   man_ent_generic_death,                                       //Ptrf_v_ep death;
+   //SONS
+   4,8,                                                        //u8 originalx, originaly;
+   //AI
+   0,                                                          //Ptrf_v_ep act;
+   0,0,                                                        //i8 prev_vx, prev_vy;
+   //Input
+   0,0,                                                         //i8 on_ground, jumping;        
+   //Collisions
+   col_t_ally_breaker,                                         //u8 col_type;                  
+   //physics
+   //render
+   spr_p_0,                                                //u8* sprite;                   
+   0,                                                          //u8* memory_pos;               
+   0,                                                          //u8* prev_memory_pos;          
+   sys_ren_block                                               //Ptrf_v_ep render;
 };
 /*character-----------------------------------------------------*/
 /*shoot-----------------------------------------------------*/
 const ent_t init_shoot = {
-    e_t_render | e_t_AI,
-    col_t_enemy,                           //tipo de colision
-    0,0,
-    0,0,    
-    0,0,                              
-    0,0,                                  //memory_pos, prev_memory_pos
-    4,16,
-    0,-1,
-    0,0,                                    //prev_vx,prev_vy
-    0,0,                                     //on ground and jumping
-    spr_shooter_0,
-    sys_AI_shoot,
-    sys_ren_block,
-    man_ent_generic_death
+   //generic
+   e_t_AI | e_t_render,                                         //u8 type;
+   0,0,                                                        //u8 x, y;
+   0,0,                                                        //u8 prevx, prevy;
+   4,16,                                                       //u8 w, h;
+   0,0,                                                        //i8 vx, vy;
+   man_ent_generic_death,                                       //Ptrf_v_ep death;
+   //SONS
+   0,0,                                                        //u8 originalx, originaly;
+   //AI
+   sys_AI_shoot,                                               //Ptrf_v_ep act;
+   0,0,                                                        //i8 prev_vx, prev_vy;
+   //Input
+   0,0,                                                         //i8 on_ground, jumping;        
+   //Collisions
+   col_t_enemy,                                                //u8 col_type;                  
+   //physics
+   //render
+   spr_shooter_0,                                                //u8* sprite;                   
+   0,                                                          //u8* memory_pos;               
+   0,                                                          //u8* prev_memory_pos;          
+   sys_ren_block                                               //Ptrf_v_ep render;
 };
 const ent_t init_shoot_son = {
-    e_t_dead | e_t_son | e_t_physics | e_t_render,
-    col_t_enemy_breaker,                           //tipo de colision
-    -2,4,
-    -2,4,
-    -2,4,
-    0,0,                                  //memory_pos, prev_memory_pos
-    4,8,
-    -1,0,
-    0,0,                                    //prev_vx,prev_vy
-    0,-1,                                     //on ground and jumping
-    spr_p_1,
-    0,
-    sys_ren_block,
-    man_ent_generic_death
+   //generic
+   e_t_dead | e_t_physics | e_t_render | e_t_col,              //u8 type;
+   0,0,                                                        //u8 x, y;
+   0,0,                                                        //u8 prevx, prevy;
+   4,8,                                                        //u8 w, h;
+   -1,0,                                                       //i8 vx, vy;
+   man_ent_generic_death,                                      //Ptrf_v_ep death;
+   //SONS
+   -2,4,                                                       //u8 originalx, originaly;
+   //AI
+   0,                                                          //Ptrf_v_ep act;
+   0,0,                                                        //i8 prev_vx, prev_vy;
+   //Input
+   0,0,                                                        //i8 on_ground, jumping;        
+   //Collisions
+   col_t_enemy_breaker,                                        //u8 col_type;                  
+   //physics
+   //render
+   spr_p_1,                                                    //u8* sprite;                   
+   0,                                                          //u8* memory_pos;               
+   0,                                                          //u8* prev_memory_pos;          
+   sys_ren_block                                               //Ptrf_v_ep render; 
 };
 /*shoot-----------------------------------------------------*/
 /*zombi-----------------------------------------------------*/
 const ent_t init_zombi = {
-    e_t_render | e_t_AI | e_t_col | e_t_physics,
-    col_t_enemy,                           //tipo de colision
-    0,0,
-    0,0,    
-    0,0,                              
-    0,0,                                  //memory_pos, prev_memory_pos
-    2,24,
-    0,0,                                   
-    0,0,                                    //prev_vx,prev_vy
-    0,0,                                   //on ground and jumping
-    spr_zombi_0,
-    sys_AI_zombi,
-    sys_ren_block,
-    man_ent_generic_death
+
+   //generic
+   e_t_render | e_t_AI | e_t_col | e_t_physics,                //u8 type;
+   0,0,                                                        //u8 x, y;
+   0,0,                                                        //u8 prevx, prevy;
+   2,24,                                                       //u8 w, h;
+   0,0,                                                        //i8 vx, vy;
+   man_ent_generic_death,                                       //Ptrf_v_ep death;
+   //SONS
+   0,0,                                                        //u8 originalx, originaly;
+   //AI
+   sys_AI_zombi,                                               //Ptrf_v_ep act;
+   0,0,                                                        //i8 prev_vx, prev_vy;
+   //Input
+   0,0,                                                         //i8 on_ground, jumping;        
+   //Collisions
+   col_t_enemy,                                                //u8 col_type;                  
+   //physics
+   //render
+   spr_zombi_0,                                                //u8* sprite;                   
+   0,                                                          //u8* memory_pos;               
+   0,                                                          //u8* prev_memory_pos;          
+   sys_ren_block                                               //Ptrf_v_ep render; 
 };
 /*zombi-----------------------------------------------------*/
 ent_t ents[20];

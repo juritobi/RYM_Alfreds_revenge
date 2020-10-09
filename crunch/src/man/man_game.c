@@ -19,7 +19,7 @@ const lvl_t i_lvl0 = {
     0,                  //bot
     0,                  //left
     {
-        {e_c_shoot, 70, 176},
+        {e_c_shoot, 45, 176},
         {e_c_zombi, 55, 16},
         {0, 0, 0},
         {0, 0, 0},
@@ -101,9 +101,6 @@ void man_game_exit(){
 
 void man_game_play(){
     while (in_game){
-
-        cpct_waitHalts(2);
-
         cpct_setBorder(HW_RED);
         man_ent_forall_type(man_ent_reset_pos,e_t_render);
         cpct_setBorder(HW_BLUE);
@@ -119,8 +116,6 @@ void man_game_play(){
         cpct_setBorder(HW_MAGENTA);
         man_ent_forall_type(sys_ren_get_pos, e_t_render);
         cpct_setBorder(HW_BLACK);
-        
-        
         
         wait_render_signal();
         cpct_setBorder(HW_GREEN);
