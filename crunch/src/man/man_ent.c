@@ -164,6 +164,7 @@ const ent_t init_zombi = {
    man_ent_generic_death,                                       //Ptrf_v_ep death;
    //SONS
    0,0,                                                        //u8 originalx, originaly;
+   0,0,                                                        //i8 originalvx, originalvy;
    //CHARACTERS
    1,0,1,                                                       //u8 hp, mp, damage;
    //AI
