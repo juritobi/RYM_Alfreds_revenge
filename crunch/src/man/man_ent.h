@@ -39,8 +39,9 @@ typedef struct et{
    Ptrf_v_ep death;
    //SONS
    u8 originalx, originaly;
+   i8 originalvx, originalvy;
    //CHARACTERS
-   //u8 hp, mp, damage;
+   u8 hp, mp, damage;
    //AI
    Ptrf_v_ep act;
    i8 prev_vx, prev_vy;
@@ -68,6 +69,7 @@ void man_ent_create_class(u8 type, u8 x, u8 y);
 
 ent_t* man_ent_create_from_template(ent_t* template);
 void man_ent_resurrect(ent_t* e, u8 displacement);
+void man_ent_move(ent_t* e, u8 displacement);
 
 void man_ent_forall(Ptrf_v_ep fun);
 void man_ent_forall_type(Ptrf_v_ep fun, u8 types);

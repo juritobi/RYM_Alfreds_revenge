@@ -3,6 +3,7 @@
 #include <sys/render.h>
 #include <sys/AI.h>
 #include <sprites/char.h>
+#include <sprites/sword.h>
 #include <sprites/shooter.h>
 #include <sprites/zombi.h>
 #include <sprites/proyectile.h>
@@ -18,8 +19,9 @@ const ent_t init_player = {
    man_ent_char_death,                                         //Ptrf_v_ep death;
    //SONS
    0,0,                                                        //u8 originalx, originaly;
+   0,0,                                                        //i8 originalvx, originalvy;
    //CHARACTERS
-   //5,5,0                                                       //u8 hp, mp, damage;
+   5,5,0,                                                       //u8 hp, mp, damage;
    //AI
    0,                                                          //Ptrf_v_ep act;
    0,0,                                                        //i8 prev_vx, prev_vy;
@@ -45,8 +47,9 @@ const ent_t init_sword = {
    man_ent_generic_death,                                       //Ptrf_v_ep death;
    //SONS
    4,0,                                                        //u8 originalx, originaly;
+   0,0,                                                        //i8 originalvx, originalvy;
    //CHARACTERS
-   //1,0,1                                                       //u8 hp, mp, damage;
+   1,0,1,                                                       //u8 hp, mp, damage;
    //AI
    0,                                                          //Ptrf_v_ep act;
    0,0,                                                        //i8 prev_vx, prev_vy;
@@ -72,8 +75,9 @@ const ent_t init_knife = {
    man_ent_generic_death,                                       //Ptrf_v_ep death;
    //SONS
    4,8,                                                        //u8 originalx, originaly;
+   1,0,                                                        //i8 originalvx, originalvy;
    //CHARACTERS
-   //1,0,1                                                       //u8 hp, mp, damage;
+   1,0,1,                                                       //u8 hp, mp, damage;
    //AI
    0,                                                          //Ptrf_v_ep act;
    0,0,                                                        //i8 prev_vx, prev_vy;
@@ -101,8 +105,9 @@ const ent_t init_shoot = {
    man_ent_generic_death,                                       //Ptrf_v_ep death;
    //SONS
    0,0,                                                        //u8 originalx, originaly;
+   0,0,                                                        //i8 originalvx, originalvy;
    //CHARACTERS
-   //1,0,1                                                       //u8 hp, mp, damage;
+   1,0,1,                                                       //u8 hp, mp, damage;
    //AI
    sys_AI_shoot,                                               //Ptrf_v_ep act;
    0,0,                                                        //i8 prev_vx, prev_vy;
@@ -128,8 +133,9 @@ const ent_t init_shoot_son = {
    man_ent_generic_death,                                      //Ptrf_v_ep death;
    //SONS
    -2,4,                                                       //u8 originalx, originaly;
+   -1,0,                                                        //i8 originalvx, originalvy;
    //CHARACTERS
-   //1,0,1                                                       //u8 hp, mp, damage;
+   1,0,1,                                                       //u8 hp, mp, damage;
    //AI
    0,                                                          //Ptrf_v_ep act;
    0,0,                                                        //i8 prev_vx, prev_vy;
@@ -159,7 +165,7 @@ const ent_t init_zombi = {
    //SONS
    0,0,                                                        //u8 originalx, originaly;
    //CHARACTERS
-   //1,0,1                                                       //u8 hp, mp, damage;
+   1,0,1,                                                       //u8 hp, mp, damage;
    //AI
    sys_AI_zombi,                                               //Ptrf_v_ep act;
    0,0,                                                        //i8 prev_vx, prev_vy;
@@ -268,6 +274,16 @@ void man_ent_resurrect(ent_t* e, u8 displacement){
    e_to_res->type &= ~e_t_dead;
    e_to_res->x = e->x + e_to_res->originalx;
    e_to_res->y = e->y + e_to_res->originaly;
+   e_to_res->vx = e_to_res->originalvx;
+   e_to_res->vy = e_to_res->originalvy;
+   
+}
+
+void man_ent_move(ent_t* e, u8 displacement){
+   ent_t* e_to_move = e + displacement;
+   e_to_move->x = e->x + e_to_move->originalx;
+   e_to_move->y = e->y + e_to_move->originaly;
+   
 }
 ent_t* man_ent_get_char(){
    return &ents[0];
