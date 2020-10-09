@@ -51,6 +51,7 @@ $(eval $(call IMG2SP, CONVERT         , assets/char.png , 16, 24, spr_char))
 $(eval $(call IMG2SP, CONVERT         , assets/shooter.png , 16, 16, spr_shooter))
 $(eval $(call IMG2SP, CONVERT         , assets/zombi.png , 8, 24, spr_zombi))
 $(eval $(call IMG2SP, CONVERT         , assets/proyectile.png , 16, 8, spr_p))
+$(eval $(call IMG2SP, CONVERT         , assets/sword.png , 16, 24, spr_sword))
 
 $(eval $(call IMG2SP, SET_IMG_FORMAT  , zgtiles            ))
 $(eval $(call IMG2SP, CONVERT         , assets/tileset.png , 16, 8, tileset))
