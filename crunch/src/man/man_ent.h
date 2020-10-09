@@ -34,7 +34,9 @@ typedef struct et{
    u8 col_type;
    u8 x, y;
    u8 prevx, prevy;
-   u8 originalx, originaly; ////reusin
+   u8 originalx, originaly;
+   u8* memory_pos;
+   u8* prev_memory_pos; 
    u8 w, h;
    i8 vx, vy;
    i8 prev_vx, prev_vy;
@@ -61,6 +63,8 @@ void man_ent_forall(Ptrf_v_ep fun);
 void man_ent_forall_type(Ptrf_v_ep fun, u8 types);
 
 void man_ent_forall_col_type(Ptrf_v_epep fun, u8 first_type, u8 second_type);
+
+void man_ent_reset_pos(ent_t* dead_ent);
 
 void man_ent_char_death(ent_t* dead_ent);
 void man_ent_generic_death(ent_t* dead_ent);

@@ -13,13 +13,14 @@ const ent_t init_player = {
     0,0,                                  //x,y
     0,0,                                  //prevx, prevy
     0,0,                                  //originalx, originaly
+    0,0,                                  //memory_pos, prev_memory_pos
     4,24,                                   //w,h
     0,0,                                    //vx,vy
     0,0,                                    //prev_vx,prev_vy
     0,-1,                                     //on ground and jumping
     spr_char_0,                             //sprite
     0,                                   //AI function
-    sys_ren_blend_first,                  //render function
+    sys_ren_block,                  //render function
     man_ent_char_death
 };
 const ent_t init_sword = {
@@ -28,6 +29,7 @@ const ent_t init_sword = {
     4,0,                                  //parent displacement for sons
     4,0,                                    //prevx, prevy
     4,0,                                    //originalx, originaly
+    0,0,                                  //memory_pos, prev_memory_pos
     4,24,                                   //w,h
     0,0,                                    //vx,vy
     0,0,                                    //prev_vx,prev_vy
@@ -43,13 +45,14 @@ const ent_t init_knife = {
     4,8,                                  //parent displacement for sons
     4,8,                                   //prevx, prevy
     4,8,                                  //parent displacement for sons
+    0,0,                                  //memory_pos, prev_memory_pos
     4,8,                                   //w,h
     0,0,                                    //vx,vy
     0,0,                                    //prev_vx,prev_vy
     0,-1,                                     //on ground and jumping
     spr_char_2,                             //sprite
     0,                                  //AI function
-    sys_ren_blend_first,
+    sys_ren_block,
     man_ent_generic_death
 };
 /*character-----------------------------------------------------*/
@@ -60,13 +63,14 @@ const ent_t init_shoot = {
     0,0,
     0,0,    
     0,0,                              
+    0,0,                                  //memory_pos, prev_memory_pos
     4,16,
     0,-1,
     0,0,                                    //prev_vx,prev_vy
     0,0,                                     //on ground and jumping
     spr_shooter_0,
     sys_AI_shoot,
-    sys_ren_blend_first,
+    sys_ren_block,
     man_ent_generic_death
 };
 const ent_t init_shoot_son = {
@@ -75,13 +79,14 @@ const ent_t init_shoot_son = {
     -2,4,
     -2,4,
     -2,4,
+    0,0,                                  //memory_pos, prev_memory_pos
     4,8,
     -1,0,
     0,0,                                    //prev_vx,prev_vy
     0,-1,                                     //on ground and jumping
     spr_p_1,
     0,
-    sys_ren_blend_first,
+    sys_ren_block,
     man_ent_generic_death
 };
 /*shoot-----------------------------------------------------*/
@@ -92,16 +97,17 @@ const ent_t init_zombi = {
     0,0,
     0,0,    
     0,0,                              
+    0,0,                                  //memory_pos, prev_memory_pos
     2,24,
     0,0,                                   
     0,0,                                    //prev_vx,prev_vy
     0,0,                                   //on ground and jumping
     spr_zombi_0,
     sys_AI_zombi,
-    sys_ren_blend_first,
+    sys_ren_block,
     man_ent_generic_death
 };
-
+/*zombi-----------------------------------------------------*/
 ent_t ents[20];
 u8 invalid_at_end_of_ents;
 ent_t*  next_free_ent;
@@ -109,6 +115,11 @@ ent_t*  next_free_ent;
 void man_ent_init(){
    next_free_ent = ents;
    cpct_memset (ents, e_t_invalid, sizeof(ents)+1);
+}
+
+void man_ent_reset_pos(ent_t* e){
+   e->prevx = e->x;
+   e->prevy = e->y;
 }
 
 ent_t* man_ent_create(){

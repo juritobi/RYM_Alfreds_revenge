@@ -6,8 +6,6 @@ const i8 jumptable[] = {-2, -2, -2, -2, -2, 0, 0};
 void sys_input_one(ent_t* ent){
     if (ent->type & e_t_input)
     {
-        cpct_scanKeyboard_f();
-        
         ent->vx = 0;
         ent->vy = 8;
 

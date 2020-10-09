@@ -55,6 +55,7 @@ void man_game_init(){
     actual_level = &i_lvl0;
     man_level_load(actual_level, 4,168);
     in_game = 1;
+    
 }
 
 void man_game_load_level(lvl_t* level_to_load){
@@ -89,12 +90,31 @@ void man_game_exit(){
 
 void man_game_play(){
     while (in_game){
+        
+        cpct_waitHalts(2);
+        //cpct_setBorder(HW_RED);
+        man_ent_forall_type(man_ent_reset_pos,e_t_render);
+        //cpct_setBorder(HW_BLUE);
         sys_AI_update();
+        //cpct_setBorder(HW_WHITE);
         sys_input_update();
+        //cpct_setBorder(HW_CYAN);
         sys_col_update();
+        //cpct_setBorder(HW_PINK);
         sys_phy_update();
+        //cpct_setBorder(HW_YELLOW);
         man_game_check_level_change();
+        //cpct_setBorder(HW_MAGENTA);
+        man_ent_forall_type(sys_ren_get_pos, e_t_render);
+
+        
+        
+        //cpct_setBorder(HW_GREEN);
+
         sys_ren_update();
-        wait(1);
+        //cpct_setBorder(HW_BLACK);
+        cpct_waitVSYNC();
+        
+       
     }
 }
