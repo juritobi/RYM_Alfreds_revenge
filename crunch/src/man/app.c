@@ -3,28 +3,29 @@
 #include <sprites/g_palette.h>
 
 void interrupt_1(){
-    cpct_setBorder(HW_RED);
+    //cpct_setBorder(HW_RED);
     cpct_scanKeyboard();
     cpct_setInterruptHandler(interrupt_2);
 }
 void interrupt_2(){
-    cpct_setBorder(HW_GREEN);
+    //cpct_setBorder(HW_GREEN);
     cpct_setInterruptHandler(interrupt_3);
 }
 void interrupt_3(){
-    cpct_setBorder(HW_CYAN);
+    //cpct_setBorder(HW_CYAN);
     cpct_setInterruptHandler(interrupt_4);
 }
 void interrupt_4(){
-    cpct_setBorder(HW_BLACK);
+    //cpct_setBorder(HW_BLACK);
     cpct_setInterruptHandler(interrupt_5);
 }
 void interrupt_5(){
-    cpct_setBorder(HW_WHITE);
+    //cpct_setBorder(HW_WHITE);
     cpct_setInterruptHandler(interrupt_6);
 }
 void interrupt_6(){
-    cpct_setBorder(HW_YELLOW);
+    //cpct_setBorder(HW_YELLOW);
+    activate_render_signal();
     cpct_setInterruptHandler(interrupt_1);
 }
 

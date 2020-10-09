@@ -43,19 +43,24 @@ const lvl_t i_lvl1 = {
 
 lvl_t* actual_level;
 u8 in_game;
+u8 render_signal;
 
-void wait(u8 n){
-    do{
-        cpct_waitHalts(2);
-        cpct_waitVSYNC();
-    }while (--n);
+void activate_render_signal(){
+    render_signal=1;
 }
-
+void wait_render_signal(){
+    while(1){
+        if(render_signal){
+            render_signal=0;
+            break;
+        }
+    }
+}
 void man_game_init(){
     actual_level = &i_lvl0;
     man_level_load(actual_level, 4,168);
     in_game = 1;
-    
+    render_signal=0;
 }
 
 void man_game_load_level(lvl_t* level_to_load){
@@ -90,31 +95,27 @@ void man_game_exit(){
 
 void man_game_play(){
     while (in_game){
-        
-        cpct_waitHalts(2);
-        //cpct_setBorder(HW_RED);
+
+        cpct_setBorder(HW_RED);
         man_ent_forall_type(man_ent_reset_pos,e_t_render);
-        //cpct_setBorder(HW_BLUE);
+        cpct_setBorder(HW_BLUE);
         sys_AI_update();
-        //cpct_setBorder(HW_WHITE);
+        cpct_setBorder(HW_WHITE);
         sys_input_update();
-        //cpct_setBorder(HW_CYAN);
+        cpct_setBorder(HW_CYAN);
         sys_col_update();
-        //cpct_setBorder(HW_PINK);
+        cpct_setBorder(HW_PINK);
         sys_phy_update();
-        //cpct_setBorder(HW_YELLOW);
+        cpct_setBorder(HW_YELLOW);
         man_game_check_level_change();
-        //cpct_setBorder(HW_MAGENTA);
+        cpct_setBorder(HW_MAGENTA);
         man_ent_forall_type(sys_ren_get_pos, e_t_render);
-
+        cpct_setBorder(HW_BLACK);
         
         
-        //cpct_setBorder(HW_GREEN);
-
+        
+        wait_render_signal();
+        cpct_setBorder(HW_GREEN);
         sys_ren_update();
-        //cpct_setBorder(HW_BLACK);
-        cpct_waitVSYNC();
-        
-       
     }
 }
