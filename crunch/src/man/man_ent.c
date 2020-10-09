@@ -1,7 +1,81 @@
 #include "man_ent.h"
-#include "sys/render.h"
+#include <sys/render.h>
+#include <sys/AI.h>
+#include <sprites/char.h>
+#include <sprites/sword.h>
+#include <sprites/shooter.h>
+#include <sprites/proyectile.h>
+/*character-----------------------------------------------------*/
+const ent_t init_player = {
+    e_t_physics | e_t_render | e_t_input | e_t_col,  //tipo
+    0,0,                                  //x,y
+    0,0,                                  //prevx, prevy
+    0,0,                                  //originalx, originaly
+    4,24,                                   //w,h
+    0,0,                                    //vx,vy
+    0,0,                                    //originalvx, originalvy
+    0,-1,                                     //on ground and jumping
+    spr_char_0,                             //sprite
+    0,                                   //AI function
+    sys_ren_blend_first                  //render function
+};
+const ent_t init_sword = {
+    e_t_dead | e_t_son | e_t_render,            //tipo
+    4,0,                                  //parent displacement for sons
+    4,0,                                    //prevx, prevy
+    4,0,                                    //originalx, originaly
+    4,24,                                   //w,h
+    0,0,                                    //vx,vy
+    0,0,                                    //originalvx, originalvy
+    0,-1,                                     //on ground and jumping
+    spr_sword,                             //sprite
+    0,                                  //AI function
+    sys_ren_blend_first
+};
+const ent_t init_knife = {
+    e_t_dead | e_t_son | e_t_render | e_t_physics | e_t_col,           //tipo
+    4,8,                                  //parent displacement for sons
+    4,8,                                   //prevx, prevy
+    4,8,                                  //parent displacement for sons
+    4,8,                                   //w,h
+    0,0,                                    //vx,vy
+    1,0,                                    //originalvx, originalvy
+    0,-1,                                     //on ground and jumping
+    spr_char_2,                             //sprite
+    0,                                  //AI function
+    sys_ren_blend_first
+};
+/*character-----------------------------------------------------*/
+/*shoot-----------------------------------------------------*/
+const ent_t init_shoot = {
+    e_t_render | e_t_AI,
+    0,0,
+    0,0,    
+    0,0,                              
+    4,16,
+    0,-1,
+    -1,0,                                    //originalvx, originalvy
+    0,0,                                     //on ground and jumping
+    spr_shooter_0,
+    sys_AI_shoot,
+    sys_ren_blend_first
+};
+const ent_t init_shoot_son = {
+    e_t_dead | e_t_son | e_t_physics | e_t_render,
+    -2,4,
+    -2,4,
+    -2,4,
+    4,8,
+    -1,0,
+    -1,0,                                    //originalvx, originalvy
+    0,-1,                                     //on ground and jumping
+    spr_p_1,
+    0,
+    sys_ren_blend_first
+};
+/*shoot-----------------------------------------------------*/
 
-ent_t ents[10];
+ent_t ents[20];
 u8 invalid_at_end_of_ents;
 ent_t*  next_free_ent;
 
@@ -9,15 +83,30 @@ void man_ent_init(){
    next_free_ent = ents;
    cpct_memset (ents, e_t_invalid, sizeof(ents)+1);
 }
-void man_ent_update(){
-}
-
 
 ent_t* man_ent_create(){
    ent_t* res = next_free_ent;
    next_free_ent = res + 1;
    return res;
 }
+//tipo tiene en los 2 primeros bit el numero de entidades que crea y en los siguientes la entidad en la que empieza a crear
+//la inicializacion de datos es para setear en ents el numro de entidades y class_main y class_init el puntero a la primera entidad que tiene que crear
+//luego las crea en bucle y cambia la posicion de la entidad principal que sera siempre la primera de las 3
+void man_ent_create_class(u8 type, u8 x, u8 y){
+   u8 class_ents = (type & 0b11000000);
+   ent_t* class_init = &init_player;
+   class_init += (type & 0b00111111);
+   class_ents = class_ents >> 6;
+
+   while(class_ents){
+      ent_t* ent_in_class = man_ent_create_from_template(class_init);
+      ent_in_class->x = x;
+      ent_in_class->y = y;
+      class_init++;
+      class_ents--;
+   }
+}
+
 ent_t* man_ent_create_from_template(ent_t* template){
    ent_t* res = man_ent_create();
    cpct_memcpy(res, template, sizeof(ent_t));
@@ -58,4 +147,15 @@ void man_ent_resurrect(ent_t* e, u8 displacement){
    e_to_res->vx = e_to_res->originalvx;
    e_to_res->vy = e_to_res->originalvy;
    
+}
+
+void man_ent_move(ent_t* e, u8 displacement){
+   ent_t* e_to_move = e + displacement;
+   e_to_move->x = e->x + e_to_move->originalx;
+   e_to_move->y = e->y + e_to_move->originaly;
+   
+}
+
+ent_t* man_ent_get_char(){
+   return &ents[0];
 }

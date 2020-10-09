@@ -1,5 +1,6 @@
 #include "physics.h"
 #include <man/man_ent.h>
+#include <man/man_game.h>
 #include <man/level.h>
 #include <constants.h>
 
@@ -52,8 +53,9 @@ void sys_col_one(ent_t* e){
     
 }
 
+
 void sys_col_update(){
-    man_ent_forall_type(sys_col_one, e_t_col);
+    man_ent_forall_type(sys_col_one, e_t_col); //colisiones con tiles
 }
 
 /*
