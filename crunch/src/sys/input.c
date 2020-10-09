@@ -12,8 +12,8 @@ const i8 swordDuration = 10;
 const i8 jumpCD = 10;
 i8 jumpCont = 10;
 
-const i8 PiumPiumCD  = 10;
-i8 PiumPiumCont = 10;
+const i8 PiumPiumCD  = 25;
+i8 PiumPiumCont = 25;
 
 void sys_input_one(ent_t* ent){
     
