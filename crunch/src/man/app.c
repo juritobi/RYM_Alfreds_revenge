@@ -5,7 +5,7 @@ void man_app_init(){
 
     cpct_clearScreen(0x0);
     cpct_setDrawCharM1(3, 0);
-    cpct_drawStringM1("press any key to start", CPCT_VMEM_START+500);
+    cpct_drawStringM1("press any key to start", CPCT_VMEM_START/*+500*/);
 }
 
 void man_app_update(){

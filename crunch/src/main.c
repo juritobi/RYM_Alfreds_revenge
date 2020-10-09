@@ -5,6 +5,7 @@
 void main(void) {
 
     cpct_disableFirmware();
+    //cpct_setVideoMode(0);
     cpct_setBorder(HW_BLACK);
     cpct_setPalette(g_palette,4);
 
