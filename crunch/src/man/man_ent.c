@@ -1,79 +1,107 @@
 #include "man_ent.h"
+#include <man/man_game.h>
 #include <sys/render.h>
 #include <sys/AI.h>
 #include <sprites/char.h>
 #include <sprites/sword.h>
 #include <sprites/shooter.h>
+#include <sprites/zombi.h>
 #include <sprites/proyectile.h>
 /*character-----------------------------------------------------*/
 const ent_t init_player = {
     e_t_physics | e_t_render | e_t_input | e_t_col,  //tipo
+    col_t_ally,                           //tipo de colision cada entidad puede tener un solo tipo
     0,0,                                  //x,y
     0,0,                                  //prevx, prevy
     0,0,                                  //originalx, originaly
     4,24,                                   //w,h
     0,0,                                    //vx,vy
-    0,0,                                    //originalvx, originalvy
+    0,0,                                    //prev_vx,prev_vy
     0,-1,                                     //on ground and jumping
     spr_char_0,                             //sprite
     0,                                   //AI function
-    sys_ren_blend_first                  //render function
+    sys_ren_blend_first,                  //render function
+    man_ent_char_death
 };
 const ent_t init_sword = {
     e_t_dead | e_t_son | e_t_render,            //tipo
+    col_t_ally_breaker,                           //tipo de colision
     4,0,                                  //parent displacement for sons
     4,0,                                    //prevx, prevy
     4,0,                                    //originalx, originaly
     4,24,                                   //w,h
     0,0,                                    //vx,vy
-    0,0,                                    //originalvx, originalvy
+    0,0,                                    //prev_vx,prev_vy
     0,-1,                                     //on ground and jumping
     spr_sword,                             //sprite
     0,                                  //AI function
-    sys_ren_blend_first
+    sys_ren_blend_first,
+    man_ent_generic_death
 };
 const ent_t init_knife = {
-    e_t_dead | e_t_son | e_t_render | e_t_physics | e_t_col,           //tipo
+    e_t_dead | e_t_son | e_t_render | e_t_physics,           //tipo
+    col_t_ally_breaker,                           //tipo de colision
     4,8,                                  //parent displacement for sons
     4,8,                                   //prevx, prevy
     4,8,                                  //parent displacement for sons
     4,8,                                   //w,h
     0,0,                                    //vx,vy
-    1,0,                                    //originalvx, originalvy
+    0,0,                                    //prev_vx,prev_vy
     0,-1,                                     //on ground and jumping
     spr_char_2,                             //sprite
     0,                                  //AI function
-    sys_ren_blend_first
+    sys_ren_blend_first,
+    man_ent_generic_death
 };
 /*character-----------------------------------------------------*/
 /*shoot-----------------------------------------------------*/
 const ent_t init_shoot = {
     e_t_render | e_t_AI,
+    col_t_enemy,                           //tipo de colision
     0,0,
     0,0,    
     0,0,                              
     4,16,
     0,-1,
-    -1,0,                                    //originalvx, originalvy
+    0,0,                                    //prev_vx,prev_vy
     0,0,                                     //on ground and jumping
     spr_shooter_0,
     sys_AI_shoot,
-    sys_ren_blend_first
+    sys_ren_blend_first,
+    man_ent_generic_death
 };
 const ent_t init_shoot_son = {
     e_t_dead | e_t_son | e_t_physics | e_t_render,
+    col_t_enemy_breaker,                           //tipo de colision
     -2,4,
     -2,4,
     -2,4,
     4,8,
     -1,0,
-    -1,0,                                    //originalvx, originalvy
+    0,0,                                    //prev_vx,prev_vy
     0,-1,                                     //on ground and jumping
     spr_p_1,
     0,
-    sys_ren_blend_first
+    sys_ren_blend_first,
+    man_ent_generic_death
 };
 /*shoot-----------------------------------------------------*/
+/*zombi-----------------------------------------------------*/
+const ent_t init_zombi = {
+    e_t_render | e_t_AI | e_t_col | e_t_physics,
+    col_t_enemy,                           //tipo de colision
+    0,0,
+    0,0,    
+    0,0,                              
+    2,24,
+    0,0,                                   
+    0,0,                                    //prev_vx,prev_vy
+    0,0,                                   //on ground and jumping
+    spr_zombi_0,
+    sys_AI_zombi,
+    sys_ren_blend_first,
+    man_ent_generic_death
+};
 
 ent_t ents[20];
 u8 invalid_at_end_of_ents;
@@ -112,12 +140,14 @@ ent_t* man_ent_create_from_template(ent_t* template){
    cpct_memcpy(res, template, sizeof(ent_t));
    return res;
 }
-void man_ent_setdead(ent_t* dead_ent){
-   ent_t* de = dead_ent;
-   de->type |= e_t_dead;
+
+void man_ent_char_death(ent_t* dead_ent){
+   man_game_exit();
 }
-
-
+void man_ent_generic_death(ent_t* dead_ent){
+   dead_ent->type |= e_t_dead;
+   sys_ren_kill(dead_ent);
+}
 
 void man_ent_forall(Ptrf_v_ep fun){
    ent_t* res = ents;
@@ -137,6 +167,23 @@ void man_ent_forall_type( Ptrf_v_ep fun, u8 types){
       ++res;
    }
 }
+void man_ent_forall_col_type( Ptrf_v_epep fun, u8 first_type, u8 second_type){
+   ent_t* ents1 = ents;
+   ent_t* ents2 = ents;
+   while(ents1->type != e_t_invalid){
+      if((!(ents1->type & e_t_dead)) && (ents1->col_type & first_type)){
+
+         while( ents2->type != e_t_invalid ){
+            if(!(ents2->type & e_t_dead) && (ents2->col_type & second_type)) {
+               fun(ents1, ents2);
+            }
+            ++ents2;
+         }
+
+      }
+      ++ents1;
+   }
+}
 
 
 void man_ent_resurrect(ent_t* e, u8 displacement){
@@ -144,8 +191,8 @@ void man_ent_resurrect(ent_t* e, u8 displacement){
    e_to_res->type &= ~e_t_dead;
    e_to_res->x = e->x + e_to_res->originalx;
    e_to_res->y = e->y + e_to_res->originaly;
-   e_to_res->vx = e_to_res->originalvx;
-   e_to_res->vy = e_to_res->originalvy;
+   e_to_res->vx = e_to_res->prev_vx;
+   e_to_res->vy = e_to_res->prev_vy;
    
 }
 
@@ -155,7 +202,6 @@ void man_ent_move(ent_t* e, u8 displacement){
    e_to_move->y = e->y + e_to_move->originaly;
    
 }
-
 ent_t* man_ent_get_char(){
    return &ents[0];
 }

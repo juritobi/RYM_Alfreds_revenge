@@ -53,9 +53,17 @@ void sys_col_one(ent_t* e){
     
 }
 
+void sys_col_ally_enemy(ent_t* ally, ent_t* enemy){
+    if( !(ally->x+ally->w <= enemy->x  ||  ally->x >= enemy->x+enemy->w) ){
+        if(!(ally->y+ally->h <= enemy->y  ||  ally->y >= enemy->y+enemy->h) ) {
+            ally->death(ally);
+        }
+    }
+}
 
 void sys_col_update(){
     man_ent_forall_type(sys_col_one, e_t_col); //colisiones con tiles
+    man_ent_forall_col_type(sys_col_ally_enemy, col_t_ally, col_t_enemy|col_t_enemy_breaker);
 }
 
 /*
