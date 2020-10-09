@@ -37,6 +37,7 @@ typedef struct et{
    u8 originalx, originaly; ////reusin
    u8 w, h;
    i8 vx, vy;
+   i8 originalvx, originalvy;
    i8 prev_vx, prev_vy;
    i8 on_ground, jumping;    //jump stage
    u8* sprite;

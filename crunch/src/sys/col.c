@@ -28,7 +28,7 @@ void sys_col_one(ent_t* e){
         }
        
     }
-    if(e->type & e_t_input){ 
+    
         array_pos = up_tile*tilemap_W + tile_x;
         if(tile_y != (e->y-1)/8){//si voy a cambiar de tile
             if(e->vy<0){
@@ -49,7 +49,7 @@ void sys_col_one(ent_t* e){
                 }
             }
         }
-    }
+    
     
 }
 

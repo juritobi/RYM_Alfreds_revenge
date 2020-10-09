@@ -16,6 +16,7 @@ const ent_t init_player = {
     0,0,                                  //originalx, originaly
     4,24,                                   //w,h
     0,0,                                    //vx,vy
+    0,0,
     0,0,                                    //prev_vx,prev_vy
     0,-1,                                     //on ground and jumping
     spr_char_0,                             //sprite
@@ -31,6 +32,7 @@ const ent_t init_sword = {
     4,0,                                    //originalx, originaly
     4,24,                                   //w,h
     0,0,                                    //vx,vy
+    0,0,
     0,0,                                    //prev_vx,prev_vy
     0,-1,                                     //on ground and jumping
     spr_sword,                             //sprite
@@ -46,9 +48,10 @@ const ent_t init_knife = {
     4,8,                                  //parent displacement for sons
     4,8,                                   //w,h
     0,0,                                    //vx,vy
+    1,0,
     0,0,                                    //prev_vx,prev_vy
     0,-1,                                     //on ground and jumping
-    spr_char_2,                             //sprite
+    spr_p_0,                             //sprite
     0,                                  //AI function
     sys_ren_blend_first,
     man_ent_generic_death
@@ -63,6 +66,7 @@ const ent_t init_shoot = {
     0,0,                              
     4,16,
     0,-1,
+    0,0,
     0,0,                                    //prev_vx,prev_vy
     0,0,                                     //on ground and jumping
     spr_shooter_0,
@@ -78,6 +82,7 @@ const ent_t init_shoot_son = {
     -2,4,
     4,8,
     -1,0,
+    0,0,
     0,0,                                    //prev_vx,prev_vy
     0,-1,                                     //on ground and jumping
     spr_p_1,
@@ -95,6 +100,7 @@ const ent_t init_zombi = {
     0,0,                              
     2,24,
     0,0,                                   
+    0,0,
     0,0,                                    //prev_vx,prev_vy
     0,0,                                   //on ground and jumping
     spr_zombi_0,
@@ -191,8 +197,8 @@ void man_ent_resurrect(ent_t* e, u8 displacement){
    e_to_res->type &= ~e_t_dead;
    e_to_res->x = e->x + e_to_res->originalx;
    e_to_res->y = e->y + e_to_res->originaly;
-   e_to_res->vx = e_to_res->prev_vx;
-   e_to_res->vy = e_to_res->prev_vy;
+   e_to_res->vx = e_to_res->originalvx;
+   e_to_res->vy = e_to_res->originalvy;
    
 }
 
