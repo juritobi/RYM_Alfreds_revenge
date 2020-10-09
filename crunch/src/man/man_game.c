@@ -114,12 +114,12 @@ void man_game_play(){
         cpct_setBorder(HW_YELLOW);
         man_game_check_level_change();
         cpct_setBorder(HW_MAGENTA);
-        man_ent_forall_type(sys_ren_get_pos, e_t_render);
+        sys_ren_setup();
         cpct_setBorder(HW_BLACK);
         
         wait_render_signal();
         cpct_setBorder(HW_GREEN);
-        sys_ren_update();
+        sys_ren_render();
         cpct_setBorder(HW_BLACK);
     }
 }

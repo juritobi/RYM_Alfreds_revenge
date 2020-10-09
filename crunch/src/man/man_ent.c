@@ -29,8 +29,9 @@ const ent_t init_player = {
    //render
    spr_char_0,                                                 //u8* sprite;                   
    0,                                                          //u8* memory_pos;               
-   0,                                                          //u8* prev_memory_pos;          
-   sys_ren_block                                               //Ptrf_v_ep render; 
+   0,                                                          //u8* prev_memory_pos;    
+   sys_ren_block_setup,                                        //Ptrf_v_ep render_mode;
+   sys_ren_no_draw                                             //Ptrf_v_ep render; 
 };
 const ent_t init_sword = {
    //generic
@@ -53,8 +54,9 @@ const ent_t init_sword = {
    //render
    spr_sword,                                                  //u8* sprite;                   
    0,                                                          //u8* memory_pos;               
-   0,                                                          //u8* prev_memory_pos;          
-   sys_ren_blend_first                                         //Ptrf_v_ep render;
+   0,                                                          //u8* prev_memory_pos;
+   sys_ren_blend_setup_first,                                  //Ptrf_v_ep render_mode;
+   sys_ren_no_draw                                             //Ptrf_v_ep render;
 };
 const ent_t init_knife = {
    //generic
@@ -77,8 +79,9 @@ const ent_t init_knife = {
    //render
    spr_p_0,                                                //u8* sprite;                   
    0,                                                          //u8* memory_pos;               
-   0,                                                          //u8* prev_memory_pos;          
-   sys_ren_block                                               //Ptrf_v_ep render;
+   0,                                                          //u8* prev_memory_pos; 
+   sys_ren_block_setup,                                        //Ptrf_v_ep render_mode;
+   sys_ren_no_draw                                             //Ptrf_v_ep render;
 };
 /*character-----------------------------------------------------*/
 /*shoot-----------------------------------------------------*/
@@ -103,8 +106,9 @@ const ent_t init_shoot = {
    //render
    spr_shooter_0,                                                //u8* sprite;                   
    0,                                                          //u8* memory_pos;               
-   0,                                                          //u8* prev_memory_pos;          
-   sys_ren_block                                               //Ptrf_v_ep render;
+   0,                                                          //u8* prev_memory_pos;
+   sys_ren_block_setup,                                        //Ptrf_v_ep render_mode;
+   sys_ren_no_draw                                             //Ptrf_v_ep render;
 };
 const ent_t init_shoot_son = {
    //generic
@@ -127,8 +131,9 @@ const ent_t init_shoot_son = {
    //render
    spr_p_1,                                                    //u8* sprite;                   
    0,                                                          //u8* memory_pos;               
-   0,                                                          //u8* prev_memory_pos;          
-   sys_ren_block                                               //Ptrf_v_ep render; 
+   0,                                                          //u8* prev_memory_pos;  
+   sys_ren_block_setup,                                        //Ptrf_v_ep render_mode;
+   sys_ren_no_draw                                             //Ptrf_v_ep render; 
 };
 /*shoot-----------------------------------------------------*/
 /*zombi-----------------------------------------------------*/
@@ -154,8 +159,9 @@ const ent_t init_zombi = {
    //render
    spr_zombi_0,                                                //u8* sprite;                   
    0,                                                          //u8* memory_pos;               
-   0,                                                          //u8* prev_memory_pos;          
-   sys_ren_block                                               //Ptrf_v_ep render; 
+   0,                                                          //u8* prev_memory_pos;
+   sys_ren_block_setup,                                        //Ptrf_v_ep render_mode;
+   sys_ren_no_draw                                             //Ptrf_v_ep render; 
 };
 /*zombi-----------------------------------------------------*/
 ent_t ents[20];
@@ -206,7 +212,6 @@ void man_ent_char_death(ent_t* dead_ent){
 }
 void man_ent_generic_death(ent_t* dead_ent){
    dead_ent->type |= e_t_dead;
-   sys_ren_kill(dead_ent);
 }
 
 void man_ent_forall(Ptrf_v_ep fun){
