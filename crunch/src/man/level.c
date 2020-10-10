@@ -4,8 +4,8 @@
 #include <man/app.h>
 #include <constants.h>
 
-u8 tilemap_start[tilemap_size];
-#define tilemap_end  (tilemap_start + tilemap_size - 1)
+u8 tilemap_start[500];
+#define tilemap_end  (tilemap_start + 500 - 1)
 
 void man_level_load(lvl_t* map, u8 x, u8 y){
     u8 it = 0;
@@ -13,10 +13,7 @@ void man_level_load(lvl_t* map, u8 x, u8 y){
     
 
     cpct_zx7b_decrunch_s(tilemap_end, map->self);
-    sys_ren_draw_tilemap(tilemap_start);
-    
-    cpct_waitVSYNC();
-    cpct_waitHalts(2);
+    sys_ren_draw_tilemap(tilemap_start+40);
     
     man_ent_init();
     man_ent_create_class(e_c_char, x, y);
@@ -27,6 +24,8 @@ void man_level_load(lvl_t* map, u8 x, u8 y){
         class = &map->entities[it];
     }
 
+    cpct_waitVSYNC();
+    cpct_waitHalts(2);
     cpct_waitVSYNC();
     cpct_setInterruptHandler(interrupt_1);
 }

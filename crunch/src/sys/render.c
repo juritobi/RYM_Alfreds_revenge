@@ -7,7 +7,7 @@ u16 null_at_end;
 
 void sys_ren_draw_tilemap(u8* tilemap){
     cpct_etm_setDrawTilemap4x8_ag(tilemap_W, tilemap_H, tilemap_W, tileset);
-    cpct_etm_drawTilemap4x8_ag(CPCT_VMEM_START, tilemap);
+    cpct_etm_drawTilemap4x8_ag(CPCT_VMEM_START+160, tilemap);
 }
 
 void sys_ren_init(){
