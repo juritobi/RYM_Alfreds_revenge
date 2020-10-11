@@ -5,52 +5,112 @@
 #include <constants.h>
 
 
+#define x_div 4
+#define y_div 8
+
+
 void sys_col_one(ent_t* e){
 
     u8* tilemap = man_level_get_tilemap();
-    u8 tile_x = e->x/4;
-    u8 tile_y = e->y/8-3;
-    u8 next_tile = tile_x + e->vx;
-    u8 up_tile = tile_y - 1;
-    u8 down_tile = tile_y + 3;
-    u16 array_pos= tile_y*tilemap_W + next_tile;
+    u8 tile_x = e->x/x_div;
+    u8 tile_y = e->y/y_div - 3;// -3 para por que el hud son 3 tiles
 
-    if(tile_x != (e->x-1)/4){//si voy a cambiar de tile
-        if(e->type & e_t_input){ 
-            if(tilemap[array_pos] !=3 || tilemap[array_pos + tilemap_W] !=3 || tilemap[array_pos + tilemap_W +tilemap_W] !=3){
-                e->vx = 0;
-            }
-        }
-        else{
-            if(tilemap[array_pos] !=3){
-                e->vx = 0;
-            }
-        }
-       
-    }
-    
-        array_pos = up_tile*tilemap_W + tile_x;
-        if(tile_y != (e->y-1)/8){//si voy a cambiar de tile
-            if(e->vy<0){
-                if(tilemap[array_pos] !=3 || (!(tile_x != (e->x-1)/4) && tilemap[array_pos+ 1] !=3 )){
-                    e->vy = 0;
-                }
+    u8 right_tile;
+    u8 left_tile;
+    u8 top_tile;
+    u8 bot_tile; 
+    u16 tile_pointer;
+
+    if(e->vx){
+        if(tile_x != (e->x-1)/x_div){
+            u8 counter = 0;
+            u8 y_tile_num = e->h/y_div;
+            right_tile = tile_x + e->w/x_div;
+            left_tile = tile_x - 1;
+            
+            if(e->vx > 0){
+                tile_pointer = tile_y*tilemap_W + right_tile;
             }
             else{
-                array_pos = down_tile*tilemap_W + tile_x;
-                if(tilemap[array_pos] !=3 || (!(tile_x != (e->x-1)/4) && tilemap[array_pos+ 1] !=3 )){
+                tile_pointer = tile_y*tilemap_W + left_tile;
+            }
+            if(tile_y == (e->y-1)/y_div){
+                ++y_tile_num;
+            }
+            
+            while(counter!= y_tile_num){
+                if(tilemap[tile_pointer+counter*tilemap_W] !=3){
+                    e->vx = 0;
+                    break;
+                }
+                ++counter;
+            }
+        }
+    }
+    if(e->vy){
+        if(tile_y != (e->y-1)/y_div){//si voy a cambiar de tile
+            u8 counter = 0;
+            u8 x_tile_num = e->w/x_div;
+            bot_tile = tile_y + e->h/y_div;
+            top_tile = tile_y - 1;
+            
+
+            if(e->vy>0){
+                tile_pointer = bot_tile*tilemap_W + tile_x;
+            }
+            else{
+                tile_pointer = top_tile*tilemap_W + tile_x;
+                
+            }
+            if(tile_x == (e->x-1)/x_div){
+                ++x_tile_num;
+            }
+            
+            while(counter!= x_tile_num){
+                if(tilemap[tile_pointer+counter] !=3){
+                    if(e->vy>0){
+                        e->on_ground = 1;
+                    }
+                    else{
+                        e->on_ground = 0;
+                    }
+                    e->vy = 0;
+                    break;
+                }
+                ++counter;
+            }
+        }
+    }
+
+    if(e->vx && e->vy){
+        if(tile_x != (e->x-1)/x_div && tile_y != (e->y-1)/y_div){
+            u8 x_wins = 0;
+            if(e->vx > 0 && e->vy < 0){
+                tile_pointer = top_tile*tilemap_W + right_tile;
+            }
+            else if(e->vx > 0 && e->vy > 0){
+                tile_pointer = bot_tile*tilemap_W + right_tile;
+                x_wins = 1;
+            }
+            else if(e->vx < 0 && e->vy > 0){
+                tile_pointer = bot_tile*tilemap_W + left_tile;
+                x_wins = 1;
+            }
+            else{
+                tile_pointer = top_tile*tilemap_W + left_tile;
+            }
+
+            if(tilemap[tile_pointer] !=3){
+                if(x_wins){
+                    e->vy = 0;
                     e->on_ground = 1;
                 }
                 else{
-                    e->on_ground = 0;
-                }
-                if(e->on_ground && e->vy>0){
-                    e->vy=0;
+                    e->vx = 0;
                 }
             }
         }
-    
-    
+    }
 }
 
 void sys_col_ally_enemy(ent_t* ally, ent_t* enemy){
