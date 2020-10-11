@@ -22,6 +22,7 @@ const ent_t init_player = {
    0,0,                                                        //i8 originalvx, originalvy;
    //CHARACTERS
    5,5,0,                                                       //u8 hp, mp, damage;
+   50,                                                          // invulnerable
    //AI
    0,                                                          //Ptrf_v_ep act;
    0,0,                                                        //i8 prev_vx, prev_vy;
@@ -50,6 +51,7 @@ const ent_t init_sword = {
    0,0,                                                        //i8 originalvx, originalvy;
    //CHARACTERS
    1,0,1,                                                       //u8 hp, mp, damage;
+   50,                                                          // invulnerable
    //AI
    0,                                                          //Ptrf_v_ep act;
    0,0,                                                        //i8 prev_vx, prev_vy;
@@ -78,6 +80,7 @@ const ent_t init_knife = {
    1,0,                                                        //i8 originalvx, originalvy;
    //CHARACTERS
    1,0,1,                                                       //u8 hp, mp, damage;
+   50,                                                          // invulnerable
    //AI
    0,                                                          //Ptrf_v_ep act;
    0,0,                                                        //i8 prev_vx, prev_vy;
@@ -108,6 +111,7 @@ const ent_t init_shoot = {
    0,0,                                                        //i8 originalvx, originalvy;
    //CHARACTERS
    1,0,1,                                                       //u8 hp, mp, damage;
+   50,                                                          // invulnerable
    //AI
    sys_AI_shoot,                                               //Ptrf_v_ep act;
    0,0,                                                        //i8 prev_vx, prev_vy;
@@ -136,6 +140,7 @@ const ent_t init_shoot_son = {
    -1,0,                                                        //i8 originalvx, originalvy;
    //CHARACTERS
    1,0,1,                                                       //u8 hp, mp, damage;
+   50,                                                          // invulnerable
    //AI
    0,                                                          //Ptrf_v_ep act;
    0,0,                                                        //i8 prev_vx, prev_vy;
@@ -166,7 +171,8 @@ const ent_t init_zombi = {
    0,0,                                                        //u8 originalx, originaly;
    0,0,                                                        //i8 originalvx, originalvy;
    //CHARACTERS
-   1,0,1,                                                       //u8 hp, mp, damage;
+   2,0,1,                                                       //u8 hp, mp, damage;
+   50,                                                          // invulnerable
    //AI
    sys_AI_zombi,                                               //Ptrf_v_ep act;
    0,0,                                                        //i8 prev_vx, prev_vy;
@@ -195,6 +201,12 @@ void man_ent_init(){
 void man_ent_reset_pos(ent_t* e){
    e->prevx = e->x;
    e->prevy = e->y;
+
+   if(e->hp == 0){
+      e->death(e);
+   }
+// esta wea se va a descontrolar
+   // si enemigo o ally vida = 0 -> procede a cometer sudoku
 }
 
 ent_t* man_ent_create(){
@@ -251,6 +263,19 @@ void man_ent_forall_type( Ptrf_v_ep fun, u8 types){
       ++res;
    }
 }
+
+void man_ent_forall_col_type_individual( Ptrf_v_ep fun, u8 types){
+   ent_t* res = ents;
+   while(res->type != e_t_invalid){
+      if(!(res->type & e_t_dead)){
+         if((res->col_type & types) == types){
+            fun(res);
+         }
+      }
+      ++res;
+   }
+}
+
 void man_ent_forall_col_type( Ptrf_v_epep fun, u8 first_type, u8 second_type){
    ent_t* ents1 = ents;
    ent_t* ents2 = ents;
