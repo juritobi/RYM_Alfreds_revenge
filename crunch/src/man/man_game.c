@@ -113,6 +113,7 @@ void man_game_play(){
         
         //cpct_setBorder(HW_RED);
         man_ent_forall_type(man_ent_reset_pos,e_t_render);
+        sys_UI_update();
         //cpct_setBorder(HW_BLUE);
         sys_AI_update();
         //cpct_setBorder(HW_WHITE);
