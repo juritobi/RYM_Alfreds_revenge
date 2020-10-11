@@ -42,6 +42,11 @@ $(eval $(call TMX2DATA, SET_OUTPUTS     , h bin       ))
 $(eval $(call TMX2DATA, SET_FOLDER      , src/tilemaps      ))
 $(eval $(call TMX2DATA, CONVERT, assets/lvl0.tmx, lvl0 )) 
 $(eval $(call TMX2DATA, CONVERT, assets/lvl1.tmx, lvl1 )) 
+$(eval $(call TMX2DATA, CONVERT, assets/lvl2.tmx, lvl2 )) 
+$(eval $(call TMX2DATA, CONVERT, assets/lvl3.tmx, lvl3 )) 
+$(eval $(call TMX2DATA, CONVERT, assets/lvl4.tmx, lvl4 )) 
+$(eval $(call TMX2DATA, CONVERT, assets/lvl5.tmx, lvl5 )) 
+
 
 ##
 ## OLD MACROS (For compatibility)

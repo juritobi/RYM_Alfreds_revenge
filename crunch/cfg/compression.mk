@@ -40,6 +40,14 @@ $(eval $(call PACKZX7B,lvl0_pack,src/tilemaps))
 
 $(eval $(call ADD2PACK,lvl1_pack, src/tilemaps/lvl1.bin))
 $(eval $(call PACKZX7B,lvl1_pack,src/tilemaps))
+$(eval $(call ADD2PACK,lvl2_pack, src/tilemaps/lvl2.bin))
+$(eval $(call PACKZX7B,lvl2_pack,src/tilemaps))
+$(eval $(call ADD2PACK,lvl3_pack, src/tilemaps/lvl3.bin))
+$(eval $(call PACKZX7B,lvl3_pack,src/tilemaps))
+$(eval $(call ADD2PACK,lvl4_pack, src/tilemaps/lvl4.bin))
+$(eval $(call PACKZX7B,lvl4_pack,src/tilemaps))
+$(eval $(call ADD2PACK,lvl5_pack, src/tilemaps/lvl5.bin))
+$(eval $(call PACKZX7B,lvl5_pack,src/tilemaps))
 
 
 

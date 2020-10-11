@@ -27,7 +27,7 @@ const ent_t init_player = {
    0,                                                          //Ptrf_v_ep act;
    0,0,                                                        //i8 prev_vx, prev_vy;
    //Input
-   0,0,                                                        //i8 on_ground, jumping;        
+   0,-1,                                                        //i8 on_ground, jumping;        
    //Collisions
    col_t_ally,                                                 //u8 col_type;                  
    //physics

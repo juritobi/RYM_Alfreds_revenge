@@ -11,34 +11,94 @@
 void man_game_check_level_change();
 extern const lvl_t i_lvl0;
 extern const lvl_t i_lvl1;
+extern const lvl_t i_lvl2;
+extern const lvl_t i_lvl3;
+extern const lvl_t i_lvl4;
+extern const lvl_t i_lvl5;
 
 const lvl_t i_lvl0 = {
     lvl0_pack_end,      //this
     0,                  //top
-    &i_lvl1,      //right
-    0,                  //bot
-    0,                  //left
+    &i_lvl2,      //right
+    &i_lvl5,                  //bot
+    &i_lvl1,                  //left
     {
-        {e_c_shoot, 45, 176},
-        {e_c_zombi, 55, 16},
+        {0, 0, 0},
+        {0, 0, 0},
         {0, 0, 0},
         {0, 0, 0},
         {0, 0, 0}
     }
 };
 const lvl_t i_lvl1 = {
-    lvl1_pack_end,
-    0,                  
-    0,      
-    0,
-    &i_lvl0,
+    lvl1_pack_end,      //this
+    0,                  //top
+    &i_lvl0,      //right
+    &i_lvl0,                  //bot
+    0,                  //left
     {
-        {e_c_shoot, 50, 100},
+        {0, 0, 0},
         {0, 0, 0},
         {0, 0, 0},
         {0, 0, 0},
         {0, 0, 0}
-    }                  
+    }
+};
+const lvl_t i_lvl2 = {
+    lvl2_pack_end,      //this
+    0,                  //top
+    0,      //right
+    &i_lvl0,                  //bot
+    &i_lvl0,                  //left
+    {
+        {0, 0, 0},
+        {0, 0, 0},
+        {0, 0, 0},
+        {0, 0, 0},
+        {0, 0, 0}
+    }
+};
+const lvl_t i_lvl3 = {
+    lvl3_pack_end,      //this
+    &i_lvl0,                  //top
+    &i_lvl5,      //right
+    0,                  //bot
+    0,                  //left
+    {
+        {0, 0, 0},
+        {0, 0, 0},
+        {0, 0, 0},
+        {0, 0, 0},
+        {0, 0, 0}
+    }
+};
+const lvl_t i_lvl4 = {
+    lvl4_pack_end,      //this
+    &i_lvl0,                  //top
+    0,      //right
+    0,                  //bot
+    &i_lvl5,                  //left
+    {
+        {0, 0, 0},
+        {0, 0, 0},
+        {0, 0, 0},
+        {0, 0, 0},
+        {0, 0, 0}
+    }
+};
+const lvl_t i_lvl5 = {
+    lvl5_pack_end,      //this
+    &i_lvl0,                  //top
+    &i_lvl4,      //right
+    0,                  //bot
+    &i_lvl3,                  //left
+    {
+        {0, 0, 0},
+        {0, 0, 0},
+        {0, 0, 0},
+        {0, 0, 0},
+        {0, 0, 0}
+    }
 };
 
 lvl_t* actual_level;
@@ -93,13 +153,13 @@ void man_game_check_level_change(){
         player->x = 4;
         man_game_load_level(actual_level->right);
     }
-    else if(player->y == 0){
+    else if(player->y == 24){
         player->y = 168;
         man_game_load_level(actual_level->top);
     }
     else if(player->y == 176){
-        player->y = 8;
-        man_game_load_level(actual_level->right);
+        player->y = 32;
+        man_game_load_level(actual_level->bot);
     }
 }
 
