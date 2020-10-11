@@ -9,7 +9,7 @@ void sys_col_one(ent_t* e){
 
     u8* tilemap = man_level_get_tilemap();
     u8 tile_x = e->x/4;
-    u8 tile_y = e->y/8-2;
+    u8 tile_y = e->y/8-3;
     u8 next_tile = tile_x + e->vx;
     u8 up_tile = tile_y - 1;
     u8 down_tile = tile_y + 3;

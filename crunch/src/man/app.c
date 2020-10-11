@@ -38,7 +38,7 @@ void man_app_init(){
     cpct_clearScreen(0x0);
     cpct_setDrawCharM1(3, 0);
     cpct_drawStringM1("press any key to start", CPCT_VMEM_START+500);
-
+    cpct_setDrawCharM1(3, 1);
     cpct_waitVSYNC();
     cpct_waitHalts(3);
     cpct_waitVSYNC();
