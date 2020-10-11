@@ -47,6 +47,9 @@ $(eval $(call TMX2DATA, CONVERT, assets/lvl3.tmx, lvl3 ))
 $(eval $(call TMX2DATA, CONVERT, assets/lvl4.tmx, lvl4 )) 
 $(eval $(call TMX2DATA, CONVERT, assets/lvl5.tmx, lvl5 )) 
 
+$(eval $(call TMX2DATA, CONVERT, assets/lvlmeme1.tmx, lvlmeme1 )) 
+$(eval $(call TMX2DATA, CONVERT, assets/lvlmeme2.tmx, lvlmeme2 )) 
+
 
 ##
 ## OLD MACROS (For compatibility)

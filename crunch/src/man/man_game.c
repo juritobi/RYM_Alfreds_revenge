@@ -16,6 +16,9 @@ extern const lvl_t i_lvl3;
 extern const lvl_t i_lvl4;
 extern const lvl_t i_lvl5;
 
+extern const lvl_t i_lvlmeme1;
+extern const lvl_t i_lvlmeme2;
+
 const lvl_t i_lvl0 = {
     lvl0_pack_end,      //this
     0,                  //top
@@ -101,6 +104,35 @@ const lvl_t i_lvl5 = {
     }
 };
 
+const lvl_t i_lvlmeme1 = {
+    lvlmeme1_pack_end,      //this
+    0,                  //top
+    0,      //right
+    &i_lvlmeme2,                  //bot
+    0,                  //left
+    {
+        {0, 0, 0},
+        {0, 0, 0},
+        {0, 0, 0},
+        {0, 0, 0},
+        {0, 0, 0}
+    }
+};
+const lvl_t i_lvlmeme2 = {
+    lvlmeme2_pack_end,      //this
+    0,                  //top
+    0,      //right
+    &i_lvlmeme1,                  //bot
+    0,                  //left
+    {
+        {0, 0, 0},
+        {0, 0, 0},
+        {0, 0, 0},
+        {0, 0, 0},
+        {0, 0, 0}
+    }
+};
+
 lvl_t* actual_level;
 u8 in_game;
 u8 render_signal;
@@ -122,7 +154,7 @@ void wait_render_signal(){
     waiting_render_signal = 0;
 }
 void man_game_init(){
-    actual_level = &i_lvl0;
+    actual_level = &i_lvlmeme2;
     in_game = 1;
     render_signal=0;
     waiting_render_signal=0;

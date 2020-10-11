@@ -6,6 +6,8 @@
 #include <tilemaps/lvl3_pack.h>
 #include <tilemaps/lvl4_pack.h>
 #include <tilemaps/lvl5_pack.h>
+#include <tilemaps/lvlmeme1_pack.h>
+#include <tilemaps/lvlmeme2_pack.h>
 #include <sprites/tileset.h>
 
 #define tilemap_W (lvl0_W)
