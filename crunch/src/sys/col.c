@@ -16,7 +16,6 @@
 u16 get_tile_pointer(u8 x, u8 y){
     return y * tilemap_W + x;
 }
-
 void sys_col_one(ent_t* e){
 
     u8* tilemap = man_level_get_tilemap();
@@ -29,11 +28,12 @@ void sys_col_one(ent_t* e){
     u8 top_tile = tile_y - 1; 
     u16 tile_pointer;
 
+    u8 exact_tile_x = e->x%x_div;
+    u8 exact_tile_y = e->y%y_div;
+
     if(e->vx){
-        if(tile_x != (e->x-1)/x_div){
-            u8 counter = 0;
-            u8 y_tile_num = e->h/y_div;
-            
+        if(!not_changing_tile_x){
+            u8 width = e->h/y_div;
             if(e->vx > 0){
                 tile_pointer = get_tile_pointer(right_tile, tile_y);
             }
@@ -41,49 +41,50 @@ void sys_col_one(ent_t* e){
                 tile_pointer = get_tile_pointer(left_tile, tile_y);
             }
             if(tile_y == (e->y-1)/y_div){
-                ++y_tile_num;
+                ++width;
             }
-            while(counter!= y_tile_num){
-                if((tilemap[tile_pointer+counter*tilemap_W] & tile_type_mask) == solid){
+            while(width){
+                u8 tile_type = tilemap[tile_pointer+width*tilemap_W] & tile_type_mask;
+                if(tile_type == solid){
                     e->vx = 0;
                     break;
                 }
-                ++counter;
+                --width;
             }
         }
     }
     if(e->vy){
-        if(tile_y != (e->y-1)/y_div){//si voy a cambiar de tile
-            u8 counter = 0;
-            u8 x_tile_num = e->w/x_div;
+        u8 width = e->w/x_div;
+        if(tile_x == (e->x-1)/x_div){
+            ++width;
+        }
 
-            if(e->vy>0){
-                tile_pointer = get_tile_pointer(tile_x, bot_tile);
+
+        if(e->vy>0){
+            tile_pointer = get_tile_pointer(tile_x, bot_tile);
+        }
+        else{
+            tile_pointer = get_tile_pointer(tile_x, top_tile);
+        }
+        
+        
+        while(width){
+            u8 tile_type = tilemap[tile_pointer+width] & tile_type_mask;
+            if(tile_type == solid){
+                if(e->vy>0){
+                    e->on_ground = 1;
+                }
+                e->vy = 0;
+                break;
             }
-            else{
-                tile_pointer = get_tile_pointer(tile_x, top_tile);
-            }
-            if(tile_x == (e->x-1)/x_div){
-                ++x_tile_num;
-            }
-            
-            while(counter!= x_tile_num){
-                if((tilemap[tile_pointer+counter] & tile_type_mask) == solid){
-                    if(e->vy>0){
-                        e->on_ground = 1;
-                    }
+            else if(tile_type == half){
+                if(!e->on_ground){
+                    e->on_ground = 1;
                     e->vy = 0;
-                    break;
                 }
-                else if((tilemap[tile_pointer+counter] & tile_type_mask) == half){
-                    if(!e->on_ground){
-                        e->on_ground = 1;
-                        e->vy = 0;
-                    }
-                    break;
-                }
-                ++counter;
+                break;
             }
+            --width;
         }
     }
 
