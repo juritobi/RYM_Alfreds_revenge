@@ -13,8 +13,8 @@ void sys_ren_draw_tile(u8 tile_index, u8 x, u8 y){
 
     void* tile = tileset + tile_index*tileset_length;
     u8* pos = cpct_getScreenPtr(CPCT_VMEM_START, x, y);
-    //cpct_drawTileZigZagGrayCode4x8 (pos, tile);
-    cpct_drawTileAligned4x8(tile, pos);
+    cpct_drawTileZigZagGrayCode4x8_af (pos, tile);
+    //cpct_drawTileAligned4x8(tile, pos);
 }
 
 void sys_ren_init(){

@@ -154,20 +154,23 @@ void sys_col_one(ent_t* e){
         u8 byte_tile_x;
         u8 byte_tile_y;
 
-        
-        if((tile_y == (e->y-1)/y_div) && e->vy<0){
-            tile_pointer = get_tile_pointer(tile_x, bot_tile);
-            byte_tile_y = bot_tile;
+        if(e->vy>0){
+            tile_pointer = get_tile_pointer(tile_x, tile_y);
+            byte_tile_y = tile_y ;
         }
         else{
-            tile_pointer = get_tile_pointer(tile_x, tile_y);
-            byte_tile_y = tile_y;
+            tile_pointer = get_tile_pointer(tile_x, tile_y + e->h/y_div);
+            byte_tile_y = tile_y + e->h/y_div;
+        }
+
+        if(tile_x == (e->x-1)/x_div){
+            ++x_tile_num;
         }
 
         byte_tile_y = (byte_tile_y + 3) * y_div;
         while(counter!= x_tile_num){
             byte_tile_x = (tile_x + counter)*x_div;
-            sys_ren_draw_tile( tilemap[tile_pointer+counter*tilemap_W], byte_tile_x, byte_tile_y);
+            sys_ren_draw_tile( tilemap[tile_pointer+counter], byte_tile_x, byte_tile_y);
             ++counter;
         }
     }
