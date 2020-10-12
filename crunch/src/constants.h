@@ -15,3 +15,4 @@
 
 
 #define tileset (tileset_00)
+#define tileset_length (TILESET_00_W * TILESET_00_H)

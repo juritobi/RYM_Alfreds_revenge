@@ -9,6 +9,13 @@ void sys_ren_draw_tilemap(u8* tilemap){
     cpct_etm_setDrawTilemap4x8_ag(tilemap_W, tilemap_H, tilemap_W, tileset);
     cpct_etm_drawTilemap4x8_ag(CPCT_VMEM_START+240, tilemap);
 }
+void sys_ren_draw_tile(u8 tile_index, u8 x, u8 y){
+
+    void* tile = tileset + tile_index*tileset_length;
+    u8* pos = cpct_getScreenPtr(CPCT_VMEM_START, x, y);
+    //cpct_drawTileZigZagGrayCode4x8 (pos, tile);
+    cpct_drawTileAligned4x8(tile, pos);
+}
 
 void sys_ren_init(){
     ent_t* ents_to_render[8] = {0,0,0,0,0,0,0,0};
@@ -79,7 +86,7 @@ void sys_ren_blend_setup_first(ent_t* e){
 
 /*RENDERIZADO*/
 void sys_ren_block_erasing(ent_t* e){
-    cpct_drawSolidBox (e->prev_memory_pos, 0x00, e->w, e->h);
+    //cpct_drawSolidBox (e->prev_memory_pos, 0x00, e->w, e->h);
     cpct_drawSprite (e->sprite, e->memory_pos, e->w, e->h);
 }
 void sys_ren_block(ent_t* e){
