@@ -192,5 +192,6 @@ void man_game_play(){
         //cpct_setBorder(HW_GREEN);
         sys_ren_render();
         cpct_setBorder(HW_BLACK);
+
     }
 }

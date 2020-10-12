@@ -7,7 +7,10 @@
 
 #define x_div 4
 #define y_div 8
-
+#define solid 0x00
+#define half  0x08
+#define air   0x10
+#define tile_type_mask   0x18
 
 void sys_col_one(ent_t* e){
 
@@ -39,7 +42,7 @@ void sys_col_one(ent_t* e){
             }
             
             while(counter!= y_tile_num){
-                if(tilemap[tile_pointer+counter*tilemap_W] !=3){
+                if((tilemap[tile_pointer+counter*tilemap_W] & tile_type_mask) == solid){
                     e->vx = 0;
                     break;
                 }
@@ -60,21 +63,24 @@ void sys_col_one(ent_t* e){
             }
             else{
                 tile_pointer = top_tile*tilemap_W + tile_x;
-                
             }
             if(tile_x == (e->x-1)/x_div){
                 ++x_tile_num;
             }
             
             while(counter!= x_tile_num){
-                if(tilemap[tile_pointer+counter] !=3){
+                if((tilemap[tile_pointer+counter] & tile_type_mask) == solid){
                     if(e->vy>0){
                         e->on_ground = 1;
                     }
-                    else{
-                        e->on_ground = 0;
-                    }
                     e->vy = 0;
+                    break;
+                }
+                else if((tilemap[tile_pointer+counter] & tile_type_mask) == half){
+                    if(!e->on_ground){
+                        e->on_ground = 1;
+                        e->vy = 0;
+                    }
                     break;
                 }
                 ++counter;
@@ -100,13 +106,19 @@ void sys_col_one(ent_t* e){
                 tile_pointer = top_tile*tilemap_W + left_tile;
             }
 
-            if(tilemap[tile_pointer] !=3){
+            if((tilemap[tile_pointer] & tile_type_mask) == solid){
                 if(x_wins){
                     e->vy = 0;
                     e->on_ground = 1;
                 }
                 else{
                     e->vx = 0;
+                }
+            }
+            if((tilemap[tile_pointer] & tile_type_mask) == half){
+                if(!e->on_ground){
+                    e->on_ground = 1;
+                    e->vy = 0;
                 }
             }
         }
