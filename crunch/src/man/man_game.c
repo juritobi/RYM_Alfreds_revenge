@@ -3,6 +3,7 @@
 #include <sys/render.h>
 #include <sys/input.h>
 #include <sys/AI.h>
+#include <sys/UI.h>
 #include <sys/col.h>
 #include <man/level.h>
 #include <man/man_ent.h>

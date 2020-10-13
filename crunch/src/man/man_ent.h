@@ -68,7 +68,7 @@ void man_ent_init();
 
 void man_ent_create_class(u8 type, u8 x, u8 y);
 
-ent_t* man_ent_create_from_template(ent_t* template);
+ent_t* man_ent_create_from_template(const ent_t* template);
 void man_ent_resurrect(ent_t* e, u8 displacement);
 void man_ent_move(ent_t* e, u8 displacement);
 

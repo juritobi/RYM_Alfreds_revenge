@@ -12,6 +12,7 @@ extern const lvl_t i_lvl4;
 extern const lvl_t i_lvl5;
 
 const lvl_t i_lvl0 = {
+    0,                  //id
     lvl0_pack_end,      //this
     0,                  //top
     &i_lvl2,      //right
@@ -27,6 +28,7 @@ const lvl_t i_lvl0 = {
     }
 };
 const lvl_t i_lvl1 = {
+    1,                  //id
     lvl1_pack_end,      //this
     0,                  //top
     &i_lvl0,      //right
@@ -42,6 +44,7 @@ const lvl_t i_lvl1 = {
     }
 };
 const lvl_t i_lvl2 = {
+    2,                  //id
     lvl2_pack_end,      //this
     0,                  //top
     0,      //right
@@ -57,6 +60,7 @@ const lvl_t i_lvl2 = {
     }
 };
 const lvl_t i_lvl3 = {
+    3,                  //id
     lvl3_pack_end,      //this
     &i_lvl0,                  //top
     &i_lvl5,      //right
@@ -72,6 +76,7 @@ const lvl_t i_lvl3 = {
     }
 };
 const lvl_t i_lvl4 = {
+    4,                  //id
     lvl4_pack_end,      //this
     &i_lvl0,                  //top
     0,      //right
@@ -87,6 +92,7 @@ const lvl_t i_lvl4 = {
     }
 };
 const lvl_t i_lvl5 = {
+    5,                  //id
     lvl5_pack_end,      //this
     &i_lvl0,                  //top
     &i_lvl4,      //right
@@ -102,12 +108,14 @@ const lvl_t i_lvl5 = {
     }
 };
 
+u8 cleared_rooms[6];
 lvl_t level;
 u8 tilemap_start[tilemap_size];
 #define tilemap_end  (tilemap_start + tilemap_size - 1)
 
 void man_level_init(){
     cpct_memcpy(&level, &i_lvl0, sizeof(lvl_t));
+    cpct_memset(cleared_rooms, 0, sizeof(cleared_rooms));
     man_level_load(16, 80);
 }
 
@@ -120,12 +128,13 @@ void man_level_load(u8 px, u8 py){
     
     man_ent_init();
     man_ent_create_class(e_c_char, px, py);
-
-    while(class->type != e_c_undefined){
-        level.enemies++;
-        man_ent_create_class(class->type, class->x, class->y);
-        it++;
-        class = &level.entities[it];
+    if(!cleared_rooms[level.id]){
+        while(class->type != e_c_undefined){
+            level.enemies++;
+            man_ent_create_class(class->type, class->x, class->y);
+            it++;
+            class = &level.entities[it];
+        }
     }
 
     cpct_waitVSYNC();
@@ -160,6 +169,9 @@ void man_level_update(){
 
 void man_level_kill_enemy(){
     level.enemies--;
+    if(level.enemies == 0){
+        cleared_rooms[level.id]=1;
+    }
 }
 
 u8* man_level_get_tilemap(){

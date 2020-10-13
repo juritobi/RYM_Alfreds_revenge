@@ -4,6 +4,7 @@
 
 typedef struct lvl lvl_t;
 typedef struct lvl{
+    u8 id;
     u8* self;
     lvl_t* top;
     lvl_t* right;
@@ -19,3 +20,4 @@ void man_level_init();
 void man_level_update();
 void man_level_load(u8 px, u8 py);
 void man_level_kill_enemy();
+void sys_ren_init();
