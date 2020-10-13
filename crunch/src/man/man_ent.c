@@ -34,10 +34,7 @@ const ent_t init_player = {
    //physics
    //render
    spr_char_0,                                                 //u8* sprite;                   
-   0,                                                          //u8* memory_pos;               
-   0,                                                          //u8* prev_memory_pos;    
-   sys_ren_block_setup,                                        //Ptrf_v_ep render_mode;
-   sys_ren_no_draw                                             //Ptrf_v_ep render; 
+   0                                                          //u8* memory_pos;               
 };
 const ent_t init_sword = {
    //generic
@@ -63,10 +60,7 @@ const ent_t init_sword = {
    //physics
    //render
    spr_sword,                                                  //u8* sprite;                   
-   0,                                                          //u8* memory_pos;               
-   0,                                                          //u8* prev_memory_pos;
-   sys_ren_blend_setup_first,                                  //Ptrf_v_ep render_mode;
-   sys_ren_no_draw                                             //Ptrf_v_ep render;
+   0                                                          //u8* memory_pos;               
 };
 const ent_t init_knife = {
    //generic
@@ -92,10 +86,7 @@ const ent_t init_knife = {
    //physics
    //render
    spr_p_0,                                                //u8* sprite;                   
-   0,                                                          //u8* memory_pos;               
-   0,                                                          //u8* prev_memory_pos; 
-   sys_ren_block_setup,                                        //Ptrf_v_ep render_mode;
-   sys_ren_no_draw                                             //Ptrf_v_ep render;
+   0                                                          //u8* memory_pos;               
 };
 /*character-----------------------------------------------------*/
 /*shoot-----------------------------------------------------*/
@@ -123,10 +114,8 @@ const ent_t init_shoot = {
    //physics
    //render
    spr_shooter_0,                                                //u8* sprite;                   
-   0,                                                          //u8* memory_pos;               
-   0,                                                          //u8* prev_memory_pos;
-   sys_ren_block_setup,                                        //Ptrf_v_ep render_mode;
-   sys_ren_no_draw                                             //Ptrf_v_ep render;
+   0                                                          //u8* memory_pos;               
+
 };
 const ent_t init_shoot_son = {
    //generic
@@ -152,10 +141,7 @@ const ent_t init_shoot_son = {
    //physics
    //render
    spr_p_1,                                                    //u8* sprite;                   
-   0,                                                          //u8* memory_pos;               
-   0,                                                          //u8* prev_memory_pos;  
-   sys_ren_block_setup,                                        //Ptrf_v_ep render_mode;
-   sys_ren_no_draw                                             //Ptrf_v_ep render; 
+   0                                                          //u8* memory_pos;                
 };
 /*shoot-----------------------------------------------------*/
 /*zombi-----------------------------------------------------*/
@@ -184,10 +170,7 @@ const ent_t init_zombi = {
    //physics
    //render
    spr_zombi_0,                                                //u8* sprite;                   
-   0,                                                          //u8* memory_pos;               
-   0,                                                          //u8* prev_memory_pos;
-   sys_ren_block_setup,                                        //Ptrf_v_ep render_mode;
-   sys_ren_no_draw                                             //Ptrf_v_ep render; 
+   0                                                          //u8* memory_pos;               
 };
 /*zombi-----------------------------------------------------*/
 ent_t ents[20];

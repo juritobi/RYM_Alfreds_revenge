@@ -53,10 +53,7 @@ typedef struct et{
    //physics
    //render
    u8* sprite;                   
-   u8* memory_pos;               
-   u8* prev_memory_pos;      
-   Ptrf_v_ep render_mode;    
-   Ptrf_v_ep render;             
+   u8* memory_pos;       
 };
 typedef struct entity_class{
    u8 type;

@@ -10,12 +10,11 @@ void sys_ren_draw_tilemap(u8* tilemap){
     cpct_etm_drawTilemap4x8_ag(CPCT_VMEM_START+240, tilemap);
 }
 void sys_ren_draw_tile(u8 tile_index, u8 x, u8 y){
-
     void* tile = tileset + tile_index*tileset_length;
     u8* pos = cpct_getScreenPtr(CPCT_VMEM_START, x, y);
     cpct_drawTileZigZagGrayCode4x8_af (pos, tile);
-    //cpct_drawTileAligned4x8(tile, pos);
 }
+
 
 void sys_ren_init(){
     ent_t* ents_to_render[8] = {0,0,0,0,0,0,0,0};
@@ -23,84 +22,32 @@ void sys_ren_init(){
     next_free_index = 0;
 }
 
-/*UPDATES*/
-void sys_ren_one_setup(ent_t* e){
-    e->render_mode(e);
-}
-void sys_ren_setup(){
-    clean_array();
-    man_ent_forall_type(sys_ren_one_setup, e_t_render);
-}
-void sys_ren_render(){
-    u8 index = 0;
-    while(ents_to_render[index]){
-        ents_to_render[index]->render(ents_to_render[index]);
-        ++index;
-    }
-    //man_ent_forall_type(sys_ren_one_render, e_t_render);
-}
 
 
 
-/*PREPARACION*/
-void sys_ren_get_pos(ent_t* e){
-    e->prev_memory_pos = cpct_getScreenPtr(CPCT_VMEM_START, e->prevx, e->prevy);
+void sys_ren_one(ent_t* e){
+    cpct_drawSprite (e->sprite, e->memory_pos, e->w, e->h);
+}
+void sys_ren_setup_one(ent_t* e){
     e->memory_pos = cpct_getScreenPtr(CPCT_VMEM_START, e->x, e->y);
 }
-void add_to_array(ent_t* e){
-    ents_to_render[next_free_index] = e;
-    next_free_index++;
+void sys_ren_setup(){
+    man_ent_forall_type(sys_ren_setup_one, e_t_render);
 }
-void clean_array(){
-    u8 index = 0;
-    while(ents_to_render[index]){
-        ents_to_render[index] = 0;
-        ++index;
-    }
-    next_free_index = 0;
+void sys_ren_render(){
+    man_ent_forall_type(sys_ren_one, e_t_render);
 }
 
-void sys_ren_block_setup(ent_t* e){
-    sys_ren_get_pos(e);
-    if(e->memory_pos == e->prev_memory_pos){
-        e->render = sys_ren_block;
-    }
-    else{
-        e->render = sys_ren_block_erasing;
-    }
-    add_to_array(e);
-}
-void sys_ren_blend_setup(ent_t* e){
-    sys_ren_get_pos(e);
-    if(e->memory_pos != e->prev_memory_pos){
-        e->render = sys_ren_blend;
-        add_to_array(e);
-    }
-}
-void sys_ren_blend_setup_first(ent_t* e){
-    sys_ren_get_pos(e);
-    e->render_mode = sys_ren_blend_setup;
-    e->render = sys_ren_blend_one;
-    add_to_array(e);
-}
 
-/*RENDERIZADO*/
-void sys_ren_block_erasing(ent_t* e){
-    //cpct_drawSolidBox (e->prev_memory_pos, 0x00, e->w, e->h);
+//runthroug array
+/*u8 index = 0;
+while(ents_to_render[index]){
+    ent_t* e = ents_to_render[index];
     cpct_drawSprite (e->sprite, e->memory_pos, e->w, e->h);
-}
-void sys_ren_block(ent_t* e){
-    cpct_drawSprite (e->sprite, e->memory_pos, e->w, e->h);
-}
-
-void sys_ren_blend_one(ent_t* e){
-    cpct_drawSpriteBlended(e->memory_pos, e->h, e->w, e->sprite);
-}
-void sys_ren_blend(ent_t* e){
-    cpct_drawSpriteBlended(e->prev_memory_pos, e->h, e->w, e->sprite);
-    cpct_drawSpriteBlended(e->memory_pos, e->h, e->w, e->sprite);
-}
-
-void sys_ren_no_draw(ent_t* e){
-
-}
+    ++index;
+}*/
+//cpct_memset(ents_to_render, 0, sizeof(ents_to_render));
+/*void add_to_array(ent_t* e){
+ents_to_render[next_free_index] = e;
+next_free_index++;
+}*/

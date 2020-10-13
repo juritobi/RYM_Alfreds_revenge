@@ -11,6 +11,13 @@ extern const lvl_t i_lvl3;
 extern const lvl_t i_lvl4;
 extern const lvl_t i_lvl5;
 
+void lt_room();
+void rt_room();
+void lb_room();
+void rb_room();
+void final_room();
+void normal_room();
+
 const lvl_t i_lvl0 = {
     0,                  //id
     lvl0_pack_end,      //this
@@ -18,6 +25,7 @@ const lvl_t i_lvl0 = {
     &i_lvl2,      //right
     &i_lvl5,                  //bot
     &i_lvl1,                  //left
+    final_room,
     0,
     {
         {0, 0, 0},
@@ -34,6 +42,7 @@ const lvl_t i_lvl1 = {
     &i_lvl0,      //right
     &i_lvl0,                  //bot
     0,                  //left
+    lt_room,
     0,
     {
         {e_c_zombi, 4, 168},
@@ -50,6 +59,7 @@ const lvl_t i_lvl2 = {
     0,      //right
     &i_lvl0,                  //bot
     &i_lvl0,                  //left
+    rt_room,
     0,
     {
         {0, 0, 0},
@@ -66,9 +76,10 @@ const lvl_t i_lvl3 = {
     &i_lvl5,      //right
     0,                  //bot
     0,                  //left
+    lb_room,
     0,
     {
-        {0, 0, 0},
+        {e_c_zombi, 60, 168},
         {0, 0, 0},
         {0, 0, 0},
         {0, 0, 0},
@@ -82,6 +93,7 @@ const lvl_t i_lvl4 = {
     0,      //right
     0,                  //bot
     &i_lvl5,                  //left
+    rb_room,
     0,
     {
         {0, 0, 0},
@@ -98,6 +110,7 @@ const lvl_t i_lvl5 = {
     &i_lvl4,      //right
     0,                  //bot
     &i_lvl3,                  //left
+    normal_room,
     0,
     {
         {e_c_shoot, 12, 98},
@@ -112,6 +125,55 @@ u8 cleared_rooms[6];
 lvl_t level;
 u8 tilemap_start[tilemap_size];
 #define tilemap_end  (tilemap_start + tilemap_size - 1)
+
+void lt_room(){
+    tilemap_start[21*tilemap_W + 9] = 19;
+    sys_ren_draw_tile(19, 9*4, (21+3)*8 );
+    tilemap_start[21*tilemap_W + 10] = 19;
+    sys_ren_draw_tile(19, 10*4, (21+3)*8);
+    cleared_rooms[0]=0x01;
+}
+void lb_room(){
+    tilemap_start[9] = 19;
+    tilemap_start[10] = 19;
+    cleared_rooms[0]=0x08;
+}
+void rt_room(){
+    tilemap_start[21*tilemap_W + 9] = 19;
+    tilemap_start[21*tilemap_W + 10] = 19;
+    cleared_rooms[0]=0x02;
+}
+void rb_room(){
+    tilemap_start[9] = 19;
+    tilemap_start[10] = 19;
+    cleared_rooms[0]=0x04;
+}
+void final_room(){
+    if(cleared_rooms[level.id] == 0x0F){
+        tilemap_start[2*tilemap_W + 6] = 27;
+        tilemap_start[2*tilemap_W + 13] = 27;
+        tilemap_start[15*tilemap_W + 6] = 27;
+        tilemap_start[15*tilemap_W + 13] = 27;
+    }
+    else{
+        if(cleared_rooms[level.id] & 1){
+            tilemap_start[2*tilemap_W + 6] = 27;
+            sys_ren_draw_tile(27, 6*4, (2+3)*8);
+        }
+        if(cleared_rooms[level.id] & 2){
+            tilemap_start[2*tilemap_W + 13] = 27;
+        }
+        if(cleared_rooms[level.id] & 4){
+            tilemap_start[15*tilemap_W + 6] = 27;
+        }
+        if(cleared_rooms[level.id] & 8){
+            tilemap_start[15*tilemap_W + 13] = 27;
+        }
+    }
+    
+}
+void normal_room(){
+}
 
 void man_level_init(){
     cpct_memcpy(&level, &i_lvl0, sizeof(lvl_t));
@@ -128,14 +190,24 @@ void man_level_load(u8 px, u8 py){
     
     man_ent_init();
     man_ent_create_class(e_c_char, px, py);
-    if(!cleared_rooms[level.id]){
-        while(class->type != e_c_undefined){
-            level.enemies++;
-            man_ent_create_class(class->type, class->x, class->y);
-            it++;
-            class = &level.entities[it];
+
+    if(level.id){
+        if(!cleared_rooms[level.id]){
+            while(class->type != e_c_undefined){
+                level.enemies++;
+                man_ent_create_class(class->type, class->x, class->y);
+                it++;
+                class = &level.entities[it];
+            }
+        }
+        else{
+            level.cleared_func();
         }
     }
+    else{
+        level.cleared_func();
+    }
+
 
     cpct_waitVSYNC();
     cpct_waitHalts(2);
@@ -171,6 +243,7 @@ void man_level_kill_enemy(){
     level.enemies--;
     if(level.enemies == 0){
         cleared_rooms[level.id]=1;
+        level.cleared_func();
     }
 }
 
