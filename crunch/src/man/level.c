@@ -19,6 +19,7 @@ void man_level_load(lvl_t* map, u8 x, u8 y){
     man_ent_create_class(e_c_char, x, y);
 
     while(class->type != e_c_undefined){
+        map->enemies++;
         man_ent_create_class(class->type, class->x, class->y);
         it++;
         class = &map->entities[it];
@@ -28,6 +29,10 @@ void man_level_load(lvl_t* map, u8 x, u8 y){
     cpct_waitHalts(2);
     cpct_waitVSYNC();
     cpct_setInterruptHandler(interrupt_1);
+}
+
+void man_level_kill_enemy(){
+    //enemies--;
 }
 
 u8* man_level_get_tilemap(){

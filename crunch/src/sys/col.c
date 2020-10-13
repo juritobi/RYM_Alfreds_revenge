@@ -22,9 +22,9 @@ void sys_col_one(ent_t* e){
     u8 tile_x = e->x/x_div;
     u8 tile_y = e->y/y_div - 3;// -3 para por que el hud son 3 tiles
 
-    u8 right_tile = tile_x + e->w/x_div;
+    u8 right_tile = tile_x + ((e->w/x_div) | 0x01);
     u8 left_tile = tile_x - 1;
-    u8 bot_tile = tile_y + e->h/y_div;
+    u8 bot_tile = tile_y + ((e->h/y_div) | 0x01);
     u8 top_tile = tile_y - 1; 
     u16 tile_pointer;
 
@@ -33,7 +33,7 @@ void sys_col_one(ent_t* e){
 
     if(e->vx){
         if(!not_exact_tile_x){
-            u8 width = e->h/y_div;
+            u8 width = (e->h/y_div) | 0x01;
             u8 tile_type;
             if(not_exact_tile_y){
                 ++width;
@@ -58,7 +58,7 @@ void sys_col_one(ent_t* e){
     }
     if(e->vy){
         if(!not_exact_tile_y){
-            u8 width = e->w/x_div;
+            u8 width = (e->w/x_div) | 0x01;
             u8 tile_type;
             if(not_exact_tile_x){
                 ++width;
@@ -132,8 +132,7 @@ void sys_col_one(ent_t* e){
 
     //redibujado de tiles
     if(e->vx){
-        u8 counter = 0;
-        u8 y_tile_num = e->h/y_div;
+        u8 y_tile_num = (e->h/y_div)| 0x01;
         u8 byte_tile_x;
         u8 byte_tile_y;
 
@@ -152,17 +151,20 @@ void sys_col_one(ent_t* e){
             byte_tile_x = tile_x;
         }
 
+        if( not_exact_tile_y){
+            ++y_tile_num;
+        }
+
         byte_tile_x = byte_tile_x * x_div;
-        while(counter!= y_tile_num){
-            byte_tile_y = (tile_y + 3 + counter)*y_div;
-            sys_ren_draw_tile( tilemap[tile_pointer+counter*tilemap_W], byte_tile_x, byte_tile_y);
-            ++counter;
+        while(y_tile_num){
+            --y_tile_num;
+            byte_tile_y = (tile_y + 3 + y_tile_num)*y_div;
+            sys_ren_draw_tile( tilemap[tile_pointer+y_tile_num*tilemap_W], byte_tile_x, byte_tile_y);
         }
     }
     //redibujado de tiles
     if(e->vy){
-        u8 counter = 0;
-        u8 x_tile_num = e->w/x_div;
+        u8 x_tile_num = (e->w/x_div) | 0x01;
         u8 byte_tile_x;
         u8 byte_tile_y;
 
@@ -186,10 +188,11 @@ void sys_col_one(ent_t* e){
         }
 
         byte_tile_y = (byte_tile_y + 3) * y_div;
-        while(counter!= x_tile_num){
-            byte_tile_x = (tile_x + counter)*x_div;
-            sys_ren_draw_tile( tilemap[tile_pointer+counter], byte_tile_x, byte_tile_y);
-            ++counter;
+        while(x_tile_num){
+            --x_tile_num;
+            byte_tile_x = (tile_x + x_tile_num)*x_div;
+            sys_ren_draw_tile( tilemap[tile_pointer+x_tile_num], byte_tile_x, byte_tile_y);
+            
         }
     }
 }

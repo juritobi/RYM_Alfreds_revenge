@@ -22,6 +22,7 @@ const lvl_t i_lvl0 = {
     &i_lvl2,      //right
     &i_lvl5,                  //bot
     &i_lvl1,                  //left
+    0,
     {
         {0, 0, 0},
         {0, 0, 0},
@@ -36,9 +37,10 @@ const lvl_t i_lvl1 = {
     &i_lvl0,      //right
     &i_lvl0,                  //bot
     0,                  //left
+    0,
     {
-        {0, 0, 0},
-        {0, 0, 0},
+        {e_c_zombi, 4, 168},
+        {e_c_zombi, 72, 168},
         {0, 0, 0},
         {0, 0, 0},
         {0, 0, 0}
@@ -50,6 +52,7 @@ const lvl_t i_lvl2 = {
     0,      //right
     &i_lvl0,                  //bot
     &i_lvl0,                  //left
+    0,
     {
         {0, 0, 0},
         {0, 0, 0},
@@ -64,6 +67,7 @@ const lvl_t i_lvl3 = {
     &i_lvl5,      //right
     0,                  //bot
     0,                  //left
+    0,
     {
         {0, 0, 0},
         {0, 0, 0},
@@ -78,6 +82,7 @@ const lvl_t i_lvl4 = {
     0,      //right
     0,                  //bot
     &i_lvl5,                  //left
+    0,
     {
         {0, 0, 0},
         {0, 0, 0},
@@ -92,9 +97,10 @@ const lvl_t i_lvl5 = {
     &i_lvl4,      //right
     0,                  //bot
     &i_lvl3,                  //left
+    0,
     {
-        {0, 0, 0},
-        {0, 0, 0},
+        {e_c_shoot, 12, 98},
+        {e_c_shoot, 72, 64},
         {0, 0, 0},
         {0, 0, 0},
         {0, 0, 0}

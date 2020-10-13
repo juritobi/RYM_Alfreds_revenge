@@ -1,5 +1,6 @@
 #include "man_ent.h"
 #include <man/man_game.h>
+#include <man/level.h>
 #include <sys/render.h>
 #include <sys/AI.h>
 #include <sprites/char.h>
@@ -202,7 +203,9 @@ void man_ent_reset_pos(ent_t* e){
    e->prevx = e->x;
    e->prevy = e->y;
 
-   if(e->hp == 0){
+   //los objetos no puede tener la vida a 0 es
+   if(!e->hp){
+      man_level_kill_enemy();
       e->death(e);
    }
 // esta wea se va a descontrolar
@@ -211,7 +214,7 @@ void man_ent_reset_pos(ent_t* e){
 
 ent_t* man_ent_create(){
    ent_t* res = next_free_ent;
-   next_free_ent = res + 1;
+   ++next_free_ent;
    return res;
 }
 //tipo tiene en los 2 primeros bit el numero de entidades que crea y en los siguientes la entidad en la que empieza a crear
@@ -222,7 +225,6 @@ void man_ent_create_class(u8 type, u8 x, u8 y){
    ent_t* class_init = &init_player;
    class_init += (type & 0b00111111);
    class_ents = class_ents >> 6;
-
    while(class_ents){
       ent_t* ent_in_class = man_ent_create_from_template(class_init);
       ent_in_class->x = x;
