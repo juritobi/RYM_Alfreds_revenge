@@ -128,9 +128,9 @@ u8 tilemap_start[tilemap_size];
 
 void lt_room(){
     tilemap_start[21*tilemap_W + 9] = 19;
-    sys_ren_draw_tile(19, 9*4, (21+3)*8 );
+    sys_ren_set_tile(19, 9*4, (21+3)*8 );
     tilemap_start[21*tilemap_W + 10] = 19;
-    sys_ren_draw_tile(19, 10*4, (21+3)*8);
+    sys_ren_set_tile(19, 10*4, (21+3)*8);
     cleared_rooms[0]=0x01;
 }
 void lb_room(){
@@ -158,7 +158,7 @@ void final_room(){
     else{
         if(cleared_rooms[level.id] & 1){
             tilemap_start[2*tilemap_W + 6] = 27;
-            sys_ren_draw_tile(27, 6*4, (2+3)*8);
+            sys_ren_set_tile(27, 6*4, (2+3)*8);
         }
         if(cleared_rooms[level.id] & 2){
             tilemap_start[2*tilemap_W + 13] = 27;

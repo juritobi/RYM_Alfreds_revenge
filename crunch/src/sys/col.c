@@ -159,7 +159,7 @@ void sys_col_one(ent_t* e){
         while(y_tile_num){
             --y_tile_num;
             byte_tile_y = (tile_y + 3 + y_tile_num)*y_div;
-            sys_ren_draw_tile( tilemap[tile_pointer+y_tile_num*tilemap_W], byte_tile_x, byte_tile_y);
+            sys_ren_set_tile( tilemap[tile_pointer+y_tile_num*tilemap_W], byte_tile_x, byte_tile_y);
         }
     }
     //redibujado de tiles
@@ -191,7 +191,7 @@ void sys_col_one(ent_t* e){
         while(x_tile_num){
             --x_tile_num;
             byte_tile_x = (tile_x + x_tile_num)*x_div;
-            sys_ren_draw_tile( tilemap[tile_pointer+x_tile_num], byte_tile_x, byte_tile_y);
+            sys_ren_set_tile( tilemap[tile_pointer+x_tile_num], byte_tile_x, byte_tile_y);
             
         }
     }
