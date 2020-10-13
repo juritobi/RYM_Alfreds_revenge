@@ -193,5 +193,24 @@ void man_game_play(){
         sys_ren_render();
         cpct_setBorder(HW_BLACK);
 
+        /*cpct_waitVSYNC();
+        cpct_waitHalts(2);
+        cpct_waitVSYNC();
+        cpct_waitVSYNC();
+        cpct_waitHalts(2);
+        cpct_waitVSYNC();
+        cpct_waitVSYNC();
+        cpct_waitHalts(2);
+        cpct_waitVSYNC();
+        cpct_waitVSYNC();
+        cpct_waitHalts(2);
+        cpct_waitVSYNC();
+        cpct_waitVSYNC();
+        cpct_waitHalts(2);
+        cpct_waitVSYNC();
+        cpct_waitVSYNC();
+        cpct_waitHalts(2);
+        cpct_waitVSYNC();*/
+
     }
 }
