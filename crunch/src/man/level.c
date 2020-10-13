@@ -102,30 +102,30 @@ const lvl_t i_lvl5 = {
     }
 };
 
-lvl_t* level;
+lvl_t level;
 u8 tilemap_start[tilemap_size];
 #define tilemap_end  (tilemap_start + tilemap_size - 1)
 
 void man_level_init(){
-    level = &i_lvl0;
+    cpct_memcpy(&level, &i_lvl0, sizeof(lvl_t));
     man_level_load(16, 80);
 }
 
 void man_level_load(u8 px, u8 py){
     u8 it = 0;
-    ent_class* class = &level->entities[it]; 
+    ent_class* class = &level.entities[it]; 
 
-    cpct_zx7b_decrunch_s(tilemap_end, level->self);
+    cpct_zx7b_decrunch_s(tilemap_end, level.self);
     sys_ren_draw_tilemap(tilemap_start);
     
     man_ent_init();
     man_ent_create_class(e_c_char, px, py);
 
     while(class->type != e_c_undefined){
-        level->enemies++;
+        level.enemies++;
         man_ent_create_class(class->type, class->x, class->y);
         it++;
-        class = &level->entities[it];
+        class = &level.entities[it];
     }
 
     cpct_waitVSYNC();
@@ -138,28 +138,28 @@ void man_level_update(){
     ent_t* player = man_ent_get_char();
     if(player->x == 0){
         player->x = 72;
-        level = level->left;
+        cpct_memcpy(&level, level.left, sizeof(lvl_t));
         man_level_load(player->x, player->y);
     }
     else if(player->x == 76){
         player->x = 4;
-        level = level->right;
+        cpct_memcpy(&level, level.right, sizeof(lvl_t));
         man_level_load(player->x, player->y);
     }
     else if(player->y == 24){
         player->y = 168;
-        level = level->top;
+        cpct_memcpy(&level, level.top, sizeof(lvl_t));
         man_level_load(player->x, player->y);
     }
     else if(player->y == 176){
         player->y = 32;
-        level = level->bot;
+        cpct_memcpy(&level, level.bot, sizeof(lvl_t));
         man_level_load(player->x, player->y);
     }
 }
 
 void man_level_kill_enemy(){
-    //level->enemies--;
+    level.enemies--;
 }
 
 u8* man_level_get_tilemap(){
