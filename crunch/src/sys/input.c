@@ -1,18 +1,19 @@
 #include "input.h"
 #include <man/man_ent.h>
 
+#define swordCD 15
+#define swordDuration 10
+#define jumpCD 10
+#define PiumPiumCD  25//las constantes si son un numero hay que hacerlas con #define no const, si utilizas const utilizan espacio en mememoria del amstrad, con define es una variable del compilador
+
 const i8 jumptable[] = {-2, -2, -2, -2, -2, 0, 0}; //si lo ponemos en bytes sirectamente cons ahorramos un operacion del procesador
 
 i8 swordUp = 0;
 i8 swordTime = 0;
-const i8 swordCD = 15; //las constantes si son un numero hay que hacerlas con #define no const, si utilizas const utilizan espacio en mememoria del amstrad, con define es una variable del compilador
 i8 swordCount = 15;
-const i8 swordDuration = 10;
 
-const i8 jumpCD = 10;
 i8 jumpCont = 10;
 
-const i8 PiumPiumCD  = 25;
 i8 PiumPiumCont = 25;
 
 void sys_input_one(ent_t* ent){
@@ -55,7 +56,7 @@ void sys_input_one(ent_t* ent){
     }
     // PROYECTIL
 
-    if(cpct_isKeyPressed(Key_E) && PiumPiumCont == PiumPiumCD ){
+    if(cpct_isKeyPressed(Key_P) && PiumPiumCont == PiumPiumCD ){
         man_ent_resurrect(ent, 2);
         PiumPiumCont = 0;
     }
@@ -65,30 +66,32 @@ void sys_input_one(ent_t* ent){
     }
     
     // ESPADA
-
-    if(cpct_isKeyPressed(Key_Q) && swordUp == 0 && swordCount == swordCD){
+    //no lo tengo del todo claro pero parece que se puede hacer con menos variables
+    if(cpct_isKeyPressed(Key_O) && !swordUp && swordCount == swordCD){
         man_ent_resurrect(ent, 1);
         swordUp = 1;
+        ent->w = 8;
     }
 
     if(swordCount < swordCD){
         swordCount++;
     }
 
-    if(swordUp != 0 && swordTime < swordDuration){
+    if(swordUp && swordTime < swordDuration){
         man_ent_move(ent, 1);
         swordTime++;
+        ent->w = 8;
     }
 
     if(swordTime == swordDuration){
         swordUp = 0;
         swordTime = 0;
         swordCount = 0;
+        ent->w = 4;
     }
-
-
 }
 
 void sys_input_update(){
-    man_ent_forall_type(sys_input_one, e_t_input);
+    ent_t* player = man_ent_get_char();
+    sys_input_one(player);
 }

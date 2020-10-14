@@ -195,6 +195,9 @@ void sys_col_one(ent_t* e){
             
         }
     }
+    if((e->type & e_t_input) == e_t_input){
+        e->w=4;
+    }
 }
 
 void sys_col_ally_enemy(ent_t* ally, ent_t* enemy){
