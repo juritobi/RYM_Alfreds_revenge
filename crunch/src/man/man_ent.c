@@ -1,4 +1,5 @@
 #include "man_ent.h"
+#include <constants.h>
 #include <man/man_game.h>
 #include <man/level.h>
 #include <sys/render.h>
@@ -228,7 +229,33 @@ void man_ent_char_death(ent_t* dead_ent){
    man_game_exit();
 }
 void man_ent_generic_death(ent_t* dead_ent){
+
+   u8* tilemap = man_level_get_tilemap();
+   u8 tile_x = dead_ent->x/4;
+   u8 tile_y = dead_ent->y/8 - 3;// -3 para por que el hud son 3 tiles
+   u8 tile_w = dead_ent->w/4;
+   u8 tile_h = dead_ent->h/8;
+   u8 not_exact_tile_x = dead_ent->x%4;
+   u8 not_exact_tile_y = dead_ent->y%8;
+
+   u16 tile_pointer = tile_y * tilemap_W + tile_x;
+   u8 byte_tile_x;
+   u8 byte_tile_y;
+
    dead_ent->type |= e_t_dead;
+   if( not_exact_tile_y) ++tile_h;
+   if( not_exact_tile_x) ++tile_w;
+   while(tile_w){
+      u8 h = tile_h;
+      tile_w--;
+      byte_tile_x = (tile_x + tile_w)*4;
+      while(h){
+         h--;
+         byte_tile_y = (tile_y +3 + h)*8;
+         sys_ren_set_tile( tilemap[tile_pointer + h*tilemap_W + tile_w], byte_tile_x, byte_tile_y);
+      }
+      h= tile_h;
+   }
 }
 
 void man_ent_forall(Ptrf_v_ep fun){

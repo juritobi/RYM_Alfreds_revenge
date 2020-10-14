@@ -5,6 +5,7 @@
         "initializer_list": "c",
         "ranges": "c",
         "utility": "c",
-        "variant": "c"
+        "variant": "c",
+        "cstddef": "c"
     }
 }

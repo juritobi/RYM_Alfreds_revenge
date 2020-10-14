@@ -76,8 +76,8 @@ void sys_input_one(ent_t* ent){
     if(swordUp){
         swordUp--;
         if(!swordUp){
+            ent_t* to_kill = ent + 1;
             swordCooling = swordCD;
-            ent_t* to_kill = ent+1;
             to_kill->death(to_kill);
         }
     }
