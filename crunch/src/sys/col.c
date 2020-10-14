@@ -3,6 +3,7 @@
 #include <man/man_game.h>
 #include <man/level.h>
 #include <sys/render.h>
+#include <sys/input.h>
 #include <constants.h>
 
 
@@ -21,19 +22,28 @@ void sys_col_one(ent_t* e){
     u8* tilemap = man_level_get_tilemap();
     u8 tile_x = e->x/x_div;
     u8 tile_y = e->y/y_div - 3;// -3 para por que el hud son 3 tiles
-
-    u8 right_tile = tile_x + ((e->w/x_div) | 0x01);
-    u8 left_tile = tile_x - 1;
-    u8 bot_tile = tile_y + ((e->h/y_div) | 0x01);
-    u8 top_tile = tile_y - 1; 
-    u16 tile_pointer;
-
+    u8 tile_w = e->w/x_div;
+    u8 tile_h = e->h/y_div;
     u8 not_exact_tile_x = e->x%x_div;
     u8 not_exact_tile_y = e->y%y_div;
 
+    u8 right_tile;
+    u8 left_tile;
+    u8 bot_tile;
+    u8 top_tile; 
+    u16 tile_pointer;
+
+    if(tile_w == 0) tile_w = 1;
+    if(tile_h == 0) tile_h = 1;
+
+    right_tile = tile_x + tile_w;
+    left_tile = tile_x - 1;
+    bot_tile = tile_y + tile_h;
+    top_tile = tile_y - 1; 
+
     if(e->vx){
         if(!not_exact_tile_x){
-            u8 width = (e->h/y_div) | 0x01;
+            u8 width = tile_h;
             u8 tile_type;
             if(not_exact_tile_y){
                 ++width;
@@ -58,7 +68,7 @@ void sys_col_one(ent_t* e){
     }
     if(e->vy){
         if(!not_exact_tile_y){
-            u8 width = (e->w/x_div) | 0x01;
+            u8 width = tile_w;
             u8 tile_type;
             if(not_exact_tile_x){
                 ++width;
@@ -130,9 +140,17 @@ void sys_col_one(ent_t* e){
         }
     }
 
+
+    if((e->type & e_t_input) == e_t_input){
+        u8 swordUp = sys_input_get_sword_up();
+        if(swordUp){
+            tile_w++;
+            right_tile++;
+        }
+    }
     //redibujado de tiles
     if(e->vx){
-        u8 y_tile_num = (e->h/y_div)| 0x01;
+        u8 y_tile_num = tile_h;
         u8 byte_tile_x;
         u8 byte_tile_y;
 
@@ -164,7 +182,7 @@ void sys_col_one(ent_t* e){
     }
     //redibujado de tiles
     if(e->vy){
-        u8 x_tile_num = (e->w/x_div) | 0x01;
+        u8 x_tile_num = tile_w;
         u8 byte_tile_x;
         u8 byte_tile_y;
 
@@ -194,9 +212,6 @@ void sys_col_one(ent_t* e){
             sys_ren_set_tile( tilemap[tile_pointer+x_tile_num], byte_tile_x, byte_tile_y);
             
         }
-    }
-    if((e->type & e_t_input) == e_t_input){
-        e->w=4;
     }
 }
 

@@ -284,19 +284,17 @@ void man_ent_forall_col_type( Ptrf_v_epep fun, u8 first_type, u8 second_type){
 void man_ent_resurrect(ent_t* e, u8 displacement){
    ent_t* e_to_res = e + displacement;
    e_to_res->type &= ~e_t_dead;
-   e_to_res->x = e->x + e_to_res->originalx;
-   e_to_res->y = e->y + e_to_res->originaly;
+   man_ent_move(e, displacement);
    e_to_res->vx = e_to_res->originalvx;
    e_to_res->vy = e_to_res->originalvy;
    
 }
-
 void man_ent_move(ent_t* e, u8 displacement){
    ent_t* e_to_move = e + displacement;
    e_to_move->x = e->x + e_to_move->originalx;
    e_to_move->y = e->y + e_to_move->originaly;
-   
 }
+
 ent_t* man_ent_get_char(){
    return &ents[0];
 }

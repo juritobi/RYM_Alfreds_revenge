@@ -9,8 +9,7 @@
 const i8 jumptable[] = {-2, -2, -2, -2, -2, 0, 0}; //si lo ponemos en bytes sirectamente cons ahorramos un operacion del procesador
 
 i8 swordUp = 0;
-i8 swordTime = 0;
-i8 swordCount = 15;
+i8 swordCooling = 0;
 
 i8 jumpCont = 10;
 
@@ -31,7 +30,7 @@ void sys_input_one(ent_t* ent){
     }
 
     //SALTO Y SUS MIERDAS
-    if(cpct_isKeyPressed(Key_W) && ent->on_ground && ent->jumping == -1 && jumpCont == swordCD){
+    if(cpct_isKeyPressed(Key_W) && ent->on_ground && ent->jumping == -1 && jumpCont == jumpCD){
         ent->jumping = 0;
     }
     ent->on_ground = 0;
@@ -39,7 +38,7 @@ void sys_input_one(ent_t* ent){
         ent->on_ground=2;
     }
 
-    if(jumpCont < swordCD){
+    if(jumpCont < jumpCD){
         jumpCont++;
     }
 
@@ -67,28 +66,32 @@ void sys_input_one(ent_t* ent){
     
     // ESPADA
     //no lo tengo del todo claro pero parece que se puede hacer con menos variables
-    if(cpct_isKeyPressed(Key_O) && !swordUp && swordCount == swordCD){
-        man_ent_resurrect(ent, 1);
-        swordUp = 1;
-        ent->w = 8;
+    
+    if(cpct_isKeyPressed(Key_O) && !swordUp && !swordCooling){
+        swordUp = swordDuration;
     }
+    if(swordCooling){
+        swordCooling--;
+    }
+    if(swordUp){
+        swordUp--;
+        if(!swordUp){
+            swordCooling = swordCD;
+            ent_t* to_kill = ent+1;
+            to_kill->death(to_kill);
+        }
+    }
+}
 
-    if(swordCount < swordCD){
-        swordCount++;
+void sys_input_sword_move(){
+    ent_t* player = man_ent_get_char();
+    if(swordUp){
+        man_ent_resurrect(player, 1);
     }
+}
 
-    if(swordUp && swordTime < swordDuration){
-        man_ent_move(ent, 1);
-        swordTime++;
-        ent->w = 8;
-    }
-
-    if(swordTime == swordDuration){
-        swordUp = 0;
-        swordTime = 0;
-        swordCount = 0;
-        ent->w = 4;
-    }
+u8 sys_input_get_sword_up(){
+    return swordUp;
 }
 
 void sys_input_update(){

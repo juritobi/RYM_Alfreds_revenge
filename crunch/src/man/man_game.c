@@ -62,6 +62,7 @@ void man_game_play(){
         sys_col_update();
         //cpct_setBorder(HW_PINK);
         sys_phy_update();
+        sys_input_sword_move();
         //cpct_setBorder(HW_YELLOW);
         man_level_update();
         //cpct_setBorder(HW_MAGENTA);
@@ -90,7 +91,7 @@ void man_game_play(){
         cpct_waitVSYNC();
         cpct_waitVSYNC();
         cpct_waitHalts(2);
-        cpct_waitVSYNC();*/
-
+        cpct_waitVSYNC();
+*/
     }
 }
