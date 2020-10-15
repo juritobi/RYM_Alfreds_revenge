@@ -222,12 +222,11 @@ void sys_col_ally_enemy(ent_t* ally, ent_t* enemy){
         if( !(ally->x+ally->w <= enemy->x  ||  ally->x >= enemy->x+enemy->w) ){
             if(!(ally->y+ally->h <= enemy->y  ||  ally->y >= enemy->y+enemy->h) ) {
                 man_ent_hit(ally);
-                ally->action &= 0xFC;
                 if(ally->prevx < enemy->prevx){
-                    ally->action |= 0x02;
+                    ally->dir = -1;
                 }
                 else{
-                    ally->action |= 0x01;
+                    ally->dir = 1;
                 }
             }
         }
@@ -238,12 +237,11 @@ void sys_col_allybreaker_enemy(ent_t* breaker, ent_t* enemy){
         if( !(breaker->x+breaker->w <= enemy->x  ||  breaker->x >= enemy->x+enemy->w) ){
             if(!(breaker->y+breaker->h <= enemy->y  ||  breaker->y >= enemy->y+enemy->h) ) {
                 man_ent_hit(enemy);
-                enemy->action &= 0xFC;
                 if(enemy->prevx < breaker->prevx){
-                    enemy->action |= 0x02;
+                    enemy->dir = -1;
                 }
                 else{
-                    enemy->action |= 0x01;
+                    enemy->dir = 1;
                 }
             }
         }
@@ -252,10 +250,7 @@ void sys_col_allybreaker_enemy(ent_t* breaker, ent_t* enemy){
 
 void sys_col_reduceTimeInvulnerable(ent_t* e){
     if(e->knockback != -1 && e->knockback < sizeof(knocknackX)){ 
-        if(e->action&0x01) e->vx = knocknackX[e->knockback];
-        else if(e->action&0x02)e->vx = -knocknackX[e->knockback];
-        else e->vx = 0;
-        
+        e->vx = knocknackX[e->knockback]*e->dir;
         e->vy = knocknackY[e->knockback];
         e->knockback++;
     }

@@ -27,7 +27,7 @@ const ent_t init_player = {
    5,5,0,                                                       //u8 hp, mp, damage;
    0,                                                          // invulnerable
    -1,                                                           // knockback
-   4,                                                           //u8 action;//0000-*-00-*-00 anim_action-*-anim_dir-*-knockback_dir
+   4,                                                           //u8 dir;//0000-*-00-*-00 anim_action-*-anim_dir-*-knockback_dir
    //AI
    0,                                                          //Ptrf_v_ep act;
    0,0,                                                        //i8 prev_vx, prev_vy;
@@ -58,7 +58,7 @@ const ent_t init_sword = {
    1,0,1,                                                       //u8 hp, mp, damage;
    50,                                                          // invulnerable
    -1,                                                           // knockback
-   4,                                                           //u8 action;//0000-*-00-*-00 anim_action-*-anim_dir-*-knockback_dir
+   4,                                                           //u8 dir;//0000-*-00-*-00 anim_action-*-anim_dir-*-knockback_dir
    //AI
    0,                                                          //Ptrf_v_ep act;
    0,0,                                                        //i8 prev_vx, prev_vy;
@@ -89,7 +89,7 @@ const ent_t init_knife = {
    1,0,1,                                                       //u8 hp, mp, damage;
    50,                                                          // invulnerable
    0,                                                           // knockback
-   4,                                                           //u8 action;//0000-*-00-*-00 anim_action-*-anim_dir-*-knockback_dir
+   4,                                                           //u8 dir;//0000-*-00-*-00 anim_action-*-anim_dir-*-knockback_dir
    //AI
    0,                                                          //Ptrf_v_ep act;
    0,0,                                                        //i8 prev_vx, prev_vy;
@@ -122,7 +122,7 @@ const ent_t init_shoot = {
    1,0,1,                                                       //u8 hp, mp, damage;
    50,                                                          // invulnerable
    0,                                                           // knockback
-   4,                                                           //u8 action;//0000-*-00-*-00 anim_action-*-anim_dir-*-knockback_dir
+   4,                                                           //u8 dir;//0000-*-00-*-00 anim_action-*-anim_dir-*-knockback_dir
    //AI
    sys_AI_shoot,                                               //Ptrf_v_ep act;
    0,0,                                                        //i8 prev_vx, prev_vy;
@@ -154,7 +154,7 @@ const ent_t init_shoot_son = {
    1,0,1,                                                       //u8 hp, mp, damage;
    50,                                                          // invulnerable
    0,                                                           // knockback
-   4,                                                           //u8 action;//0000-*-00-*-00 anim_action-*-anim_dir-*-knockback_dir
+   4,                                                           //u8 dir;//0000-*-00-*-00 anim_action-*-anim_dir-*-knockback_dir
    //AI
    0,                                                          //Ptrf_v_ep act;
    0,0,                                                        //i8 prev_vx, prev_vy;
@@ -188,7 +188,7 @@ const ent_t init_zombi = {
    2,0,1,                                                       //u8 hp, mp, damage;
    0,                                                          // invulnerable
    -1,                                                           // knockback
-   4,                                                           //u8 action;//0000-*-00-*-00 anim_action-*-anim_dir-*-knockback_dir
+   4,                                                           //u8 dir;//0000-*-00-*-00 anim_action-*-anim_dir-*-knockback_dir
    //AI
    sys_AI_zombi,                                               //Ptrf_v_ep act;
    0,0,                                                        //i8 prev_vx, prev_vy;
