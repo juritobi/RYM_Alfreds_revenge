@@ -218,38 +218,32 @@ void sys_col_one(ent_t* e){
 }
 
 void sys_col_ally_enemy(ent_t* ally, ent_t* enemy){
-
     if(ally->invulnerable == 0){
         if( !(ally->x+ally->w <= enemy->x  ||  ally->x >= enemy->x+enemy->w) ){
             if(!(ally->y+ally->h <= enemy->y  ||  ally->y >= enemy->y+enemy->h) ) {
-                //probablemente lo ideal seria haer esto en una funcion man_ent_hit() y comprobar y hacer todo lo que se tenga que hacer ahi ademas nos quitariamos una de estas dos funcions que hacen casi lo mismo
-                ally->hp--;
-                ally->invulnerable = 50;
-                ally->knockback = 0;
+                man_ent_hit(ally);
+                ally->action &= 0xFC;
                 if(ally->prevx < enemy->prevx){
-                    ally->dir = -1;
+                    ally->action |= 0x02;
                 }
                 else{
-                    ally->dir = 1;
+                    ally->action |= 0x01;
                 }
             }
         }
     }
 }
-
-void sys_col_enemy_ally(ent_t* enemy, ent_t* ally){
+void sys_col_allybreaker_enemy(ent_t* breaker, ent_t* enemy){
     if(enemy->invulnerable == 0){
-        if( !(ally->x+ally->w <= enemy->x  ||  ally->x >= enemy->x+enemy->w) ){
-            if(!(ally->y+ally->h <= enemy->y  ||  ally->y >= enemy->y+enemy->h) ) {
-                //probablemente lo ideal seria haer esto en una funcion man_ent_hit() y comprobar y hacer todo lo que se tenga que hacer ahi ademas nos quitariamos una de estas dos funcions que hacen casi lo mismo
-                enemy->hp--;
-                enemy->invulnerable = 50;
-                enemy->knockback = 0;
-                if(enemy->prevx < ally->prevx){
-                    enemy->dir = -1;
+        if( !(breaker->x+breaker->w <= enemy->x  ||  breaker->x >= enemy->x+enemy->w) ){
+            if(!(breaker->y+breaker->h <= enemy->y  ||  breaker->y >= enemy->y+enemy->h) ) {
+                man_ent_hit(enemy);
+                enemy->action &= 0xFC;
+                if(enemy->prevx < breaker->prevx){
+                    enemy->action |= 0x02;
                 }
                 else{
-                    enemy->dir = 1;
+                    enemy->action |= 0x01;
                 }
             }
         }
@@ -257,12 +251,11 @@ void sys_col_enemy_ally(ent_t* enemy, ent_t* ally){
 }
 
 void sys_col_reduceTimeInvulnerable(ent_t* e){
-    if(e->invulnerable > 0){
-        e->invulnerable--;
-    }
-    if(e->knockback != -1 && e->knockback < sizeof(knocknackX)){
+    if(e->knockback != -1 && e->knockback < sizeof(knocknackX)){ 
+        if(e->action&0x01) e->vx = knocknackX[e->knockback];
+        else if(e->action&0x02)e->vx = -knocknackX[e->knockback];
+        else e->vx = 0;
         
-        e->vx = knocknackX[e->knockback] * e->dir;
         e->vy = knocknackY[e->knockback];
         e->knockback++;
     }
@@ -272,20 +265,8 @@ void sys_col_reduceTimeInvulnerable(ent_t* e){
 }
 
 void sys_col_update(){
-
-    man_ent_forall_col_type(sys_col_enemy_ally, col_t_enemy, col_t_ally_breaker);
-    //man_ent_forall_col_type(sys_col_ally_enemy, col_t_ally, col_t_enemy|col_t_enemy_breaker);
-    man_ent_forall_col_type_individual(sys_col_reduceTimeInvulnerable, col_t_ally); //esto tiene que ir en el update del manejdor de entidades y esta malgastando tiempo recorriendo 2 veces el array de entidades
-    man_ent_forall_col_type_individual(sys_col_reduceTimeInvulnerable, col_t_enemy);//esto tiene que ir en el update del manejdor de entidades y esta malgastando tiempo recorriendo 2 veces el array de entidades
+    man_ent_forall_col_type(sys_col_allybreaker_enemy, col_t_ally_breaker, col_t_enemy);
+    man_ent_forall_col_type(sys_col_ally_enemy, col_t_ally, col_t_enemy|col_t_enemy_breaker);
+    man_ent_forall_col_type_individual(sys_col_reduceTimeInvulnerable, col_t_ally|col_t_enemy);
     man_ent_forall_type(sys_col_one, e_t_col); //colisiones con tiles
 }
-
-/*
-casos:
-
-saltamos debajo de un bloque blanco -> no poder saltar directamente
-saltar pero en medio del salto haya un bloque blanco -> cancelar el salto y caer al suelo
-saltar y caer en una plataforma -> cancelar el salto y caer en la plataforma SIN QUEDARSE DENTRO DE ELLA POR FAVOR
-saltar de una plataforma al suelo -> acabar el salto y caer hasta el suelo
-andar fuera de una plataforma -> caer hasta el
-*/

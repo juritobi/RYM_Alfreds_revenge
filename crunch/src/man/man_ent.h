@@ -43,8 +43,8 @@ typedef struct et{
    //CHARACTERS
    u8 hp, mp, damage;
    u8 invulnerable;
-   u8 knockback;
-   u8 dir;
+   i8 knockback;
+   u8 action;//0000-*-00-*-00 anim_action-*-anim_dir-*-knockback_dir
    //AI
    Ptrf_v_ep act;
    i8 prev_vx, prev_vy;
@@ -80,8 +80,10 @@ void man_ent_forall_type(Ptrf_v_ep fun, u8 types);
 void man_ent_forall_col_type_individual( Ptrf_v_ep fun, u8 types);
 void man_ent_forall_col_type(Ptrf_v_epep fun, u8 first_type, u8 second_type);
 
-void man_ent_reset_pos(ent_t* dead_ent);
+void man_ent_update(ent_t* dead_ent);
 
+
+void man_ent_hit(ent_t* hitted);
 void man_ent_char_death(ent_t* dead_ent);
 void man_ent_generic_death(ent_t* dead_ent);
 

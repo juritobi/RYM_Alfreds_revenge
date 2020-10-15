@@ -27,14 +27,14 @@ const ent_t init_player = {
    5,5,0,                                                       //u8 hp, mp, damage;
    0,                                                          // invulnerable
    -1,                                                           // knockback
-   0,                                                           // dir de colision ultima;
+   4,                                                           //u8 action;//0000-*-00-*-00 anim_action-*-anim_dir-*-knockback_dir
    //AI
    0,                                                          //Ptrf_v_ep act;
    0,0,                                                        //i8 prev_vx, prev_vy;
    //Input
    0,-1,                                                        //i8 on_ground, jumping;   
    //Animation
-   anim_frame_time,                                                          //u8 step;
+   anim_frame_time,                                              //u8 anim_timer;
    char_walking_right,                                             //anim_frame_t* anim;        
    //Collisions
    col_t_ally,                                                 //u8 col_type;                  
@@ -58,13 +58,13 @@ const ent_t init_sword = {
    1,0,1,                                                       //u8 hp, mp, damage;
    50,                                                          // invulnerable
    -1,                                                           // knockback
-   0,                                                          // dir de colision ultima;
+   4,                                                           //u8 action;//0000-*-00-*-00 anim_action-*-anim_dir-*-knockback_dir
    //AI
    0,                                                          //Ptrf_v_ep act;
    0,0,                                                        //i8 prev_vx, prev_vy;
    //Input
    0,0,                                                         //i8 on_ground, jumping;     
-      //Animation
+   //Animation
    0,                                                          //u8 step;
    0,                                             //const u16* animation;    
    //Collisions
@@ -89,7 +89,7 @@ const ent_t init_knife = {
    1,0,1,                                                       //u8 hp, mp, damage;
    50,                                                          // invulnerable
    0,                                                           // knockback
-   0,                                                           // dir de colision ultima;
+   4,                                                           //u8 action;//0000-*-00-*-00 anim_action-*-anim_dir-*-knockback_dir
    //AI
    0,                                                          //Ptrf_v_ep act;
    0,0,                                                        //i8 prev_vx, prev_vy;
@@ -122,7 +122,7 @@ const ent_t init_shoot = {
    1,0,1,                                                       //u8 hp, mp, damage;
    50,                                                          // invulnerable
    0,                                                           // knockback
-   0,                                                           // dir de colision ultima;
+   4,                                                           //u8 action;//0000-*-00-*-00 anim_action-*-anim_dir-*-knockback_dir
    //AI
    sys_AI_shoot,                                               //Ptrf_v_ep act;
    0,0,                                                        //i8 prev_vx, prev_vy;
@@ -154,7 +154,7 @@ const ent_t init_shoot_son = {
    1,0,1,                                                       //u8 hp, mp, damage;
    50,                                                          // invulnerable
    0,                                                           // knockback
-   0,                                                           // dir de colision ultima;
+   4,                                                           //u8 action;//0000-*-00-*-00 anim_action-*-anim_dir-*-knockback_dir
    //AI
    0,                                                          //Ptrf_v_ep act;
    0,0,                                                        //i8 prev_vx, prev_vy;
@@ -188,7 +188,7 @@ const ent_t init_zombi = {
    2,0,1,                                                       //u8 hp, mp, damage;
    0,                                                          // invulnerable
    -1,                                                           // knockback
-   0 ,                                                          // dir de colision ultima;
+   4,                                                           //u8 action;//0000-*-00-*-00 anim_action-*-anim_dir-*-knockback_dir
    //AI
    sys_AI_zombi,                                               //Ptrf_v_ep act;
    0,0,                                                        //i8 prev_vx, prev_vy;
@@ -214,17 +214,12 @@ void man_ent_init(){
    cpct_memset (ents, e_t_invalid, sizeof(ents)+1);
 }
 
-void man_ent_reset_pos(ent_t* e){
+void man_ent_update(ent_t* e){
    e->prevx = e->x;
    e->prevy = e->y;
-
-   //los objetos no puede tener la vida a 0 es
-   if(!e->hp){
-      e->death(e);
-      man_level_kill_enemy();
+   if(e->invulnerable > 0){
+      e->invulnerable--;
    }
-// esta wea se va a descontrolar
-   // si enemigo o ally vida = 0 -> procede a cometer sudoku
 }
 
 ent_t* man_ent_create(){
@@ -254,6 +249,17 @@ ent_t* man_ent_create_from_template(const ent_t* template){
    cpct_memcpy(res, template, sizeof(ent_t));
    return res;
 }
+void man_ent_hit(ent_t* hitted){
+   hitted->hp--;
+   if(hitted->hp==0){
+      hitted->death(hitted);
+      man_level_kill_enemy();
+      return;
+   }
+   hitted->invulnerable = 50;
+   hitted->knockback = 0;
+}
+
 
 void man_ent_char_death(ent_t* dead_ent){
    ent_t* e = dead_ent;
@@ -313,7 +319,7 @@ void man_ent_forall_col_type_individual( Ptrf_v_ep fun, u8 types){
    ent_t* res = ents;
    while(res->type != e_t_invalid){
       if(!(res->type & e_t_dead)){
-         if((res->col_type & types) == types){
+         if(res->col_type & types){
             fun(res);
          }
       }
@@ -341,7 +347,6 @@ void man_ent_forall_col_type( Ptrf_v_epep fun, u8 first_type, u8 second_type){
       ents2 = ents;
    }
 }
-
 
 void man_ent_resurrect(ent_t* e, u8 displacement){
    ent_t* e_to_res = e + displacement;

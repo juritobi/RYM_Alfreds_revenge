@@ -7,6 +7,7 @@
         "utility": "c",
         "variant": "c",
         "cstddef": "c",
-        "tuple": "cpp"
+        "tuple": "cpp",
+        "ostream": "cpp"
     }
 }
