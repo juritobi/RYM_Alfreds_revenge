@@ -5,6 +5,7 @@
 #include <sys/AI.h>
 #include <sys/UI.h>
 #include <sys/col.h>
+#include <sys/anim.h>
 #include <man/level.h>
 #include <man/man_ent.h>
 
@@ -59,6 +60,7 @@ void man_game_play(){
         //cpct_setBorder(HW_WHITE);
         sys_input_update();
         //cpct_setBorder(HW_CYAN);
+        sys_anim_update();
         sys_col_update();
         //cpct_setBorder(HW_PINK);
         sys_phy_update();

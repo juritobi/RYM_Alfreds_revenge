@@ -4,6 +4,7 @@
 #include <man/level.h>
 #include <sys/render.h>
 #include <sys/AI.h>
+#include <sys/anim.h>
 #include <sprites/char.h>
 #include <sprites/sword.h>
 #include <sprites/shooter.h>
@@ -13,7 +14,7 @@
 /*character-----------------------------------------------------*/
 const ent_t init_player = {
    //generic
-   e_t_physics | e_t_render | e_t_input | e_t_col,             //u8 type;
+   e_t_physics | e_t_render | e_t_input | e_t_col |e_t_anim,             //u8 type;
    0,0,                                                        //u8 x, y;
    0,0,                                                        //u8 prevx, prevy;
    4,24,                                                       //u8 w, h;
@@ -29,7 +30,10 @@ const ent_t init_player = {
    0,                                                          //Ptrf_v_ep act;
    0,0,                                                        //i8 prev_vx, prev_vy;
    //Input
-   0,-1,                                                        //i8 on_ground, jumping;        
+   0,-1,                                                        //i8 on_ground, jumping;   
+   //Animation
+   4,                                                          //u8 step;
+   char_walk_right,                                             //anim_frame_t* anim;        
    //Collisions
    col_t_ally,                                                 //u8 col_type;                  
    //physics
@@ -55,7 +59,10 @@ const ent_t init_sword = {
    0,                                                          //Ptrf_v_ep act;
    0,0,                                                        //i8 prev_vx, prev_vy;
    //Input
-   0,0,                                                         //i8 on_ground, jumping;        
+   0,0,                                                         //i8 on_ground, jumping;     
+      //Animation
+   0,                                                          //u8 step;
+   0,                                             //const u16* animation;    
    //Collisions
    col_t_ally_breaker,                                         //u8 col_type;                  
    //physics
@@ -82,6 +89,9 @@ const ent_t init_knife = {
    0,0,                                                        //i8 prev_vx, prev_vy;
    //Input
    0,0,                                                         //i8 on_ground, jumping;        
+      //Animation
+   0,                                                          //u8 step;
+   0,                                             //const u16* animation; 
    //Collisions
    col_t_ally_breaker,                                         //u8 col_type;                  
    //physics
@@ -109,7 +119,10 @@ const ent_t init_shoot = {
    sys_AI_shoot,                                               //Ptrf_v_ep act;
    0,0,                                                        //i8 prev_vx, prev_vy;
    //Input
-   0,0,                                                         //i8 on_ground, jumping;        
+   0,0,                                                         //i8 on_ground, jumping;    
+      //Animation
+   0,                                                          //u8 step;
+   0,                                             //const u16* animation;     
    //Collisions
    col_t_enemy,                                                //u8 col_type;                  
    //physics
@@ -136,7 +149,10 @@ const ent_t init_shoot_son = {
    0,                                                          //Ptrf_v_ep act;
    0,0,                                                        //i8 prev_vx, prev_vy;
    //Input
-   0,0,                                                        //i8 on_ground, jumping;        
+   0,0,                                                        //i8 on_ground, jumping;    
+      //Animation
+   0,                                                          //u8 step;
+   0,                                             //const u16* animation;     
    //Collisions
    col_t_enemy_breaker,                                        //u8 col_type;                  
    //physics
@@ -165,7 +181,10 @@ const ent_t init_zombi = {
    sys_AI_zombi,                                               //Ptrf_v_ep act;
    0,0,                                                        //i8 prev_vx, prev_vy;
    //Input
-   0,0,                                                         //i8 on_ground, jumping;        
+   0,0,                                                         //i8 on_ground, jumping;     
+      //Animation
+   0,                                                          //u8 step;
+   0,                                             //const u16* animation;    
    //Collisions
    col_t_enemy,                                                //u8 col_type;                  
    //physics
@@ -228,6 +247,7 @@ void man_ent_char_death(ent_t* dead_ent){
    ent_t* e = dead_ent;
    man_game_exit();
 }
+//esto habra que mejorarlo
 void man_ent_generic_death(ent_t* dead_ent){
 
    u8* tilemap = man_level_get_tilemap();

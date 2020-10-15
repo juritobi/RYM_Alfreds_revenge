@@ -1,13 +1,13 @@
 #pragma once
 #include <cpctelera.h>
-
+#include <sys/anim.h>
 
 #define e_t_invalid 0x00
 #define e_t_render 0x01
 #define e_t_physics 0x02
 #define e_t_input 0x04
 #define e_t_AI 0x08
-#define e_t_undefined 0x10
+#define e_t_anim 0x10
 #define e_t_col 0x20
 #define e_t_undefined3 0x40
 #define e_t_dead 0x80
@@ -47,12 +47,15 @@ typedef struct et{
    Ptrf_v_ep act;
    i8 prev_vx, prev_vy;
    //Input
-   i8 on_ground, jumping;        
+   i8 on_ground, jumping;
+   //Animation
+   u8 step;
+   anim_frame_t* anim;          
    //Collisions
    u8 col_type;                  
    //physics
    //render
-   u8* sprite;                   
+   const u8* sprite;                   
    u8* memory_pos;       
 };
 typedef struct entity_class{
