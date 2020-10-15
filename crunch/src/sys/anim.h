@@ -1,6 +1,8 @@
 #pragma once
 #include <cpctelera.h>
 
+#define anim_frame_time 8
+
 typedef struct anFr anim_frame_t;
 typedef union next_frame_pointer next_fr;
 
@@ -14,8 +16,10 @@ struct anFr{
     next_fr value;
 };
 
-extern const anim_frame_t char_walk_right [];
-
+extern const anim_frame_t char_walking_right [];
+extern const anim_frame_t char_standing_right [];
+extern const anim_frame_t char_jumping_right [];
+extern const anim_frame_t char_hitting_right [];
 
 void sys_anim_init();
 void sys_anim_update();

@@ -49,7 +49,7 @@ typedef struct et{
    //Input
    i8 on_ground, jumping;
    //Animation
-   u8 step;
+   u8 anim_timer;
    anim_frame_t* anim;          
    //Collisions
    u8 col_type;                  

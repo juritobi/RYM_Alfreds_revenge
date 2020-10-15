@@ -1,5 +1,6 @@
 #include "input.h"
 #include <man/man_ent.h>
+#include <sys/anim.h>
 
 #define swordCD 15
 #define swordDuration 10
@@ -19,9 +20,7 @@ void sys_input_one(ent_t* ent){
     
     ent->vx = 0;
     ent->vy = 8;
-
     // MONYECO
-
     if(cpct_isKeyPressed(Key_D)){
         ent->vx = 1;
     }
@@ -65,8 +64,6 @@ void sys_input_one(ent_t* ent){
     }
     
     // ESPADA
-    //no lo tengo del todo claro pero parece que se puede hacer con menos variables
-    
     if(cpct_isKeyPressed(Key_O) && !swordUp && !swordCooling){
         swordUp = swordDuration;
     }

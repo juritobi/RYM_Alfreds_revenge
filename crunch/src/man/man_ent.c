@@ -32,8 +32,8 @@ const ent_t init_player = {
    //Input
    0,-1,                                                        //i8 on_ground, jumping;   
    //Animation
-   4,                                                          //u8 step;
-   char_walk_right,                                             //anim_frame_t* anim;        
+   anim_frame_time,                                                          //u8 step;
+   char_walking_right,                                             //anim_frame_t* anim;        
    //Collisions
    col_t_ally,                                                 //u8 col_type;                  
    //physics
@@ -323,6 +323,7 @@ void man_ent_forall_col_type( Ptrf_v_epep fun, u8 first_type, u8 second_type){
          }
 
       }
+      
       ++ents1;
    }
 }

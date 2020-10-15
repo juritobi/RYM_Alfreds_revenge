@@ -6,6 +6,7 @@
         "ranges": "c",
         "utility": "c",
         "variant": "c",
-        "cstddef": "c"
+        "cstddef": "c",
+        "tuple": "cpp"
     }
 }
