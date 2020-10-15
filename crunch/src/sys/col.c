@@ -2,57 +2,219 @@
 #include <man/man_ent.h>
 #include <man/man_game.h>
 #include <man/level.h>
+#include <sys/render.h>
+#include <sys/input.h>
 #include <constants.h>
 
 const i8 knocknackX[] = {  1,  1, 1, 1, 1,1,1,1};
 const i8 knocknackY[] = { -8, -8, -8, 0, 0, 8 ,8, 8};
 
+#define x_div 4
+#define y_div 8
+#define solid 0x00
+#define half  0x08
+#define air   0x10
+#define tile_type_mask   0x18
+
+u16 get_tile_pointer(u8 x, u8 y){
+    return y * tilemap_W + x;
+}
 void sys_col_one(ent_t* e){
 
     u8* tilemap = man_level_get_tilemap();
-    u8 tile_x = e->x/4;
-    u8 tile_y = e->y/8;
-    u8 next_tile = tile_x + e->vx;
-    u8 up_tile = tile_y - 1;
-    u8 down_tile = tile_y + 3;
-    u16 array_pos= tile_y*tilemap_W + next_tile;
+    u8 tile_x = e->x/x_div;
+    u8 tile_y = e->y/y_div - 3;// -3 para por que el hud son 3 tiles
+    u8 tile_w = e->w/x_div;
+    u8 tile_h = e->h/y_div;
+    u8 not_exact_tile_x = e->x%x_div;
+    u8 not_exact_tile_y = e->y%y_div;
 
-    if(tile_x != (e->x-1)/4){//si voy a cambiar de tile
-        if(e->type & e_t_input){ 
-            if(tilemap[array_pos] !=3 || tilemap[array_pos + tilemap_W] !=3 || tilemap[array_pos + tilemap_W +tilemap_W] !=3){
-                e->vx = 0;
+    u8 right_tile;
+    u8 left_tile;
+    u8 bot_tile;
+    u8 top_tile; 
+    u16 tile_pointer;
+
+    if(tile_w == 0) tile_w = 1;
+    if(tile_h == 0) tile_h = 1;
+
+    right_tile = tile_x + tile_w;
+    left_tile = tile_x - 1;
+    bot_tile = tile_y + tile_h;
+    top_tile = tile_y - 1; 
+
+    if(e->vx){
+        if(!not_exact_tile_x){
+            u8 width = tile_h;
+            u8 tile_type;
+            if(not_exact_tile_y){
+                ++width;
             }
-        }
-        else{
-            if(tilemap[array_pos] !=3){
-                e->vx = 0;
-            }
-        }
-       
-    }
-    
-        array_pos = up_tile*tilemap_W + tile_x;
-        if(tile_y != (e->y-1)/8){//si voy a cambiar de tile
-            if(e->vy<0){
-                if(tilemap[array_pos] !=3 || (!(tile_x != (e->x-1)/4) && tilemap[array_pos+ 1] !=3 )){
-                    e->vy = 0;
-                }
+
+            if(e->vx > 0){
+                tile_pointer = get_tile_pointer(right_tile, tile_y);
             }
             else{
-                array_pos = down_tile*tilemap_W + tile_x;
-                if(tilemap[array_pos] !=3 || (!(tile_x != (e->x-1)/4) && tilemap[array_pos+ 1] !=3 )){
+                tile_pointer = get_tile_pointer(left_tile, tile_y);
+            }
+            
+            while(width){
+                width--;
+                tile_type = tilemap[tile_pointer+width*tilemap_W] & tile_type_mask;
+                if(tile_type == solid){
+                    e->vx = 0;
+                    break;
+                }
+            }
+        }
+    }
+    if(e->vy){
+        if(!not_exact_tile_y){
+            u8 width = tile_w;
+            u8 tile_type;
+            if(not_exact_tile_x){
+                ++width;
+            }
+
+            if(e->vy>0){
+                tile_pointer = get_tile_pointer(tile_x, bot_tile);
+            }
+            else{
+                tile_pointer = get_tile_pointer(tile_x, top_tile);
+            }
+            
+            while(width){
+                --width;
+                tile_type = tilemap[tile_pointer+width] & tile_type_mask;
+                
+                if(tile_type == solid){
+                    if(e->vy>0){
+                        e->on_ground = 1;
+                    }
+                    e->vy = 0;
+                    break;
+                }
+                else if(tile_type == half){
+                    if(!e->on_ground){
+                        e->on_ground = 1;
+                        e->vy = 0;
+                    }
+                }
+            }
+        }
+    }
+
+    if(e->vx && e->vy){
+        if(!not_exact_tile_x && !not_exact_tile_y){
+            u8 x_wins = 0;
+            u8 tile_type;
+            if(e->vx > 0 && e->vy < 0){
+                tile_pointer = get_tile_pointer(right_tile, top_tile);
+            }
+            else if(e->vx > 0 && e->vy > 0){
+                tile_pointer = get_tile_pointer(right_tile, bot_tile);
+                x_wins = 1;
+            }
+            else if(e->vx < 0 && e->vy > 0){
+                tile_pointer = get_tile_pointer(left_tile, bot_tile);
+                x_wins = 1;
+            }
+            else{
+                tile_pointer = get_tile_pointer(left_tile, top_tile);
+            }
+
+            tile_type = tilemap[tile_pointer] & tile_type_mask;
+            if(tile_type == solid){
+                if(x_wins){
+                    e->vy = 0;
                     e->on_ground = 1;
                 }
                 else{
-                    e->on_ground = 0;
+                    e->vx = 0;
                 }
-                if(e->on_ground && e->vy>0){
-                    e->vy=0;
+            }
+            else if(tile_type == half){
+                if(!e->on_ground){
+                    e->on_ground = 1;
+                    e->vy = 0;
                 }
             }
         }
-    
-    
+    }
+
+
+    if((e->type & e_t_input) == e_t_input){
+        u8 swordUp = sys_input_get_sword_up();
+        if(swordUp){
+            tile_w++;
+            right_tile++;
+        }
+    }
+    //redibujado de tiles
+    if(e->vx){
+        u8 y_tile_num = tile_h;
+        u8 byte_tile_x;
+        u8 byte_tile_y;
+
+        if(e->vx<0){
+            if(not_exact_tile_x){
+                tile_pointer = get_tile_pointer(right_tile, tile_y);
+                byte_tile_x = right_tile;
+            }
+            else{
+                tile_pointer = get_tile_pointer(right_tile-1, tile_y);
+                byte_tile_x = right_tile-1;
+            }
+        }
+        else{
+            tile_pointer = get_tile_pointer(tile_x, tile_y);
+            byte_tile_x = tile_x;
+        }
+
+        if( not_exact_tile_y){
+            ++y_tile_num;
+        }
+
+        byte_tile_x = byte_tile_x * x_div;
+        while(y_tile_num){
+            --y_tile_num;
+            byte_tile_y = (tile_y + 3 + y_tile_num)*y_div;
+            sys_ren_set_tile( tilemap[tile_pointer+y_tile_num*tilemap_W], byte_tile_x, byte_tile_y);
+        }
+    }
+    //redibujado de tiles
+    if(e->vy){
+        u8 x_tile_num = tile_w;
+        u8 byte_tile_x;
+        u8 byte_tile_y;
+
+        if(e->vy<0){
+            if(not_exact_tile_y){
+                tile_pointer = get_tile_pointer(tile_x, bot_tile);
+                byte_tile_y = bot_tile;
+            }
+            else{
+                tile_pointer = get_tile_pointer(tile_x, bot_tile-1);
+                byte_tile_y = bot_tile-1;
+            }
+        }
+        else{
+            tile_pointer = get_tile_pointer(tile_x, tile_y);
+            byte_tile_y = tile_y;
+        }
+
+        if( not_exact_tile_x){
+            ++x_tile_num;
+        }
+
+        byte_tile_y = (byte_tile_y + 3) * y_div;
+        while(x_tile_num){
+            --x_tile_num;
+            byte_tile_x = (tile_x + x_tile_num)*x_div;
+            sys_ren_set_tile( tilemap[tile_pointer+x_tile_num], byte_tile_x, byte_tile_y);
+            
+        }
+    }
 }
 
 void sys_col_ally_enemy(ent_t* ally, ent_t* enemy){
@@ -60,6 +222,7 @@ void sys_col_ally_enemy(ent_t* ally, ent_t* enemy){
     if(ally->invulnerable == 0){
         if( !(ally->x+ally->w <= enemy->x  ||  ally->x >= enemy->x+enemy->w) ){
             if(!(ally->y+ally->h <= enemy->y  ||  ally->y >= enemy->y+enemy->h) ) {
+                //probablemente lo ideal seria haer esto en una funcion man_ent_hit() y comprobar y hacer todo lo que se tenga que hacer ahi ademas nos quitariamos una de estas dos funcions que hacen casi lo mismo
                 ally->hp--;
                 ally->invulnerable = 50;
                 ally->knockback = 0;
@@ -74,19 +237,24 @@ void sys_col_ally_enemy(ent_t* ally, ent_t* enemy){
     }
 }
 
-void sys_col_enemy_ally(ent_t* ally, ent_t* enemy){
+void sys_col_enemy_ally(ent_t* enemy, ent_t* ally){
     if(enemy->invulnerable == 0){
         if( !(ally->x+ally->w <= enemy->x  ||  ally->x >= enemy->x+enemy->w) ){
             if(!(ally->y+ally->h <= enemy->y  ||  ally->y >= enemy->y+enemy->h) ) {
+                //probablemente lo ideal seria haer esto en una funcion man_ent_hit() y comprobar y hacer todo lo que se tenga que hacer ahi ademas nos quitariamos una de estas dos funcions que hacen casi lo mismo
                 enemy->hp--;
                 enemy->invulnerable = 50;
                 enemy->knockback = 0;
+                if(enemy->prevx < ally->prevx){
+                    enemy->dir = -1;
+                }
+                else{
+                    enemy->dir = 1;
+                }
             }
         }
     }
 }
-
-
 
 void sys_col_reduceTimeInvulnerable(ent_t* e){
     if(e->invulnerable > 0){
@@ -104,10 +272,11 @@ void sys_col_reduceTimeInvulnerable(ent_t* e){
 }
 
 void sys_col_update(){
-    man_ent_forall_col_type(sys_col_ally_enemy, col_t_ally, col_t_enemy|col_t_enemy_breaker);
-    man_ent_forall_col_type(sys_col_enemy_ally, col_t_ally_breaker, col_t_enemy);
-    man_ent_forall_col_type_individual(sys_col_reduceTimeInvulnerable, col_t_ally);
-    man_ent_forall_col_type_individual(sys_col_reduceTimeInvulnerable, col_t_enemy);
+
+    man_ent_forall_col_type(sys_col_enemy_ally, col_t_enemy, col_t_ally_breaker);
+    //man_ent_forall_col_type(sys_col_ally_enemy, col_t_ally, col_t_enemy|col_t_enemy_breaker);
+    man_ent_forall_col_type_individual(sys_col_reduceTimeInvulnerable, col_t_ally); //esto tiene que ir en el update del manejdor de entidades y esta malgastando tiempo recorriendo 2 veces el array de entidades
+    man_ent_forall_col_type_individual(sys_col_reduceTimeInvulnerable, col_t_enemy);//esto tiene que ir en el update del manejdor de entidades y esta malgastando tiempo recorriendo 2 veces el array de entidades
     man_ent_forall_type(sys_col_one, e_t_col); //colisiones con tiles
 }
 

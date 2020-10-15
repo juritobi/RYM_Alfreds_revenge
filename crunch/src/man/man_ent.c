@@ -1,5 +1,7 @@
 #include "man_ent.h"
+#include <constants.h>
 #include <man/man_game.h>
+#include <man/level.h>
 #include <sys/render.h>
 #include <sys/AI.h>
 #include <sprites/char.h>
@@ -29,16 +31,13 @@ const ent_t init_player = {
    0,                                                          //Ptrf_v_ep act;
    0,0,                                                        //i8 prev_vx, prev_vy;
    //Input
-   0,0,                                                        //i8 on_ground, jumping;        
+   0,-1,                                                        //i8 on_ground, jumping;        
    //Collisions
    col_t_ally,                                                 //u8 col_type;                  
    //physics
    //render
    spr_char_0,                                                 //u8* sprite;                   
-   0,                                                          //u8* memory_pos;               
-   0,                                                          //u8* prev_memory_pos;    
-   sys_ren_block_setup,                                        //Ptrf_v_ep render_mode;
-   sys_ren_no_draw                                             //Ptrf_v_ep render; 
+   0                                                          //u8* memory_pos;               
 };
 const ent_t init_sword = {
    //generic
@@ -66,10 +65,7 @@ const ent_t init_sword = {
    //physics
    //render
    spr_sword,                                                  //u8* sprite;                   
-   0,                                                          //u8* memory_pos;               
-   0,                                                          //u8* prev_memory_pos;
-   sys_ren_blend_setup_first,                                  //Ptrf_v_ep render_mode;
-   sys_ren_no_draw                                             //Ptrf_v_ep render;
+   0                                                          //u8* memory_pos;               
 };
 const ent_t init_knife = {
    //generic
@@ -97,10 +93,7 @@ const ent_t init_knife = {
    //physics
    //render
    spr_p_0,                                                //u8* sprite;                   
-   0,                                                          //u8* memory_pos;               
-   0,                                                          //u8* prev_memory_pos; 
-   sys_ren_block_setup,                                        //Ptrf_v_ep render_mode;
-   sys_ren_no_draw                                             //Ptrf_v_ep render;
+   0                                                          //u8* memory_pos;               
 };
 /*character-----------------------------------------------------*/
 /*shoot-----------------------------------------------------*/
@@ -130,10 +123,8 @@ const ent_t init_shoot = {
    //physics
    //render
    spr_shooter_0,                                                //u8* sprite;                   
-   0,                                                          //u8* memory_pos;               
-   0,                                                          //u8* prev_memory_pos;
-   sys_ren_block_setup,                                        //Ptrf_v_ep render_mode;
-   sys_ren_no_draw                                             //Ptrf_v_ep render;
+   0                                                          //u8* memory_pos;               
+
 };
 const ent_t init_shoot_son = {
    //generic
@@ -161,10 +152,7 @@ const ent_t init_shoot_son = {
    //physics
    //render
    spr_p_1,                                                    //u8* sprite;                   
-   0,                                                          //u8* memory_pos;               
-   0,                                                          //u8* prev_memory_pos;  
-   sys_ren_block_setup,                                        //Ptrf_v_ep render_mode;
-   sys_ren_no_draw                                             //Ptrf_v_ep render; 
+   0                                                          //u8* memory_pos;                
 };
 /*shoot-----------------------------------------------------*/
 /*zombi-----------------------------------------------------*/
@@ -195,10 +183,7 @@ const ent_t init_zombi = {
    //physics
    //render
    spr_zombi_0,                                                //u8* sprite;                   
-   0,                                                          //u8* memory_pos;               
-   0,                                                          //u8* prev_memory_pos;
-   sys_ren_block_setup,                                        //Ptrf_v_ep render_mode;
-   sys_ren_no_draw                                             //Ptrf_v_ep render; 
+   0                                                          //u8* memory_pos;               
 };
 /*zombi-----------------------------------------------------*/
 ent_t ents[20];
@@ -214,8 +199,10 @@ void man_ent_reset_pos(ent_t* e){
    e->prevx = e->x;
    e->prevy = e->y;
 
-   if(e->hp == 0){
+   //los objetos no puede tener la vida a 0 es
+   if(!e->hp){
       e->death(e);
+      man_level_kill_enemy();
    }
 // esta wea se va a descontrolar
    // si enemigo o ally vida = 0 -> procede a cometer sudoku
@@ -223,7 +210,7 @@ void man_ent_reset_pos(ent_t* e){
 
 ent_t* man_ent_create(){
    ent_t* res = next_free_ent;
-   next_free_ent = res + 1;
+   ++next_free_ent;
    return res;
 }
 //tipo tiene en los 2 primeros bit el numero de entidades que crea y en los siguientes la entidad en la que empieza a crear
@@ -231,10 +218,9 @@ ent_t* man_ent_create(){
 //luego las crea en bucle y cambia la posicion de la entidad principal que sera siempre la primera de las 3
 void man_ent_create_class(u8 type, u8 x, u8 y){
    u8 class_ents = (type & 0b11000000);
-   ent_t* class_init = &init_player;
+   const ent_t* class_init = &init_player;//contents of class init should NEVER be modified
    class_init += (type & 0b00111111);
    class_ents = class_ents >> 6;
-
    while(class_ents){
       ent_t* ent_in_class = man_ent_create_from_template(class_init);
       ent_in_class->x = x;
@@ -244,17 +230,44 @@ void man_ent_create_class(u8 type, u8 x, u8 y){
    }
 }
 
-ent_t* man_ent_create_from_template(ent_t* template){
+ent_t* man_ent_create_from_template(const ent_t* template){
    ent_t* res = man_ent_create();
    cpct_memcpy(res, template, sizeof(ent_t));
    return res;
 }
 
 void man_ent_char_death(ent_t* dead_ent){
+   ent_t* e = dead_ent;
    man_game_exit();
 }
 void man_ent_generic_death(ent_t* dead_ent){
+
+   u8* tilemap = man_level_get_tilemap();
+   u8 tile_x = dead_ent->x/4;
+   u8 tile_y = dead_ent->y/8 - 3;// -3 para por que el hud son 3 tiles
+   u8 tile_w = dead_ent->w/4;
+   u8 tile_h = dead_ent->h/8;
+   u8 not_exact_tile_x = dead_ent->x%4;
+   u8 not_exact_tile_y = dead_ent->y%8;
+
+   u16 tile_pointer = tile_y * tilemap_W + tile_x;
+   u8 byte_tile_x;
+   u8 byte_tile_y;
+
    dead_ent->type |= e_t_dead;
+   if( not_exact_tile_y) ++tile_h;
+   if( not_exact_tile_x) ++tile_w;
+   while(tile_w){
+      u8 h = tile_h;
+      tile_w--;
+      byte_tile_x = (tile_x + tile_w)*4;
+      while(h){
+         h--;
+         byte_tile_y = (tile_y +3 + h)*8;
+         sys_ren_set_tile( tilemap[tile_pointer + h*tilemap_W + tile_w], byte_tile_x, byte_tile_y);
+      }
+      h= tile_h;
+   }
 }
 
 void man_ent_forall(Ptrf_v_ep fun){
@@ -310,19 +323,17 @@ void man_ent_forall_col_type( Ptrf_v_epep fun, u8 first_type, u8 second_type){
 void man_ent_resurrect(ent_t* e, u8 displacement){
    ent_t* e_to_res = e + displacement;
    e_to_res->type &= ~e_t_dead;
-   e_to_res->x = e->x + e_to_res->originalx;
-   e_to_res->y = e->y + e_to_res->originaly;
+   man_ent_move(e, displacement);
    e_to_res->vx = e_to_res->originalvx;
    e_to_res->vy = e_to_res->originalvy;
    
 }
-
 void man_ent_move(ent_t* e, u8 displacement){
    ent_t* e_to_move = e + displacement;
    e_to_move->x = e->x + e_to_move->originalx;
    e_to_move->y = e->y + e_to_move->originaly;
-   
 }
+
 ent_t* man_ent_get_char(){
    return &ents[0];
 }
