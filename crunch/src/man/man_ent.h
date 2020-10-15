@@ -43,6 +43,8 @@ typedef struct et{
    //CHARACTERS
    u8 hp, mp, damage;
    u8 invulnerable;
+   u8 knockback;
+   u8 dir;
    //AI
    Ptrf_v_ep act;
    i8 prev_vx, prev_vy;

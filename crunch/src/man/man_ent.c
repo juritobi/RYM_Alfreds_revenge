@@ -23,6 +23,8 @@ const ent_t init_player = {
    //CHARACTERS
    5,5,0,                                                       //u8 hp, mp, damage;
    50,                                                          // invulnerable
+   0,                                                           // knockback
+   0,                                                           // dir de colision ultima;
    //AI
    0,                                                          //Ptrf_v_ep act;
    0,0,                                                        //i8 prev_vx, prev_vy;
@@ -52,6 +54,8 @@ const ent_t init_sword = {
    //CHARACTERS
    1,0,1,                                                       //u8 hp, mp, damage;
    50,                                                          // invulnerable
+   -1,                                                           // knockback
+   0,                                                          // dir de colision ultima;
    //AI
    0,                                                          //Ptrf_v_ep act;
    0,0,                                                        //i8 prev_vx, prev_vy;
@@ -81,6 +85,8 @@ const ent_t init_knife = {
    //CHARACTERS
    1,0,1,                                                       //u8 hp, mp, damage;
    50,                                                          // invulnerable
+   0,                                                           // knockback
+   0,                                                           // dir de colision ultima;
    //AI
    0,                                                          //Ptrf_v_ep act;
    0,0,                                                        //i8 prev_vx, prev_vy;
@@ -112,6 +118,8 @@ const ent_t init_shoot = {
    //CHARACTERS
    1,0,1,                                                       //u8 hp, mp, damage;
    50,                                                          // invulnerable
+   0,                                                           // knockback
+   0,                                                           // dir de colision ultima;
    //AI
    sys_AI_shoot,                                               //Ptrf_v_ep act;
    0,0,                                                        //i8 prev_vx, prev_vy;
@@ -141,6 +149,8 @@ const ent_t init_shoot_son = {
    //CHARACTERS
    1,0,1,                                                       //u8 hp, mp, damage;
    50,                                                          // invulnerable
+   0,                                                           // knockback
+   0,                                                           // dir de colision ultima;
    //AI
    0,                                                          //Ptrf_v_ep act;
    0,0,                                                        //i8 prev_vx, prev_vy;
@@ -173,6 +183,8 @@ const ent_t init_zombi = {
    //CHARACTERS
    2,0,1,                                                       //u8 hp, mp, damage;
    50,                                                          // invulnerable
+   -1,                                                           // knockback
+   0 ,                                                          // dir de colision ultima;
    //AI
    sys_AI_zombi,                                               //Ptrf_v_ep act;
    0,0,                                                        //i8 prev_vx, prev_vy;

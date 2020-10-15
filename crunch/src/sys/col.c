@@ -4,6 +4,8 @@
 #include <man/level.h>
 #include <constants.h>
 
+const i8 knocknackX[] = {  1,  1, 1, 1, 1,1,1,1};
+const i8 knocknackY[] = { -8, -8, -8, 0, 0, 8 ,8, 8};
 
 void sys_col_one(ent_t* e){
 
@@ -54,12 +56,19 @@ void sys_col_one(ent_t* e){
 }
 
 void sys_col_ally_enemy(ent_t* ally, ent_t* enemy){
+
     if(ally->invulnerable == 0){
-    
         if( !(ally->x+ally->w <= enemy->x  ||  ally->x >= enemy->x+enemy->w) ){
             if(!(ally->y+ally->h <= enemy->y  ||  ally->y >= enemy->y+enemy->h) ) {
                 ally->hp--;
                 ally->invulnerable = 50;
+                ally->knockback = 0;
+                if(ally->prevx < enemy->prevx){
+                    ally->dir = -1;
+                }
+                else{
+                    ally->dir = 1;
+                }
             }
         }
     }
@@ -71,23 +80,35 @@ void sys_col_enemy_ally(ent_t* ally, ent_t* enemy){
             if(!(ally->y+ally->h <= enemy->y  ||  ally->y >= enemy->y+enemy->h) ) {
                 enemy->hp--;
                 enemy->invulnerable = 50;
+                enemy->knockback = 0;
             }
         }
     }
 }
 
+
+
 void sys_col_reduceTimeInvulnerable(ent_t* e){
     if(e->invulnerable > 0){
         e->invulnerable--;
     }
+    if(e->knockback != -1 && e->knockback < sizeof(knocknackX)){
+        
+        e->vx = knocknackX[e->knockback] * e->dir;
+        e->vy = knocknackY[e->knockback];
+        e->knockback++;
+    }
+    if(e->knockback == sizeof(knocknackX)){
+        e->knockback = -1;
+    }
 }
 
 void sys_col_update(){
-    man_ent_forall_type(sys_col_one, e_t_col); //colisiones con tiles
-    man_ent_forall_col_type_individual(sys_col_reduceTimeInvulnerable, col_t_ally);
-    man_ent_forall_col_type_individual(sys_col_reduceTimeInvulnerable, col_t_enemy);
     man_ent_forall_col_type(sys_col_ally_enemy, col_t_ally, col_t_enemy|col_t_enemy_breaker);
     man_ent_forall_col_type(sys_col_enemy_ally, col_t_ally_breaker, col_t_enemy);
+    man_ent_forall_col_type_individual(sys_col_reduceTimeInvulnerable, col_t_ally);
+    man_ent_forall_col_type_individual(sys_col_reduceTimeInvulnerable, col_t_enemy);
+    man_ent_forall_type(sys_col_one, e_t_col); //colisiones con tiles
 }
 
 /*
