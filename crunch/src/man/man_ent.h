@@ -52,7 +52,9 @@ typedef struct et{
    i8 on_ground, jumping;
    //Animation
    u8 anim_timer;
-   anim_frame_t* anim;          
+   u8 anim_step;
+   u8 action;  //action  
+   spr_tile_t* sprite_set;     
    //Collisions
    u8 col_type;                  
    //physics

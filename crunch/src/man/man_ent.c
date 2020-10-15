@@ -35,7 +35,9 @@ const ent_t init_player = {
    0,-1,                                                        //i8 on_ground, jumping;   
    //Animation
    anim_frame_time,                                              //u8 anim_timer;
-   char_walking_right,                                             //anim_frame_t* anim;        
+   0,                                                            //u8 anim_step;
+   0x00,                                                            //u8 action;  //action - dir  
+   character_spriteset,                                          //spr_set_t* sprite_set;       
    //Collisions
    col_t_ally,                                                 //u8 col_type;                  
    //physics
@@ -65,8 +67,10 @@ const ent_t init_sword = {
    //Input
    0,0,                                                         //i8 on_ground, jumping;     
    //Animation
-   0,                                                          //u8 step;
-   0,                                             //const u16* animation;    
+   anim_frame_time,                                              //u8 anim_timer;
+   0,                                                            //u8 anim_step;
+   1,                                                            //u8 action;  //action - dir  
+   0,                                                            //spr_set_t* sprite_set; 
    //Collisions
    col_t_ally_breaker,                                         //u8 col_type;                  
    //physics
@@ -95,9 +99,11 @@ const ent_t init_knife = {
    0,0,                                                        //i8 prev_vx, prev_vy;
    //Input
    0,0,                                                         //i8 on_ground, jumping;        
-      //Animation
-   0,                                                          //u8 step;
-   0,                                             //const u16* animation; 
+   //Animation
+   anim_frame_time,                                              //u8 anim_timer;
+   0,                                                            //u8 anim_step;
+   1,                                                            //u8 action;  //action - dir  
+   0,                                                            //spr_set_t* sprite_set; 
    //Collisions
    col_t_ally_breaker,                                         //u8 col_type;                  
    //physics
@@ -128,9 +134,11 @@ const ent_t init_shoot = {
    0,0,                                                        //i8 prev_vx, prev_vy;
    //Input
    0,0,                                                         //i8 on_ground, jumping;    
-      //Animation
-   0,                                                          //u8 step;
-   0,                                             //const u16* animation;     
+   //Animation
+   anim_frame_time,                                              //u8 anim_timer;
+   0,                                                            //u8 anim_step;
+   1,                                                            //u8 action;  //action - dir    
+   0,                                                            //spr_set_t* sprite_set;
    //Collisions
    col_t_enemy,                                                //u8 col_type;                  
    //physics
@@ -160,9 +168,11 @@ const ent_t init_shoot_son = {
    0,0,                                                        //i8 prev_vx, prev_vy;
    //Input
    0,0,                                                        //i8 on_ground, jumping;    
-      //Animation
-   0,                                                          //u8 step;
-   0,                                             //const u16* animation;     
+   //Animation
+   anim_frame_time,                                              //u8 anim_timer;
+   0,                                                            //u8 anim_step;
+   1,                                                            //u8 action;  //action - dir   
+   0,                                                            //spr_set_t* sprite_set;   
    //Collisions
    col_t_enemy_breaker,                                        //u8 col_type;                  
    //physics
@@ -194,9 +204,11 @@ const ent_t init_zombi = {
    0,0,                                                        //i8 prev_vx, prev_vy;
    //Input
    0,0,                                                         //i8 on_ground, jumping;     
-      //Animation
-   0,                                                          //u8 step;
-   0,                                             //const u16* animation;    
+   //Animation
+   anim_frame_time,                                              //u8 anim_timer;
+   0,                                                            //u8 anim_step;
+   1,                                                            //u8 action;  //action - dir
+   0,                                                            //spr_set_t* sprite_set;     
    //Collisions
    col_t_enemy,                                                //u8 col_type;                  
    //physics

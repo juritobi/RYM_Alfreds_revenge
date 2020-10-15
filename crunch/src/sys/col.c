@@ -253,9 +253,11 @@ void sys_col_reduceTimeInvulnerable(ent_t* e){
         e->vx = knocknackX[e->knockback]*e->dir;
         e->vy = knocknackY[e->knockback];
         e->knockback++;
+        e->on_ground = 2;//esto es pa que atraviese los bloques semi-solidos
     }
     if(e->knockback == sizeof(knocknackX)){
         e->knockback = -1;
+        e->on_ground = 0;
     }
 }
 
