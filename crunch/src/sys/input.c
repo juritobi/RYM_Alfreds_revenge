@@ -54,9 +54,10 @@ void sys_input_one(ent_t* ent){
     }
     // PROYECTIL
 
-    if(cpct_isKeyPressed(Key_P) && PiumPiumCont == PiumPiumCD ){
+    if(cpct_isKeyPressed(Key_P) && PiumPiumCont == PiumPiumCD && ent->mp > 0){
         man_ent_resurrect(ent, 2);
         PiumPiumCont = 0;
+        ent->mp = ent->mp -1;
     }
 
     if(PiumPiumCont < PiumPiumCD){

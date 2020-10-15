@@ -113,8 +113,8 @@ const lvl_t i_lvl5 = {
     normal_room,
     0,
     {
-        {e_c_shoot, 12, 98},
         {e_c_shoot, 72, 64},
+        {0, 0, 0},
         {0, 0, 0},
         {0, 0, 0},
         {0, 0, 0}

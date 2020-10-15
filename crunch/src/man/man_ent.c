@@ -25,7 +25,9 @@ const ent_t init_player = {
    0,0,                                                        //i8 originalvx, originalvy;
    //CHARACTERS
    5,5,0,                                                       //u8 hp, mp, damage;
-   50,                                                          // invulnerable
+   0,                                                          // invulnerable
+   -1,                                                           // knockback
+   0,                                                           // dir de colision ultima;
    //AI
    0,                                                          //Ptrf_v_ep act;
    0,0,                                                        //i8 prev_vx, prev_vy;
@@ -55,6 +57,8 @@ const ent_t init_sword = {
    //CHARACTERS
    1,0,1,                                                       //u8 hp, mp, damage;
    50,                                                          // invulnerable
+   -1,                                                           // knockback
+   0,                                                          // dir de colision ultima;
    //AI
    0,                                                          //Ptrf_v_ep act;
    0,0,                                                        //i8 prev_vx, prev_vy;
@@ -84,6 +88,8 @@ const ent_t init_knife = {
    //CHARACTERS
    1,0,1,                                                       //u8 hp, mp, damage;
    50,                                                          // invulnerable
+   0,                                                           // knockback
+   0,                                                           // dir de colision ultima;
    //AI
    0,                                                          //Ptrf_v_ep act;
    0,0,                                                        //i8 prev_vx, prev_vy;
@@ -115,6 +121,8 @@ const ent_t init_shoot = {
    //CHARACTERS
    1,0,1,                                                       //u8 hp, mp, damage;
    50,                                                          // invulnerable
+   0,                                                           // knockback
+   0,                                                           // dir de colision ultima;
    //AI
    sys_AI_shoot,                                               //Ptrf_v_ep act;
    0,0,                                                        //i8 prev_vx, prev_vy;
@@ -145,6 +153,8 @@ const ent_t init_shoot_son = {
    //CHARACTERS
    1,0,1,                                                       //u8 hp, mp, damage;
    50,                                                          // invulnerable
+   0,                                                           // knockback
+   0,                                                           // dir de colision ultima;
    //AI
    0,                                                          //Ptrf_v_ep act;
    0,0,                                                        //i8 prev_vx, prev_vy;
@@ -176,7 +186,9 @@ const ent_t init_zombi = {
    0,0,                                                        //i8 originalvx, originalvy;
    //CHARACTERS
    2,0,1,                                                       //u8 hp, mp, damage;
-   50,                                                          // invulnerable
+   0,                                                          // invulnerable
+   -1,                                                           // knockback
+   0 ,                                                          // dir de colision ultima;
    //AI
    sys_AI_zombi,                                               //Ptrf_v_ep act;
    0,0,                                                        //i8 prev_vx, prev_vy;
@@ -317,6 +329,7 @@ void man_ent_forall_col_type( Ptrf_v_epep fun, u8 first_type, u8 second_type){
 
          while( ents2->type != e_t_invalid ){
             if(!(ents2->type & e_t_dead) && (ents2->col_type & second_type)) {
+               
                fun(ents1, ents2);
             }
             ++ents2;
@@ -325,6 +338,7 @@ void man_ent_forall_col_type( Ptrf_v_epep fun, u8 first_type, u8 second_type){
       }
       
       ++ents1;
+      ents2 = ents;
    }
 }
 
