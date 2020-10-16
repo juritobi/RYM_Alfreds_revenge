@@ -30,8 +30,8 @@ void sys_anim_one(ent_t* e){
         }
     }
 
-    e->sprite = tile->first_frame + step * char_sprite_size;
-    e->action = e->action<<4;
+    e->sprite = tile->first_frame + step * char_sprite_size + e->move_dir * char_sprsheet_line;
+    e->action = action<<4;
     e->anim_timer = timer;
     e->anim_step = step;
 }

@@ -19,6 +19,7 @@ const ent_t init_player = {
    0,0,                                                        //u8 prevx, prevy;
    4,24,                                                       //u8 w, h;
    0,0,                                                        //i8 vx, vy;
+   dir_right,                                                      //u8 move_dir;
    man_ent_char_death,                                         //Ptrf_v_ep death;
    //SONS
    0,0,                                                        //u8 originalx, originaly;
@@ -52,6 +53,7 @@ const ent_t init_sword = {
    0,0,                                                        //u8 prevx, prevy;
    4,24,                                                       //u8 w, h;
    0,0,                                                        //i8 vx, vy;
+   dir_right,                                                      //u8 move_dir;
    man_ent_generic_death,                                       //Ptrf_v_ep death;
    //SONS
    4,0,                                                        //u8 originalx, originaly;
@@ -85,6 +87,7 @@ const ent_t init_knife = {
    0,0,                                                        //u8 prevx, prevy;
    4,8,                                                        //u8 w, h;
    1,0,                                                        //i8 vx, vy;
+   dir_right,                                                      //u8 move_dir;
    man_ent_generic_death,                                       //Ptrf_v_ep death;
    //SONS
    4,8,                                                        //u8 originalx, originaly;
@@ -120,6 +123,7 @@ const ent_t init_shoot = {
    0,0,                                                        //u8 prevx, prevy;
    4,16,                                                       //u8 w, h;
    0,0,                                                        //i8 vx, vy;
+   dir_left,                                                      //u8 move_dir;
    man_ent_generic_death,                                       //Ptrf_v_ep death;
    //SONS
    0,0,                                                        //u8 originalx, originaly;
@@ -154,6 +158,7 @@ const ent_t init_shoot_son = {
    0,0,                                                        //u8 prevx, prevy;
    4,8,                                                        //u8 w, h;
    -1,0,                                                       //i8 vx, vy;
+   dir_left,                                                      //u8 move_dir;
    man_ent_generic_death,                                      //Ptrf_v_ep death;
    //SONS
    -2,4,                                                       //u8 originalx, originaly;
@@ -190,6 +195,7 @@ const ent_t init_zombi = {
    0,0,                                                        //u8 prevx, prevy;
    2,24,                                                       //u8 w, h;
    0,0,                                                        //i8 vx, vy;
+   dir_left,                                                      //u8 move_dir;
    man_ent_generic_death,                                       //Ptrf_v_ep death;
    //SONS
    0,0,                                                        //u8 originalx, originaly;

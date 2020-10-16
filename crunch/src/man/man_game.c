@@ -52,27 +52,37 @@ void man_game_exit(){
 void man_game_play(){
     while (in_game){
         
-        //cpct_setBorder(HW_RED);
+        cpct_setBorder(HW_RED);
         man_ent_forall_type(man_ent_update,e_t_render);
         sys_UI_update();
-        //cpct_setBorder(HW_BLUE);
+
+        cpct_setBorder(HW_BLUE);
         sys_AI_update();
-        //cpct_setBorder(HW_WHITE);
+        
+        cpct_setBorder(HW_WHITE);
         sys_input_update();
-        //cpct_setBorder(HW_CYAN);
+
+        cpct_setBorder(HW_CYAN);
         sys_anim_update();
+
+        cpct_setBorder(HW_BRIGHT_RED);
         sys_col_update();
-        //cpct_setBorder(HW_PINK);
+
+        cpct_setBorder(HW_PINK);
         sys_phy_update();
         sys_input_sword_move();
-        //cpct_setBorder(HW_YELLOW);
+
+        cpct_setBorder(HW_YELLOW);
         man_level_update();
-        //cpct_setBorder(HW_MAGENTA);
+
+        cpct_setBorder(HW_MAGENTA);
         sys_ren_setup();
-        //cpct_setBorder(HW_BLACK);
+        cpct_setBorder(HW_BLACK);
+        
+        cpct_waitVSYNC();
         
         wait_render_signal();
-        //cpct_setBorder(HW_GREEN);
+        cpct_setBorder(HW_GREEN);
         sys_ren_render();
         cpct_setBorder(HW_BLACK);
 

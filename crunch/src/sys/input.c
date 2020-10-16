@@ -24,10 +24,12 @@ void sys_input_one(ent_t* ent){
     if(cpct_isKeyPressed(Key_D)){
         ent->vx = 1;
         ent->action |= 0x01;
+        ent->move_dir = dir_right;
     }
     else if(cpct_isKeyPressed(Key_A)){
         ent->vx = -1;
         ent->action |= 0x01;
+        ent->move_dir = dir_left;
     }
 
     //SALTO Y SUS MIERDAS

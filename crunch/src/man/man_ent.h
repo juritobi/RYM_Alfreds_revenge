@@ -26,6 +26,9 @@
 #define e_c_shoot 0x83
 #define e_c_zombi 0x45
 
+#define dir_right 0x00
+#define dir_left 0x01
+
 typedef struct et ent_t;
 typedef void (*Ptrf_v_ep)(ent_t*);
 typedef void (*Ptrf_v_epep)(ent_t*, ent_t*);
@@ -36,6 +39,7 @@ typedef struct et{
    u8 prevx, prevy;
    u8 w, h;
    i8 vx, vy;
+   u8 move_dir;
    Ptrf_v_ep death;
    //SONS
    u8 originalx, originaly;

@@ -9,6 +9,13 @@
         "cstddef": "c",
         "tuple": "cpp",
         "ostream": "cpp",
-        "system_error": "cpp"
+        "system_error": "cpp",
+        "bit": "cpp",
+        "*.tcc": "cpp",
+        "memory_resource": "cpp",
+        "random": "cpp",
+        "limits": "cpp",
+        "*.inc": "cpp",
+        "*.rh": "cpp"
     }
 }
