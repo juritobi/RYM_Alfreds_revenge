@@ -4,21 +4,26 @@
 u8 next_free_index;
 tile tiles[20];
 u16 null_end_tiles;
-tile to_ren;
+
 
 void sys_ren_draw_tilemap(u8* tilemap){
     cpct_etm_setDrawTilemap4x8_ag(tilemap_W, tilemap_H, tilemap_W, tileset);
     cpct_etm_drawTilemap4x8_ag(CPCT_VMEM_START+240, tilemap);
 }
 void sys_ren_set_tile(u8 tile_index, u8 x, u8 y){
-    
+    tile to_ren;
     to_ren.sprite = tileset + tile_index*tileset_length;
     to_ren.pos = cpct_getScreenPtr(CPCT_VMEM_START, x, y);
     tiles[next_free_index].sprite = to_ren.sprite;
     tiles[next_free_index].pos = to_ren.pos;
     next_free_index++;
 }
-
+void sys_ren_tile(u8 tile_index, u8 x, u8 y){
+    tile to_ren;
+    to_ren.sprite = tileset + tile_index*tileset_length;
+    to_ren.pos = cpct_getScreenPtr(CPCT_VMEM_START, x, y);
+    cpct_drawTileZigZagGrayCode4x8_af (to_ren.pos, to_ren.sprite);
+}
 
 void sys_ren_init(){
     cpct_memset(tiles, 0, sizeof(tiles));

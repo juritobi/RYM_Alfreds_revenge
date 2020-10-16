@@ -18,7 +18,7 @@ void rb_room();
 void final_room();
 void normal_room();
 
-const lvl_t i_lvl0 = {
+const lvl_t i_lvl0 = {//center room
     0,                  //id
     lvl0_pack_end,      //this
     0,                  //top
@@ -35,7 +35,7 @@ const lvl_t i_lvl0 = {
         {0, 0, 0}
     }
 };
-const lvl_t i_lvl1 = {
+const lvl_t i_lvl1 = {//top left
     1,                  //id
     lvl1_pack_end,      //this
     0,                  //top
@@ -52,7 +52,7 @@ const lvl_t i_lvl1 = {
         {0, 0, 0}
     }
 };
-const lvl_t i_lvl2 = {
+const lvl_t i_lvl2 = {//right top
     2,                  //id
     lvl2_pack_end,      //this
     0,                  //top
@@ -69,7 +69,7 @@ const lvl_t i_lvl2 = {
         {0, 0, 0}
     }
 };
-const lvl_t i_lvl3 = {
+const lvl_t i_lvl3 = {//left bottom
     3,                  //id
     lvl3_pack_end,      //this
     &i_lvl0,                  //top
@@ -86,7 +86,7 @@ const lvl_t i_lvl3 = {
         {0, 0, 0}
     }
 };
-const lvl_t i_lvl4 = {
+const lvl_t i_lvl4 = {//right bottom
     4,                  //id
     lvl4_pack_end,      //this
     &i_lvl0,                  //top
@@ -128,25 +128,31 @@ u8 tilemap_start[tilemap_size];
 
 void lt_room(){
     tilemap_start[21*tilemap_W + 9] = 19;
-    sys_ren_set_tile(19, 9*4, (21+3)*8 );
+    sys_ren_tile(19, 9*4, (21+3)*8 );
     tilemap_start[21*tilemap_W + 10] = 19;
-    sys_ren_set_tile(19, 10*4, (21+3)*8);
-    cleared_rooms[0]=0x01;
+    sys_ren_tile(19, 10*4, (21+3)*8);
+    cleared_rooms[0]|=0x01;
 }
 void lb_room(){
     tilemap_start[9] = 19;
+    sys_ren_tile(19, 9*4, 3*8);
     tilemap_start[10] = 19;
-    cleared_rooms[0]=0x08;
+    sys_ren_tile(19, 10*4, 3*8);
+    cleared_rooms[0]|=0x08;
 }
 void rt_room(){
     tilemap_start[21*tilemap_W + 9] = 19;
+    sys_ren_tile(19, 9*4, (21+3)*8 );
     tilemap_start[21*tilemap_W + 10] = 19;
-    cleared_rooms[0]=0x02;
+    sys_ren_tile(19, 10*4, (21+3)*8);
+    cleared_rooms[0]|=0x02;
 }
 void rb_room(){
     tilemap_start[9] = 19;
+    sys_ren_tile(19, 9*4, 3*8);
     tilemap_start[10] = 19;
-    cleared_rooms[0]=0x04;
+    sys_ren_tile(19, 10*4, 3*8);
+    cleared_rooms[0]|=0x04;
 }
 void final_room(){
     if(cleared_rooms[level.id] == 0x0F){
@@ -158,16 +164,19 @@ void final_room(){
     else{
         if(cleared_rooms[level.id] & 1){
             tilemap_start[2*tilemap_W + 6] = 27;
-            sys_ren_set_tile(27, 6*4, (2+3)*8);
+            sys_ren_tile(27, 6*4, (2+3)*8);
         }
         if(cleared_rooms[level.id] & 2){
             tilemap_start[2*tilemap_W + 13] = 27;
+            sys_ren_tile(27, 13*4, (2+3)*8);
         }
         if(cleared_rooms[level.id] & 4){
-            tilemap_start[15*tilemap_W + 6] = 27;
+            tilemap_start[15*tilemap_W + 13] = 27;
+            sys_ren_tile(27, 13*4, (15+3)*8);
         }
         if(cleared_rooms[level.id] & 8){
-            tilemap_start[15*tilemap_W + 13] = 27;
+            tilemap_start[15*tilemap_W + 6] = 27;
+            sys_ren_tile(27, 6*4, (15+3)*8);
         }
     }
     
