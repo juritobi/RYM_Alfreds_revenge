@@ -193,7 +193,7 @@ const ent_t init_zombi = {
    e_t_render | e_t_AI | e_t_col | e_t_physics,                //u8 type;
    0,0,                                                        //u8 x, y;
    0,0,                                                        //u8 prevx, prevy;
-   2,24,                                                       //u8 w, h;
+   4,16,                                                       //u8 w, h;
    0,0,                                                        //i8 vx, vy;
    dir_left,                                                      //u8 move_dir;
    man_ent_generic_death,                                       //Ptrf_v_ep death;
