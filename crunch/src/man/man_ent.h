@@ -22,7 +22,8 @@
 //y shoot crea 2 entidades por eso el siguiente sera 5
 //los dos primero bits indican el numero de entidades que crean
 #define e_c_undefined 0x00
-#define e_c_char 0xC0
+#define e_c_char 0x40
+#define e_c_tools 0x81
 #define e_c_shoot 0x83
 #define e_c_zombi 0x45
 
@@ -73,6 +74,7 @@ typedef struct entity_class{
 
 
 void man_ent_init();
+void man_ent_reset();
 
 void man_ent_create_class(u8 type, u8 x, u8 y);
 

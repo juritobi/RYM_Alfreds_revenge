@@ -232,12 +232,18 @@ void man_ent_init(){
    cpct_memset (ents, e_t_invalid, sizeof(ents)+1);
 }
 
+void man_ent_reset(){
+   next_free_ent = ents+1;
+   cpct_memset ((ents+1), e_t_invalid, sizeof(ents)-sizeof(ent_t));
+}
+
 void man_ent_update(ent_t* e){
    e->prevx = e->x;
    e->prevy = e->y;
    if(e->invulnerable > 0){
       e->invulnerable--;
    }
+   
 }
 
 ent_t* man_ent_create(){
@@ -248,6 +254,7 @@ ent_t* man_ent_create(){
 //tipo tiene en los 2 primeros bit el numero de entidades que crea y en los siguientes la entidad en la que empieza a crear
 //la inicializacion de datos es para setear en ents el numro de entidades y class_main y class_init el puntero a la primera entidad que tiene que crear
 //luego las crea en bucle y cambia la posicion de la entidad principal que sera siempre la primera de las 3
+
 void man_ent_create_class(u8 type, u8 x, u8 y){
    u8 class_ents = (type & 0b11000000);
    const ent_t* class_init = &init_player;//contents of class init should NEVER be modified
@@ -271,6 +278,7 @@ void man_ent_hit(ent_t* hitted){
    hitted->hp--;
    if(hitted->hp==0){
       hitted->death(hitted);
+      
       man_level_kill_enemy();
       return;
    }
@@ -312,6 +320,11 @@ void man_ent_generic_death(ent_t* dead_ent){
       }
       h= tile_h;
    }
+   if(dead_ent->col_type == col_t_enemy){
+         if(man_ent_get_char()->mp < 5){
+         man_ent_get_char()->mp++;
+         }
+      }
 }
 
 void man_ent_forall(Ptrf_v_ep fun){
