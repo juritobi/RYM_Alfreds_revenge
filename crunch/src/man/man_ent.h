@@ -1,13 +1,13 @@
 #pragma once
 #include <cpctelera.h>
-
+#include <sys/anim.h>
 
 #define e_t_invalid 0x00
 #define e_t_render 0x01
 #define e_t_physics 0x02
 #define e_t_input 0x04
 #define e_t_AI 0x08
-#define e_t_undefined 0x10
+#define e_t_anim 0x10
 #define e_t_col 0x20
 #define e_t_undefined3 0x40
 #define e_t_dead 0x80
@@ -27,6 +27,9 @@
 #define e_c_shoot 0x83
 #define e_c_zombi 0x45
 
+#define dir_right 0x00
+#define dir_left 0x01
+
 typedef struct et ent_t;
 typedef void (*Ptrf_v_ep)(ent_t*);
 typedef void (*Ptrf_v_epep)(ent_t*, ent_t*);
@@ -37,6 +40,7 @@ typedef struct et{
    u8 prevx, prevy;
    u8 w, h;
    i8 vx, vy;
+   u8 move_dir;
    Ptrf_v_ep death;
    //SONS
    u8 originalx, originaly;
@@ -44,18 +48,23 @@ typedef struct et{
    //CHARACTERS
    u8 hp, mp, damage;
    u8 invulnerable;
-   u8 knockback;
-   u8 dir;
+   i8 knockback;
+   i8 dir;
    //AI
    Ptrf_v_ep act;
    i8 prev_vx, prev_vy;
    //Input
-   i8 on_ground, jumping;        
+   i8 on_ground, jumping;
+   //Animation
+   u8 anim_timer;
+   u8 anim_step;
+   u8 action;  //action  
+   spr_tile_t* sprite_set;     
    //Collisions
    u8 col_type;                  
    //physics
    //render
-   u8* sprite;                   
+   const u8* sprite;                   
    u8* memory_pos;       
 };
 typedef struct entity_class{
@@ -79,8 +88,10 @@ void man_ent_forall_type(Ptrf_v_ep fun, u8 types);
 void man_ent_forall_col_type_individual( Ptrf_v_ep fun, u8 types);
 void man_ent_forall_col_type(Ptrf_v_epep fun, u8 first_type, u8 second_type);
 
-void man_ent_reset_pos(ent_t* dead_ent);
+void man_ent_update(ent_t* dead_ent);
 
+
+void man_ent_hit(ent_t* hitted);
 void man_ent_char_death(ent_t* dead_ent);
 void man_ent_generic_death(ent_t* dead_ent);
 

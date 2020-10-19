@@ -4,6 +4,7 @@
 #include <man/level.h>
 #include <sys/render.h>
 #include <sys/AI.h>
+#include <sys/anim.h>
 #include <sprites/char.h>
 #include <sprites/sword.h>
 #include <sprites/shooter.h>
@@ -13,11 +14,12 @@
 /*character-----------------------------------------------------*/
 const ent_t init_player = {
    //generic
-   e_t_physics | e_t_render | e_t_input | e_t_col,             //u8 type;
+   e_t_physics | e_t_render | e_t_input | e_t_col |e_t_anim,             //u8 type;
    0,0,                                                        //u8 x, y;
    0,0,                                                        //u8 prevx, prevy;
    4,24,                                                       //u8 w, h;
    0,0,                                                        //i8 vx, vy;
+   dir_right,                                                      //u8 move_dir;
    man_ent_char_death,                                         //Ptrf_v_ep death;
    //SONS
    0,0,                                                        //u8 originalx, originaly;
@@ -26,12 +28,17 @@ const ent_t init_player = {
    5,5,0,                                                       //u8 hp, mp, damage;
    0,                                                          // invulnerable
    -1,                                                           // knockback
-   0,                                                           // dir de colision ultima;
+   1,                                                           //u8 dir;//0000-*-00-*-00 anim_action-*-anim_dir-*-knockback_dir
    //AI
    0,                                                          //Ptrf_v_ep act;
    0,0,                                                        //i8 prev_vx, prev_vy;
    //Input
-   0,-1,                                                        //i8 on_ground, jumping;        
+   0,-1,                                                        //i8 on_ground, jumping;   
+   //Animation
+   anim_frame_time,                                              //u8 anim_timer;
+   0,                                                            //u8 anim_step;
+   0x00,                                                            //u8 action;  //action - dir  
+   character_spriteset,                                          //spr_set_t* sprite_set;       
    //Collisions
    col_t_ally,                                                 //u8 col_type;                  
    //physics
@@ -46,6 +53,7 @@ const ent_t init_sword = {
    0,0,                                                        //u8 prevx, prevy;
    4,24,                                                       //u8 w, h;
    0,0,                                                        //i8 vx, vy;
+   dir_right,                                                      //u8 move_dir;
    man_ent_generic_death,                                       //Ptrf_v_ep death;
    //SONS
    4,0,                                                        //u8 originalx, originaly;
@@ -54,12 +62,17 @@ const ent_t init_sword = {
    1,0,1,                                                       //u8 hp, mp, damage;
    50,                                                          // invulnerable
    -1,                                                           // knockback
-   0,                                                          // dir de colision ultima;
+   1,                                                           //u8 dir;//0000-*-00-*-00 anim_action-*-anim_dir-*-knockback_dir
    //AI
    0,                                                          //Ptrf_v_ep act;
    0,0,                                                        //i8 prev_vx, prev_vy;
    //Input
-   0,0,                                                         //i8 on_ground, jumping;        
+   0,0,                                                         //i8 on_ground, jumping;     
+   //Animation
+   anim_frame_time,                                              //u8 anim_timer;
+   0,                                                            //u8 anim_step;
+   1,                                                            //u8 action;  //action - dir  
+   0,                                                            //spr_set_t* sprite_set; 
    //Collisions
    col_t_ally_breaker,                                         //u8 col_type;                  
    //physics
@@ -74,6 +87,7 @@ const ent_t init_knife = {
    0,0,                                                        //u8 prevx, prevy;
    4,8,                                                        //u8 w, h;
    1,0,                                                        //i8 vx, vy;
+   dir_right,                                                      //u8 move_dir;
    man_ent_generic_death,                                       //Ptrf_v_ep death;
    //SONS
    4,8,                                                        //u8 originalx, originaly;
@@ -82,12 +96,17 @@ const ent_t init_knife = {
    1,0,1,                                                       //u8 hp, mp, damage;
    50,                                                          // invulnerable
    0,                                                           // knockback
-   0,                                                           // dir de colision ultima;
+   1,                                                           //u8 dir;//0000-*-00-*-00 anim_action-*-anim_dir-*-knockback_dir
    //AI
    0,                                                          //Ptrf_v_ep act;
    0,0,                                                        //i8 prev_vx, prev_vy;
    //Input
    0,0,                                                         //i8 on_ground, jumping;        
+   //Animation
+   anim_frame_time,                                              //u8 anim_timer;
+   0,                                                            //u8 anim_step;
+   1,                                                            //u8 action;  //action - dir  
+   0,                                                            //spr_set_t* sprite_set; 
    //Collisions
    col_t_ally_breaker,                                         //u8 col_type;                  
    //physics
@@ -104,6 +123,7 @@ const ent_t init_shoot = {
    0,0,                                                        //u8 prevx, prevy;
    4,16,                                                       //u8 w, h;
    0,0,                                                        //i8 vx, vy;
+   dir_left,                                                      //u8 move_dir;
    man_ent_generic_death,                                       //Ptrf_v_ep death;
    //SONS
    0,0,                                                        //u8 originalx, originaly;
@@ -112,12 +132,17 @@ const ent_t init_shoot = {
    1,0,1,                                                       //u8 hp, mp, damage;
    50,                                                          // invulnerable
    0,                                                           // knockback
-   0,                                                           // dir de colision ultima;
+   1,                                                           //u8 dir;//0000-*-00-*-00 anim_action-*-anim_dir-*-knockback_dir
    //AI
    sys_AI_shoot,                                               //Ptrf_v_ep act;
    0,0,                                                        //i8 prev_vx, prev_vy;
    //Input
-   0,0,                                                         //i8 on_ground, jumping;        
+   0,0,                                                         //i8 on_ground, jumping;    
+   //Animation
+   anim_frame_time,                                              //u8 anim_timer;
+   0,                                                            //u8 anim_step;
+   1,                                                            //u8 action;  //action - dir    
+   0,                                                            //spr_set_t* sprite_set;
    //Collisions
    col_t_enemy,                                                //u8 col_type;                  
    //physics
@@ -133,6 +158,7 @@ const ent_t init_shoot_son = {
    0,0,                                                        //u8 prevx, prevy;
    4,8,                                                        //u8 w, h;
    -1,0,                                                       //i8 vx, vy;
+   dir_left,                                                      //u8 move_dir;
    man_ent_generic_death,                                      //Ptrf_v_ep death;
    //SONS
    -2,4,                                                       //u8 originalx, originaly;
@@ -141,12 +167,17 @@ const ent_t init_shoot_son = {
    1,0,1,                                                       //u8 hp, mp, damage;
    50,                                                          // invulnerable
    0,                                                           // knockback
-   0,                                                           // dir de colision ultima;
+   1,                                                           //u8 dir;//0000-*-00-*-00 anim_action-*-anim_dir-*-knockback_dir
    //AI
    0,                                                          //Ptrf_v_ep act;
    0,0,                                                        //i8 prev_vx, prev_vy;
    //Input
-   0,0,                                                        //i8 on_ground, jumping;        
+   0,0,                                                        //i8 on_ground, jumping;    
+   //Animation
+   anim_frame_time,                                              //u8 anim_timer;
+   0,                                                            //u8 anim_step;
+   1,                                                            //u8 action;  //action - dir   
+   0,                                                            //spr_set_t* sprite_set;   
    //Collisions
    col_t_enemy_breaker,                                        //u8 col_type;                  
    //physics
@@ -164,6 +195,7 @@ const ent_t init_zombi = {
    0,0,                                                        //u8 prevx, prevy;
    2,24,                                                       //u8 w, h;
    0,0,                                                        //i8 vx, vy;
+   dir_left,                                                      //u8 move_dir;
    man_ent_generic_death,                                       //Ptrf_v_ep death;
    //SONS
    0,0,                                                        //u8 originalx, originaly;
@@ -172,12 +204,17 @@ const ent_t init_zombi = {
    2,0,1,                                                       //u8 hp, mp, damage;
    0,                                                          // invulnerable
    -1,                                                           // knockback
-   0 ,                                                          // dir de colision ultima;
+   1,                                                           //u8 dir;//0000-*-00-*-00 anim_action-*-anim_dir-*-knockback_dir
    //AI
    sys_AI_zombi,                                               //Ptrf_v_ep act;
    0,0,                                                        //i8 prev_vx, prev_vy;
    //Input
-   0,0,                                                         //i8 on_ground, jumping;        
+   0,0,                                                         //i8 on_ground, jumping;     
+   //Animation
+   anim_frame_time,                                              //u8 anim_timer;
+   0,                                                            //u8 anim_step;
+   1,                                                            //u8 action;  //action - dir
+   0,                                                            //spr_set_t* sprite_set;     
    //Collisions
    col_t_enemy,                                                //u8 col_type;                  
    //physics
@@ -200,13 +237,12 @@ void man_ent_reset(){
    cpct_memset ((ents+1), e_t_invalid, sizeof(ents)-sizeof(ent_t));
 }
 
-void man_ent_reset_pos(ent_t* e){
+void man_ent_update(ent_t* e){
    e->prevx = e->x;
    e->prevy = e->y;
-
-   
-
-   //los objetos no puede tener la vida a 0 es
+   if(e->invulnerable > 0){
+      e->invulnerable--;
+   }
    if(!e->hp){
       e->death(e);
       // si matas un enemigo, ganas 1 de mp
@@ -217,7 +253,6 @@ void man_ent_reset_pos(ent_t* e){
       }
       man_level_kill_enemy();
    }
-
 }
 
 ent_t* man_ent_create(){
@@ -248,11 +283,23 @@ ent_t* man_ent_create_from_template(const ent_t* template){
    cpct_memcpy(res, template, sizeof(ent_t));
    return res;
 }
+void man_ent_hit(ent_t* hitted){
+   hitted->hp--;
+   if(hitted->hp==0){
+      hitted->death(hitted);
+      man_level_kill_enemy();
+      return;
+   }
+   hitted->invulnerable = 50;
+   hitted->knockback = 0;
+}
+
 
 void man_ent_char_death(ent_t* dead_ent){
    ent_t* e = dead_ent;
    man_game_exit();
 }
+//esto habra que mejorarlo
 void man_ent_generic_death(ent_t* dead_ent){
 
    u8* tilemap = man_level_get_tilemap();
@@ -306,7 +353,7 @@ void man_ent_forall_col_type_individual( Ptrf_v_ep fun, u8 types){
    ent_t* res = ents;
    while(res->type != e_t_invalid){
       if(!(res->type & e_t_dead)){
-         if((res->col_type & types) == types){
+         if(res->col_type & types){
             fun(res);
          }
       }
@@ -329,11 +376,11 @@ void man_ent_forall_col_type( Ptrf_v_epep fun, u8 first_type, u8 second_type){
          }
 
       }
+      
       ++ents1;
       ents2 = ents;
    }
 }
-
 
 void man_ent_resurrect(ent_t* e, u8 displacement){
    ent_t* e_to_res = e + displacement;
