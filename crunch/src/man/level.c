@@ -159,6 +159,7 @@ void final_room(){
         if(cleared_rooms[level.id] & 1){
             tilemap_start[2*tilemap_W + 6] = 27;
             sys_ren_set_tile(27, 6*4, (2+3)*8);
+            
         }
         if(cleared_rooms[level.id] & 2){
             tilemap_start[2*tilemap_W + 13] = 27;
@@ -175,10 +176,15 @@ void final_room(){
 void normal_room(){
 }
 
+
 void man_level_init(){
     cpct_memcpy(&level, &i_lvl0, sizeof(lvl_t));
     cpct_memset(cleared_rooms, 0, sizeof(cleared_rooms));
+
+    man_ent_init();
+    man_ent_create_class(e_c_char, 16, 80);
     man_level_load(16, 80);
+
 }
 
 void man_level_load(u8 px, u8 py){
@@ -188,8 +194,11 @@ void man_level_load(u8 px, u8 py){
     cpct_zx7b_decrunch_s(tilemap_end, level.self);
     sys_ren_draw_tilemap(tilemap_start);
     
-    man_ent_init();
-    man_ent_create_class(e_c_char, px, py);
+    man_ent_reset();
+    man_ent_get_char()->x = px;
+    man_ent_get_char()->y = py;
+    man_ent_create_class(e_c_tools, 0, 0);
+    
 
     if(level.id){
         if(!cleared_rooms[level.id]){
@@ -239,11 +248,23 @@ void man_level_update(){
     }
 }
 
+void man_level_add_mp_end_lvl(){
+    if(man_ent_get_char()->mp == 4){
+        man_ent_get_char()->mp++;
+    }
+    else if(man_ent_get_char()->mp < 4){
+        man_ent_get_char()->mp++;
+        man_ent_get_char()->mp++;
+    }
+}
+
 void man_level_kill_enemy(){
     level.enemies--;
     if(level.enemies == 0){
         cleared_rooms[level.id]=1;
         level.cleared_func();
+        man_level_add_mp_end_lvl();
+        
     }
 }
 

@@ -261,8 +261,14 @@ void sys_col_reduceTimeInvulnerable(ent_t* e){
         e->invulnerable--;
     }
     if(e->knockback != -1 && e->knockback < sizeof(knocknackX)){
-        
-        e->vx = knocknackX[e->knockback] * e->dir;
+        if(e->dir == -1){
+            e->vx = knocknackX[e->knockback] * -1;
+        }
+
+        else{
+            e->vx = knocknackX[e->knockback];
+        }
+
         e->vy = knocknackY[e->knockback];
         e->knockback++;
     }
@@ -274,7 +280,7 @@ void sys_col_reduceTimeInvulnerable(ent_t* e){
 void sys_col_update(){
 
     man_ent_forall_col_type(sys_col_enemy_ally, col_t_enemy, col_t_ally_breaker);
-    //man_ent_forall_col_type(sys_col_ally_enemy, col_t_ally, col_t_enemy|col_t_enemy_breaker);
+    man_ent_forall_col_type(sys_col_ally_enemy, col_t_ally, col_t_enemy|col_t_enemy_breaker);
     man_ent_forall_col_type_individual(sys_col_reduceTimeInvulnerable, col_t_ally); //esto tiene que ir en el update del manejdor de entidades y esta malgastando tiempo recorriendo 2 veces el array de entidades
     man_ent_forall_col_type_individual(sys_col_reduceTimeInvulnerable, col_t_enemy);//esto tiene que ir en el update del manejdor de entidades y esta malgastando tiempo recorriendo 2 veces el array de entidades
     man_ent_forall_type(sys_col_one, e_t_col); //colisiones con tiles

@@ -195,17 +195,29 @@ void man_ent_init(){
    cpct_memset (ents, e_t_invalid, sizeof(ents)+1);
 }
 
+void man_ent_reset(){
+   next_free_ent = ents+1;
+   cpct_memset ((ents+1), e_t_invalid, sizeof(ents)-sizeof(ent_t));
+}
+
 void man_ent_reset_pos(ent_t* e){
    e->prevx = e->x;
    e->prevy = e->y;
 
+   
+
    //los objetos no puede tener la vida a 0 es
    if(!e->hp){
       e->death(e);
+      // si matas un enemigo, ganas 1 de mp
+      if(e->col_type == col_t_enemy){
+         if(man_ent_get_char()->mp < 5){
+         man_ent_get_char()->mp++;
+         }
+      }
       man_level_kill_enemy();
    }
-// esta wea se va a descontrolar
-   // si enemigo o ally vida = 0 -> procede a cometer sudoku
+
 }
 
 ent_t* man_ent_create(){
@@ -216,6 +228,7 @@ ent_t* man_ent_create(){
 //tipo tiene en los 2 primeros bit el numero de entidades que crea y en los siguientes la entidad en la que empieza a crear
 //la inicializacion de datos es para setear en ents el numro de entidades y class_main y class_init el puntero a la primera entidad que tiene que crear
 //luego las crea en bucle y cambia la posicion de la entidad principal que sera siempre la primera de las 3
+
 void man_ent_create_class(u8 type, u8 x, u8 y){
    u8 class_ents = (type & 0b11000000);
    const ent_t* class_init = &init_player;//contents of class init should NEVER be modified
