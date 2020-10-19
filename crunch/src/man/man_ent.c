@@ -35,10 +35,10 @@ const ent_t init_player = {
    //Input
    0,-1,                                                        //i8 on_ground, jumping;   
    //Animation
-   0,                                                          //u8 anim_timer;
+   4,                                                          //u8 anim_timer;
    0x00,                                                       //u8 action;  //action - dir  
-   0x00,                                                       //spr_frame_t* frame;      
-   0x00,                                                       //spr_set_t* sprite_set;     
+   &c_w_0,                                                       //spr_frame_t* frame;      
+   &c_spriteset,                                                       //spr_set_t* sprite_set;     
    //Collisions
    col_t_ally,                                                 //u8 col_type;                  
    //physics
@@ -183,7 +183,7 @@ const ent_t init_shoot_son = {
    //physics
    //render
    spr_p_1,                                                    //u8* sprite;                   
-   0x00                                                        //u8* memory_pos;                
+   000                                                        //u8* memory_pos;                
 };
 /*shoot-----------------------------------------------------*/
 /*zombi-----------------------------------------------------*/

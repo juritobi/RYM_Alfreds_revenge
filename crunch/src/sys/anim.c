@@ -1,6 +1,8 @@
 #include "anim.h"
 #include <man/man_ent.h>
 
+spr_frame_t* c_tset[4];
+
 const spr_frame_t c_s_0 = {
     4,
     spr_char_0,
@@ -26,13 +28,7 @@ const spr_frame_t c_h_0 = {
     spr_char_3,
     &c_h_0
 };
-const spr_frame_t* c_tset[char_sprset_W] = {
-    &c_s_0,
-    &c_w_0,
-    &c_h_0,
-    &c_h_0
-};
-const spr_set_t character_spriteset = {
+const spr_set_t c_spriteset = {
     c_tset,
     char_sprsheet_line
 };
@@ -60,11 +56,16 @@ void sys_anim_one(ent_t* e){
     else{
         e->sprite = frame->frame;
     }
-    
     e->action = action<<4;
     e->anim_timer = timer;
     e->frame = frame;
 }
 void sys_anim_update(){
     man_ent_forall_type(sys_anim_one, e_t_anim);
+}
+void sys_anim_init(){
+    c_tset[0] = &c_s_0;
+    c_tset[1] = &c_w_0;
+    c_tset[2] = &c_j_0;
+    c_tset[3] = &c_h_0;//this is supose to be constant but the compiles is poopoo and doesn't let me do that
 }
