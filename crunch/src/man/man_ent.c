@@ -243,16 +243,7 @@ void man_ent_update(ent_t* e){
    if(e->invulnerable > 0){
       e->invulnerable--;
    }
-   if(!e->hp){
-      e->death(e);
-      // si matas un enemigo, ganas 1 de mp
-      if(e->col_type == col_t_enemy){
-         if(man_ent_get_char()->mp < 5){
-         man_ent_get_char()->mp++;
-         }
-      }
-      man_level_kill_enemy();
-   }
+   
 }
 
 ent_t* man_ent_create(){
@@ -287,6 +278,7 @@ void man_ent_hit(ent_t* hitted){
    hitted->hp--;
    if(hitted->hp==0){
       hitted->death(hitted);
+      
       man_level_kill_enemy();
       return;
    }
@@ -328,6 +320,11 @@ void man_ent_generic_death(ent_t* dead_ent){
       }
       h= tile_h;
    }
+   if(dead_ent->col_type == col_t_enemy){
+         if(man_ent_get_char()->mp < 5){
+         man_ent_get_char()->mp++;
+         }
+      }
 }
 
 void man_ent_forall(Ptrf_v_ep fun){
