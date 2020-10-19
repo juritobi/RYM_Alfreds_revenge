@@ -37,7 +37,7 @@ const ent_t init_player = {
    //Animation
    4,                                                          //u8 anim_timer;
    0x00,                                                       //u8 action;  //action - dir  
-   &c_w_0,                                                       //spr_frame_t* frame;      
+   &c_s_0,                                                       //spr_frame_t* frame;      
    &c_spriteset,                                                       //spr_set_t* sprite_set;     
    //Collisions
    col_t_ally,                                                 //u8 col_type;                  
@@ -118,7 +118,7 @@ const ent_t init_knife = {
 /*shoot-----------------------------------------------------*/
 const ent_t init_shoot = {
    //generic
-   e_t_AI | e_t_render,                                         //u8 type;
+   e_t_AI | e_t_render |e_t_anim,                                         //u8 type;
    0,0,                                                        //u8 x, y;
    0,0,                                                        //u8 prevx, prevy;
    4,16,                                                       //u8 w, h;
@@ -139,10 +139,10 @@ const ent_t init_shoot = {
    //Input
    0,0,                                                         //i8 on_ground, jumping;    
    //Animation
-   0,                                                          //u8 anim_timer;
+   1,                                                          //u8 anim_timer;
    0x00,                                                       //u8 action;  //action - dir  
-   0x00,                                                       //spr_frame_t* frame;      
-   0x00,                                                       //spr_set_t* sprite_set;  
+   &s_w_0,                                                       //spr_frame_t* frame;      
+   &s_spriteset,                                                //spr_set_t* sprite_set;  
    //Collisions
    col_t_enemy,                                                //u8 col_type;                  
    //physics

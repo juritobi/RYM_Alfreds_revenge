@@ -1,7 +1,8 @@
 #include "anim.h"
 #include <man/man_ent.h>
 
-spr_frame_t* c_tset[4];
+spr_frame_t* c_tset[char_sprset_W];
+spr_frame_t* s_tset[shooter_sprset_W];
 
 const spr_frame_t c_s_0 = {
     4,
@@ -31,6 +32,23 @@ const spr_frame_t c_h_0 = {
 const spr_set_t c_spriteset = {
     c_tset,
     char_sprsheet_line
+};
+
+
+
+const spr_frame_t s_w_0 = {
+    20,
+    spr_shooter_0,
+    &s_w_1
+};
+const spr_frame_t s_w_1 = {
+    4,
+    spr_shooter_1,
+    &s_w_0
+};
+const spr_set_t s_spriteset = {
+    s_tset,
+    shooter_sprsheet_line
 };
 
 void sys_anim_one(ent_t* e){
@@ -68,4 +86,6 @@ void sys_anim_init(){
     c_tset[1] = &c_w_0;
     c_tset[2] = &c_j_0;
     c_tset[3] = &c_h_0;//this is supose to be constant but the compiles is poopoo and doesn't let me do that
+
+    s_tset[0] = &s_w_0;
 }
