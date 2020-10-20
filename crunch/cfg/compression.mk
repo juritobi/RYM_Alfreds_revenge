@@ -49,6 +49,11 @@ $(eval $(call PACKZX7B,lvl4_pack,src/tilemaps))
 $(eval $(call ADD2PACK,lvl5_pack, src/tilemaps/lvl5.bin))
 $(eval $(call PACKZX7B,lvl5_pack,src/tilemaps))
 
+$(eval $(call ADD2PACK,boss1_pack, src/tilemaps/boss1.bin))
+$(eval $(call PACKZX7B,boss1_pack,src/tilemaps))
+$(eval $(call ADD2PACK,boss2_pack, src/tilemaps/boss2.bin))
+$(eval $(call PACKZX7B,boss2_pack,src/tilemaps))
+
 
 
 

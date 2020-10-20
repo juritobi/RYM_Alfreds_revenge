@@ -26,6 +26,12 @@
 #define e_c_tools 0x81
 #define e_c_shoot 0x83
 #define e_c_zombi 0x45
+#define e_c_boss1_1 0x46
+#define e_c_boss1_2 0xC9
+#define e_c_boss1_3 0xCC
+#define e_c_boss1_4 0xCF
+#define e_c_boss1_5 0xD2
+
 
 #define dir_right 0x00
 #define dir_left 0x01
@@ -94,6 +100,7 @@ void man_ent_update(ent_t* dead_ent);
 void man_ent_hit(ent_t* hitted);
 void man_ent_char_death(ent_t* dead_ent);
 void man_ent_generic_death(ent_t* dead_ent);
+void man_ent_boss_death(ent_t* dead_ent);
 
 
 ent_t* man_ent_get_char();

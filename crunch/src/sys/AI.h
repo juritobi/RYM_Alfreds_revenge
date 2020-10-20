@@ -6,3 +6,4 @@ void sys_AI_init();
 void sys_AI_update();
 void sys_AI_shoot(ent_t* e);
 void sys_AI_zombi(ent_t* e);
+void sys_AI_boss(ent_t* e);

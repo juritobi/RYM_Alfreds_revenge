@@ -9,6 +9,7 @@
 #include <sprites/sword.h>
 #include <sprites/shooter.h>
 #include <sprites/zombi.h>
+#include <sprites/boss.h>
 #include <sprites/proyectile.h>
 #include <sprites/sword.h>
 /*character-----------------------------------------------------*/
@@ -223,6 +224,45 @@ const ent_t init_zombi = {
    0                                                          //u8* memory_pos;               
 };
 /*zombi-----------------------------------------------------*/
+
+/*HERE COMES THE BOSS*/
+
+const ent_t init_boss = {
+   //generic
+   e_t_physics | e_t_render | e_t_AI | e_t_anim,             //u8 type;
+   0,0,                                                        //u8 x, y;
+   0,0,                                                        //u8 prevx, prevy;
+   12,40,                                                       //u8 w, h;
+   0,0,                                                        //i8 vx, vy;
+   dir_right,                                                      //u8 move_dir;
+   man_ent_boss_death,                                         //Ptrf_v_ep death;
+   //SONS
+   0,0,                                                        //u8 originalx, originaly;
+   0,0,                                                        //i8 originalvx, originalvy;
+   //CHARACTERS
+   50,5,2,                                                       //u8 hp, mp, damage;
+   0,                                                          // invulnerable
+   -1,                                                           // knockback
+   1,                                                           //u8 dir;//0000-*-00-*-00 anim_action-*-anim_dir-*-knockback_dir
+   //AI
+   sys_AI_boss,                                                          //Ptrf_v_ep act;
+   0,0,                                                        //i8 prev_vx, prev_vy;
+   //Input
+   0,-1,                                                        //i8 on_ground, jumping;   
+   //Animation
+   4,                                                          //u8 anim_timer;
+   0x00,                                                       //u8 action;  //action - dir  
+   &c_s_0,                                                       //spr_frame_t* frame;      
+   &c_spriteset,                                                       //spr_set_t* sprite_set;     
+   //Collisions
+   col_t_enemy,                                                 //u8 col_type;                  
+   //physics
+   //render
+   spr_boss,                                                 //u8* sprite;                   
+   0                                                          //u8* memory_pos;               
+};
+
+/*HERE COMES THE BOSS*/
 ent_t ents[20];
 u8 invalid_at_end_of_ents;
 ent_t*  next_free_ent;
@@ -288,6 +328,10 @@ void man_ent_hit(ent_t* hitted){
 
 
 void man_ent_char_death(ent_t* dead_ent){
+   ent_t* e = dead_ent;
+   man_game_exit();
+}
+void man_ent_boss_death(ent_t* dead_ent){
    ent_t* e = dead_ent;
    man_game_exit();
 }

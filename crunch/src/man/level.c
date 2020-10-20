@@ -17,6 +17,7 @@ void lb_room();
 void rb_room();
 void final_room();
 void normal_room();
+void boss_room();
 
 const lvl_t i_lvl0 = {//center room
     0,                  //id
@@ -62,7 +63,7 @@ const lvl_t i_lvl2 = {//right top
     rt_room,
     0,
     {
-        {0, 0, 0},
+        {e_c_zombi, 4, 168},
         {0, 0, 0},
         {0, 0, 0},
         {0, 0, 0},
@@ -96,7 +97,7 @@ const lvl_t i_lvl4 = {//right bottom
     rb_room,
     0,
     {
-        {0, 0, 0},
+        {e_c_zombi, 4, 168},
         {0, 0, 0},
         {0, 0, 0},
         {0, 0, 0},
@@ -121,7 +122,42 @@ const lvl_t i_lvl5 = {
     }
 };
 
-u8 cleared_rooms[6];
+const lvl_t i_boss1 = {
+    6,                  //id
+    boss1_pack_end,      //this
+    0,                  //top
+    0,      //right
+    0,                  //bot
+    0,                  //left
+    boss_room,
+    0,
+    {
+        {e_c_boss1_1, 32, 64},
+        {0, 0, 0},
+        {0, 0, 0},
+        {0, 0, 0},
+        {0, 0, 0}
+    }
+};
+const lvl_t i_boss2 = {
+    7,                  //id
+    boss2_pack_end,      //this
+    0,                  //top
+    0,      //right
+    &i_boss2,                  //bot
+    0,                  //left
+    boss_room,
+    0,
+    {
+        {0, 0, 0},
+        {0, 0, 0},
+        {0, 0, 0},
+        {0, 0, 0},
+        {0, 0, 0}
+    }
+};
+
+u8 cleared_rooms[8];
 lvl_t level;
 u8 tilemap_start[tilemap_size];
 #define tilemap_end  (tilemap_start + tilemap_size - 1)
@@ -179,14 +215,16 @@ void final_room(){
             sys_ren_tile(27, 6*4, (15+3)*8);
         }
     }
-    
+}
+void boss_room(){
+
 }
 void normal_room(){
 }
 
 
 void man_level_init(){
-    cpct_memcpy(&level, &i_lvl0, sizeof(lvl_t));
+    cpct_memcpy(&level, &i_boss1, sizeof(lvl_t));//temporal
     cpct_memset(cleared_rooms, 0, sizeof(cleared_rooms));
 
     man_ent_init();

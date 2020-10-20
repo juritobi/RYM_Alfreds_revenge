@@ -29,6 +29,10 @@ void sys_AI_zombi(ent_t* e){
     }
 }
 
+void sys_AI_boss(ent_t* e){
+
+}
+
 void sys_AI_one(ent_t* e){
     e->act(e);
 }
