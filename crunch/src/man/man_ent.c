@@ -226,7 +226,6 @@ const ent_t init_zombi = {
 /*zombi-----------------------------------------------------*/
 
 /*HERE COMES THE BOSS*/
-
 const ent_t init_boss = {
    //generic
    e_t_physics | e_t_render | e_t_AI | e_t_anim,             //u8 type;
@@ -242,7 +241,7 @@ const ent_t init_boss = {
    //CHARACTERS
    50,5,2,                                                       //u8 hp, mp, damage;
    0,                                                          // invulnerable
-   -1,                                                           // knockback
+   -2,                                                           // knockback
    1,                                                           //u8 dir;//0000-*-00-*-00 anim_action-*-anim_dir-*-knockback_dir
    //AI
    sys_AI_boss,                                                          //Ptrf_v_ep act;
@@ -261,8 +260,43 @@ const ent_t init_boss = {
    spr_boss,                                                 //u8* sprite;                   
    0                                                          //u8* memory_pos;               
 };
-
+const ent_t init_boss_hor = {
+   //generic
+   e_t_render | e_t_dead,                                                 //u8 type;
+   0,0,                                                        //u8 x, y;
+   0,0,                                                        //u8 prevx, prevy;
+   28,8,                                                       //u8 w, h;
+   0,0,                                                        //i8 vx, vy;
+   dir_right,                                                      //u8 move_dir;
+   man_ent_generic_death,                                         //Ptrf_v_ep death;
+   //SONS
+   12,0,                                                        //u8 originalx, originaly;
+   0,0,                                                        //i8 originalvx, originalvy;
+   //CHARACTERS
+   1,0,3,                                                       //u8 hp, mp, damage;
+   0,                                                          // invulnerable
+   -1,                                                           // knockback
+   1,                                                           //u8 dir;//0000-*-00-*-00 anim_action-*-anim_dir-*-knockback_dir
+   //AI
+   0x00,                                                          //Ptrf_v_ep act;
+   0,0,                                                        //i8 prev_vx, prev_vy;
+   //Input
+   0,-1,                                                        //i8 on_ground, jumping;   
+   //Animation
+   4,                                                          //u8 anim_timer;
+   0x00,                                                       //u8 action;  //action - dir  
+   &c_s_0,                                                       //spr_frame_t* frame;      
+   &c_spriteset,                                                       //spr_set_t* sprite_set;     
+   //Collisions
+   col_t_enemy_breaker,                                                 //u8 col_type;                  
+   //physics
+   //render
+   spr_boss,                                                 //u8* sprite;                   
+   0                                                          //u8* memory_pos;               
+};
 /*HERE COMES THE BOSS*/
+
+
 ent_t ents[20];
 u8 invalid_at_end_of_ents;
 ent_t*  next_free_ent;
@@ -271,20 +305,11 @@ void man_ent_init(){
    next_free_ent = ents;
    cpct_memset (ents, e_t_invalid, sizeof(ents)+1);
 }
-
 void man_ent_reset(){
    next_free_ent = ents+1;
    cpct_memset ((ents+1), e_t_invalid, sizeof(ents)-sizeof(ent_t));
 }
 
-void man_ent_update(ent_t* e){
-   e->prevx = e->x;
-   e->prevy = e->y;
-   if(e->invulnerable > 0){
-      e->invulnerable--;
-   }
-   
-}
 
 ent_t* man_ent_create(){
    ent_t* res = next_free_ent;
@@ -294,12 +319,19 @@ ent_t* man_ent_create(){
 //tipo tiene en los 2 primeros bit el numero de entidades que crea y en los siguientes la entidad en la que empieza a crear
 //la inicializacion de datos es para setear en ents el numro de entidades y class_main y class_init el puntero a la primera entidad que tiene que crear
 //luego las crea en bucle y cambia la posicion de la entidad principal que sera siempre la primera de las 3
-
 void man_ent_create_class(u8 type, u8 x, u8 y){
    u8 class_ents = (type & 0b11000000);
    const ent_t* class_init = &init_player;//contents of class init should NEVER be modified
    class_init += (type & 0b00111111);
    class_ents = class_ents >> 6;
+   if (!class_ents){
+      ent_t* ent_in_class;
+      ent_in_class = man_ent_create_from_template(class_init);
+      ent_in_class = man_ent_create_from_template(class_init);
+      ent_in_class->originaly = 16;
+      ent_in_class = man_ent_create_from_template(class_init);
+      ent_in_class->originaly += 16;
+   }
    while(class_ents){
       ent_t* ent_in_class = man_ent_create_from_template(class_init);
       ent_in_class->x = x;
@@ -308,12 +340,13 @@ void man_ent_create_class(u8 type, u8 x, u8 y){
       class_ents--;
    }
 }
-
 ent_t* man_ent_create_from_template(const ent_t* template){
    ent_t* res = man_ent_create();
    cpct_memcpy(res, template, sizeof(ent_t));
    return res;
 }
+
+
 void man_ent_hit(ent_t* hitted){
    hitted->hp--;
    if(hitted->hp==0){
@@ -323,10 +356,9 @@ void man_ent_hit(ent_t* hitted){
       return;
    }
    hitted->invulnerable = 50;
-   hitted->knockback = 0;
+   if(hitted->knockback!= -2)
+      hitted->knockback = 0;
 }
-
-
 void man_ent_char_death(ent_t* dead_ent){
    ent_t* e = dead_ent;
    man_game_exit();
@@ -371,6 +403,14 @@ void man_ent_generic_death(ent_t* dead_ent){
       }
 }
 
+
+void man_ent_update(ent_t* e){
+   e->prevx = e->x;
+   e->prevy = e->y;
+   if(e->invulnerable > 0){
+      e->invulnerable--;
+   }
+}
 void man_ent_forall(Ptrf_v_ep fun){
    ent_t* res = ents;
    while(res->type != e_t_invalid){
@@ -389,7 +429,6 @@ void man_ent_forall_type( Ptrf_v_ep fun, u8 types){
       ++res;
    }
 }
-
 void man_ent_forall_col_type_individual( Ptrf_v_ep fun, u8 types){
    ent_t* res = ents;
    while(res->type != e_t_invalid){
@@ -401,7 +440,6 @@ void man_ent_forall_col_type_individual( Ptrf_v_ep fun, u8 types){
       ++res;
    }
 }
-
 void man_ent_forall_col_type( Ptrf_v_epep fun, u8 first_type, u8 second_type){
    ent_t* ents1 = ents;
    ent_t* ents2 = ents;
@@ -423,6 +461,7 @@ void man_ent_forall_col_type( Ptrf_v_epep fun, u8 first_type, u8 second_type){
    }
 }
 
+
 void man_ent_resurrect(ent_t* e, u8 displacement){
    ent_t* e_to_res = e + displacement;
    e_to_res->type &= ~e_t_dead;
@@ -436,6 +475,7 @@ void man_ent_move(ent_t* e, u8 displacement){
    e_to_move->x = e->x + e_to_move->originalx;
    e_to_move->y = e->y + e_to_move->originaly;
 }
+
 
 ent_t* man_ent_get_char(){
    return &ents[0];

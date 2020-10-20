@@ -27,10 +27,7 @@
 #define e_c_shoot 0x83
 #define e_c_zombi 0x45
 #define e_c_boss1_1 0x46
-#define e_c_boss1_2 0xC9
-#define e_c_boss1_3 0xCC
-#define e_c_boss1_4 0xCF
-#define e_c_boss1_5 0xD2
+#define e_c_boss_tools 0x07
 
 
 #define dir_right 0x00

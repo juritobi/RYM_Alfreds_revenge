@@ -249,7 +249,7 @@ void sys_col_allybreaker_enemy(ent_t* breaker, ent_t* enemy){
 }
 
 void sys_col_reduceTimeInvulnerable(ent_t* e){
-    if(e->knockback != -1 && e->knockback < sizeof(knocknackX)){ 
+    if(e->knockback > -1 && e->knockback < sizeof(knocknackX)){ 
         e->vx = knocknackX[e->knockback]*e->dir;
         e->vy = knocknackY[e->knockback];
         e->knockback++;
