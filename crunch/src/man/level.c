@@ -181,7 +181,7 @@ void final_room(){
     }
     
 }
-void normal_room(){
+void normal_room(){     
 }
 
 

@@ -283,7 +283,9 @@ void man_ent_hit(ent_t* hitted){
       return;
    }
    hitted->invulnerable = 50;
-   hitted->knockback = 0;
+   if(hitted->knockback != -2){
+      hitted->knockback = 0;
+   }
 }
 
 
@@ -389,7 +391,20 @@ void man_ent_resurrect(ent_t* e, u8 displacement){
 }
 void man_ent_move(ent_t* e, u8 displacement){
    ent_t* e_to_move = e + displacement;
-   e_to_move->x = e->x + e_to_move->originalx;
+
+   if(e->move_dir == dir_left){
+      e_to_move->x = e->x - e_to_move->originalx;
+      if(e_to_move->originalvx != -1){
+         e_to_move->originalvx = e_to_move->originalvx * (-1);
+      }
+   }
+   else{
+      e_to_move->x = e->x + e_to_move->originalx;
+      if(e_to_move->originalvx != 1){
+         e_to_move->originalvx = e_to_move->originalvx * (-1);
+      }
+   }
+
    e_to_move->y = e->y + e_to_move->originaly;
 }
 
