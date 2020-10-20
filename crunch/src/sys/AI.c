@@ -1,21 +1,27 @@
-#include "physics.h"
-#include <man/man_ent.h>
-
-#define att_move_id 0
-#define att_move_num 0
-#define att_hor_id 1
-#define att_hor_num 3
-typedef void (*Ptrf_v_v)();
+#include "AI.h"
 
 #define rate_of_fire 100
 #define move_rate 4
 u8 shoot_timer;
 u8 move_counter;
 
+
+const attack_t move = {
+    10,
+    att_move
+};
+const attack_t horizontal = {
+    10,
+    att_hor
+};
+
+
+
 u8 boss_timer;
+u8 boss_attack_timer;
 u8 boss_inter_attack_time;
-u8 (*attacks[2])();//array de punteros a funcion
-u8 attack_function;//indece a array de punteros a funcion
+attack_t* attacks[2];
+attack_t* attack;
 
 void sys_AI_shoot(ent_t* e){
     shoot_timer--;
@@ -47,22 +53,19 @@ void sys_AI_boss(ent_t* e){
         ent_t* player = man_ent_get_char();
         u8 rand = cpct_getRandom_lcg_u8(player->x);
         rand = (rand%2);
-        boss_timer= 100;
-        attack_function = (*attacks[rand])();
-    }else{
-        attack_function = (*attacks[attack_function])();
+        boss_timer= attacks[rand]->total_time;
+        attack = attacks[rand];
     }
+    attack->funct();// attack_function();
     boss_timer--;
 }
-u8 att_move(){
+void att_move(){
     ent_t* player = man_ent_get_char();
     player->x=4;
-    return 0;
 }
-u8 att_hor(){
+void att_hor(){
     ent_t* player = man_ent_get_char();
     player->x=60;
-    return 1;
 }
 
 
@@ -75,11 +78,12 @@ void sys_AI_init(){
     move_counter = 0;
 
     boss_inter_attack_time = 100;
+    boss_attack_timer = 0;
     boss_timer = boss_inter_attack_time;
-    attack_function = 0x00;
 
-    attacks[0] = att_move;
-    attacks[1] = att_hor;
+    attacks[0] = &move;
+    attacks[1] = &horizontal;
+    attack = attacks[0];
 
 }
 void sys_AI_update(){
