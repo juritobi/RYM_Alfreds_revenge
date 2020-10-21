@@ -17,6 +17,7 @@ typedef struct lvl{
 };
 
 u8* man_level_get_tilemap();
+u8 man_level_get_door();
 
 void man_level_init();
 void man_level_update();

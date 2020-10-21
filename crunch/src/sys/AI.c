@@ -25,8 +25,8 @@ u8 boss_timer;
 u8 boss_attack_timer;
 u8 boss_inter_attack_time;
 u8 boss_attack_index;
-attack_t* attacks[2];
-attack_t* attack;
+attack_t const *  attacks[2];
+attack_t const *  attack;
 
 void sys_AI_shoot(ent_t* e){
     e->Ai_counter--;
@@ -156,7 +156,7 @@ void att_move(ent_t* e){
     boss_attack_timer--;
 }
 void att_none(ent_t* e){
-
+    ent_t* en = e;
 }
 
 void att_hor(ent_t* e){

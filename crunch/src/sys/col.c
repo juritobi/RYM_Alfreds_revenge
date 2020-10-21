@@ -35,9 +35,6 @@ void sys_col_one(ent_t* e){
     u8 top_tile; 
     u16 tile_pointer;
 
-    if(tile_w == 0) tile_w = 1;
-    if(tile_h == 0) tile_h = 1;
-
     right_tile = tile_x + tile_w;
     left_tile = tile_x - 1;
     bot_tile = tile_y + tile_h;
@@ -139,87 +136,6 @@ void sys_col_one(ent_t* e){
                     e->vy = 0;
                 }
             }
-        }
-    }
-
-
-    if((e->type & e_t_input) == e_t_input){
-        u8 swordUp = sys_input_get_sword_up();
-        if(swordUp){
-            if(e->move_dir == dir_right){
-                tile_w++;
-                right_tile++;
-            }
-            else{
-                tile_w++;
-                tile_x--;
-                left_tile--;
-            }
-        }
-    }
-    //redibujado de tiles
-    if(e->vx){
-        u8 y_tile_num = tile_h;
-        u8 byte_tile_x;
-        u8 byte_tile_y;
-
-        if(e->vx<0){
-            if(not_exact_tile_x){
-                tile_pointer = get_tile_pointer(right_tile, tile_y);
-                byte_tile_x = right_tile;
-            }
-            else{
-                tile_pointer = get_tile_pointer(right_tile-1, tile_y);
-                byte_tile_x = right_tile-1;
-            }
-        }
-        else{
-            tile_pointer = get_tile_pointer(tile_x, tile_y);
-            byte_tile_x = tile_x;
-        }
-
-        if( not_exact_tile_y){
-            ++y_tile_num;
-        }
-
-        byte_tile_x = byte_tile_x * x_div;
-        while(y_tile_num){
-            --y_tile_num;
-            byte_tile_y = (tile_y + 3 + y_tile_num)*y_div;
-            sys_ren_set_tile( tilemap[tile_pointer+y_tile_num*tilemap_W], byte_tile_x, byte_tile_y);
-        }
-    }
-    //redibujado de tiles
-    if(e->vy){
-        u8 x_tile_num = tile_w;
-        u8 byte_tile_x;
-        u8 byte_tile_y;
-
-        if(e->vy<0){
-            if(not_exact_tile_y){
-                tile_pointer = get_tile_pointer(tile_x, bot_tile);
-                byte_tile_y = bot_tile;
-            }
-            else{
-                tile_pointer = get_tile_pointer(tile_x, bot_tile-1);
-                byte_tile_y = bot_tile-1;
-            }
-        }
-        else{
-            tile_pointer = get_tile_pointer(tile_x, tile_y);
-            byte_tile_y = tile_y;
-        }
-
-        if( not_exact_tile_x){
-            ++x_tile_num;
-        }
-
-        byte_tile_y = (byte_tile_y + 3) * y_div;
-        while(x_tile_num){
-            --x_tile_num;
-            byte_tile_x = (tile_x + x_tile_num)*x_div;
-            sys_ren_set_tile( tilemap[tile_pointer+x_tile_num], byte_tile_x, byte_tile_y);
-            
         }
     }
 }
