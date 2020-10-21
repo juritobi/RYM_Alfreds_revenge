@@ -135,7 +135,7 @@ const ent_t init_shoot = {
    0,0,                                                        //i8 originalvx, originalvy;
    //CHARACTERS
    1,0,1,                                                       //u8 hp, mp, damage;
-   50,                                                          // invulnerable
+   0,                                                          // invulnerable
    0,                                                           // knockback
    1,                                                           //u8 dir;//0000-*-00-*-00 anim_action-*-anim_dir-*-knockback_dir
    //AI
