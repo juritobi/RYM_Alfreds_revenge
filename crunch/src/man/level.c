@@ -62,7 +62,7 @@ const lvl_t i_lvl2 = {//right top
     rt_room,
     0,
     {
-        {0, 0, 0},
+        {e_c_ghost, 72, 168},
         {0, 0, 0},
         {0, 0, 0},
         {0, 0, 0},
@@ -96,7 +96,7 @@ const lvl_t i_lvl4 = {//right bottom
     rb_room,
     0,
     {
-        {0, 0, 0},
+        {e_c_sonic, 72, 152},
         {0, 0, 0},
         {0, 0, 0},
         {0, 0, 0},

@@ -9,6 +9,8 @@
 #include <sprites/sword.h>
 #include <sprites/shooter.h>
 #include <sprites/zombi.h>
+#include <sprites/ghost.h>
+#include <sprites/dasher.h>
 #include <sprites/proyectile.h>
 #include <sprites/sword.h>
 /*character-----------------------------------------------------*/
@@ -31,6 +33,7 @@ const ent_t init_player = {
    1,                                                           //u8 dir;//0000-*-00-*-00 anim_action-*-anim_dir-*-knockback_dir
    //AI
    0,                                                          //Ptrf_v_ep act;
+   0,                                                          //Ai_counter
    0,0,                                                        //i8 prev_vx, prev_vy;
    //Input
    0,-1,                                                        //i8 on_ground, jumping;   
@@ -65,6 +68,7 @@ const ent_t init_sword = {
    1,                                                           //u8 dir;//0000-*-00-*-00 anim_action-*-anim_dir-*-knockback_dir
    //AI
    0,                                                          //Ptrf_v_ep act;
+   0,                                                          //AI_Counter
    0,0,                                                        //i8 prev_vx, prev_vy;
    //Input
    0,0,                                                         //i8 on_ground, jumping;     
@@ -99,6 +103,7 @@ const ent_t init_knife = {
    1,                                                           //u8 dir;//0000-*-00-*-00 anim_action-*-anim_dir-*-knockback_dir
    //AI
    0,                                                          //Ptrf_v_ep act;
+   0,                                                          //AI_Counter
    0,0,                                                        //i8 prev_vx, prev_vy;
    //Input
    0,0,                                                         //i8 on_ground, jumping;        
@@ -135,6 +140,7 @@ const ent_t init_shoot = {
    1,                                                           //u8 dir;//0000-*-00-*-00 anim_action-*-anim_dir-*-knockback_dir
    //AI
    sys_AI_shoot,                                               //Ptrf_v_ep act;
+   100,                                                          //AI_Counter
    0,0,                                                        //i8 prev_vx, prev_vy;
    //Input
    0,0,                                                         //i8 on_ground, jumping;    
@@ -170,6 +176,7 @@ const ent_t init_shoot_son = {
    1,                                                           //u8 dir;//0000-*-00-*-00 anim_action-*-anim_dir-*-knockback_dir
    //AI
    0,                                                          //Ptrf_v_ep act;
+   0,                                                          //AI_Counter
    0,0,                                                        //i8 prev_vx, prev_vy;
    //Input
    0,0,                                                        //i8 on_ground, jumping;    
@@ -183,7 +190,7 @@ const ent_t init_shoot_son = {
    //physics
    //render
    spr_p_1,                                                    //u8* sprite;                   
-   000                                                        //u8* memory_pos;                
+   0                                                           //u8* memory_pos;                
 };
 /*shoot-----------------------------------------------------*/
 /*zombi-----------------------------------------------------*/
@@ -207,6 +214,7 @@ const ent_t init_zombi = {
    1,                                                           //u8 dir;//0000-*-00-*-00 anim_action-*-anim_dir-*-knockback_dir
    //AI
    sys_AI_zombi,                                               //Ptrf_v_ep act;
+   0,                                                          //AI_Counter
    0,0,                                                        //i8 prev_vx, prev_vy;
    //Input
    0,0,                                                         //i8 on_ground, jumping;     
@@ -223,6 +231,82 @@ const ent_t init_zombi = {
    0                                                          //u8* memory_pos;               
 };
 /*zombi-----------------------------------------------------*/
+/*fantasma--------------------------------------------------*/
+const ent_t init_ghost = {
+
+   //generic
+   e_t_render | e_t_AI | e_t_physics,                //u8 type;
+   0,0,                                                        //u8 x, y;
+   0,0,                                                        //u8 prevx, prevy;
+   4,16,                                                       //u8 w, h;
+   0,0,                                                        //i8 vx, vy;
+   dir_left,                                                      //u8 move_dir;
+   man_ent_generic_death,                                       //Ptrf_v_ep death;
+   //SONS
+   0,0,                                                        //u8 originalx, originaly;
+   0,0,                                                        //i8 originalvx, originalvy;
+   //CHARACTERS
+   3,0,1,                                                       //u8 hp, mp, damage;
+   0,                                                          // invulnerable
+   -1,                                                           // knockback
+   1,                                                           //u8 dir;//0000-*-00-*-00 anim_action-*-anim_dir-*-knockback_dir
+   //AI
+   sys_AI_ghost,                                               //Ptrf_v_ep act;
+   0,                                                          //AI_Counter
+   0,0,                                                        //i8 prev_vx, prev_vy;
+   //Input
+   0,0,                                                         //i8 on_ground, jumping;     
+   //Animation
+   0,                                                          //u8 anim_timer;
+   0x00,                                                       //u8 action;  //action - dir  
+   0x00,                                                       //spr_frame_t* frame;      
+   0x00,                                                       //spr_set_t* sprite_set;     
+   //Collisions
+   col_t_enemy,                                                //u8 col_type;                  
+   //physics
+   //render
+   spr_ghost_0,                                                //u8* sprite;                   
+   0                                                          //u8* memory_pos;               
+};
+/*fantasma--------------------------------------------------*/
+/*sonic-----------------------------------------------------*/
+const ent_t init_sonic = {
+
+   //generic
+   e_t_render | e_t_AI | e_t_col | e_t_physics,                //u8 type;
+   0,0,                                                        //u8 x, y;
+   0,0,                                                        //u8 prevx, prevy;
+   4,16,                                                       //u8 w, h;
+   0,0,                                                        //i8 vx, vy;
+   dir_left,                                                      //u8 move_dir;
+   man_ent_generic_death,                                       //Ptrf_v_ep death;
+   //SONS
+   0,0,                                                        //u8 originalx, originaly;
+   0,0,                                                        //i8 originalvx, originalvy;
+   //CHARACTERS
+   3,0,1,                                                       //u8 hp, mp, damage;
+   0,                                                          // invulnerable
+   -1,                                                           // knockback
+   1,                                                           //u8 dir;//0000-*-00-*-00 anim_action-*-anim_dir-*-knockback_dir
+   //AI
+   sys_AI_sonic,                                               //Ptrf_v_ep act;
+   0,                                                          //AI_Counter
+   0,0,                                                        //i8 prev_vx, prev_vy;
+   //Input
+   0,0,                                                         //i8 on_ground, jumping;     
+   //Animation
+   0,                                                          //u8 anim_timer;
+   0x00,                                                       //u8 action;  //action - dir  
+   0x00,                                                       //spr_frame_t* frame;      
+   0x00,                                                       //spr_set_t* sprite_set;     
+   //Collisions
+   col_t_enemy,                                                //u8 col_type;                  
+   //physics
+   //render
+   spr_dasher_0,                                                //u8* sprite;                   
+   0                                                          //u8* memory_pos;               
+};
+/*sonic-----------------------------------------------------*/
 ent_t ents[20];
 u8 invalid_at_end_of_ents;
 ent_t*  next_free_ent;
