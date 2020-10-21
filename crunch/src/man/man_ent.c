@@ -239,7 +239,7 @@ const ent_t init_boss = {
    0,0,                                                        //u8 originalx, originaly;
    0,0,                                                        //i8 originalvx, originalvy;
    //CHARACTERS
-   50,5,2,                                                       //u8 hp, mp, damage;
+   1,5,2,                                                       //u8 hp, mp, damage;
    0,                                                          // invulnerable
    -2,                                                           // knockback
    1,                                                           //u8 dir;//0000-*-00-*-00 anim_action-*-anim_dir-*-knockback_dir
@@ -251,13 +251,13 @@ const ent_t init_boss = {
    //Animation
    4,                                                          //u8 anim_timer;
    0x00,                                                       //u8 action;  //action - dir  
-   &c_s_0,                                                       //spr_frame_t* frame;      
-   &c_spriteset,                                                       //spr_set_t* sprite_set;     
+   &b_s_0,                                                       //spr_frame_t* frame;      
+   &b_spriteset,                                                       //spr_set_t* sprite_set;     
    //Collisions
    col_t_enemy,                                                 //u8 col_type;                  
    //physics
    //render
-   spr_boss,                                                 //u8* sprite;                   
+   spr_boss_0,                                                 //u8* sprite;                   
    0                                                          //u8* memory_pos;               
 };
 const ent_t init_boss_hor = {
@@ -291,7 +291,7 @@ const ent_t init_boss_hor = {
    col_t_enemy_breaker,                                                 //u8 col_type;                  
    //physics
    //render
-   spr_boss,                                                 //u8* sprite;                   
+   spr_boss_0,                                                 //u8* sprite;                   
    0                                                          //u8* memory_pos;               
 };
 /*HERE COMES THE BOSS*/
@@ -330,7 +330,7 @@ void man_ent_create_class(u8 type, u8 x, u8 y){
       ent_in_class = man_ent_create_from_template(class_init);
       ent_in_class->originaly = 16;
       ent_in_class = man_ent_create_from_template(class_init);
-      ent_in_class->originaly += 16;
+      ent_in_class->originaly = 32;
    }
    while(class_ents){
       ent_t* ent_in_class = man_ent_create_from_template(class_init);

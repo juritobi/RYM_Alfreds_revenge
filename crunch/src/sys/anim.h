@@ -2,6 +2,7 @@
 #include <cpctelera.h>
 #include <sprites/char.h>
 #include <sprites/shooter.h>
+#include <sprites/boss.h>
 
 
 #define anim_frame_time 4
@@ -33,6 +34,12 @@ extern const spr_frame_t c_h_0;
 extern const spr_set_t s_spriteset;
 extern const spr_frame_t s_w_0;
 extern const spr_frame_t s_w_1;
+
+#define boss_sprset_W 2
+#define boss_sprsheet_line (SPR_BOSS_0_W * SPR_BOSS_0_H * 2)//4 number of images in right direction
+extern const spr_set_t b_spriteset;
+extern const spr_frame_t b_s_0;
+extern const spr_frame_t b_h_0;
 
 void sys_anim_init();
 void sys_anim_update();
