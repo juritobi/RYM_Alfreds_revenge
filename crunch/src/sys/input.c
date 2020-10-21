@@ -9,12 +9,18 @@
 
 const i8 jumptable[] = {-8, -8, -8, -8, -8, 0, 0};
 
-i8 swordUp = 0;
-i8 swordCooling = 0;
+i8 swordUp;
+i8 swordCooling;
+i8 jumpCont;
+i8 PiumPiumCont;
 
-i8 jumpCont = 10;
+void sys_Input_init(){
 
-i8 PiumPiumCont = 25;
+    swordUp = 0;
+    swordCooling = 0;
+    jumpCont = 1;
+    PiumPiumCont = 25;
+}
 
 void sys_input_one(ent_t* ent){
     
@@ -24,12 +30,16 @@ void sys_input_one(ent_t* ent){
     if(cpct_isKeyPressed(Key_D)){
         ent->vx = 1;
         ent->action |= 0x01;
-        ent->move_dir = dir_right;
+        if(!swordUp){
+            ent->move_dir = dir_right;
+        }
     }
     else if(cpct_isKeyPressed(Key_A)){
         ent->vx = -1;
         ent->action |= 0x01;
-        ent->move_dir = dir_left;
+        if(!swordUp){
+            ent->move_dir = dir_left;
+        }
     }
 
     //SALTO Y SUS MIERDAS
@@ -79,11 +89,11 @@ void sys_input_one(ent_t* ent){
     if(swordCooling){
         swordCooling--;
     }
-    if(swordUp){
+    if(swordUp){ // si la espada activa
         ent->action &= 0xF0;
         ent->action |= 0x03;
         swordUp--;
-        if(!swordUp){
+        if(!swordUp){ // si la espada NO esta activa
             ent_t* to_kill = ent + 1;
             swordCooling = swordCD;
             to_kill->death(to_kill);

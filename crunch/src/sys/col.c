@@ -146,8 +146,15 @@ void sys_col_one(ent_t* e){
     if((e->type & e_t_input) == e_t_input){
         u8 swordUp = sys_input_get_sword_up();
         if(swordUp){
-            tile_w++;
-            right_tile++;
+            if(e->move_dir == dir_right){
+                tile_w++;
+                right_tile++;
+            }
+            else{
+                tile_w++;
+                tile_x--;
+                left_tile--;
+            }
         }
     }
     //redibujado de tiles

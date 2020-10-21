@@ -26,8 +26,10 @@
 #define e_c_tools 0x81
 #define e_c_shoot 0x83
 #define e_c_zombi 0x45
-#define e_c_boss1_1 0x46
-#define e_c_boss_tools 0x07
+#define e_c_ghost 0x46
+#define e_c_sonic 0x47
+#define e_c_boss1_1 0x48
+#define e_c_boss_tools 0x09
 
 
 #define dir_right 0x00
@@ -55,6 +57,7 @@ typedef struct et{
    i8 dir;
    //AI
    Ptrf_v_ep act;
+   u8 Ai_counter;
    i8 prev_vx, prev_vy;
    //Input
    i8 on_ground, jumping;

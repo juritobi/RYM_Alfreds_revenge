@@ -63,7 +63,7 @@ const lvl_t i_lvl2 = {//right top
     rt_room,
     0,
     {
-        {e_c_zombi, 4, 168},
+        {e_c_ghost, 72, 168},
         {0, 0, 0},
         {0, 0, 0},
         {0, 0, 0},
@@ -97,7 +97,7 @@ const lvl_t i_lvl4 = {//right bottom
     rb_room,
     0,
     {
-        {e_c_zombi, 4, 168},
+        {e_c_sonic, 72, 152},
         {0, 0, 0},
         {0, 0, 0},
         {0, 0, 0},
@@ -219,12 +219,12 @@ void final_room(){
 void boss_room(){
 
 }
-void normal_room(){
+void normal_room(){     
 }
 
 
 void man_level_init(){
-    cpct_memcpy(&level, &i_boss1, sizeof(lvl_t));//temporal
+    cpct_memcpy(&level, &i_lvl0, sizeof(lvl_t));//temporal
     cpct_memset(cleared_rooms, 0, sizeof(cleared_rooms));
 
     man_ent_init();

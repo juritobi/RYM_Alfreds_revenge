@@ -18,3 +18,5 @@ void sys_AI_boss(ent_t* e);
 void att_move(ent_t* e);
 void att_hor(ent_t* e);
 void att_none(ent_t* e);
+void sys_AI_ghost(ent_t* e);
+void sys_AI_sonic(ent_t* e);
