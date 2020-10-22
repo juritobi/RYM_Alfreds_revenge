@@ -18,6 +18,10 @@ const attack_t rain = {
     30,
     att_rain
 };
+const attack_t pilar = {
+    20,
+    att_pilar
+};
 const attack_t none = {
     20,
     att_none
@@ -121,11 +125,12 @@ void sys_AI_boss(ent_t* e){
     if(!boss_timer){
         ent_t* player = man_ent_get_char();
         u8 rand = cpct_getRandom_lcg_u8(player->x);
-        rand = rand%3;
+        rand = rand%4;
         if(rand==boss_attack_index){
             if(rand==0) rand++;
             else rand--;
         }
+        rand = 3;
         boss_attack_index = rand;
         boss_attack_timer = attacks[rand]->total_time;
         boss_timer = boss_inter_attack_time;
@@ -280,6 +285,28 @@ void att_rain(ent_t* e){
     boss_attack_timer--;
 }
 
+void att_pilar(ent_t* e){
+    ent_t* player = man_ent_get_char();
+
+    if(boss_attack_timer==attack->total_time-1){//set entities to hit
+        (e + 3 + 6 + 1)->originalx = player->x - 4;  
+    }
+    if(boss_attack_timer>6){
+        e->action |= 0x01;
+    }
+    if(boss_attack_timer==6){
+        man_ent_res_absolute(e, 3+6+1);
+    }
+    else if(boss_attack_timer==1){
+        (e+3+6+1)->death(e+3+6+1);
+    }
+    else if(boss_attack_timer==0){
+        attack = &none;
+    }
+
+    boss_attack_timer--;
+}
+
 void sys_AI_one(ent_t* e){
     e->act(e);
 }
@@ -296,6 +323,7 @@ void sys_AI_init(){
     attacks[0] = &move;
     attacks[1] = &horizontal;
     attacks[2] = &rain;
+    attacks[3] = &pilar;
     attack = &none;
 
 }
