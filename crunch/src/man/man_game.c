@@ -80,13 +80,10 @@ u8 man_game_play(){
         sys_ren_setup();
         cpct_setBorder(HW_BLACK);
         
-        cpct_waitVSYNC();
-        
         wait_render_signal();
         cpct_setBorder(HW_GREEN);
         sys_ren_render();
         cpct_setBorder(HW_BLACK);
     }
-    cpct_waitHalts(50);
     return next_screen;
 }

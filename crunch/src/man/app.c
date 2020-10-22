@@ -2,6 +2,8 @@
 #include <man/man_game.h>
 #include <sprites/g_palette.h>
 
+u8 render_count;
+
 void interrupt_1(){
     //cpct_setBorder(HW_RED);
     cpct_scanKeyboard();
@@ -25,7 +27,12 @@ void interrupt_5(){
 }
 void interrupt_6(){
     //cpct_setBorder(HW_YELLOW);
-    activate_render_signal();
+    render_count--;
+    if(!render_count){
+        activate_render_signal();
+        render_count = 2;
+    }
+    
     cpct_setInterruptHandler(interrupt_1);
 }
 
@@ -103,6 +110,8 @@ void man_app_init(){
     cpct_disableFirmware();
     cpct_setPalette(g_palette,4);
     cpct_setDrawCharM1(3, 0);
+
+    render_count = 2;
 
     left_value  = Key_A;
     right_value = Key_D;
