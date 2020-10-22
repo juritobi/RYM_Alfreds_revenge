@@ -134,7 +134,7 @@ const lvl_t i_boss1 = {
     boss_room,
     0,
     {
-        {e_c_boss1_1, 32, 64},
+        {e_c_boss1_1, 34, 88},
         {e_c_boss_tools, 0, 0},
         {0, 0, 0},
         {0, 0, 0},

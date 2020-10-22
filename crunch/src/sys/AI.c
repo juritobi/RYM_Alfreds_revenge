@@ -14,6 +14,10 @@ const attack_t horizontal = {
     20,
     att_hor
 };
+const attack_t rain = {
+    30,
+    att_rain
+};
 const attack_t none = {
     20,
     att_none
@@ -25,7 +29,7 @@ u8 boss_timer;
 u8 boss_attack_timer;
 u8 boss_inter_attack_time;
 u8 boss_attack_index;
-attack_t const *  attacks[2];
+attack_t const *  attacks[3];
 attack_t const *  attack;
 
 void sys_AI_shoot(ent_t* e){
@@ -117,7 +121,7 @@ void sys_AI_boss(ent_t* e){
     if(!boss_timer){
         ent_t* player = man_ent_get_char();
         u8 rand = cpct_getRandom_lcg_u8(player->x);
-        rand = rand%2;
+        rand = rand%3;
         if(rand==boss_attack_index){
             if(rand==0) rand++;
             else rand--;
@@ -136,17 +140,17 @@ void att_move(ent_t* e){
         e->action |= 0x01;
     }
     else{
-        if(boss_attack_timer==10){
-            e->vx = 8;
+        if(boss_attack_timer<10 && boss_attack_timer>8){
+            e->vx = 2;
         }
-        else if(boss_attack_timer==8){
-            e->vx = -8;
+        else if(boss_attack_timer<8 && boss_attack_timer>4){
+            e->vx = -2;
         }
-        else if(boss_attack_timer==7){
-            e->vx = -8;
+        else if(boss_attack_timer==4){
+            e->vx = 2;
         }
-        else if(boss_attack_timer==5){
-            e->vx = 8;
+        else if(boss_attack_timer==3){
+            e->vx = 2;
         }
         else if(boss_attack_timer==0){
             attack = &none;
@@ -198,6 +202,17 @@ void att_hor(ent_t* e){
         else if(boss_attack_timer == 8){
             man_ent_resurrect(e, 3);
         }
+
+        else if(boss_attack_timer==3){
+            (e+1)->death(e+1);
+        }
+        else if(boss_attack_timer==2){
+            (e+2)->death(e+2);
+        }
+        else if(boss_attack_timer==1){
+            (e+3)->death(e+3);
+        }
+
         else if(boss_attack_timer==0){
             attack = &none;
         }
@@ -205,6 +220,65 @@ void att_hor(ent_t* e){
     boss_attack_timer--;
 }
 
+void att_rain(ent_t* e){
+    ent_t* player = man_ent_get_char();
+
+    if(boss_attack_timer==attack->total_time-1){//set entities to hit
+        u8 i = 6;
+        u8 xpos = player->x%3;
+        xpos = xpos*4 + 4;
+        while(i){
+            (e + 3 + i)->originaly = 24;
+            (e + 3 + i)->originalx = xpos;
+            (e + 3 + i)->originalvy = 8;
+            xpos+=12;
+            i--;
+        }
+    }
+    e->action |= 0x01;
+    if(boss_attack_timer==attack->total_time-2){
+        man_ent_res_absolute(e, 3+1);
+    }
+    if(boss_attack_timer==attack->total_time-3){
+        man_ent_res_absolute(e, 3+2);
+    }
+    if(boss_attack_timer==attack->total_time-4){
+        man_ent_res_absolute(e, 3+3);
+    }
+    if(boss_attack_timer==attack->total_time-5){
+        man_ent_res_absolute(e, 3+4);
+    }
+    if(boss_attack_timer==attack->total_time-6){
+        man_ent_res_absolute(e, 3+5);
+    }
+    if(boss_attack_timer==attack->total_time-7){
+        man_ent_res_absolute(e, 3+6);
+    }
+
+    else if(boss_attack_timer==7){
+        (e+3+1)->death(e+3+1);
+    }
+    else if(boss_attack_timer==6){
+        (e+3+2)->death(e+3+2);
+    }
+    else if(boss_attack_timer==5){
+        (e+3+3)->death(e+3+3);
+    }
+    else if(boss_attack_timer==4){
+        (e+3+4)->death(e+3+4);
+    }
+    else if(boss_attack_timer==3){
+        (e+3+5)->death(e+3+5);
+    }
+    else if(boss_attack_timer==2){
+        (e+3+6)->death(e+3+6);
+    }
+    else if(boss_attack_timer==0){
+        attack = &none;
+    }
+
+    boss_attack_timer--;
+}
 
 void sys_AI_one(ent_t* e){
     e->act(e);
@@ -221,6 +295,7 @@ void sys_AI_init(){
 
     attacks[0] = &move;
     attacks[1] = &horizontal;
+    attacks[2] = &rain;
     attack = &none;
 
 }
