@@ -12,7 +12,7 @@
 #include <constants.h>
 
 
-u8 in_game;
+u8 next_screen;
 u8 render_signal;
 u8 waiting_render_signal;
 
@@ -32,7 +32,7 @@ void wait_render_signal(){
     waiting_render_signal = 0;
 }
 void man_game_init(){
-    in_game = 1;
+    next_screen = 0;
     render_signal=0;
     waiting_render_signal=0;
 
@@ -46,12 +46,12 @@ void man_game_init(){
     sys_ren_init();
 }
 
-void man_game_exit(){
-    in_game=0;
+void man_game_exit(u8 next){
+    next_screen=next;
 }
 
-void man_game_play(){
-    while (in_game){
+u8 man_game_play(){
+    while (!next_screen){
         
         cpct_setBorder(HW_RED);
         man_ent_forall_type(man_ent_update,e_t_render);
@@ -86,25 +86,7 @@ void man_game_play(){
         cpct_setBorder(HW_GREEN);
         sys_ren_render();
         cpct_setBorder(HW_BLACK);
-
-        /*cpct_waitVSYNC();
-        cpct_waitHalts(2);
-        cpct_waitVSYNC();
-        cpct_waitVSYNC();
-        cpct_waitHalts(2);
-        cpct_waitVSYNC();
-        cpct_waitVSYNC();
-        cpct_waitHalts(2);
-        cpct_waitVSYNC();
-        cpct_waitVSYNC();
-        cpct_waitHalts(2);
-        cpct_waitVSYNC();
-        cpct_waitVSYNC();
-        cpct_waitHalts(2);
-        cpct_waitVSYNC();
-        cpct_waitVSYNC();
-        cpct_waitHalts(2);
-        cpct_waitVSYNC();
-*/
     }
+    cpct_waitHalts(50);
+    return next_screen;
 }

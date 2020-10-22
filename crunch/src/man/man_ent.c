@@ -451,11 +451,11 @@ void man_ent_hit(ent_t* hitted, u8 damage){
 
 void man_ent_char_death(ent_t* dead_ent){
    ent_t* e = dead_ent;
-   man_game_exit();
+   man_game_exit(lose);
 }
 void man_ent_boss_death(ent_t* dead_ent){
    ent_t* e = dead_ent;
-   man_game_exit();
+   man_game_exit(win);
 }
 //esto habra que mejorarlo
 void man_ent_generic_death(ent_t* dead_ent){
