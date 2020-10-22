@@ -41,7 +41,7 @@ void man_game_init(){
     sys_AI_init();
     sys_anim_init();
     sys_Input_init();
-    //sys_col_init();
+    sys_col_init();
     //sys_phy_init();
     sys_ren_init();
 }

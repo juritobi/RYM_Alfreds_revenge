@@ -435,18 +435,20 @@ ent_t* man_ent_create_from_template(const ent_t* template){
 }
 
 
-void man_ent_hit(ent_t* hitted){
-   hitted->hp--;
-   if(hitted->hp==0){
-      hitted->death(hitted);
-      
-      man_level_kill_enemy();
-      return;
+void man_ent_hit(ent_t* hitted, u8 damage){
+   if(!hitted->invulnerable){
+      hitted->hp -= damage;
+      if(hitted->hp==0 || hitted->hp > 100){
+         hitted->death(hitted);
+         man_level_kill_enemy();
+         return;
+      }
+      hitted->invulnerable = 50;
+      if(hitted->knockback!= -2)
+         hitted->knockback = 0;
    }
-   hitted->invulnerable = 50;
-   if(hitted->knockback!= -2)
-      hitted->knockback = 0;
 }
+
 void man_ent_char_death(ent_t* dead_ent){
    ent_t* e = dead_ent;
    man_game_exit();

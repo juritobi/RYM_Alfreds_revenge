@@ -97,7 +97,7 @@ void man_ent_forall_col_type(Ptrf_v_epep fun, u8 first_type, u8 second_type);
 void man_ent_update(ent_t* dead_ent);
 
 
-void man_ent_hit(ent_t* hitted);
+void man_ent_hit(ent_t* hitted, u8 damage);
 void man_ent_char_death(ent_t* dead_ent);
 void man_ent_generic_death(ent_t* dead_ent);
 void man_ent_boss_death(ent_t* dead_ent);
