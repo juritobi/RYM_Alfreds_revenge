@@ -128,7 +128,8 @@ void sys_col_one(ent_t* e){
         }
     }
 
-    /*if(e->vx && e->vy){
+
+     if(e->vx && e->vy){
         if(!not_exact_tile_x && !not_exact_tile_y){
             u8 x_wins = 0;
             u8 tile_type;
@@ -147,8 +148,8 @@ void sys_col_one(ent_t* e){
                 tile_pointer = get_tile_pointer(left_tile, top_tile);
             }
 
-            tile_type = tilemap[tile_pointer] & tile_type_mask;
-            if(tile_type == solid){
+            tile_type = tilemap[tile_pointer];
+            if(tile_type < solid){
                 if(x_wins){
                     e->vy = 0;
                     e->on_ground = 1;
@@ -157,14 +158,15 @@ void sys_col_one(ent_t* e){
                     e->vx = 0;
                 }
             }
-            else if(tile_type == half){
+            else if(tile_type < half){
                 if(!e->on_ground){
                     e->on_ground = 1;
                     e->vy = 0;
                 }
             }
         }
-    }*/
+    }
+
 }
 
 void sys_col_ally_enemy(ent_t* ally, ent_t* enemy){
