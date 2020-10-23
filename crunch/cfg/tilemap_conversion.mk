@@ -47,8 +47,7 @@ $(eval $(call TMX2DATA, CONVERT, assets/lvl3.tmx, lvl3 ))
 $(eval $(call TMX2DATA, CONVERT, assets/lvl4.tmx, lvl4 )) 
 $(eval $(call TMX2DATA, CONVERT, assets/lvl5.tmx, lvl5 )) 
 
-$(eval $(call TMX2DATA, CONVERT, assets/boss1.tmx, boss1 )) 
-$(eval $(call TMX2DATA, CONVERT, assets/boss2.tmx, boss2 )) 
+$(eval $(call TMX2DATA, CONVERT, assets/boss1.tmx, boss1 ))
 
 
 ##

@@ -1,25 +1,25 @@
 #include "AI.h"
 
 #define rate_of_fire 100
-#define move_rate 4
+#define move_rate 5
 u8 shoot_timer;
 u8 move_counter;
 
 
-const attack_t move = {
+/*const attack_t move = {
     20,
     att_move
-};
+};*/
 const attack_t horizontal = {
-    20,
+    30,
     att_hor
 };
 const attack_t rain = {
-    30,
+    40,
     att_rain
 };
 const attack_t pilar = {
-    20,
+    30,
     att_pilar
 };
 const attack_t none = {
@@ -130,16 +130,49 @@ void sys_AI_boss(ent_t* e){
             if(rand==0) rand++;
             else rand--;
         }
-        rand = 3;
         boss_attack_index = rand;
         boss_attack_timer = attacks[rand]->total_time;
         boss_timer = boss_inter_attack_time;
         attack = attacks[rand];
     }
+//going tio use original x careful for breaks
+    e->vy = 0;
+    e->vx = 0;
+    e->Ai_counter--;
+    if(!e->Ai_counter){
+        e->Ai_counter = move_rate;
+        if(e->x == 32 && e->y == 72){
+            e->originalvx = 1;
+            e->originalvy = 0;
+        }
+        else if(e->x == 36 && e->y == 72){
+            e->originalvx = 1;
+            e->originalvy = 4;
+        }
+        else if(e->x == 40 && e->y == 88){
+            e->originalvx = -1;
+            e->originalvy = 4;
+        }
+        else if(e->x == 36 && e->y == 104){
+            e->originalvx = -1;
+            e->originalvy = 0;
+        }
+        else if(e->x == 32 && e->y == 104){
+            e->originalvx = -1;
+            e->originalvy = -4;
+        }
+        else if(e->x == 28 && e->y == 88){
+            e->originalvx = 1;
+            e->originalvy = -4;
+        }
+        e->vx = e->originalvx;
+        e->vy = e->originalvy;
+    }
+
     boss_timer--;
     attack->funct(e);// attack_function();
 }
-void att_move(ent_t* e){
+/*void att_move(ent_t* e){
     e->vx = 0;
     if(boss_attack_timer>10){
         e->action |= 0x01;
@@ -163,7 +196,7 @@ void att_move(ent_t* e){
     }
 
     boss_attack_timer--;
-}
+}*/
 void att_none(ent_t* e){
     ent_t* en = e;
 }
@@ -171,13 +204,13 @@ void att_none(ent_t* e){
 void att_hor(ent_t* e){
     ent_t* player = man_ent_get_char();
 
-    if(boss_attack_timer==attack->total_time){// si no le voy a dar cambio de ataque
+    /*if(boss_attack_timer==attack->total_time){// si no le voy a dar cambio de ataque
         if(player->y+player->h <= e->y  ||  player->y >= e->y+e->h){
             boss_timer = 0;
         }
         boss_attack_timer--;
         return;
-    }
+    }*/
 
     if(boss_attack_timer==attack->total_time-1){//set entities to hit
         u8 i = 3;
@@ -241,22 +274,22 @@ void att_rain(ent_t* e){
         }
     }
     e->action |= 0x01;
-    if(boss_attack_timer==attack->total_time-2){
+    if(boss_attack_timer==28){
         man_ent_res_absolute(e, 3+1);
     }
-    if(boss_attack_timer==attack->total_time-3){
+    if(boss_attack_timer==27){
         man_ent_res_absolute(e, 3+2);
     }
-    if(boss_attack_timer==attack->total_time-4){
+    if(boss_attack_timer==26){
         man_ent_res_absolute(e, 3+3);
     }
-    if(boss_attack_timer==attack->total_time-5){
+    if(boss_attack_timer==25){
         man_ent_res_absolute(e, 3+4);
     }
-    if(boss_attack_timer==attack->total_time-6){
+    if(boss_attack_timer==24){
         man_ent_res_absolute(e, 3+5);
     }
-    if(boss_attack_timer==attack->total_time-7){
+    if(boss_attack_timer==23){
         man_ent_res_absolute(e, 3+6);
     }
 
@@ -294,7 +327,7 @@ void att_pilar(ent_t* e){
     if(boss_attack_timer>6){
         e->action |= 0x01;
     }
-    if(boss_attack_timer==6){
+    else if(boss_attack_timer==6){
         man_ent_res_absolute(e, 3+6+1);
     }
     else if(boss_attack_timer==1){
@@ -320,10 +353,9 @@ void sys_AI_init(){
     boss_timer = boss_inter_attack_time;
     boss_attack_index = 0xFF;
 
-    attacks[0] = &move;
-    attacks[1] = &horizontal;
-    attacks[2] = &rain;
-    attacks[3] = &pilar;
+    attacks[0] = &horizontal;
+    attacks[1] = &rain;
+    attacks[2] = &pilar;
     attack = &none;
 
 }

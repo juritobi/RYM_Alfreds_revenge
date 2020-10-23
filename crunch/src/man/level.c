@@ -134,25 +134,8 @@ const lvl_t i_boss1 = {
     boss_room,
     0,
     {
-        {e_c_boss1_1, 34, 88},
+        {e_c_boss1_1, 32, 72},
         {e_c_boss_tools, 0, 0},
-        {0, 0, 0},
-        {0, 0, 0},
-        {0, 0, 0}
-    }
-};
-const lvl_t i_boss2 = {
-    7,                  //id
-    boss2_pack_end,      //this
-    0,                  //top
-    0,      //right
-    &i_boss2,                  //bot
-    0,                  //left
-    boss_room,
-    0,
-    {
-        {0, 0, 0},
-        {0, 0, 0},
         {0, 0, 0},
         {0, 0, 0},
         {0, 0, 0}

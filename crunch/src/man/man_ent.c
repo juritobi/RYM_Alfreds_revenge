@@ -331,7 +331,7 @@ const ent_t init_boss = {
    1,                                                           //u8 dir;//0000-*-00-*-00 anim_action-*-anim_dir-*-knockback_dir
    //AI
    sys_AI_boss,                                                          //Ptrf_v_ep act;
-   0,                                                          //AI_Counter
+   4,                                                          //AI_Counter
    0,0,                                                        //i8 prev_vx, prev_vy;
    //Input
    0,-1,                                                        //i8 on_ground, jumping;   
@@ -422,12 +422,12 @@ const ent_t init_boss_pilar = {
    e_t_render | e_t_dead,                                                 //u8 type;
    0,0,                                                        //u8 x, y;
    0,0,                                                        //u8 prevx, prevy;
-   8,136,                                                       //u8 w, h;
+   8,136,                                                       //u8 w, h; 136
    0,0,                                                        //i8 vx, vy;
    dir_right,                                                      //u8 move_dir;
    man_ent_generic_death,                                         //Ptrf_v_ep death;
    //SONS
-   48,0,                                                        //u8 originalx, originaly;
+   0,48,                                                        //u8 originalx, originaly;
    0,0,                                                        //i8 originalvx, originalvy;
    //CHARACTERS
    1,0,1,                                                       //u8 hp, mp, damage;  

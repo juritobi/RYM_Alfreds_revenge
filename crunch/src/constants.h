@@ -7,7 +7,6 @@
 #include <tilemaps/lvl4_pack.h>
 #include <tilemaps/lvl5_pack.h>
 #include <tilemaps/boss1_pack.h>
-#include <tilemaps/boss2_pack.h>
 #include <sprites/tileset.h>
 
 #define tilemap_W (lvl0_W)
