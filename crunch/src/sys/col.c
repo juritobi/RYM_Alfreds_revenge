@@ -255,9 +255,32 @@ void sys_col_allybreaker_enemy(ent_t* breaker, ent_t* enemy){
     }
 }
 
+void sys_col_ally_PowerUp(ent_t* ally, ent_t* PowerUp){
+    if( !(ally->x+ally->w <= PowerUp->x  ||  ally->x >= PowerUp->x+PowerUp->w) ){
+        if(!(ally->y+ally->h <= PowerUp->y  ||  ally->y >= PowerUp->y+PowerUp->h) ) {
+            if(PowerUp->mp == 1){
+                man_ent_max_hp(ally);
+            }
+            else if(PowerUp->mp == 2){
+                man_ent_max_mana(ally);
+            }
+            else if(PowerUp->mp == 3){
+                man_ent_max_melee(ally+1);
+            }
+            else if(PowerUp->mp == 4){
+                man_ent_max_range(ally+2);
+            }
+
+            PowerUp->death(PowerUp);
+
+        }
+    }
+}
+
 void sys_col_reduceTimeInvulnerable(ent_t* e){
+    i8 dire = e->dir;
     if(e->knockback > -1 && e->knockback < sizeof(knocknackX)){ 
-        e->vx = knocknackX[e->knockback]*e->dir;
+        e->vx = knocknackX[e->knockback]*dire;
         e->vy = knocknackY[e->knockback];
         e->knockback++;
         e->on_ground = 2;//esto es pa que atraviese los bloques semi-solidos
@@ -269,6 +292,7 @@ void sys_col_reduceTimeInvulnerable(ent_t* e){
 }
 
 void sys_col_update(){
+    man_ent_forall_col_type(sys_col_ally_PowerUp, col_t_ally, col_t_powerUp);
     man_ent_forall_col_type(sys_col_allybreaker_enemy, col_t_ally_breaker, col_t_enemy);
     man_ent_forall_col_type(sys_col_ally_enemy, col_t_ally, col_t_enemy|col_t_enemy_breaker);
     man_ent_forall_col_type_individual(sys_col_reduceTimeInvulnerable, col_t_ally|col_t_enemy);

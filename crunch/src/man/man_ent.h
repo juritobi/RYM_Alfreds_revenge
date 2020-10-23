@@ -17,6 +17,7 @@
 #define col_t_ally_breaker 0x02
 #define col_t_enemy 0x04
 #define col_t_enemy_breaker 0x08
+#define col_t_powerUp 0x10
 
 //el tipo aumenta en funcion del numero de entidades que tenga la clase es decir char crea 3 entidades, por eso shoot es es el 3 
 //y shoot crea 2 entidades por eso el siguiente sera 5
@@ -28,8 +29,9 @@
 #define e_c_zombi 0x45
 #define e_c_ghost 0x46
 #define e_c_sonic 0x47
-#define e_c_boss1_1 0x48
-#define e_c_boss_tools 0x09
+#define e_c_powerUp 0x48
+#define e_c_boss1_1 0x49
+#define e_c_boss_tools 0x0A
 
 
 #define dir_right 0x00
@@ -76,13 +78,14 @@ typedef struct et{
 typedef struct entity_class{
    u8 type;
    u8 x, y;
+   u8 mp;
 }ent_class;
 
 
 void man_ent_init();
 void man_ent_reset();
 
-void man_ent_create_class(u8 type, u8 x, u8 y);
+void man_ent_create_class(u8 type, u8 x, u8 y, u8 mp);
 
 ent_t* man_ent_create_from_template(const ent_t* template);
 void man_ent_resurrect(ent_t* e, u8 displacement);
@@ -94,7 +97,13 @@ void man_ent_forall_type(Ptrf_v_ep fun, u8 types);
 void man_ent_forall_col_type_individual( Ptrf_v_ep fun, u8 types);
 void man_ent_forall_col_type(Ptrf_v_epep fun, u8 first_type, u8 second_type);
 
+void man_ent_max_hp(ent_t* ent);
+void man_ent_max_mana(ent_t* ent);
+void man_ent_max_melee(ent_t* sword);
+void man_ent_max_range(ent_t* knife);
+
 void man_ent_update(ent_t* dead_ent);
+
 
 
 void man_ent_hit(ent_t* hitted);

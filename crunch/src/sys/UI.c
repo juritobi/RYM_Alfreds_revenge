@@ -5,6 +5,8 @@
 
 u16 score;
 ent_t* player; 
+u8 prev_max_hp;
+u8 prev_max_mana;
 u8 prev_hp;
 u8 prev_mp;
 u8 ad;
@@ -14,6 +16,43 @@ void draw_sprite(u8* sprite, u8 x, u8 y){
     u8* pos = cpct_getScreenPtr (CPCT_VMEM_START,x, y);
     cpct_drawSprite (sprite, pos, 2, 8);
 }
+
+
+void sys_UI_max_hp(){
+
+    u8 looper;
+    u8 index;
+
+    draw_sprite(spr_UI_00, 2, 3);
+    looper=player->prev_vx;
+    index = 4;
+
+
+    while(looper){
+        draw_sprite(spr_UI_01, index, 3);
+        --looper;
+        index +=2;
+    }
+    draw_sprite(spr_UI_03, index, 3);
+
+}
+
+void sys_UI_max_mana(){
+    u8 looper;
+    u8 index;
+    draw_sprite(spr_UI_05, 2, 13);
+
+    looper=player->prev_vy;
+    index = 4;
+    while(looper){
+        draw_sprite(spr_UI_06, index, 13);
+        --looper;
+        index +=2;
+    }
+    draw_sprite(spr_UI_08, index, 13);
+
+}
+
 
 void sys_UI_init(){
 
@@ -27,6 +66,9 @@ void sys_UI_init(){
     prev_mp = player->mp;
     ad = (player+1)->damage;
     ap = (player+2)->damage;
+
+    prev_max_hp = player->prev_vx;
+    prev_max_mana = player->prev_vy;
         
 
 
@@ -35,27 +77,10 @@ void sys_UI_init(){
     cpct_drawSolidBox (CPCT_VMEM_START+40, 0xF0, 40, 24);
 
     //hp mp
-    draw_sprite(spr_UI_00, 2, 3);
-    draw_sprite(spr_UI_05, 2, 13);
+    sys_UI_max_hp();
+    sys_UI_max_mana();
 
-    looper=player->hp;
-    index = 4;
-    while(looper){
-        draw_sprite(spr_UI_01, index, 3);
-        --looper;
-        index +=2;
-    }
-    draw_sprite(spr_UI_03, index, 3);
-
-    looper=player->mp;
-    index = 4;
-    while(looper){
-        draw_sprite(spr_UI_06, index, 13);
-        --looper;
-        index +=2;
-    }
-    draw_sprite(spr_UI_08, index, 13);
-
+    
     //damage
     draw_sprite(spr_UI_04, 40, 3);
     draw_sprite(spr_number_00, 44, 3);
@@ -76,9 +101,6 @@ void sys_UI_init(){
     }
 }
 
-
-
-
 void sys_UI_update(){
     if(prev_hp > player->hp){ // pierdes vida
         draw_sprite(spr_UI_02, 2+prev_hp*2, 3);
@@ -97,5 +119,15 @@ void sys_UI_update(){
     while(prev_mp < player->mp){// ganas mana
         draw_sprite(spr_UI_06, 2+(prev_mp+1)*2, 13);
         prev_mp++;
+    }
+
+    if(prev_max_hp < player->prev_vx){
+        sys_UI_max_hp();
+        prev_max_hp = player->hp;
+    }
+
+    if(prev_max_mana < player->prev_vy){
+        sys_UI_max_mana();
+        prev_max_mana = player->mp;
     }
 }

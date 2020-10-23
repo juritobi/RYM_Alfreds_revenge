@@ -46,8 +46,8 @@ const lvl_t i_lvl1 = {//top left
     lt_room,
     0,
     {
-        {e_c_zombi, 4, 168},
-        {e_c_zombi, 72, 168},
+        {e_c_zombi, 4, 168, 0},
+        {e_c_zombi, 72, 168, 0},
         {0, 0, 0},
         {0, 0, 0},
         {0, 0, 0}
@@ -63,7 +63,7 @@ const lvl_t i_lvl2 = {//right top
     rt_room,
     0,
     {
-        {e_c_ghost, 72, 168},
+        {e_c_ghost, 72, 168, 0},
         {0, 0, 0},
         {0, 0, 0},
         {0, 0, 0},
@@ -80,8 +80,8 @@ const lvl_t i_lvl3 = {//left bottom
     lb_room,
     0,
     {
-        {e_c_zombi, 60, 168},
-        {0, 0, 0},
+        {e_c_powerUp, 4, 96, 2},
+        {e_c_ghost, 20, 168, 0},
         {0, 0, 0},
         {0, 0, 0},
         {0, 0, 0}
@@ -97,7 +97,7 @@ const lvl_t i_lvl4 = {//right bottom
     rb_room,
     0,
     {
-        {e_c_sonic, 72, 152},
+        {e_c_sonic, 72, 152, 0},
         {0, 0, 0},
         {0, 0, 0},
         {0, 0, 0},
@@ -114,7 +114,7 @@ const lvl_t i_lvl5 = {
     normal_room,
     0,
     {
-        {e_c_shoot, 72, 64},
+        {e_c_shoot, 72, 64, 0},
         {0, 0, 0},
         {0, 0, 0},
         {0, 0, 0},
@@ -132,8 +132,8 @@ const lvl_t i_boss1 = {
     boss_room,
     0,
     {
-        {e_c_boss1_1, 32, 64},
-        {e_c_boss_tools, 0, 0},
+        {e_c_boss1_1, 32, 64, 0},
+        {e_c_boss_tools, 0, 0, 0},
         {0, 0, 0},
         {0, 0, 0},
         {0, 0, 0}
@@ -228,7 +228,7 @@ void man_level_init(){
     cpct_memset(cleared_rooms, 0, sizeof(cleared_rooms));
 
     man_ent_init();
-    man_ent_create_class(e_c_char, 16, 80);
+    man_ent_create_class(e_c_char, 16, 80, 5);
     man_level_load(16, 80);
 
 }
@@ -243,14 +243,16 @@ void man_level_load(u8 px, u8 py){
     man_ent_reset();
     man_ent_get_char()->x = px;
     man_ent_get_char()->y = py;
-    man_ent_create_class(e_c_tools, 0, 0);
+    man_ent_create_class(e_c_tools, 0, 0, 0);
     
 
     if(level.id){
         if(!cleared_rooms[level.id]){
             while(class->type != e_c_undefined){
-                level.enemies++;
-                man_ent_create_class(class->type, class->x, class->y);
+                if(class->type != e_c_powerUp){
+                    level.enemies++;
+                }
+                man_ent_create_class(class->type, class->x, class->y, class->mp);
                 it++;
                 class = &level.entities[it];
             }
@@ -295,10 +297,11 @@ void man_level_update(){
 }
 
 void man_level_add_mp_end_lvl(){
-    if(man_ent_get_char()->mp == 4){
+    ent_t* player = man_ent_get_char();
+    if(man_ent_get_char()->mp == player->prev_vy -1){
         man_ent_get_char()->mp++;
     }
-    else if(man_ent_get_char()->mp < 4){
+    else if(man_ent_get_char()->mp < player->prev_vy -1){
         man_ent_get_char()->mp++;
         man_ent_get_char()->mp++;
     }
