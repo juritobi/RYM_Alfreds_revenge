@@ -212,7 +212,7 @@ void normal_room(){
 
 void man_level_init(){
     final_door_open = 0;
-    cpct_memcpy(&level, &i_boss1, sizeof(lvl_t));//temporal
+    cpct_memcpy(&level, &i_lvl0, sizeof(lvl_t));//temporal
     cpct_memset(cleared_rooms, 0, sizeof(cleared_rooms));
 
     man_ent_init();

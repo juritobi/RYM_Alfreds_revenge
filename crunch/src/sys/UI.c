@@ -13,7 +13,7 @@ u8 ad;
 u8 ap;
 u8 down_score_timer;
 
-u8* numbers[9];
+u8* numbers[10];
 
 void draw_sprite(u8* sprite, u8 x, u8 y){
     u8* pos = cpct_getScreenPtr (CPCT_VMEM_START,x, y);
@@ -85,6 +85,7 @@ void sys_UI_init(){
     down_score_timer= 0xFF;
     prev_max_hp = player->prev_vx;
     prev_max_mana = player->prev_vy;
+
 
     numbers[0] = spr_number_00;
     numbers[1] = spr_number_01;
