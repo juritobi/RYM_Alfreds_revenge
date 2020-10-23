@@ -368,13 +368,13 @@ const ent_t init_boss = {
    0,0,                                                        //u8 originalx, originaly;
    0,0,                                                        //i8 originalvx, originalvy;
    //CHARACTERS
-   1,5,2,                                                       //u8 hp, mp, damage;
+   50,5,1,                                                       //u8 hp, mp, damage;
    0,                                                          // invulnerable
    -2,                                                           // knockback
    1,                                                           //u8 dir;//0000-*-00-*-00 anim_action-*-anim_dir-*-knockback_dir
    //AI
    sys_AI_boss,                                                          //Ptrf_v_ep act;
-   0,                                                          //AI_Counter
+   4,                                                          //AI_Counter
    0,0,                                                        //i8 prev_vx, prev_vy;
    //Input
    0,-1,                                                        //i8 on_ground, jumping;   
@@ -403,7 +403,77 @@ const ent_t init_boss_hor = {
    12,0,                                                        //u8 originalx, originaly;
    0,0,                                                        //i8 originalvx, originalvy;
    //CHARACTERS
-   1,0,3,                                                       //u8 hp, mp, damage;  
+   1,0,1,                                                       //u8 hp, mp, damage;  
+   0,                                                          // invulnerable
+   -1,                                                           // knockback
+   1,                                                           //u8 dir;//0000-*-00-*-00 anim_action-*-anim_dir-*-knockback_dir
+   //AI
+   0x00,                                                          //Ptrf_v_ep act;
+   0,                                                          //AI_Counter
+   0,0,                                                        //i8 prev_vx, prev_vy;
+   //Input
+   0,-1,                                                        //i8 on_ground, jumping;   
+   //Animation
+   4,                                                          //u8 anim_timer;
+   0x00,                                                       //u8 action;  //action - dir  
+   &c_s_0,                                                       //spr_frame_t* frame;      
+   &c_spriteset,                                                       //spr_set_t* sprite_set;     
+   //Collisions
+   col_t_enemy_breaker,                                                 //u8 col_type;                  
+   //physics
+   //render
+   spr_boss_0,                                                 //u8* sprite;                   
+   0                                                          //u8* memory_pos;               
+};
+const ent_t init_boss_diag = {
+   //generic
+   e_t_render | e_t_dead |e_t_physics,                                                 //u8 type;
+   0,0,                                                        //u8 x, y;
+   0,0,                                                        //u8 prevx, prevy;
+   4,8,                                                       //u8 w, h;
+   0,0,                                                        //i8 vx, vy;
+   dir_right,                                                      //u8 move_dir;
+   man_ent_generic_death,                                         //Ptrf_v_ep death;
+   //SONS
+   0,0,                                                        //u8 originalx, originaly;
+   0,0,                                                        //i8 originalvx, originalvy;
+   //CHARACTERS
+   1,0,1,                                                       //u8 hp, mp, damage;  
+   0,                                                          // invulnerable
+   -1,                                                           // knockback
+   1,                                                           //u8 dir;//0000-*-00-*-00 anim_action-*-anim_dir-*-knockback_dir
+   //AI
+   0x00,                                                          //Ptrf_v_ep act;
+   0,                                                          //AI_Counter
+   0,0,                                                        //i8 prev_vx, prev_vy;
+   //Input
+   0,-1,                                                        //i8 on_ground, jumping;   
+   //Animation
+   4,                                                          //u8 anim_timer;
+   0x00,                                                       //u8 action;  //action - dir  
+   &c_s_0,                                                       //spr_frame_t* frame;      
+   &c_spriteset,                                                       //spr_set_t* sprite_set;     
+   //Collisions
+   col_t_enemy_breaker,                                                 //u8 col_type;                  
+   //physics
+   //render
+   spr_boss_0,                                                 //u8* sprite;                   
+   0                                                          //u8* memory_pos;               
+};
+const ent_t init_boss_pilar = {
+   //generic
+   e_t_render | e_t_dead,                                                 //u8 type;
+   0,0,                                                        //u8 x, y;
+   0,0,                                                        //u8 prevx, prevy;
+   8,136,                                                       //u8 w, h; 136
+   0,0,                                                        //i8 vx, vy;
+   dir_right,                                                      //u8 move_dir;
+   man_ent_generic_death,                                         //Ptrf_v_ep death;
+   //SONS
+   0,48,                                                        //u8 originalx, originaly;
+   0,0,                                                        //i8 originalvx, originalvy;
+   //CHARACTERS
+   1,0,1,                                                       //u8 hp, mp, damage;  
    0,                                                          // invulnerable
    -1,                                                           // knockback
    1,                                                           //u8 dir;//0000-*-00-*-00 anim_action-*-anim_dir-*-knockback_dir
@@ -462,6 +532,16 @@ void man_ent_create_class(u8 type, u8 x, u8 y, u8 PupType){
       ent_in_class->originaly = 16;
       ent_in_class = man_ent_create_from_template(class_init);
       ent_in_class->originaly = 32;
+      class_init++;
+      ent_in_class = man_ent_create_from_template(class_init);
+      ent_in_class = man_ent_create_from_template(class_init);
+      ent_in_class = man_ent_create_from_template(class_init);
+      ent_in_class = man_ent_create_from_template(class_init);
+      ent_in_class = man_ent_create_from_template(class_init);
+      ent_in_class = man_ent_create_from_template(class_init);
+      class_init++;
+      ent_in_class = man_ent_create_from_template(class_init);
+
    }
    while(class_ents){
       ent_t* ent_in_class = man_ent_create_from_template(class_init);
@@ -479,27 +559,29 @@ ent_t* man_ent_create_from_template(const ent_t* template){
    return res;
 }
 
-void man_ent_hit(ent_t* hitted){
-   hitted->hp--;
-   if(hitted->hp==0){
-      hitted->death(hitted);
-      
-      man_level_kill_enemy();
-      return;
+
+void man_ent_hit(ent_t* hitted, u8 damage){
+   if(!hitted->invulnerable){
+      hitted->hp -= damage;
+      if(hitted->hp==0 || hitted->hp > 100){
+         hitted->death(hitted);
+         man_level_kill_enemy();
+         return;
+      }
+      hitted->invulnerable = 50;
+      if(hitted->knockback!= -2)
+         hitted->knockback = 0;
    }
-   hitted->invulnerable = 50;
-   if(hitted->knockback!= -2)
-      hitted->knockback = 0;
 }
 
 void man_ent_char_death(ent_t* dead_ent){
    ent_t* e = dead_ent;
-   man_game_exit();
+   man_game_exit(lose);
 }
 
 void man_ent_boss_death(ent_t* dead_ent){
    ent_t* e = dead_ent;
-   man_game_exit();
+   man_game_exit(win);
 }
 
 
@@ -622,6 +704,14 @@ void man_ent_forall_col_type( Ptrf_v_epep fun, u8 first_type, u8 second_type){
    }
 }
 
+void man_ent_res_absolute(ent_t* e, u8 displacement){
+   ent_t* e_to_res = e + displacement;
+   e_to_res->type &= ~e_t_dead;
+   e_to_res->x = e_to_res->originalx;
+   e_to_res->y = e_to_res->originaly;
+   e_to_res->vx = e_to_res->originalvx;
+   e_to_res->vy = e_to_res->originalvy;
+}
 void man_ent_resurrect(ent_t* e, u8 displacement){
    ent_t* e_to_res = e + displacement;
    e_to_res->type &= ~e_t_dead;

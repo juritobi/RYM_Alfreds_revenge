@@ -1,9 +1,9 @@
 #include "anim.h"
 #include <man/man_ent.h>
 
-spr_frame_t* c_tset[char_sprset_W];
-spr_frame_t* s_tset[shooter_sprset_W];
-spr_frame_t* b_tset[boss_sprset_W];
+spr_frame_t const * c_tset[char_sprset_W];
+spr_frame_t const * s_tset[shooter_sprset_W];
+spr_frame_t const * b_tset[boss_sprset_W];
 
 const spr_frame_t c_s_0 = {
     4,

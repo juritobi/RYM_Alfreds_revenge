@@ -2,7 +2,7 @@
 #include <constants.h>
 
 u8 next_free_index;
-tile tiles[20];
+tile tiles[60];
 u16 null_end_tiles;
 
 

@@ -1,5 +1,6 @@
 #include "input.h"
 #include <man/man_ent.h>
+#include <man/app.h>
 #include <sys/anim.h>
 
 #define swordCD 15

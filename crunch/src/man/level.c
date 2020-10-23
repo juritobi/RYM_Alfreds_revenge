@@ -4,6 +4,8 @@
 #include <man/app.h>
 #include <constants.h>
 
+u8 final_door_open;
+
 extern const lvl_t i_lvl0;
 extern const lvl_t i_lvl1;
 extern const lvl_t i_lvl2;
@@ -132,25 +134,8 @@ const lvl_t i_boss1 = {
     boss_room,
     0,
     {
-        {e_c_boss1_1, 32, 64, 0},
+        {e_c_boss1_1, 32, 72, 0},
         {e_c_boss_tools, 0, 0, 0},
-        {0, 0, 0},
-        {0, 0, 0},
-        {0, 0, 0}
-    }
-};
-const lvl_t i_boss2 = {
-    7,                  //id
-    boss2_pack_end,      //this
-    0,                  //top
-    0,      //right
-    &i_boss2,                  //bot
-    0,                  //left
-    boss_room,
-    0,
-    {
-        {0, 0, 0},
-        {0, 0, 0},
         {0, 0, 0},
         {0, 0, 0},
         {0, 0, 0}
@@ -196,6 +181,8 @@ void final_room(){
         tilemap_start[2*tilemap_W + 13] = 27;
         tilemap_start[15*tilemap_W + 6] = 27;
         tilemap_start[15*tilemap_W + 13] = 27;
+
+        final_door_open = 1;
     }
     else{
         if(cleared_rooms[level.id] & 1){
@@ -224,7 +211,8 @@ void normal_room(){
 
 
 void man_level_init(){
-    cpct_memcpy(&level, &i_lvl0, sizeof(lvl_t));//temporal
+    final_door_open = 0;
+    cpct_memcpy(&level, &i_boss1, sizeof(lvl_t));//temporal
     cpct_memset(cleared_rooms, 0, sizeof(cleared_rooms));
 
     man_ent_init();
@@ -294,6 +282,18 @@ void man_level_update(){
         cpct_memcpy(&level, level.bot, sizeof(lvl_t));
         man_level_load(player->x, player->y);
     }
+    else if(final_door_open){
+        if(level.self == lvl0_pack_end){
+            if( player->x+player->w > 36  &&  player->x < 44){
+                if(player->y > 140) {
+                    if(cpct_isKeyPressed(Key_W)){
+                        cpct_memcpy(&level, &i_boss1, sizeof(lvl_t));
+                        man_level_load(20, 160);
+                    }
+                }
+            }
+        }
+    }
 }
 
 void man_level_add_mp_end_lvl(){
@@ -313,10 +313,12 @@ void man_level_kill_enemy(){
         cleared_rooms[level.id]=1;
         level.cleared_func();
         man_level_add_mp_end_lvl();
-        
     }
 }
 
 u8* man_level_get_tilemap(){
     return tilemap_start;
+}
+u8 man_level_get_door(){
+    return final_door_open;
 }

@@ -88,6 +88,7 @@ void man_ent_reset();
 void man_ent_create_class(u8 type, u8 x, u8 y, u8 mp);
 
 ent_t* man_ent_create_from_template(const ent_t* template);
+void man_ent_res_absolute(ent_t* e, u8 displacement);
 void man_ent_resurrect(ent_t* e, u8 displacement);
 void man_ent_move(ent_t* e, u8 displacement);
 
@@ -105,8 +106,7 @@ void man_ent_max_range(ent_t* knife);
 void man_ent_update(ent_t* dead_ent);
 
 
-
-void man_ent_hit(ent_t* hitted);
+void man_ent_hit(ent_t* hitted, u8 damage);
 void man_ent_char_death(ent_t* dead_ent);
 void man_ent_generic_death(ent_t* dead_ent);
 void man_ent_boss_death(ent_t* dead_ent);
