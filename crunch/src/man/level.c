@@ -218,7 +218,6 @@ void man_level_init(){
     man_ent_init();
     man_ent_create_class(e_c_char, 16, 80, 5);
     man_level_load(16, 80);
-
 }
 
 void man_level_load(u8 px, u8 py){

@@ -20,41 +20,25 @@ void draw_sprite(u8* sprite, u8 x, u8 y){
     cpct_drawSprite (sprite, pos, 2, 8);
 }
 
-
-void sys_UI_max_hp(){
-
+void sys_UI_hp_mp_bars(u8 w, u8 h, u8* sprite_line, u8 num){
     u8 looper;
     u8 index;
-    draw_sprite(spr_UI_00, 2, 3);
-    looper=player->prev_vx;
-    index = 4;
 
-
+    draw_sprite(sprite_line, w, h);
+    looper=num;
+    index = w+2;
     while(looper){
-        draw_sprite(spr_UI_01, index, 3);
+        draw_sprite(sprite_line +SPR_UI_00_W*SPR_UI_00_H, index, h);
         --looper;
         index +=2;
     }
-    draw_sprite(spr_UI_03, index, 3);
-
+    draw_sprite(sprite_line+SPR_UI_00_W*SPR_UI_00_H*3, index, h);
 }
-   
-
-void sys_UI_max_mana(){
-    u8 looper;
-    u8 index;
-    draw_sprite(spr_UI_05, 2, 13);
-
-    looper=player->prev_vy;
-    index = 4;
-    while(looper){
-        draw_sprite(spr_UI_06, index, 13);
-        --looper;
-        index +=2;
-    }
-    draw_sprite(spr_UI_08, index, 13);
-
+void sys_UI_draw_damage(u8 w, u8 h, u8* sprite, u8 num){
+    draw_sprite(sprite, w, h);
+    draw_sprite(numbers[num], w+4, h);
 }
+
 void draw_score(){
     u8 index = 75;
     u16 inscore = score;
@@ -66,10 +50,18 @@ void draw_score(){
     }
 }
 
-
-
-
-
+void sys_UI_pre_init(){
+    numbers[0] = spr_number_00;
+    numbers[1] = spr_number_01;
+    numbers[2] = spr_number_02;
+    numbers[3] = spr_number_03;
+    numbers[4] = spr_number_04;
+    numbers[5] = spr_number_05;
+    numbers[6] = spr_number_06;
+    numbers[7] = spr_number_07;
+    numbers[8] = spr_number_08;
+    numbers[9] = spr_number_09;
+}
 
 void sys_UI_init(){
     u8* pos;
@@ -87,33 +79,18 @@ void sys_UI_init(){
     prev_max_mana = player->prev_vy;
 
 
-    numbers[0] = spr_number_00;
-    numbers[1] = spr_number_01;
-    numbers[2] = spr_number_02;
-    numbers[3] = spr_number_03;
-    numbers[4] = spr_number_04;
-    numbers[5] = spr_number_05;
-    numbers[6] = spr_number_06;
-    numbers[7] = spr_number_07;
-    numbers[8] = spr_number_08;
-    numbers[9] = spr_number_09;
-
-
-
     //background
     cpct_drawSolidBox (CPCT_VMEM_START, 0xF0, 40, 24);
     cpct_drawSolidBox (CPCT_VMEM_START+40, 0xF0, 40, 24);
 
     //hp mp
-    sys_UI_max_hp();
-    sys_UI_max_mana();
+    sys_UI_hp_mp_bars(2, 3, spr_UI_00, prev_max_hp);
+    sys_UI_hp_mp_bars(2, 13, spr_UI_05, prev_max_mana);
 
     
     //damage
-    draw_sprite(spr_UI_04, 40, 3);
-    draw_sprite(numbers[ad], 44, 3);
-    draw_sprite(spr_UI_09, 40, 13);
-    draw_sprite(numbers[ap], 44, 13);
+    sys_UI_draw_damage(40, 3, spr_UI_04, ad);
+    sys_UI_draw_damage(40, 13, spr_UI_09, ap);
 
     //score
     pos = cpct_getScreenPtr (CPCT_VMEM_START,67, 3);
@@ -143,12 +120,12 @@ void sys_UI_update(){
     }
 
     if(prev_max_hp < player->prev_vx){
-        sys_UI_max_hp();
+        sys_UI_hp_mp_bars(2, 3, spr_UI_00, player->hp);
         prev_max_hp = player->hp;
     }
 
     if(prev_max_mana < player->prev_vy){
-        sys_UI_max_mana();
+        sys_UI_hp_mp_bars(2, 13, spr_UI_05, player->mp);
         prev_max_mana = player->mp;
     }
     --down_score_timer;

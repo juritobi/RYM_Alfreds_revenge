@@ -16,6 +16,8 @@ void man_app_main();
 void man_app_main_update();
 void man_app_controls();
 void man_app_controls_update();
+void man_app_sel();
+void man_app_sel_update();
 void man_app_game();
 void man_app_game_update();
 

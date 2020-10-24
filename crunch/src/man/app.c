@@ -1,6 +1,8 @@
 #include "app.h"
 #include <man/man_game.h>
+#include <sys/UI.h>
 #include <sprites/g_palette.h>
+#include <sprites/UI.h>
 
 u8 render_count;
 
@@ -36,6 +38,17 @@ void interrupt_6(){
     cpct_setInterruptHandler(interrupt_1);
 }
 
+typedef struct player player_t;
+typedef struct player{
+   u8 hp, mp, ap, ad;   
+};
+const player_t character_sets[] = {
+    {10 ,5  ,1  ,1},
+    {20 ,1  ,1  ,1},
+    {5  ,10 ,1  ,2},
+    {5  ,2  ,3  ,1},
+    {2  ,10 ,2  ,2},
+};
 
 typedef void (*Ptrf_v_v)(void);
 Ptrf_v_v executing_state;
@@ -54,6 +67,16 @@ const cpct_keyID* down  = &down_value;
 const cpct_keyID* fire1 = &fire1_value;
 const cpct_keyID* fire2 = &fire2_value;
 
+void man_app_draw_stats(u8 x, u8 y, player_t* stats){
+    sys_UI_hp_mp_bars(x+12, y, spr_UI_00, stats->hp);
+    sys_UI_hp_mp_bars(x+12, y+10, spr_UI_05, stats->mp);
+    sys_UI_draw_damage(x, y, spr_UI_04, stats->ad);
+    sys_UI_draw_damage(x, y+10, spr_UI_09, stats->ap);
+}
+
+
+
+//MENU
 void man_app_main(){
     u8 x,y;
     u8* pos;
@@ -73,9 +96,11 @@ void man_app_main_update(){
         executing_state = man_app_controls;
     }
     if(cpct_isKeyPressed(Key_Space)){
-        executing_state = man_app_game;
+        executing_state = man_app_sel;
     }
 }
+//MENU
+//CONTROLS
 void man_app_controls(){
     u8 x,y;
     u8* pos;
@@ -89,8 +114,52 @@ void man_app_controls(){
 void man_app_controls_update(){
     executing_state = man_app_main;
 }
+//CONTROLS
 
+//CHARACTER SELECT
+void man_app_sel(){
+    u8 x,y;
+    u8* pos;
+    cpct_clearScreen(0x0);
+    x = 20;
+    y = 8;
+    pos = cpct_getScreenPtr (CPCT_VMEM_START, x, y);
+    cpct_drawStringM1("Select your stats: ", pos);
 
+    x = 6;
+    y = 60;
+    pos = cpct_getScreenPtr (CPCT_VMEM_START, x, y);
+    cpct_drawStringM1("[1]", pos);
+    x = 6;
+    y = 116;
+    pos = cpct_getScreenPtr (CPCT_VMEM_START, x, y);
+    cpct_drawStringM1("[2]", pos);
+    x = 6;
+    y = 172;
+    pos = cpct_getScreenPtr (CPCT_VMEM_START, x, y);
+    cpct_drawStringM1("[3]", pos);
+
+    man_app_draw_stats(14, 55, character_sets);
+    man_app_draw_stats(14, 111, character_sets+1);
+    man_app_draw_stats(14, 167, character_sets+2);
+
+    executing_state = man_app_sel_update;
+}
+void man_app_sel_update(){
+    if(cpct_isKeyPressed(Key_1)){
+        
+        executing_state = man_app_game;
+    }
+    else if(cpct_isKeyPressed(Key_2)){
+        executing_state = man_app_game;
+    }
+    else if(cpct_isKeyPressed(Key_3)){
+        executing_state = man_app_game;
+    }
+}
+//CHARACTER SELECT
+
+//GAME
 void man_app_game(){
     man_game_init();
     executing_state = man_app_game_update;
@@ -104,6 +173,7 @@ void man_app_game_update(){
         executing_state = man_app_main;
     }
 }
+//GAME
 
 
 void man_app_init(){
@@ -119,6 +189,8 @@ void man_app_init(){
     down_value  = Key_S;
     fire1_value = Key_O;
     fire2_value = Key_P;
+
+    sys_UI_pre_init();
 
     executing_state = man_app_main;
 }
