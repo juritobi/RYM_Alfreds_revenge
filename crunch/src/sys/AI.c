@@ -122,6 +122,8 @@ void sys_AI_sonic(ent_t* e){
 
 void sys_AI_boss(ent_t* e){
 
+    u8 ovx,ovy;
+
     if(!boss_timer){
         ent_t* player = man_ent_get_char();
         u8 rand = cpct_getRandom_lcg_u8(player->x);
@@ -139,34 +141,38 @@ void sys_AI_boss(ent_t* e){
     e->vy = 0;
     e->vx = 0;
     e->Ai_counter--;
+
     if(!e->Ai_counter){
+        ovx = e->originalvx;
+        ovy = e->originalvy;
         e->Ai_counter = move_rate;
         if(e->x == 32 && e->y == 72){
-            e->originalvx = 1;
-            e->originalvy = 0;
+            ovx = 1;
+            ovy = 0;
         }
         else if(e->x == 36 && e->y == 72){
-            e->originalvx = 1;
-            e->originalvy = 4;
+            ovx = 1;
+            ovy = 4;
         }
         else if(e->x == 40 && e->y == 88){
-            e->originalvx = -1;
-            e->originalvy = 4;
+            ovx = -1;
+            ovy = 4;
         }
         else if(e->x == 36 && e->y == 104){
-            e->originalvx = -1;
-            e->originalvy = 0;
+            ovx = -1;
+            ovy = 0;
         }
         else if(e->x == 32 && e->y == 104){
-            e->originalvx = -1;
-            e->originalvy = -4;
+            ovx = -1;
+            ovy = -4;
         }
         else if(e->x == 28 && e->y == 88){
-            e->originalvx = 1;
-            e->originalvy = -4;
+            ovx = 1;
+            ovy = -4;
         }
-        e->vx = e->originalvx;
-        e->vy = e->originalvy;
+        
+        e->vx = e->originalvx = ovx;
+        e->vy = e->originalvy = ovy;
     }
 
     boss_timer--;

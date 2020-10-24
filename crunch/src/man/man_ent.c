@@ -497,6 +497,14 @@ const ent_t init_boss_pilar = {
 };
 /*HERE COMES THE BOSS*/
 
+const player_t input_template = {
+   5,0,-1,  //mp, onground, jumping
+};
+
+
+//----------------------------------------------------------------------------------
+//INITIALIZERS----------------------------------------------------------------------
+//----------------------------------------------------------------------------------
 ent_t ents[20];
 u8 invalid_at_end_of_ents;
 ent_t*  next_free_ent;
@@ -505,18 +513,31 @@ void man_ent_init(){
    next_free_ent = ents;
    cpct_memset (ents, e_t_invalid, sizeof(ents)+1);
 }
-
 void man_ent_reset(){
    next_free_ent = ents+3;
    cpct_memset ((ents+3), e_t_invalid, sizeof(ents)-sizeof(ent_t)*3);
 }
+//----------------------------------------------------------------------------------
+//INITIALIZERS----------------------------------------------------------------------
+//----------------------------------------------------------------------------------
 
-ent_t* man_ent_create(){
+//----------------------------------------------------------------------------------
+//ENTITY CREATION-------------------------------------------------------------------
+//----------------------------------------------------------------------------------
+ent_t* man_ent_create_from_template(const ent_t* template){
    ent_t* res = next_free_ent;
+   u8 components;
    ++next_free_ent;
+   cpct_memcpy(res, template, sizeof(ent_t));
+
+   /*components = res->components;
+   if(components & e_t_input){
+      input_array = input_template;//template for every input component
+      input_array.e = res;
+   }*/
+
    return res;
 }
-
 //tipo tiene en los 2 primeros bit el numero de entidades que crea y en los siguientes la entidad en la que empieza a crear
 //la inicializacion de datos es para setear en ents el numro de entidades y class_main y class_init el puntero a la primera entidad que tiene que crear
 //luego las crea en bucle y cambia la posicion de la entidad principal que sera siempre la primera de las 3
@@ -541,7 +562,6 @@ void man_ent_create_class(u8 type, u8 x, u8 y, u8 PupType){
       ent_in_class = man_ent_create_from_template(class_init);
       class_init++;
       ent_in_class = man_ent_create_from_template(class_init);
-
    }
    while(class_ents){
       ent_t* ent_in_class = man_ent_create_from_template(class_init);
@@ -552,12 +572,14 @@ void man_ent_create_class(u8 type, u8 x, u8 y, u8 PupType){
       class_ents--;
    }
 }
+//----------------------------------------------------------------------------------
+//ENTITY CREATION-------------------------------------------------------------------
+//----------------------------------------------------------------------------------
 
-ent_t* man_ent_create_from_template(const ent_t* template){
-   ent_t* res = man_ent_create();
-   cpct_memcpy(res, template, sizeof(ent_t));
-   return res;
-}
+
+
+
+
 
 
 void man_ent_hit(ent_t* hitted, u8 damage){
@@ -728,15 +750,11 @@ void man_ent_move(ent_t* e, u8 displacement){
 
    if(e->move_dir == dir_left){
       e_to_move->x = e->x - e_to_move->originalx;
-      if(e_to_move->originalvx != -1){
-         e_to_move->originalvx = e_to_move->originalvx * (-1);
-      }
+      e_to_move->originalvx = -1;
    }
    else{
       e_to_move->x = e->x + e_to_move->originalx;
-      if(e_to_move->originalvx != 1){
-         e_to_move->originalvx = e_to_move->originalvx * (-1);
-      }
+      e_to_move->originalvx = 1;
    }
 
    e_to_move->y = e->y + e_to_move->originaly;

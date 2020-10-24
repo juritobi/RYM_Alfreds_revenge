@@ -38,8 +38,98 @@
 #define dir_left 0x01
 
 typedef struct et ent_t;
+
 typedef void (*Ptrf_v_ep)(ent_t*);
 typedef void (*Ptrf_v_epep)(ent_t*, ent_t*);
+typedef union entity_role role_u;
+
+typedef struct entity_default ent_tt;
+typedef struct entity_character character_t;
+typedef struct entity_object object_t;
+
+typedef struct entity_input input_t;
+typedef struct entity_AI AI_t;
+typedef struct entity_animation cnimation_t;
+typedef struct entity_collisions collisions_t;
+typedef struct entity_physics physics_t;
+
+
+//----------------------------------------------------------------------------------
+//DEFAULT ENTITY--------------------------------------------------------------------
+//----------------------------------------------------------------------------------
+
+typedef struct entity_character{
+   u8 hp;
+   u8 invulnerable;
+   u8 pup_type;
+   i8 knockback;
+   i8 dir;
+   
+};
+typedef struct entity_object{
+   u8 damage;
+   u8 originalx, originaly;
+   i8 originalvx, originalvy;
+};
+union entity_role{
+   character_t character;
+   object_t    object;
+};
+typedef struct entity_default{//things that every entity is goun to use
+   u8 components;
+   u8 x, y;
+   u8* memory_pos;
+   u8 w, h;
+   u8 col_type; 
+   const u8* sprite;
+   Ptrf_v_ep death;
+   role_u role;
+};
+//----------------------------------------------------------------------------------
+//DEFAULT ENTITY--------------------------------------------------------------------
+//----------------------------------------------------------------------------------
+
+//----------------------------------------------------------------------------------
+//COMPONENTS------------------------------------------------------------------------
+//----------------------------------------------------------------------------------
+typedef struct entity_input{//thing that ONLY the player is going to use
+   ent_t* e;
+   u8 mp;
+   i8 on_ground, jumping;
+};
+typedef struct entity_AI{//thing that ONLY the AI is going to use
+   ent_t* e;
+   Ptrf_v_ep act;
+   u8 Ai_counter;
+   i8 prev_vx, prev_vy;
+};
+typedef struct entity_animation{
+   ent_t* e;
+   u8 move_dir;
+   u8 anim_timer;
+   u8 action;  //action
+   spr_frame_t* frame;   
+   spr_set_t* sprite_set;  
+};
+typedef struct entity_physics{
+   ent_t* e;
+   i8 vx, vy;
+};
+//----------------------------------------------------------------------------------
+//COMPONENTS------------------------------------------------------------------------
+//----------------------------------------------------------------------------------
+
+//----------------------------------------------------------------------------------
+//COMPONENT ARRAYS------------------------------------------------------------------
+//----------------------------------------------------------------------------------
+
+extern input_t input_array;
+
+//----------------------------------------------------------------------------------
+//COMPONENT ARRAYS------------------------------------------------------------------
+//----------------------------------------------------------------------------------
+
+
 typedef struct et{
    //generic
    u8 type;
@@ -80,6 +170,9 @@ typedef struct entity_class{
    u8 x, y;
    u8 mp;
 }ent_class;
+
+
+
 
 
 void man_ent_init();
