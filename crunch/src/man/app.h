@@ -8,9 +8,13 @@ void interrupt_5();
 void interrupt_6();
 
 
+typedef struct player player_t;
+typedef struct player{
+   u8 hp, mp, ap, ad;   
+};
+
 void man_app_init(); 
 void man_app_update();
-
 
 void man_app_main();
 void man_app_main_update();

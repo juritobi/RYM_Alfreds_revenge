@@ -507,8 +507,8 @@ void man_ent_init(){
 }
 
 void man_ent_reset(){
-   next_free_ent = ents+1;
-   cpct_memset ((ents+1), e_t_invalid, sizeof(ents)-sizeof(ent_t));
+   next_free_ent = ents+3;
+   cpct_memset ((ents+3), e_t_invalid, sizeof(ents)-sizeof(ent_t)*3);
 }
 
 ent_t* man_ent_create(){

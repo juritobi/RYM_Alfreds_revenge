@@ -31,6 +31,20 @@ void wait_render_signal(){
     }
     waiting_render_signal = 0;
 }
+
+void man_game_create_player(player_t* stats){
+    ent_t* player;
+    man_ent_init();
+    man_ent_create_class(e_c_char, 32, 32, stats->mp);
+    man_ent_create_class(e_c_tools, 0, 0, 0);
+    player = man_ent_get_char();
+    player->hp = stats->hp;
+    player->prev_vx = stats->hp;
+    player->prev_vy = stats->mp;
+    (player+1)->damage = stats->ad;
+    (player+2)->damage = stats->ap;
+}
+
 void man_game_init(){
     next_screen = 0;
     render_signal=0;

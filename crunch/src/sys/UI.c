@@ -70,13 +70,12 @@ void sys_UI_init(){
 
     score = 60000;
     player = man_ent_get_char();
-    prev_hp = player->hp;
-    prev_mp = player->mp;
+    prev_max_hp = prev_hp = player->hp;
+    prev_max_mana = prev_mp = player->mp;
     ad = (player+1)->damage;
     ap = (player+2)->damage;
     down_score_timer= 0xFF;
-    prev_max_hp = player->prev_vx;
-    prev_max_mana = player->prev_vy;
+    
 
 
     //background

@@ -38,10 +38,6 @@ void interrupt_6(){
     cpct_setInterruptHandler(interrupt_1);
 }
 
-typedef struct player player_t;
-typedef struct player{
-   u8 hp, mp, ap, ad;   
-};
 const player_t character_sets[] = {
     {10 ,5  ,1  ,1},
     {20 ,1  ,1  ,1},
@@ -147,13 +143,15 @@ void man_app_sel(){
 }
 void man_app_sel_update(){
     if(cpct_isKeyPressed(Key_1)){
-        
+        man_game_create_player(character_sets);
         executing_state = man_app_game;
     }
     else if(cpct_isKeyPressed(Key_2)){
+        man_game_create_player(character_sets+1);
         executing_state = man_app_game;
     }
     else if(cpct_isKeyPressed(Key_3)){
+        man_game_create_player(character_sets+2);
         executing_state = man_app_game;
     }
 }

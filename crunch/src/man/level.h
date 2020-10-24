@@ -21,6 +21,6 @@ u8 man_level_get_door();
 
 void man_level_init();
 void man_level_update();
-void man_level_load(u8 px, u8 py);
+void man_level_load();
 void man_level_kill_enemy();
 void sys_ren_init();

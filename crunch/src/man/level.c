@@ -214,25 +214,20 @@ void man_level_init(){
     final_door_open = 0;
     cpct_memcpy(&level, &i_lvl0, sizeof(lvl_t));//temporal
     cpct_memset(cleared_rooms, 0, sizeof(cleared_rooms));
-
-    man_ent_init();
-    man_ent_create_class(e_c_char, 16, 80, 5);
-    man_level_load(16, 80);
+    man_level_load();
 }
 
-void man_level_load(u8 px, u8 py){
+void man_level_load(){
+    ent_t* player = man_ent_get_char();
     u8 it = 0;
     ent_class* class = &level.entities[it]; 
 
     cpct_zx7b_decrunch_s(tilemap_end, level.self);
     sys_ren_draw_tilemap(tilemap_start);
     
+    (player+1)->death(player+1);
+    (player+2)->death(player+2);
     man_ent_reset();
-    man_ent_get_char()->x = px;
-    man_ent_get_char()->y = py;
-    man_ent_create_class(e_c_tools, 0, 0, 0);
-    
-
     if(level.id){
         if(!cleared_rooms[level.id]){
             while(class->type != e_c_undefined){
@@ -252,7 +247,6 @@ void man_level_load(u8 px, u8 py){
         level.cleared_func();
     }
 
-
     cpct_waitVSYNC();
     cpct_waitHalts(2);
     cpct_waitVSYNC();
@@ -264,22 +258,22 @@ void man_level_update(){
     if(player->x == 0){
         player->x = 72;
         cpct_memcpy(&level, level.left, sizeof(lvl_t));
-        man_level_load(player->x, player->y);
+        man_level_load();
     }
     else if(player->x == 76){
         player->x = 4;
         cpct_memcpy(&level, level.right, sizeof(lvl_t));
-        man_level_load(player->x, player->y);
+        man_level_load();
     }
     else if(player->y == 24){
         player->y = 168;
         cpct_memcpy(&level, level.top, sizeof(lvl_t));
-        man_level_load(player->x, player->y);
+        man_level_load();
     }
     else if(player->y == 176){
         player->y = 32;
         cpct_memcpy(&level, level.bot, sizeof(lvl_t));
-        man_level_load(player->x, player->y);
+        man_level_load();
     }
     else if(final_door_open){
         if(level.self == lvl0_pack_end){
@@ -287,7 +281,7 @@ void man_level_update(){
                 if(player->y > 140) {
                     if(cpct_isKeyPressed(Key_W)){
                         cpct_memcpy(&level, &i_boss1, sizeof(lvl_t));
-                        man_level_load(20, 160);
+                        man_level_load();
                     }
                 }
             }
