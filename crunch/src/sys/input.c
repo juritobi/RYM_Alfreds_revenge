@@ -114,6 +114,5 @@ u8 sys_input_get_sword_up(){
 }
 
 void sys_input_update(){
-    ent_t* player = man_ent_get_char();
     sys_input_one(player);
 }

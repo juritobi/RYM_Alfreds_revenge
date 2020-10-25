@@ -4,7 +4,6 @@
 #include <sprites/numbers.h>
 
 u16 score;
-ent_t* player; 
 u8 prev_max_hp;
 u8 prev_max_mana;
 u8 prev_hp;
@@ -69,7 +68,6 @@ void sys_UI_init(){
     u8 index;
 
     score = 60000;
-    player = man_ent_get_char();
     prev_max_hp = prev_hp = player->hp;
     prev_max_mana = prev_mp = player->mp;
     ad = (player+1)->damage;

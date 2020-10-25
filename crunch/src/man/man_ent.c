@@ -500,6 +500,7 @@ const ent_t init_boss_pilar = {
 const player_t input_template = {
    5,0,-1,  //mp, onground, jumping
 };
+ent_t* player;
 
 
 //----------------------------------------------------------------------------------
@@ -512,6 +513,7 @@ ent_t*  next_free_ent;
 void man_ent_init(){
    next_free_ent = ents;
    cpct_memset (ents, e_t_invalid, sizeof(ents)+1);
+   //input array
 }
 void man_ent_reset(){
    next_free_ent = ents+3;
@@ -524,17 +526,22 @@ void man_ent_reset(){
 //----------------------------------------------------------------------------------
 //ENTITY CREATION-------------------------------------------------------------------
 //----------------------------------------------------------------------------------
+
+void man_ent_place_in_arrays(ent_t* e){
+   u8 type = e->type;
+   if(!(type & e_t_dead)){
+      if(type & e_t_input){
+         player = e;
+      }
+   }
+}
+
 ent_t* man_ent_create_from_template(const ent_t* template){
    ent_t* res = next_free_ent;
-   u8 components;
    ++next_free_ent;
    cpct_memcpy(res, template, sizeof(ent_t));
 
-   /*components = res->components;
-   if(components & e_t_input){
-      input_array = input_template;//template for every input component
-      input_array.e = res;
-   }*/
+   man_ent_place_in_arrays(res);
 
    return res;
 }

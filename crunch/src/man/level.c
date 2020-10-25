@@ -218,7 +218,6 @@ void man_level_init(){
 }
 
 void man_level_load(){
-    ent_t* player = man_ent_get_char();
     u8 it = 0;
     ent_class* class = &level.entities[it]; 
 
@@ -254,7 +253,6 @@ void man_level_load(){
 }
 
 void man_level_update(){
-    ent_t* player = man_ent_get_char();
     if(player->x == 0){
         player->x = 72;
         cpct_memcpy(&level, level.left, sizeof(lvl_t));
@@ -290,7 +288,6 @@ void man_level_update(){
 }
 
 void man_level_add_mp_end_lvl(){
-    ent_t* player = man_ent_get_char();
     if(man_ent_get_char()->mp == player->prev_vy -1){
         man_ent_get_char()->mp++;
     }

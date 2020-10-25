@@ -33,11 +33,10 @@ void wait_render_signal(){
 }
 
 void man_game_create_player(player_t* stats){
-    ent_t* player;
     man_ent_init();
     man_ent_create_class(e_c_char, 32, 32, stats->mp);
     man_ent_create_class(e_c_tools, 0, 0, 0);
-    player = man_ent_get_char();
+    
     player->hp = stats->hp;
     player->prev_vx = stats->hp;
     player->prev_vy = stats->mp;

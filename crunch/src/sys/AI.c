@@ -125,7 +125,6 @@ void sys_AI_boss(ent_t* e){
     u8 ovx,ovy;
 
     if(!boss_timer){
-        ent_t* player = man_ent_get_char();
         u8 rand = cpct_getRandom_lcg_u8(player->x);
         rand = rand%4;
         if(rand==boss_attack_index){
@@ -208,8 +207,6 @@ void att_none(ent_t* e){
 }
 
 void att_hor(ent_t* e){
-    ent_t* player = man_ent_get_char();
-
     /*if(boss_attack_timer==attack->total_time){// si no le voy a dar cambio de ataque
         if(player->y+player->h <= e->y  ||  player->y >= e->y+e->h){
             boss_timer = 0;
@@ -265,8 +262,6 @@ void att_hor(ent_t* e){
 }
 
 void att_rain(ent_t* e){
-    ent_t* player = man_ent_get_char();
-
     if(boss_attack_timer==attack->total_time-1){//set entities to hit
         u8 i = 6;
         u8 xpos = player->x%3;
@@ -325,8 +320,6 @@ void att_rain(ent_t* e){
 }
 
 void att_pilar(ent_t* e){
-    ent_t* player = man_ent_get_char();
-
     if(boss_attack_timer==attack->total_time-1){//set entities to hit
         (e + 3 + 6 + 1)->originalx = player->x - 4;  
     }
