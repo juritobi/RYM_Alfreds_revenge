@@ -500,24 +500,65 @@ const ent_t init_boss_pilar = {
 const player_t input_template = {
    5,0,-1,  //mp, onground, jumping
 };
+
+ent_t ents[17];
+u8 invalid_at_end_of_ents;
+ent_t*  next_free_ent;
+
 ent_t* player;
+ent_t* AI_array [7];
+u8 AI_pointer;
+ent_t* animation_array[14];
+u8 animation_pointer;
+ent_t* walls_array[11];
+u8 walls_pointer;
+ent_t* physics_array[14];
+u8 physics_pointer;
+ent_t* render_array[14];
+u8 render_pointer;
+
 
 
 //----------------------------------------------------------------------------------
 //INITIALIZERS----------------------------------------------------------------------
 //----------------------------------------------------------------------------------
-ent_t ents[20];
-u8 invalid_at_end_of_ents;
-ent_t*  next_free_ent;
-
 void man_ent_init(){
+   //ent array
+   invalid_at_end_of_ents = 0;
    next_free_ent = ents;
    cpct_memset (ents, e_t_invalid, sizeof(ents)+1);
-   //input array
+
+   //component arrays
+   player = 0;
+   cpct_memset (AI_array, e_t_invalid, sizeof(AI_array));
+   AI_pointer = 0;
+   cpct_memset (animation_array, e_t_invalid, sizeof(animation_array));
+   animation_pointer = 0;
+   cpct_memset (walls_array, e_t_invalid, sizeof(walls_array));
+   walls_pointer = 0;
+   cpct_memset (physics_array, e_t_invalid, sizeof(physics_array));
+   physics_pointer = 0;
+   cpct_memset (render_array, e_t_invalid, sizeof(render_array));
+   render_pointer = 0;
+   
 }
+void man_ent_place_in_arrays(ent_t* e);
 void man_ent_reset(){
    next_free_ent = ents+3;
    cpct_memset ((ents+3), e_t_invalid, sizeof(ents)-sizeof(ent_t)*3);
+
+   cpct_memset (AI_array, e_t_invalid, sizeof(AI_array));
+   AI_pointer = 0;
+   cpct_memset (animation_array, e_t_invalid, sizeof(animation_array));
+   animation_pointer = 0;
+   cpct_memset (walls_array, e_t_invalid, sizeof(walls_array));
+   walls_pointer = 0;
+   cpct_memset (physics_array, e_t_invalid, sizeof(physics_array));
+   physics_pointer = 0;
+   cpct_memset (render_array, e_t_invalid, sizeof(render_array));
+   render_pointer = 0;
+
+   man_ent_place_in_arrays(player);
 }
 //----------------------------------------------------------------------------------
 //INITIALIZERS----------------------------------------------------------------------
@@ -532,6 +573,26 @@ void man_ent_place_in_arrays(ent_t* e){
    if(!(type & e_t_dead)){
       if(type & e_t_input){
          player = e;
+      }
+      if(type & e_t_AI){
+         AI_array[AI_pointer] = e;
+         AI_pointer++;
+      }
+      if(type & e_t_anim){
+         animation_array[animation_pointer] = e;
+         animation_pointer++;
+      }
+      if(type & e_t_col){
+         walls_array[walls_pointer] = e;
+         walls_pointer++;
+      }
+      if(type & e_t_physics){
+         physics_array[physics_pointer] = e;
+         physics_pointer++;
+      }
+      if(type & e_t_render){
+         render_array[render_pointer] = e;
+         render_pointer++;
       }
    }
 }
@@ -690,15 +751,10 @@ void man_ent_forall(Ptrf_v_ep fun){
    }
 }
 
-void man_ent_forall_type( Ptrf_v_ep fun, u8 types){
-   ent_t* res = ents;
-   while(res->type != e_t_invalid){
-      if(!(res->type & e_t_dead)){
-         if((res->type & types) == types){
-            fun(res);
-         }
-      }
-      ++res;
+void man_ent_forall_type( Ptrf_v_ep fun, ent_t** array){
+   while(*array != e_t_invalid){
+      fun(*array);
+      ++array;
    }
 }
 

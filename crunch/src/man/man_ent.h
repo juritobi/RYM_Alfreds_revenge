@@ -124,6 +124,12 @@ typedef struct entity_physics{
 //----------------------------------------------------------------------------------
 
 extern ent_t* player;
+extern ent_t* AI_array [7];
+extern ent_t* animation_array[14];
+extern ent_t* walls_array[11];
+extern ent_t* physics_array[14];
+extern ent_t* render_array[14];
+
 
 //----------------------------------------------------------------------------------
 //COMPONENT ARRAYS------------------------------------------------------------------
@@ -186,7 +192,7 @@ void man_ent_resurrect(ent_t* e, u8 displacement);
 void man_ent_move(ent_t* e, u8 displacement);
 
 void man_ent_forall(Ptrf_v_ep fun);
-void man_ent_forall_type(Ptrf_v_ep fun, u8 types);
+void man_ent_forall_type(Ptrf_v_ep fun, ent_t** array);
 
 void man_ent_forall_col_type_individual( Ptrf_v_ep fun, u8 types);
 void man_ent_forall_col_type(Ptrf_v_epep fun, u8 first_type, u8 second_type);

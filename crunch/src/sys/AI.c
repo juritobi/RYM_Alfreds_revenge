@@ -359,5 +359,5 @@ void sys_AI_init(){
 
 }
 void sys_AI_update(){
-    man_ent_forall_type(sys_AI_one, e_t_AI);
+    man_ent_forall_type(sys_AI_one, AI_array);
 }

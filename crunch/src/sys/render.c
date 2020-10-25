@@ -41,7 +41,7 @@ void sys_ren_setup_one(ent_t* e){
     e->memory_pos = cpct_getScreenPtr(CPCT_VMEM_START, e->x, e->y);
 }
 void sys_ren_setup(){
-    man_ent_forall_type(sys_ren_setup_one, e_t_render);
+    man_ent_forall_type(sys_ren_setup_one, render_array);
 }
 void sys_ren_render(){
     u8 index = 0;
@@ -49,7 +49,7 @@ void sys_ren_render(){
         cpct_drawTileZigZagGrayCode4x8_af (tiles[index].pos, tiles[index].sprite);
         ++index;
     }
-    man_ent_forall_type(sys_ren_one, e_t_render);
+    man_ent_forall_type(sys_ren_one, render_array);
     cpct_memset(tiles, 0, sizeof(tiles));
     next_free_index= 0;
 }

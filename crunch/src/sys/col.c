@@ -238,7 +238,7 @@ void sys_col_update(){
     man_ent_forall_col_type(sys_col_allybreaker_enemy, col_t_ally_breaker, col_t_enemy);
     man_ent_forall_col_type(sys_col_ally_enemy, col_t_ally, col_t_enemy|col_t_enemy_breaker);
     man_ent_forall_col_type_individual(sys_col_reduceTimeInvulnerable, col_t_ally|col_t_enemy);//puede que se pueda hacer con componente de fisica
-    man_ent_forall_type(sys_col_one, e_t_col); //colisiones con tiles
+    man_ent_forall_type(sys_col_one, walls_array); //colisiones con tiles
     
 }
 

@@ -95,7 +95,7 @@ void sys_anim_one(ent_t* e){
     e->frame = frame;
 }
 void sys_anim_update(){
-    man_ent_forall_type(sys_anim_one, e_t_anim);
+    man_ent_forall_type(sys_anim_one, animation_array);
 }
 void sys_anim_init(){
     c_tset[0] = &c_s_0;

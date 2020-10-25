@@ -36,7 +36,7 @@ void man_game_create_player(player_t* stats){
     man_ent_init();
     man_ent_create_class(e_c_char, 32, 32, stats->mp);
     man_ent_create_class(e_c_tools, 0, 0, 0);
-    
+
     player->hp = stats->hp;
     player->prev_vx = stats->hp;
     player->prev_vy = stats->mp;
@@ -67,7 +67,7 @@ u8 man_game_play(){
     while (!next_screen){
         
         cpct_setBorder(HW_RED);
-        man_ent_forall_type(man_ent_update,e_t_render);
+        man_ent_forall_type(man_ent_update,render_array);
         sys_UI_update();
 
         cpct_setBorder(HW_BLUE);
