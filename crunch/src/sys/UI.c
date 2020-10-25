@@ -127,6 +127,16 @@ void sys_UI_update(){
         sys_UI_hp_mp_bars(2, 13, spr_UI_05, player->mp);
         prev_max_mana = player->mp;
     }
+
+    if(ad < (player+1)->damage){
+        ad = (player+1)->damage;
+        sys_UI_draw_damage(40, 3, spr_UI_04, ad);
+    }
+    if(ap < (player+2)->damage){
+        ap = (player+2)->damage;
+        sys_UI_draw_damage(40, 13, spr_UI_09, ap);
+    }
+
     --down_score_timer;
     if(!down_score_timer){
         score--;

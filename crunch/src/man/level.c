@@ -82,7 +82,7 @@ const lvl_t i_lvl3 = {//left bottom
     lb_room,
     0,
     {
-        {e_c_powerUp, 4, 96, 1},
+        {e_c_powerUp, 4, 96, 4},
         {e_c_ghost, 20, 168, 0},
         {0, 0, 0},
         {0, 0, 0},
