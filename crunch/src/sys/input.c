@@ -103,7 +103,6 @@ void sys_input_one(ent_t* ent){
 }
 
 void sys_input_sword_move(){
-    ent_t* player = man_ent_get_char();
     if(swordUp){
         man_ent_resurrect(player, 1);
     }

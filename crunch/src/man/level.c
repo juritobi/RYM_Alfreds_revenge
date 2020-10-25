@@ -288,12 +288,12 @@ void man_level_update(){
 }
 
 void man_level_add_mp_end_lvl(){
-    if(man_ent_get_char()->mp == player->prev_vy -1){
-        man_ent_get_char()->mp++;
+    if(player->mp == player->prev_vy -1){
+        player->mp++;
     }
-    else if(man_ent_get_char()->mp < player->prev_vy -1){
-        man_ent_get_char()->mp++;
-        man_ent_get_char()->mp++;
+    else if(player->mp < player->prev_vy -1){
+        player->mp++;
+        player->mp++;
     }
 }
 

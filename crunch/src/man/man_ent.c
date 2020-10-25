@@ -518,7 +518,7 @@ ent_t* render_array[14];
 u8 render_pointer;
 
 
-
+void man_ent_place_in_arrays(ent_t* e);
 //----------------------------------------------------------------------------------
 //INITIALIZERS----------------------------------------------------------------------
 //----------------------------------------------------------------------------------
@@ -542,7 +542,7 @@ void man_ent_init(){
    render_pointer = 0;
    
 }
-void man_ent_place_in_arrays(ent_t* e);
+
 void man_ent_reset(){
    next_free_ent = ents+3;
    cpct_memset ((ents+3), e_t_invalid, sizeof(ents)-sizeof(ent_t)*3);
@@ -570,30 +570,28 @@ void man_ent_reset(){
 
 void man_ent_place_in_arrays(ent_t* e){
    u8 type = e->type;
-   if(!(type & e_t_dead)){
-      if(type & e_t_input){
-         player = e;
-      }
-      if(type & e_t_AI){
-         AI_array[AI_pointer] = e;
-         AI_pointer++;
-      }
-      if(type & e_t_anim){
-         animation_array[animation_pointer] = e;
-         animation_pointer++;
-      }
-      if(type & e_t_col){
-         walls_array[walls_pointer] = e;
-         walls_pointer++;
-      }
-      if(type & e_t_physics){
-         physics_array[physics_pointer] = e;
-         physics_pointer++;
-      }
-      if(type & e_t_render){
-         render_array[render_pointer] = e;
-         render_pointer++;
-      }
+   if(type & e_t_input){
+      player = e;
+   }
+   if(type & e_t_AI){
+      AI_array[AI_pointer] = e;
+      AI_pointer++;
+   }
+   if(type & e_t_anim){
+      animation_array[animation_pointer] = e;
+      animation_pointer++;
+   }
+   if(type & e_t_col){
+      walls_array[walls_pointer] = e;
+      walls_pointer++;
+   }
+   if(type & e_t_physics){
+      physics_array[physics_pointer] = e;
+      physics_pointer++;
+   }
+   if(type & e_t_render){
+      render_array[render_pointer] = e;
+      render_pointer++;
    }
 }
 
@@ -601,9 +599,9 @@ ent_t* man_ent_create_from_template(const ent_t* template){
    ent_t* res = next_free_ent;
    ++next_free_ent;
    cpct_memcpy(res, template, sizeof(ent_t));
-
-   man_ent_place_in_arrays(res);
-
+   if(!(res->type & e_t_dead)){
+      man_ent_place_in_arrays(res);
+   }
    return res;
 }
 //tipo tiene en los 2 primeros bit el numero de entidades que crea y en los siguientes la entidad en la que empieza a crear
@@ -713,7 +711,7 @@ void man_ent_generic_death(ent_t* dead_ent){
       u8 byte_tile_x;
       u8 byte_tile_y;
 
-      dead_ent->type |= e_t_dead;
+      dead_ent->type &= e_t_dead;
       if( not_exact_tile_y) ++tile_h;
       if( not_exact_tile_x) ++tile_w;
       while(tile_w){
@@ -728,8 +726,8 @@ void man_ent_generic_death(ent_t* dead_ent){
          h= tile_h;
       }
       if(dead_ent->col_type == col_t_enemy){
-         if(man_ent_get_char()->mp < 5){
-            man_ent_get_char()->mp++;
+         if(player->mp < 5){
+            player->mp++;
          }
       }
    }
@@ -753,8 +751,10 @@ void man_ent_forall(Ptrf_v_ep fun){
 
 void man_ent_forall_type( Ptrf_v_ep fun, ent_t** array){
    while(*array != e_t_invalid){
-      fun(*array);
-      ++array;
+      if(!((*array)->type & e_t_dead)){
+         fun(*array);
+         ++array;
+      }
    }
 }
 
@@ -778,14 +778,11 @@ void man_ent_forall_col_type( Ptrf_v_epep fun, u8 first_type, u8 second_type){
 
          while( ents2->type != e_t_invalid ){
             if(!(ents2->type & e_t_dead) && (ents2->col_type & second_type)) {
-               
                fun(ents1, ents2);
             }
             ++ents2;
          }
-
       }
-      
       ++ents1;
       ents2 = ents;
    }
@@ -805,7 +802,7 @@ void man_ent_resurrect(ent_t* e, u8 displacement){
    man_ent_move(e, displacement);
    e_to_res->vx = e_to_res->originalvx;
    e_to_res->vy = e_to_res->originalvy;
-   
+   man_ent_place_in_arrays(e_to_res);
 }
 
 void man_ent_move(ent_t* e, u8 displacement){
@@ -821,8 +818,4 @@ void man_ent_move(ent_t* e, u8 displacement){
    }
 
    e_to_move->y = e->y + e_to_move->originaly;
-}
-
-ent_t* man_ent_get_char(){
-   return &ents[0];
 }

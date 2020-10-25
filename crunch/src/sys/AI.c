@@ -62,20 +62,20 @@ void sys_AI_zombi(ent_t* e){
 
 void sys_AI_ghost(ent_t* e){
     
-    if(e->x < man_ent_get_char()->x){
+    if(e->x < player->x){
         e->prev_vx = 1;
     }
-    else if (e->x > man_ent_get_char()->x){
+    else if (e->x > player->x){
         e->prev_vx = -1;
     }
     else{
         e->prev_vx = 0;
     }
 
-    if(e->y < man_ent_get_char()->y){
+    if(e->y < player->y){
         e->prev_vy = 4;
     }
-    else if (e->y > man_ent_get_char()->y){
+    else if (e->y > player->y){
         e->prev_vy = -4;
     }
     else{
