@@ -8,7 +8,7 @@
 #define jumpCD 10
 #define PiumPiumCD  25
 
-const i8 jumptable[] = {-8, -8, -8, -8, -8, 0, 0};
+const i8 jumptable[] = {-8, -8, -8, -4, -4, 0, 0};
 
 i8 swordUp;
 i8 swordCooling;
@@ -29,14 +29,14 @@ void sys_input_one(ent_t* ent){
     ent->vy = 8;
     // MONYECO
     if(cpct_isKeyPressed(Key_D)){
-        ent->vx = 1;
+        ent->vx = 2;
         ent->action |= 0x01;
         if(!swordUp){
             ent->move_dir = dir_right;
         }
     }
     else if(cpct_isKeyPressed(Key_A)){
-        ent->vx = -1;
+        ent->vx = -2;
         ent->action |= 0x01;
         if(!swordUp){
             ent->move_dir = dir_left;

@@ -13,8 +13,8 @@ u8* tilemap;
 #define x_div 4
 #define y_div 8
 
-#define solid 0x08
-#define half  0x0a
+#define solid 0x06
+#define half  0x08
 #define spikes 0x0c
 
 
@@ -45,6 +45,32 @@ u8 get_tile_type(u8 width, u8 height, u16 tile_pointer){
 
     return most_relevant;
 }
+void sys_col_x_actions(ent_t* e, u8 tile_type, u8 bytes_to_exact_x){
+    if(      tile_type < solid) e->vx = bytes_to_exact_x;
+    else if( tile_type < half ){}
+    else if( tile_type < spikes){
+        e->vx = bytes_to_exact_x;
+        man_ent_hit(e,1);
+    }
+}
+void sys_col_y_actions(ent_t* e, u8 tile_type, u16 tile_pointer){
+    if(tile_type < solid){
+        if(e->vy>0){
+            e->on_ground = 1;
+        }
+        e->vy = 0;
+    }
+    else if(tile_type < half){
+        if(!e->on_ground){
+            e->on_ground = 1;
+            e->vy = 0;
+        }
+    }
+    else if(tile_type < spikes){
+        e->vy = 0;
+        man_ent_hit(e, 1);
+    }
+}
 
 
 void sys_col_one(ent_t* e){
@@ -52,8 +78,8 @@ void sys_col_one(ent_t* e){
     u8 tile_y = e->y/y_div - 3;// -3 para por que el hud son 3 tiles
     u8 tile_w = e->w/x_div;
     u8 tile_h = e->h/y_div;
-    u8 not_exact_tile_x = e->x%x_div;
-    u8 not_exact_tile_y = e->y%y_div;
+    u8 bytes_to_exact_x = e->x%x_div;
+    u8 bytes_to_exact_y = e->y%y_div;
 
     u8 right_tile;
     u8 left_tile;
@@ -61,76 +87,70 @@ void sys_col_one(ent_t* e){
     u8 top_tile; 
     u16 tile_pointer;
 
+    u8 changed_x = 0;
+    u8 changed_y = 0;
+
     right_tile = tile_x + tile_w;
+    if(bytes_to_exact_x) ++right_tile;
     left_tile = tile_x - 1;
+
     bot_tile = tile_y + tile_h;
+    if(bytes_to_exact_y) ++bot_tile;
     top_tile = tile_y - 1; 
 
     if(e->vx){
-        if(!not_exact_tile_x){
-            u8 height = tile_h;
-            u8 tile_type;
-            if(not_exact_tile_y){
-                ++height;
-            }
+        u8 height = tile_h;
+        u8 tile_type;
+        if(bytes_to_exact_y){
+            ++height;
+        }
 
-            if(e->vx > 0){
+        if(e->vx > 0){
+            if( (bytes_to_exact_x - e->vx) < 0){
                 tile_pointer = get_tile_pointer(right_tile, tile_y);
+                tile_type = get_tile_type(0, height, tile_pointer);
+                changed_x = 1;
+                sys_col_x_actions(e, tile_type, bytes_to_exact_x);
             }
-            else{
+        }
+        else{
+            if( (bytes_to_exact_x + e->vx) < 0){
                 tile_pointer = get_tile_pointer(left_tile, tile_y);
-            }
-            
-            tile_type = get_tile_type(0, height, tile_pointer);
-
-            if(      tile_type < solid) e->vx = 0;
-            else if( tile_type < half ){}
-            else if( tile_type < spikes){
-                e->vx = 0;
-                man_ent_hit(e,1);
+                tile_type = get_tile_type(0, height, tile_pointer);
+                changed_x = 1;
+                sys_col_x_actions(e,tile_type, -bytes_to_exact_x);
             }
         }
     }
     if(e->vy){
-        if(!not_exact_tile_y){
-            u8 hit_taken=0;
-            u8 width = tile_w;
-            u8 tile_type;
-            if(not_exact_tile_x){
-                ++width;
-            }
+        u8 hit_taken=0;
+        u8 width = tile_w;
+        u8 tile_type;
+        if(bytes_to_exact_x){
+            ++width;
+        }
 
-            if(e->vy>0){
+        if(e->vy>0){
+            if( (bytes_to_exact_y - e->vy) < 0){
                 tile_pointer = get_tile_pointer(tile_x, bot_tile);
+                tile_type = get_tile_type(width, 0, tile_pointer);
+                changed_y = 1;
+                sys_col_y_actions(e,tile_type, tile_pointer);
             }
-            else{
+        }
+        else{
+            if( (bytes_to_exact_y + e->vy) < 0){
                 tile_pointer = get_tile_pointer(tile_x, top_tile);
-            }
-            
-            tile_type = get_tile_type(width, 0, tile_pointer);
-
-            if(tile_type < solid){
-                if(e->vy>0){
-                    e->on_ground = 1;
-                }
-                e->vy = 0;
-            }
-            else if(tile_type < half){
-                if(!e->on_ground){
-                    e->on_ground = 1;
-                    e->vy = 0;
-                }
-            }
-            else if(tile_type < spikes){
-                e->vy = 0;
-                man_ent_hit(e, 1);
+                tile_type = get_tile_type(width, 0, tile_pointer);
+                changed_y = 1;
+                sys_col_y_actions(e,tile_type, tile_pointer);
             }
         }
     }
 
 
-     if(e->vx && e->vy){
-        if(!not_exact_tile_x && !not_exact_tile_y){
+    if(e->vx && e->vy){
+        if(changed_x && changed_y){
             u8 x_wins = 0;
             u8 tile_type;
             if(e->vx > 0 && e->vy < 0){
@@ -147,7 +167,6 @@ void sys_col_one(ent_t* e){
             else{
                 tile_pointer = get_tile_pointer(left_tile, top_tile);
             }
-
             tile_type = tilemap[tile_pointer];
             if(tile_type < solid){
                 if(x_wins){
@@ -166,7 +185,6 @@ void sys_col_one(ent_t* e){
             }
         }
     }
-
 }
 
 void sys_col_ally_enemy(ent_t* ally, ent_t* enemy){
