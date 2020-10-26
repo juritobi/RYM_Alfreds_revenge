@@ -16,6 +16,8 @@ typedef struct player{
 void man_app_init(); 
 void man_app_update();
 
+void man_app_intro();
+void man_app_intro_update();
 void man_app_main();
 void man_app_main_update();
 void man_app_controls();

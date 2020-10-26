@@ -35,6 +35,11 @@
 # Conversion
 #$(eval $(call AKS2DATA, CONVERT      , music.aks , array , mem_address ))
 
+$(eval $(call AKS2DATA, SET_FOLDER   , src/music ))
+$(eval $(call AKS2DATA, SET_OUTPUTS  , h s  ))
+$(eval $(call AKS2DATA, SET_SFXONLY  , no   ))
+
+$(eval $(call AKS2DATA, CONVERT      , assets/music1.aks , music1 , 0x1000 ))
 
 
 ##

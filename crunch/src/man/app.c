@@ -2,39 +2,48 @@
 #include <man/man_game.h>
 #include <sys/UI.h>
 #include <sprites/g_palette.h>
+#include <tilemaps/main_screen_pack.h>
 #include <sprites/UI.h>
+#include <sprites/door.h>
+#include <sprites/char.h>
+#include <sprites/mouse.h>
+#include <sprites/fountain.h>
+#include <sprites/converting1.h>
+#include <sprites/converting2.h>
+#include <music/music1.h>
+
 
 u8 render_count;
-
+u8 music_play;
+u16 music_sync;
+u8 intro_state;
 void interrupt_1(){
-    //cpct_setBorder(HW_RED);
     cpct_scanKeyboard();
     cpct_setInterruptHandler(interrupt_2);
 }
 void interrupt_2(){
-    //cpct_setBorder(HW_GREEN);
+    if(music_play){
+        music_sync++;
+        cpct_akp_musicPlay();
+    }
+        
     cpct_setInterruptHandler(interrupt_3);
 }
 void interrupt_3(){
-    //cpct_setBorder(HW_CYAN);
     cpct_setInterruptHandler(interrupt_4);
 }
 void interrupt_4(){
-    //cpct_setBorder(HW_BLACK);
     cpct_setInterruptHandler(interrupt_5);
 }
 void interrupt_5(){
-    //cpct_setBorder(HW_WHITE);
     cpct_setInterruptHandler(interrupt_6);
 }
 void interrupt_6(){
-    //cpct_setBorder(HW_YELLOW);
     render_count--;
     if(!render_count){
         activate_render_signal();
         render_count = 2;
     }
-    
     cpct_setInterruptHandler(interrupt_1);
 }
 
@@ -71,6 +80,76 @@ void man_app_draw_stats(u8 x, u8 y, player_t* stats){
 }
 
 
+//INTRO
+void man_app_intro(){
+
+    u8 x,y;
+    u8* pos;
+
+    cpct_zx7b_decrunch_s(0xFFFF, main_screen_pack_end);
+
+    x = 20;
+    y = 128;
+    pos = cpct_getScreenPtr (CPCT_VMEM_START,x, y);
+    cpct_drawSprite (spr_door_0, pos, 8, 48);
+
+    y = 174;
+    pos = cpct_getScreenPtr (CPCT_VMEM_START,x, y);
+    cpct_drawSolidBox (pos, 0xFF, 40, 2);
+    y +=2;
+    pos = cpct_getScreenPtr (CPCT_VMEM_START,x, y);
+    cpct_drawSolidBox (pos, 0xF0, 40, 2);
+
+    x = 56;
+    y = 162;
+    pos = cpct_getScreenPtr (CPCT_VMEM_START,x, y);
+    cpct_drawSprite (spr_fountain_0, pos, 4, 12);
+
+    x = 32;
+    y = 182;
+    pos = cpct_getScreenPtr (CPCT_VMEM_START,x, y);
+    cpct_drawStringM1("[space]", pos);
+
+    executing_state = man_app_intro_update;
+}
+void man_app_intro_update(){
+    u8 x, y;
+    u8* pos;
+    if(intro_state == 0){
+        if(cpct_isKeyPressed(Key_Space)){
+            music_play = 1;
+            intro_state = 1;
+        }
+    }
+    else if(intro_state == 1){
+        if(music_sync > 100){
+            x = 20;
+            y = 128;
+            pos = cpct_getScreenPtr (CPCT_VMEM_START,x, y);
+            cpct_drawSprite (spr_door_1, pos, 8, 48);
+        }
+        if(music_sync > 200){
+            x = 20;
+            y = 128;
+            pos = cpct_getScreenPtr (CPCT_VMEM_START,x, y);
+            cpct_drawSprite (spr_door_2, pos, 8, 48);
+        }
+        if(music_sync > 300){
+            x = 20;
+            y = 128;
+            pos = cpct_getScreenPtr (CPCT_VMEM_START,x, y);
+            cpct_drawSprite (spr_door_2, pos, 8, 48);
+
+            x = 28;
+            y = 170;
+            pos = cpct_getScreenPtr (CPCT_VMEM_START,x, y);
+            cpct_drawSprite (spr_mouse_0, pos, 4, 8);
+            executing_state = man_app_main;
+        }
+    }
+    
+}
+//INTRO
 
 //MENU
 void man_app_main(){
@@ -175,10 +254,15 @@ void man_app_game_update(){
 
 
 void man_app_init(){
+    music_play=0;
+    music_sync=0;
+    intro_state=0;
     cpct_disableFirmware();
     cpct_setPalette(g_palette,4);
     cpct_setDrawCharM1(3, 0);
+    cpct_setBorder(HW_BLACK);
 
+    cpct_akp_musicInit (music1_address);
     render_count = 2;
 
     left_value  = Key_A;
@@ -190,7 +274,7 @@ void man_app_init(){
 
     sys_UI_pre_init();
 
-    executing_state = man_app_main;
+    executing_state = man_app_intro;
 }
 
 void man_app_update(){

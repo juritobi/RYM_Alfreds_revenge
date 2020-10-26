@@ -58,8 +58,18 @@ $(eval $(call IMG2SP, CONVERT         , assets/UI.png , 8, 8, spr_UI))
 $(eval $(call IMG2SP, CONVERT         , assets/ghost.png , 16, 16, spr_ghost))
 $(eval $(call IMG2SP, CONVERT         , assets/dasher.png , 16, 16, spr_dasher))
 
+$(eval $(call IMG2SP, CONVERT         , assets/door.png , 32, 48, spr_door))
+$(eval $(call IMG2SP, CONVERT         , assets/mouse.png , 16, 8, spr_mouse))
+$(eval $(call IMG2SP, CONVERT         , assets/converting1.png , 16, 16, spr_converting1))
+$(eval $(call IMG2SP, CONVERT         , assets/converting2.png , 16, 24, spr_converting2))
+$(eval $(call IMG2SP, CONVERT         , assets/fountain.png , 16, 13, spr_fountain))
+
 $(eval $(call IMG2SP, SET_IMG_FORMAT  , zgtiles            ))
 $(eval $(call IMG2SP, CONVERT         , assets/tileset.png , 16, 8, tileset))
+
+$(eval $(call IMG2SP, SET_OUTPUT      , bin                  ))
+$(eval $(call IMG2SP, SET_IMG_FORMAT  , screen            ))
+$(eval $(call IMG2SP, CONVERT         , assets/main.png , 320, 200, main_screen))
 
 ##
 ## OLD MACROS (For compatibility)
