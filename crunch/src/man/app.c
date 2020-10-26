@@ -17,6 +17,10 @@ u8 render_count;
 u8 music_play;
 u16 music_sync;
 u8 intro_state;
+
+u8 x,y;
+u16 activate;
+u8* spr;
 void interrupt_1(){
     cpct_scanKeyboard();
     cpct_setInterruptHandler(interrupt_2);
@@ -79,75 +83,116 @@ void man_app_draw_stats(u8 x, u8 y, player_t* stats){
     sys_UI_draw_damage(x, y+10, spr_UI_09, stats->ap);
 }
 
+void app_draw_sprite(u8 x, u8 y, u8* spr, u8 w, u8 h){
+    u8* pos = cpct_getScreenPtr (CPCT_VMEM_START,x, y);
+    cpct_drawSprite (spr, pos, w, h);
+}
+void app_draw_box(u8 x, u8 y, u8 color, u8 w, u8 h){
+    u8* pos = cpct_getScreenPtr (CPCT_VMEM_START,x, y);
+    cpct_drawSolidBox (pos, color, w, h);
+}
+void app_draw_string(u8 x, u8 y, void* string){
+    u8* pos = cpct_getScreenPtr (CPCT_VMEM_START,x, y);
+    cpct_drawStringM1(string, pos);
+}
 
 //INTRO
 void man_app_intro(){
-
-    u8 x,y;
     u8* pos;
+
+    x = 28;
+    activate = 330;
+    spr = spr_mouse_1;
 
     cpct_zx7b_decrunch_s(0xFFFF, main_screen_pack_end);
 
-    x = 20;
-    y = 128;
-    pos = cpct_getScreenPtr (CPCT_VMEM_START,x, y);
-    cpct_drawSprite (spr_door_0, pos, 8, 48);
+    app_draw_sprite(20,128,spr_door_0, 8,48);
+    app_draw_sprite(56,162,spr_fountain_0, 4,12);
+    app_draw_box(20,174,0xFF, 40,2);
+    app_draw_box(20,176,0xF0, 40,2);
 
-    y = 174;
-    pos = cpct_getScreenPtr (CPCT_VMEM_START,x, y);
-    cpct_drawSolidBox (pos, 0xFF, 40, 2);
-    y +=2;
-    pos = cpct_getScreenPtr (CPCT_VMEM_START,x, y);
-    cpct_drawSolidBox (pos, 0xF0, 40, 2);
-
-    x = 56;
-    y = 162;
-    pos = cpct_getScreenPtr (CPCT_VMEM_START,x, y);
-    cpct_drawSprite (spr_fountain_0, pos, 4, 12);
-
-    x = 32;
-    y = 182;
-    pos = cpct_getScreenPtr (CPCT_VMEM_START,x, y);
-    cpct_drawStringM1("[space]", pos);
+    app_draw_string(32,182,"[space]" );
 
     executing_state = man_app_intro_update;
 }
 void man_app_intro_update(){
-    u8 x, y;
-    u8* pos;
+    if(cpct_isKeyPressed(Key_Esc)){
+        executing_state = man_app_main;
+    }
     if(intro_state == 0){
         if(cpct_isKeyPressed(Key_Space)){
             music_play = 1;
             intro_state = 1;
+            app_draw_box(32,182,0x00, 14,8);
         }
     }
     else if(intro_state == 1){
-        if(music_sync > 100){
-            x = 20;
-            y = 128;
-            pos = cpct_getScreenPtr (CPCT_VMEM_START,x, y);
-            cpct_drawSprite (spr_door_1, pos, 8, 48);
+        if(music_sync == 156){
+            app_draw_sprite(20,128,spr_door_1,8,48);
         }
-        if(music_sync > 200){
-            x = 20;
-            y = 128;
-            pos = cpct_getScreenPtr (CPCT_VMEM_START,x, y);
-            cpct_drawSprite (spr_door_2, pos, 8, 48);
+        else if(music_sync == 210){
+            app_draw_sprite(20,128,spr_door_2,8,48);
         }
-        if(music_sync > 300){
-            x = 20;
-            y = 128;
-            pos = cpct_getScreenPtr (CPCT_VMEM_START,x, y);
-            cpct_drawSprite (spr_door_2, pos, 8, 48);
-
-            x = 28;
-            y = 170;
-            pos = cpct_getScreenPtr (CPCT_VMEM_START,x, y);
-            cpct_drawSprite (spr_mouse_0, pos, 4, 8);
+        else if(music_sync == 252){
+            app_draw_sprite(20,128,spr_door_0,8,48);
+            app_draw_sprite(28,166,spr_mouse_0,4,8);
+        }
+        else if(music_sync>252 && music_sync < 463){
+            if(music_sync == activate){
+                app_draw_box(x,166, 0x00, 4,8);
+                app_draw_sprite(x+1,166,spr,4,8);
+                ++x;
+                if(spr == spr_mouse_1){
+                    spr = spr_mouse_0;
+                }
+                else{
+                    spr = spr_mouse_1;
+                }
+                activate+=6;
+            }
+        }
+        else if(music_sync == 510){
+            app_draw_sprite(51,158,spr_converting1,4,16);
+            app_draw_sprite(56,162,spr_fountain_1,4,12);
+        }
+        else if(music_sync == 534){
+            app_draw_sprite(51,150,spr_converting2,4,24);
+            app_draw_sprite(56,162,spr_fountain_2,4,12);
+        }
+        else if(music_sync == 558){
+            app_draw_sprite(51,150,spr_char_0,4,24);
+            app_draw_sprite(56,162,spr_fountain_3,4,12);
+        }
+        else if(music_sync == 606){
+            app_draw_sprite(51,150,spr_char_4,4,24);
+        }
+        else if(music_sync == 666){
+            intro_state = 2;
+            music_sync=0;
+            x = 51;
+            activate = 0;
+            spr = spr_char_5;
+        }
+    }
+    else if(intro_state == 2){
+        if(music_sync < 144){
+            if(music_sync == activate){
+                app_draw_box(x,150, 0x00, 4,24);
+                app_draw_sprite(x-1,150,spr,4,24);
+                --x;
+                if(spr == spr_char_5){
+                    spr = spr_char_4;
+                }
+                else{
+                    spr = spr_char_5;
+                }
+                activate+=6;
+            }
+        }
+        if(music_sync == 228){
             executing_state = man_app_main;
         }
     }
-    
 }
 //INTRO
 
@@ -155,15 +200,14 @@ void man_app_intro_update(){
 void man_app_main(){
     u8 x,y;
     u8* pos;
-    cpct_clearScreen(0x0);
-    x = 20;
-    y = 100;
-    pos = cpct_getScreenPtr (CPCT_VMEM_START, x, y);
-    cpct_drawStringM1("[esc]  Set controls", pos);
-    x = x-2;
-    y = y+16;
-    pos = cpct_getScreenPtr (CPCT_VMEM_START, x, y);
-    cpct_drawStringM1("[enter] Play", pos);
+
+    //cpct_setPALColour (0, HW_BLACK);
+    cpct_setPALColour (0, HW_CYAN);
+
+    cpct_zx7b_decrunch_s(0xFFFF, main_screen_pack_end);
+
+    app_draw_string(20, 144,"[Esc]  Set controls");
+    app_draw_string(18, 160,"[Space] Play");
     executing_state = man_app_main_update;
 }
 void man_app_main_update(){
