@@ -69,12 +69,12 @@ cpct_keyID down_value;
 cpct_keyID fire1_value;
 cpct_keyID fire2_value;
 
-const cpct_keyID* left  = &left_value;
-const cpct_keyID* right = &right_value;
-const cpct_keyID* up    = &up_value;
-const cpct_keyID* down  = &down_value;
-const cpct_keyID* fire1 = &fire1_value;
-const cpct_keyID* fire2 = &fire2_value;
+cpct_keyID* left;
+cpct_keyID* right;
+cpct_keyID* up;
+cpct_keyID* down;
+cpct_keyID* fire1;
+cpct_keyID* fire2;
 
 void man_app_draw_stats(u8 x, u8 y, player_t* stats){
     sys_UI_hp_mp_bars(x+12, y, spr_UI_00, stats->hp);
@@ -198,10 +198,7 @@ void man_app_intro_update(){
 
 //MENU
 void man_app_main(){
-    u8 x,y;
-    u8* pos;
-
-    //cpct_setPALColour (0, HW_BLACK);
+ 
     cpct_setPALColour (0, HW_CYAN);
 
     cpct_zx7b_decrunch_s(0xFFFF, main_screen_pack_end);
@@ -221,13 +218,35 @@ void man_app_main_update(){
 //MENU
 //CONTROLS
 void man_app_controls(){
-    u8 x,y;
-    u8* pos;
-    cpct_clearScreen(0x0);
-    x = 20;
-    y = 100;
-    pos = cpct_getScreenPtr (CPCT_VMEM_START, x, y);
-    cpct_drawStringM1("aqui van los controles", pos);
+    
+    u8 increment= 24;
+    u8 x2 = 46;
+    cpct_clearScreen(0);
+    y = 40;
+    x = 26;
+    app_draw_string(32,16, "CONTROLS");
+    app_draw_box(32,26, 0x0f, 16, 2);
+    app_draw_string(x,y, "Left:");
+    app_draw_box(x2,y, 0xFF, 2, 8);
+    y += increment;
+    app_draw_string(x,y, "Right:");
+    app_draw_box(x2,y, 0xFF, 2, 8);
+    y += increment;
+    app_draw_string(x,y, "Up:");
+    app_draw_box(x2,y, 0xFF, 2, 8);
+    y += increment;
+    app_draw_string(x,y, "Down:");
+    app_draw_box(x2,y, 0xFF, 2, 8);
+    y += increment;
+    app_draw_string(x,y, "Sword:");
+    app_draw_box(x2,y, 0xFF, 2, 8);
+    y += increment;
+    app_draw_string(x,y, "Knife:");
+    app_draw_box(x2,y, 0xFF, 2, 8);
+
+    app_draw_string(20,190, "[Esc] Back to menu");
+    app_draw_box(x2,y, 0xFF, 2, 8);
+
     executing_state = man_app_controls_update;
 }
 void man_app_controls_update(){
@@ -237,30 +256,18 @@ void man_app_controls_update(){
 
 //CHARACTER SELECT
 void man_app_sel(){
-    u8 x,y;
-    u8* pos;
+
     cpct_clearScreen(0x0);
-    x = 20;
-    y = 8;
-    pos = cpct_getScreenPtr (CPCT_VMEM_START, x, y);
-    cpct_drawStringM1("Select your stats: ", pos);
+    app_draw_string(20,8, "SELECT YOUR STATS");
+    app_draw_box(20,18, 0x0f, 34, 2);
 
-    x = 6;
-    y = 60;
-    pos = cpct_getScreenPtr (CPCT_VMEM_START, x, y);
-    cpct_drawStringM1("[1]", pos);
-    x = 6;
-    y = 116;
-    pos = cpct_getScreenPtr (CPCT_VMEM_START, x, y);
-    cpct_drawStringM1("[2]", pos);
-    x = 6;
-    y = 172;
-    pos = cpct_getScreenPtr (CPCT_VMEM_START, x, y);
-    cpct_drawStringM1("[3]", pos);
+    app_draw_string(6,60, "[1]");
+    app_draw_string(6,116, "[2]");
+    app_draw_string(6,172, "[3]");
 
-    man_app_draw_stats(14, 55, character_sets);
-    man_app_draw_stats(14, 111, character_sets+1);
-    man_app_draw_stats(14, 167, character_sets+2);
+    man_app_draw_stats(24, 55, character_sets);
+    man_app_draw_stats(24, 111, character_sets+1);
+    man_app_draw_stats(24, 167, character_sets+2);
 
     executing_state = man_app_sel_update;
 }
@@ -315,6 +322,13 @@ void man_app_init(){
     down_value  = Key_S;
     fire1_value = Key_O;
     fire2_value = Key_P;
+
+    left  = &left_value;
+    right = &right_value;
+    up    = &up_value;
+    down  = &down_value;
+    fire1 = &fire1_value;
+    fire2 = &fire2_value;
 
     sys_UI_pre_init();
 
