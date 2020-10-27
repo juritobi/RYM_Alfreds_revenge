@@ -47,16 +47,24 @@ $(eval $(call IMG2SP, SET_IMG_FORMAT  , sprites           ))
 $(eval $(call IMG2SP, SET_OUTPUT      , c                  ))
 $(eval $(call IMG2SP, SET_PALETTE_FW  , $(PALETTE)         ))
 $(eval $(call IMG2SP, CONVERT_PALETTE , $(PALETTE), g_palette ))
-$(eval $(call IMG2SP, CONVERT         , assets/char.png , 16, 24, spr_char))
-$(eval $(call IMG2SP, CONVERT         , assets/sword.png , 16, 24, spr_sword))
-$(eval $(call IMG2SP, CONVERT         , assets/shooter.png , 16, 16, spr_shooter))
-$(eval $(call IMG2SP, CONVERT         , assets/zombi.png , 16, 16, spr_zombi))
-$(eval $(call IMG2SP, CONVERT         , assets/boss.png , 48, 40, spr_boss))
-$(eval $(call IMG2SP, CONVERT         , assets/proyectile.png , 16, 8, spr_p))
+
+
 $(eval $(call IMG2SP, CONVERT         , assets/numbers.png , 8, 8, spr_number))
 $(eval $(call IMG2SP, CONVERT         , assets/UI.png , 8, 8, spr_UI))
+
+$(eval $(call IMG2SP, CONVERT         , assets/char.png , 16, 24, spr_char))
+$(eval $(call IMG2SP, CONVERT         , assets/sword.png , 16, 24, spr_sword))
+$(eval $(call IMG2SP, CONVERT         , assets/proyectile.png , 16, 8, spr_p))
+
+$(eval $(call IMG2SP, CONVERT         , assets/shooter.png , 16, 16, spr_shooter))
+$(eval $(call IMG2SP, CONVERT         , assets/zombi.png , 16, 16, spr_zombi))
 $(eval $(call IMG2SP, CONVERT         , assets/ghost.png , 16, 16, spr_ghost))
 $(eval $(call IMG2SP, CONVERT         , assets/dasher.png , 16, 16, spr_dasher))
+
+$(eval $(call IMG2SP, CONVERT         , assets/boss.png , 48, 40, spr_boss))
+$(eval $(call IMG2SP, CONVERT         , assets/rain.png , 16, 8, spr_rain))
+$(eval $(call IMG2SP, CONVERT         , assets/hor.png , 112, 8, spr_hor))
+$(eval $(call IMG2SP, CONVERT         , assets/pilar.png , 32, 136, spr_pilar))
 
 $(eval $(call IMG2SP, CONVERT         , assets/door.png , 32, 48, spr_door))
 $(eval $(call IMG2SP, CONVERT         , assets/mouse.png , 16, 8, spr_mouse))

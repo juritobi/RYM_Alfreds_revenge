@@ -346,7 +346,3 @@ void man_app_update(){
         cpct_waitHalts(3);
     }
 }
-
-/*cpct_clearScreen(0x0);
-            cpct_drawStringM1("TAS MORIDO", CPCT_VMEM_START+500);
-            cpct_drawStringM1("press any key to retry", CPCT_VMEM_START+900);*/
