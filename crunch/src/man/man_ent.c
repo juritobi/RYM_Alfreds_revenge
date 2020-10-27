@@ -7,6 +7,7 @@
 #include <sys/anim.h>
 #include <sprites/char.h>
 #include <sprites/sword.h>
+#include <sprites/knife.h>
 #include <sprites/proyectile.h>
 #include <sprites/shooter.h>
 #include <sprites/zombi.h>
@@ -17,9 +18,17 @@
 #include <sprites/rain.h>
 #include <sprites/pilar.h>
 
-
-/*character-----------------------------------------------------*/
 //LOS VALORES DE PREV_VX Y PREV_VY DE LA IA, EN EL PLAYER SIGNIFICAN LA CANTIDAD DE VIDA MAXIMA QUE TIENE Y LA CANTIDAD DE MANA MAXIMO QUE TIENE
+
+//******************************************************************
+//------------------------------------------------------------------
+//CHARACTER/////////////////////////////////////////////////////////
+//------------------------------------------------------------------
+//******************************************************************
+
+//------------------------------------------------------------------
+//CHARACTER/////////////////////////////////////////////////////////
+//------------------------------------------------------------------
 const ent_t init_player = {
    //generic
    e_t_physics | e_t_render | e_t_input | e_t_col |e_t_anim,             //u8 type;
@@ -55,9 +64,12 @@ const ent_t init_player = {
    spr_char_0,                                                 //u8* sprite;                   
    0                                                          //u8* memory_pos;               
 };
+//------------------------------------------------------------------
+//SWORD/////////////////////////////////////////////////////////////
+//------------------------------------------------------------------
 const ent_t init_sword = {
    //generic
-   e_t_dead|e_t_render,                                        //u8 type;
+   e_t_dead|e_t_render|e_t_anim,                                        //u8 type;
    0,0,                                                        //u8 x, y;
    0,0,                                                        //u8 prevx, prevy;
    4,24,                                                       //u8 w, h;
@@ -79,20 +91,23 @@ const ent_t init_sword = {
    //Input
    0,0,                                                         //i8 on_ground, jumping;     
    //Animation
-   0,                                                          //u8 anim_timer;
-   0x00,                                                       //u8 action;  //action - dir  
-   0x00,                                                       //spr_frame_t* frame;      
-   0x00,                                                       //spr_set_t* sprite_set;  
+   0xff,                                                          //u8 anim_timer;
+   0x00,                                                       //u8 action;
+   &sw_0,                                                       //spr_frame_t* frame;      
+   &sw_spriteset,                                                       //spr_set_t* sprite_set;  
    //Collisions
    col_t_ally_breaker,                                         //u8 col_type;                  
    //physics
    //render
-   spr_sword,                                                  //u8* sprite;                   
+   spr_sword_0,                                                  //u8* sprite;                   
    0                                                          //u8* memory_pos;               
 };
+//------------------------------------------------------------------
+//KNIFE/////////////////////////////////////////////////////////////
+//------------------------------------------------------------------
 const ent_t init_knife = {
    //generic
-   e_t_dead | e_t_render | e_t_physics | e_t_col,               //u8 type;
+   e_t_dead | e_t_render | e_t_physics | e_t_col|e_t_anim,               //u8 type;
    0,0,                                                        //u8 x, y;
    0,0,                                                        //u8 prevx, prevy;
    4,8,                                                        //u8 w, h;
@@ -114,19 +129,26 @@ const ent_t init_knife = {
    //Input
    0,0,                                                         //i8 on_ground, jumping;        
    //Animation
-   0,                                                          //u8 anim_timer;
+   0xff,                                                          //u8 anim_timer;
    0x00,                                                       //u8 action;  //action - dir  
-   0x00,                                                       //spr_frame_t* frame;      
-   0x00,                                                       //spr_set_t* sprite_set;  
+   &kn_0,                                                       //spr_frame_t* frame;      
+   &kn_spriteset,                                                       //spr_set_t* sprite_set;  
    //Collisions
    col_t_ally_breaker,                                         //u8 col_type;                  
    //physics
    //render
-   spr_p_0,                                                //u8* sprite;                   
+   spr_knife_0,                                                //u8* sprite;                   
    0                                                          //u8* memory_pos;               
 };
-/*character-----------------------------------------------------*/
-/*shoot-----------------------------------------------------*/
+
+//******************************************************************
+//------------------------------------------------------------------
+//ENEMIES///////////////////////////////////////////////////////////
+//------------------------------------------------------------------
+//******************************************************************
+//------------------------------------------------------------------
+//SHOOTER///////////////////////////////////////////////////////////
+//------------------------------------------------------------------
 const ent_t init_shoot = {
    //generic
    e_t_AI | e_t_render |e_t_anim,                                         //u8 type;
@@ -153,7 +175,7 @@ const ent_t init_shoot = {
    //Animation
    1,                                                          //u8 anim_timer;
    0x00,                                                       //u8 action;  //action - dir  
-   &s_w_0,                                                       //spr_frame_t* frame;      
+   &s_0,                                                       //spr_frame_t* frame;      
    &s_spriteset,                                                //spr_set_t* sprite_set;  
    //Collisions
    col_t_enemy,                                                //u8 col_type;                  
@@ -165,7 +187,7 @@ const ent_t init_shoot = {
 };
 const ent_t init_shoot_son = {
    //generic
-   e_t_dead | e_t_physics | e_t_render | e_t_col,              //u8 type;
+   e_t_dead | e_t_physics | e_t_render | e_t_col ,              //u8 type;
    0,0,                                                        //u8 x, y;
    0,0,                                                        //u8 prevx, prevy;
    4,8,                                                        //u8 w, h;
@@ -195,15 +217,16 @@ const ent_t init_shoot_son = {
    col_t_enemy_breaker,                                        //u8 col_type;                  
    //physics
    //render
-   spr_p_1,                                                    //u8* sprite;                   
+   spr_p_0,                                                    //u8* sprite;                   
    0                                                           //u8* memory_pos;                
 };
-/*shoot-----------------------------------------------------*/
-/*zombi-----------------------------------------------------*/
+//------------------------------------------------------------------
+//ZOMBI/////////////////////////////////////////////////////////////
+//------------------------------------------------------------------
 const ent_t init_zombi = {
 
    //generic
-   e_t_render | e_t_AI | e_t_col | e_t_physics,                //u8 type;
+   e_t_render | e_t_AI | e_t_col | e_t_physics |e_t_anim,                //u8 type;
    0,0,                                                        //u8 x, y;
    0,0,                                                        //u8 prevx, prevy;
    4,16,                                                       //u8 w, h;
@@ -225,10 +248,10 @@ const ent_t init_zombi = {
    //Input
    0,0,                                                         //i8 on_ground, jumping;     
    //Animation
-   0,                                                          //u8 anim_timer;
+   5,                                                          //u8 anim_timer;
    0x00,                                                       //u8 action;  //action - dir  
-   0x00,                                                       //spr_frame_t* frame;      
-   0x00,                                                       //spr_set_t* sprite_set;     
+   &z_0,                                                       //spr_frame_t* frame;      
+   &z_spriteset,                                                       //spr_set_t* sprite_set;     
    //Collisions
    col_t_enemy,                                                //u8 col_type;                  
    //physics
@@ -236,13 +259,13 @@ const ent_t init_zombi = {
    spr_zombi_0,                                                //u8* sprite;                   
    0                                                          //u8* memory_pos;               
 };
-/*zombi-----------------------------------------------------*/
-
-/*fantasma--------------------------------------------------*/
+//------------------------------------------------------------------
+//GHOST/////////////////////////////////////////////////////////////
+//------------------------------------------------------------------
 const ent_t init_ghost = {
 
    //generic
-   e_t_render | e_t_AI | e_t_physics,                //u8 type;
+   e_t_render | e_t_AI | e_t_physics |e_t_anim,                //u8 type;
    0,0,                                                        //u8 x, y;
    0,0,                                                        //u8 prevx, prevy;
    4,16,                                                       //u8 w, h;
@@ -264,10 +287,10 @@ const ent_t init_ghost = {
    //Input
    0,0,                                                         //i8 on_ground, jumping;     
    //Animation
-   0,                                                          //u8 anim_timer;
+   5,                                                          //u8 anim_timer;
    0x00,                                                       //u8 action;  //action - dir  
-   0x00,                                                       //spr_frame_t* frame;      
-   0x00,                                                       //spr_set_t* sprite_set;     
+   &g_0,                                                       //spr_frame_t* frame;      
+   &g_spriteset,                                                       //spr_set_t* sprite_set;     
    //Collisions
    col_t_enemy,                                                //u8 col_type;                  
    //physics
@@ -275,12 +298,13 @@ const ent_t init_ghost = {
    spr_ghost_0,                                                //u8* sprite;                   
    0                                                          //u8* memory_pos;               
 };
-/*fantasma--------------------------------------------------*/
-/*sonic-----------------------------------------------------*/
+//------------------------------------------------------------------
+//DASHER////////////////////////////////////////////////////////////
+//------------------------------------------------------------------
 const ent_t init_sonic = {
 
    //generic
-   e_t_render | e_t_AI | e_t_col | e_t_physics,                //u8 type;
+   e_t_render | e_t_AI | e_t_col | e_t_physics|e_t_anim,                //u8 type;
    0,0,                                                        //u8 x, y;
    0,0,                                                        //u8 prevx, prevy;
    4,16,                                                       //u8 w, h;
@@ -302,20 +326,21 @@ const ent_t init_sonic = {
    //Input
    0,0,                                                         //i8 on_ground, jumping;     
    //Animation
-   0,                                                          //u8 anim_timer;
+   5,                                                          //u8 anim_timer;
    0x00,                                                       //u8 action;  //action - dir  
-   0x00,                                                       //spr_frame_t* frame;      
-   0x00,                                                       //spr_set_t* sprite_set;     
+   &d_w_0,                                                       //spr_frame_t* frame;      
+   &d_spriteset,                                                       //spr_set_t* sprite_set;     
    //Collisions
    col_t_enemy,                                                //u8 col_type;                  
    //physics
    //render
-   spr_dasher_0,                                                //u8* sprite;                   
+   spr_dasher_00,                                                //u8* sprite;                   
    0                                                          //u8* memory_pos;               
 };
-/*sonic-----------------------------------------------------*/
 
-/*Poder arriba como Espanya---------------------------------*/
+//------------------------------------------------------------------
+//POWER_UP//////////////////////////////////////////////////////////
+//------------------------------------------------------------------
 // MP = 1 -> MAX HP
 // MP = 2 -> MAX MANA
 // MP = 3 -> MELEE DMG 
@@ -733,12 +758,14 @@ void man_ent_move(ent_t* e, u8 displacement){
    if(e->move_dir == dir_left){
       e_to_move->x = e->x - e_to_move->originalx;
       if(e_to_move->originalvx != -1){
+         e_to_move->move_dir = dir_left;
          e_to_move->originalvx = e_to_move->originalvx * (-1);
       }
    }
    else{
       e_to_move->x = e->x + e_to_move->originalx;
       if(e_to_move->originalvx != 1){
+         e_to_move->move_dir = dir_right;
          e_to_move->originalvx = e_to_move->originalvx * (-1);
       }
    }
