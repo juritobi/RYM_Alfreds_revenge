@@ -10,8 +10,11 @@
 #include <sprites/fountain.h>
 #include <sprites/converting1.h>
 #include <sprites/converting2.h>
-#include <music/music1.h>
 
+#include <music/sfx.h>
+#include <music/intro.h>
+#include <music/game.h>
+#include <music/rym.h>
 
 u8 render_count;
 u8 music_play;
@@ -99,11 +102,9 @@ void app_draw_string(u8 x, u8 y, void* string){
 //INTRO
 void man_app_intro(){
     u8* pos;
-
     x = 28;
     activate = 330;
     spr = spr_mouse_1;
-
     cpct_zx7b_decrunch_s(0xFFFF, main_screen_pack_end);
 
     app_draw_sprite(20,128,spr_door_0, 8,48);
@@ -113,6 +114,7 @@ void man_app_intro(){
 
     app_draw_string(32,182,"[space]" );
 
+    cpct_akp_musicInit (intro_address);
     executing_state = man_app_intro_update;
 }
 void man_app_intro_update(){
@@ -198,7 +200,6 @@ void man_app_intro_update(){
 
 //MENU
 void man_app_main(){
- 
     cpct_setPALColour (0, HW_CYAN);
 
     cpct_zx7b_decrunch_s(0xFFFF, main_screen_pack_end);
@@ -289,6 +290,7 @@ void man_app_sel_update(){
 
 //GAME
 void man_app_game(){
+    cpct_akp_musicInit (game_address);
     man_game_init();
     executing_state = man_app_game_update;
 }
@@ -313,7 +315,7 @@ void man_app_init(){
     cpct_setDrawCharM1(3, 0);
     cpct_setBorder(HW_BLACK);
 
-    cpct_akp_musicInit (music1_address);
+    cpct_akp_musicInit (intro_address);
     render_count = 2;
 
     left_value  = Key_A;
