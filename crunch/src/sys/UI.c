@@ -13,9 +13,9 @@ u8 ad;
 u8 ap;
 u8 down_score_timer;
 
-u8* numbers[10];
+const u8* numbers[10];
 
-void draw_sprite(u8* sprite, u8 x, u8 y){
+void draw_sprite(const u8* sprite, u8 x, u8 y){
     u8* pos = cpct_getScreenPtr (CPCT_VMEM_START,x, y);
     cpct_drawSprite (sprite, pos, 2, 8);
 }
@@ -38,7 +38,6 @@ void sys_UI_draw_damage(u8 w, u8 h, u8* sprite, u8 num){
     draw_sprite(sprite, w, h);
     draw_sprite(numbers[num], w+4, h);
 }
-
 void draw_score(){
     u8 index = 75;
     u16 inscore = score;
@@ -65,8 +64,6 @@ void sys_UI_pre_init(){
 
 void sys_UI_init(){
     u8* pos;
-    u8 looper;
-    u8 index;
 
     score = 60000;
     player = man_ent_get_char();
@@ -76,8 +73,6 @@ void sys_UI_init(){
     ap = (player+2)->damage;
     down_score_timer= 0xFF;
     
-
-
     //background
     cpct_drawSolidBox (CPCT_VMEM_START, 0xF0, 40, 24);
     cpct_drawSolidBox (CPCT_VMEM_START+40, 0xF0, 40, 24);
@@ -85,7 +80,6 @@ void sys_UI_init(){
     //hp mp
     sys_UI_hp_mp_bars(2, 3, spr_UI_00, prev_max_hp);
     sys_UI_hp_mp_bars(2, 13, spr_UI_05, prev_max_mana);
-
     
     //damage
     sys_UI_draw_damage(40, 3, spr_UI_04, ad);

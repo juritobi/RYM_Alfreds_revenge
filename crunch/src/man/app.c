@@ -10,8 +10,11 @@
 #include <sprites/fountain.h>
 #include <sprites/converting1.h>
 #include <sprites/converting2.h>
-#include <music/music1.h>
 
+#include <music/sfx.h>
+#include <music/intro.h>
+#include <music/game.h>
+#include <music/rym.h>
 
 u8 render_count;
 u8 music_play;
@@ -20,7 +23,7 @@ u8 intro_state;
 
 u8 x,y;
 u16 activate;
-u8* spr;
+const u8* spr;
 void interrupt_1(){
     cpct_scanKeyboard();
     cpct_setInterruptHandler(interrupt_2);
@@ -83,7 +86,7 @@ void man_app_draw_stats(u8 x, u8 y, player_t* stats){
     sys_UI_draw_damage(x, y+10, spr_UI_09, stats->ap);
 }
 
-void app_draw_sprite(u8 x, u8 y, u8* spr, u8 w, u8 h){
+void app_draw_sprite(u8 x, u8 y, const u8* spr, u8 w, u8 h){
     u8* pos = cpct_getScreenPtr (CPCT_VMEM_START,x, y);
     cpct_drawSprite (spr, pos, w, h);
 }
@@ -98,13 +101,10 @@ void app_draw_string(u8 x, u8 y, void* string){
 
 //INTRO
 void man_app_intro(){
-    u8* pos;
-
     x = 28;
     activate = 330;
     spr = spr_mouse_1;
-
-    cpct_zx7b_decrunch_s(0xFFFF, main_screen_pack_end);
+    cpct_zx7b_decrunch_s((u8*)0xFFFF,main_screen_pack_end);
 
     app_draw_sprite(20,128,spr_door_0, 8,48);
     app_draw_sprite(56,162,spr_fountain_0, 4,12);
@@ -113,6 +113,7 @@ void man_app_intro(){
 
     app_draw_string(32,182,"[space]" );
 
+    cpct_akp_musicInit ((u8*)intro_address);
     executing_state = man_app_intro_update;
 }
 void man_app_intro_update(){
@@ -198,10 +199,9 @@ void man_app_intro_update(){
 
 //MENU
 void man_app_main(){
- 
     cpct_setPALColour (0, HW_CYAN);
 
-    cpct_zx7b_decrunch_s(0xFFFF, main_screen_pack_end);
+    cpct_zx7b_decrunch_s((u8*)0xFFFF, main_screen_pack_end);
 
     app_draw_string(20, 144,"[Esc]  Set controls");
     app_draw_string(18, 160,"[Space] Play");
@@ -289,6 +289,7 @@ void man_app_sel_update(){
 
 //GAME
 void man_app_game(){
+    cpct_akp_musicInit ((u8*)game_address);
     man_game_init();
     executing_state = man_app_game_update;
 }
@@ -313,7 +314,7 @@ void man_app_init(){
     cpct_setDrawCharM1(3, 0);
     cpct_setBorder(HW_BLACK);
 
-    cpct_akp_musicInit (music1_address);
+    cpct_akp_musicInit ((u8*)intro_address);
     render_count = 2;
 
     left_value  = Key_A;

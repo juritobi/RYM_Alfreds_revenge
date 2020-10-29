@@ -2,7 +2,6 @@
 #include <man/man_ent.h>
 #include <sys/render.h>
 #include <man/app.h>
-#include <constants.h>
 
 u8 final_door_open;
 
@@ -202,12 +201,12 @@ u8 cleared_rooms[35];
 lvl_t level;
 u8 tilemap_start[tilemap_size];
 #define tilemap_end  (tilemap_start + tilemap_size - 1)
-
+/*
 void redraw_tile(u8 x, u8 y, u8 tile){
     tilemap_start[y*tilemap_W + x] = tile;
     sys_ren_tile(tile, x*4 (y+3)*8);
 }
-
+*/
 void lt_room(){
     tilemap_start[21*tilemap_W + 9] = 19;
     sys_ren_tile(19, 9*4, (21+3)*8 );
@@ -369,10 +368,6 @@ void man_level_kill_enemy(){
         level.cleared_func();
         man_level_add_mp_end_lvl();
     }
-}
-
-u8* man_level_get_tilemap(){
-    return tilemap_start;
 }
 u8 man_level_get_door(){
     return final_door_open;
