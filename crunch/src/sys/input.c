@@ -8,7 +8,7 @@
 #define jumpCD 10
 #define PiumPiumCD  25
 
-const i8 jumptable[] = {-8, -8, -8, -4, -4, 0, 0};
+const i8 jumptable[] = {-8, -8, -8, -8, -8, 0, 0};
 
 i8 swordUp;
 i8 swordCooling;
