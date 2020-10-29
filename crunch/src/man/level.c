@@ -165,7 +165,7 @@ const lvl_t i_bot_left_6 = {
     8,                          //id
     bot_left_6_pack_end,        //this
     &i_bot_left_5,              //top
-    &i_lvl_0,                   //right
+    &i_lvl0,                   //right
     0,                          //bot
     0,                          //left
     normal_room,
