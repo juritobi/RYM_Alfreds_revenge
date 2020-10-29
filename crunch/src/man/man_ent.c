@@ -767,6 +767,7 @@ void man_ent_res_absolute(ent_t* e, u8 displacement){
    e_to_res->y = e_to_res->originaly;
    e_to_res->vx = e_to_res->originalvx;
    e_to_res->vy = e_to_res->originalvy;
+   man_ent_update(e_to_res);
 }
 void man_ent_resurrect(ent_t* e, u8 displacement){
    ent_t* e_to_res = e + displacement;
@@ -774,7 +775,8 @@ void man_ent_resurrect(ent_t* e, u8 displacement){
    man_ent_move(e, displacement);
    e_to_res->vx = e_to_res->originalvx;
    e_to_res->vy = e_to_res->originalvy;
-   
+
+   man_ent_update(e_to_res);
 }
 
 void man_ent_move(ent_t* e, u8 displacement){

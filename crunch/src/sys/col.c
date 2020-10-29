@@ -49,7 +49,7 @@ void sys_col_y_actions(ent_t* e, u8 tile_type, i8 remaining_movement){
         e->vy = remaining_movement;
     }
     else if(tile_type < half){
-        if(e->on_ground){
+        if(e->on_ground != 2){
             e->on_ground = 1;
             e->vy = remaining_movement;
         }
@@ -60,6 +60,11 @@ void sys_col_y_actions(ent_t* e, u8 tile_type, i8 remaining_movement){
         }
         e->vy = remaining_movement;
         man_ent_hit(e, 1);
+    }
+}
+void sys_col_diag_actions(ent_t* e, u8 tile_type){
+    if(tile_type < solid){
+        e->vx = 0;
     }
 }
 
@@ -80,8 +85,10 @@ u8 sys_col_get_next_tile(u8* p, u8 l, u8 r, i8* v){//returns next tile
 }
 
 void sys_col_one(ent_t* e){
-    u8 x = e->tile_x;//moded
+    u8 x = e->tile_x;
+    u8 moded_x =x;
     u8 y = e->tile_y;
+    u8 moded_y =y;
     u8 rx = e->tile_x_r;
     u8 ry = e->tile_y_r;
     u8 w = e->tile_w;
@@ -93,65 +100,28 @@ void sys_col_one(ent_t* e){
     u8 tile_type = 0;
 
     if(vx){
-        to_collide = sys_col_get_next_tile(&x, w, rx, &vx);
+        to_collide = sys_col_get_next_tile(&moded_x, w, rx, &vx);
         if(ry) ++h;
         if(rx + vx < 0){
-            tile_type = get_tile_type(h, x, y, get_tp_x);
+            tile_type = get_tile_type(h, moded_x, y, get_tp_x);
             sys_col_x_actions(e, tile_type, to_collide);
         }
     }
-
-    x = e->tile_x;//moded
     h = e->tile_h;//modded
     to_collide = 0;
     if(vy){
-        to_collide = sys_col_get_next_tile(&y, h, ry, &vy);
+        to_collide = sys_col_get_next_tile(&moded_y, h, ry, &vy);
         if(rx) ++w;
         if(ry + vy < 0){
-            tile_type = get_tile_type(w, y, x, get_tp_y);
+            tile_type = get_tile_type(w, moded_y, x, get_tp_y);
             sys_col_y_actions(e, tile_type, to_collide);
         }
     }
-
-
-
-   
-   /* if(e->vx && e->vy){
-        if(changed_x && changed_y){
-            u8 x_wins = 0;
-            u8 tile_type;
-            if(e->vx > 0 && e->vy < 0){
-                tile_pointer = get_tile_pointer(right_tile, top_tile);
-            }
-            else if(e->vx > 0 && e->vy > 0){
-                tile_pointer = get_tile_pointer(right_tile, bot_tile);
-                x_wins = 1;
-            }
-            else if(e->vx < 0 && e->vy > 0){
-                tile_pointer = get_tile_pointer(left_tile, bot_tile);
-                x_wins = 1;
-            }
-            else{
-                tile_pointer = get_tile_pointer(left_tile, top_tile);
-            }
-            tile_type = tilemap_start[tile_pointer];
-            if(tile_type < solid){
-                if(x_wins){
-                    e->vy = 0;
-                    e->on_ground = 1;
-                }
-                else{
-                    e->vx = 0;
-                }
-            }
-            else if(tile_type < half){
-                if(!e->on_ground){
-                    e->on_ground = 1;
-                    e->vy = 0;
-                }
-            }
-        }
-    }*/
+    
+    if(e->vx && e->vy && !rx && !ry){
+        tile_type = get_tile_type(1, moded_x, moded_y, get_tp_x);
+        sys_col_diag_actions(e, tile_type);
+    }
 }
 
 void sys_col_ally_enemy(ent_t* ally, ent_t* enemy){
