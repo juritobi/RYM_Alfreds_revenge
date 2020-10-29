@@ -38,16 +38,30 @@
 $(eval $(call ADD2PACK,lvl0_pack, src/tilemaps/lvl0.bin))
 $(eval $(call PACKZX7B,lvl0_pack,src/tilemaps))
 
-$(eval $(call ADD2PACK,lvl1_pack, src/tilemaps/lvl1.bin))
-$(eval $(call PACKZX7B,lvl1_pack,src/tilemaps))
-$(eval $(call ADD2PACK,lvl2_pack, src/tilemaps/lvl2.bin))
-$(eval $(call PACKZX7B,lvl2_pack,src/tilemaps))
-$(eval $(call ADD2PACK,lvl3_pack, src/tilemaps/lvl3.bin))
-$(eval $(call PACKZX7B,lvl3_pack,src/tilemaps))
-$(eval $(call ADD2PACK,lvl4_pack, src/tilemaps/lvl4.bin))
-$(eval $(call PACKZX7B,lvl4_pack,src/tilemaps))
-$(eval $(call ADD2PACK,lvl5_pack, src/tilemaps/lvl5.bin))
-$(eval $(call PACKZX7B,lvl5_pack,src/tilemaps))
+$(eval $(call ADD2PACK,lvl0_2_pack, src/tilemaps/lvl0_2.bin))
+$(eval $(call PACKZX7B,lvl0_2_pack,src/tilemaps))
+
+
+$(eval $(call ADD2PACK,bot_left_1_pack, src/tilemaps/bot_left_1.bin))
+$(eval $(call PACKZX7B,bot_left_1_pack,src/tilemaps))
+
+$(eval $(call ADD2PACK,bot_left_2_pack, src/tilemaps/bot_left_2.bin))
+$(eval $(call PACKZX7B,bot_left_2_pack,src/tilemaps))
+
+$(eval $(call ADD2PACK,bot_left_3_pack, src/tilemaps/bot_left_3.bin))
+$(eval $(call PACKZX7B,bot_left_3_pack,src/tilemaps))
+
+$(eval $(call ADD2PACK,bot_left_4_pack, src/tilemaps/bot_left_4.bin))
+$(eval $(call PACKZX7B,bot_left_4_pack,src/tilemaps))
+
+$(eval $(call ADD2PACK,bot_left_5_pack, src/tilemaps/bot_left_5.bin))
+$(eval $(call PACKZX7B,bot_left_5_pack,src/tilemaps))
+
+$(eval $(call ADD2PACK,bot_left_6_pack, src/tilemaps/bot_left_6.bin))
+$(eval $(call PACKZX7B,bot_left_6_pack,src/tilemaps))
+
+$(eval $(call ADD2PACK,bot_left_extra_pack, src/tilemaps/bot_left_extra.bin))
+$(eval $(call PACKZX7B,bot_left_extra_pack,src/tilemaps))
 
 $(eval $(call ADD2PACK,boss1_pack, src/tilemaps/boss1.bin))
 $(eval $(call PACKZX7B,boss1_pack,src/tilemaps))

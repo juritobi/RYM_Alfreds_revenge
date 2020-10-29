@@ -7,11 +7,14 @@
 u8 final_door_open;
 
 extern const lvl_t i_lvl0;
-extern const lvl_t i_lvl1;
-extern const lvl_t i_lvl2;
-extern const lvl_t i_lvl3;
-extern const lvl_t i_lvl4;
-extern const lvl_t i_lvl5;
+extern const lvl_t i_lvl0_2;
+extern const lvl_t i_bot_left_1;
+extern const lvl_t i_bot_left_2;
+extern const lvl_t i_bot_left_3;
+extern const lvl_t i_bot_left_4;
+extern const lvl_t i_bot_left_5;
+extern const lvl_t i_bot_left_6;
+extern const lvl_t i_bot_left_extra;
 
 void lt_room();
 void rt_room();
@@ -25,9 +28,9 @@ const lvl_t i_lvl0 = {//center room
     0,                  //id
     lvl0_pack_end,      //this
     0,                  //top
-    &i_lvl2,      //right
-    &i_lvl5,                  //bot
-    &i_lvl1,                  //left
+    0,                  //right
+    &i_lvl0_2,          //bot
+    0,                  //left
     final_room,
     0,
     {
@@ -38,85 +41,34 @@ const lvl_t i_lvl0 = {//center room
         {0, 0, 0}
     }
 };
-const lvl_t i_lvl1 = {//top left
-    1,                  //id
-    lvl1_pack_end,      //this
-    0,                  //top
-    &i_lvl0,      //right
-    &i_lvl0,                  //bot
-    0,                  //left
-    lt_room,
-    0,
-    {
-        {e_c_zombi, 4, 168, 0},
-        {e_c_zombi, 72, 168, 0},
-        {0, 0, 0},
-        {0, 0, 0},
-        {0, 0, 0}
-    }
-};
-const lvl_t i_lvl2 = {//right top
-    2,                  //id
-    lvl2_pack_end,      //this
-    0,                  //top
-    0,      //right
-    &i_lvl0,                  //bot
-    &i_lvl0,                  //left
-    rt_room,
-    0,
-    {
-        {e_c_ghost, 72, 168, 0},
-        {0, 0, 0},
-        {0, 0, 0},
-        {0, 0, 0},
-        {0, 0, 0}
-    }
-};
-const lvl_t i_lvl3 = {//left bottom
-    3,                  //id
-    lvl3_pack_end,      //this
-    &i_lvl0,                  //top
-    &i_lvl5,      //right
-    0,                  //bot
-    0,                  //left
-    lb_room,
-    0,
-    {
-        {e_c_powerUp, 4, 96, 4},
-        {e_c_ghost, 20, 168, 0},
-        {0, 0, 0},
-        {0, 0, 0},
-        {0, 0, 0}
-    }
-};
-const lvl_t i_lvl4 = {//right bottom
-    4,                  //id
-    lvl4_pack_end,      //this
-    &i_lvl0,                  //top
-    0,      //right
-    0,                  //bot
-    &i_lvl5,                  //left
-    rb_room,
-    0,
-    {
-        {e_c_sonic, 72, 152, 0},
-        {0, 0, 0},
-        {0, 0, 0},
-        {0, 0, 0},
-        {0, 0, 0}
-    }
-};
-const lvl_t i_lvl5 = {
-    5,                  //id
-    lvl5_pack_end,      //this
-    &i_lvl0,                  //top
-    &i_lvl4,      //right
-    0,                  //bot
-    &i_lvl3,                  //left
+const lvl_t i_lvl0_2 = {
+    1,                          //id
+    lvl0_2_pack_end,            //this
+    &i_lvl0,                    //top
+    0,                          //right
+    0,                          //bot
+    &i_bot_left_1,              //left
     normal_room,
     0,
     {
-        {e_c_shoot, 72, 64, 0},
+        {0, 0, 0},
+        {0, 0, 0},
+        {0, 0, 0},
+        {0, 0, 0},
+        {0, 0, 0}
+    }
+};
+const lvl_t i_bot_left_1 = {
+    2,                          //id
+    bot_left_1_pack_end,         //this
+    0,                          //top
+    &i_lvl0_2,                  //right
+    0,              //bot
+    0,                          //left
+    normal_room,
+    0,
+    {
+        {e_c_zombi, 20, 184},
         {0, 0, 0},
         {0, 0, 0},
         {0, 0, 0},
@@ -125,7 +77,7 @@ const lvl_t i_lvl5 = {
 };
 
 const lvl_t i_boss1 = {
-    6,                  //id
+    33,                  //id
     boss1_pack_end,      //this
     0,                  //top
     0,      //right
@@ -142,7 +94,7 @@ const lvl_t i_boss1 = {
     }
 };
 
-u8 cleared_rooms[8];
+u8 cleared_rooms[35];
 lvl_t level;
 u8 tilemap_start[tilemap_size];
 #define tilemap_end  (tilemap_start + tilemap_size - 1)
@@ -203,9 +155,10 @@ void final_room(){
         }
     }
 }
-void boss_room(){
 
+void boss_room(){
 }
+
 void normal_room(){     
 }
 

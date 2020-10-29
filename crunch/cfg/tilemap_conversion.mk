@@ -41,11 +41,16 @@
 $(eval $(call TMX2DATA, SET_OUTPUTS     , h bin       ))
 $(eval $(call TMX2DATA, SET_FOLDER      , src/tilemaps      ))
 $(eval $(call TMX2DATA, CONVERT, assets/lvl0.tmx, lvl0 )) 
-$(eval $(call TMX2DATA, CONVERT, assets/lvl1.tmx, lvl1 )) 
-$(eval $(call TMX2DATA, CONVERT, assets/lvl2.tmx, lvl2 )) 
-$(eval $(call TMX2DATA, CONVERT, assets/lvl3.tmx, lvl3 )) 
-$(eval $(call TMX2DATA, CONVERT, assets/lvl4.tmx, lvl4 )) 
-$(eval $(call TMX2DATA, CONVERT, assets/lvl5.tmx, lvl5 )) 
+$(eval $(call TMX2DATA, CONVERT, assets/lvl0_2.tmx, lvl0_2 )) 
+
+$(eval $(call TMX2DATA, CONVERT, assets/bot_left_1.tmx, bot_left_1 )) 
+$(eval $(call TMX2DATA, CONVERT, assets/bot_left_2.tmx, bot_left_2 )) 
+$(eval $(call TMX2DATA, CONVERT, assets/bot_left_3.tmx, bot_left_3 )) 
+$(eval $(call TMX2DATA, CONVERT, assets/bot_left_4.tmx, bot_left_4 )) 
+$(eval $(call TMX2DATA, CONVERT, assets/bot_left_5.tmx, bot_left_5 )) 
+$(eval $(call TMX2DATA, CONVERT, assets/bot_left_6.tmx, bot_left_6 )) 
+$(eval $(call TMX2DATA, CONVERT, assets/bot_left_extra.tmx, bot_left_extra )) 
+
 
 $(eval $(call TMX2DATA, CONVERT, assets/boss1.tmx, boss1 ))
 
