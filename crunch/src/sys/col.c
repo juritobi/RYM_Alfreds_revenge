@@ -14,141 +14,109 @@ const i8 knocknackY[] = { -8, -8, -8, 0, 0, 8 ,8, 8};
 #define spikes 0x0c
 
 
-u16 get_tile_pointer(u8 x, u8 y){
+u16 get_tp_x(u8 x, u8 y){
     return y * tilemap_W + x;
 }
-
-u8 get_tile_type(u8 width, u8 height, u16 tile_pointer){
-
+u16 get_tp_y(u8 y, u8 x){
+    return y * tilemap_W + x;
+}
+u8 get_tile_type(u8 l, u8 st, u8 var, u16(*get_tile_pointer)(u8 first, u8 second)){
     u8 actual = 0x0F;
     u8 most_relevant = 0x0F;
-
-    while(width){
-        --width;
-        actual = tilemap_start[tile_pointer+width] ;
+    while(l){
+        --l;
+        actual = tilemap_start[get_tile_pointer(st, var+l)];
         if(actual < most_relevant){
             most_relevant = actual;
         }
     }
-
-    while(height){
-        --height;
-        actual = tilemap_start[tile_pointer+height*tilemap_W ];
-        if(actual < most_relevant){
-            most_relevant = actual;
-        }
-    }
-
     return most_relevant;
 }
-void sys_col_x_actions(ent_t* e, u8 tile_type, u8 tile_x_r){
-    if(      tile_type < solid) e->vx = tile_x_r;
+
+void sys_col_x_actions(ent_t* e, u8 tile_type, i8 remaining_movement){
+    if(      tile_type < solid) e->vx = remaining_movement;
     else if( tile_type < half ){}
     else if( tile_type < spikes){
-        e->vx = tile_x_r;
+        e->vx = remaining_movement;
         man_ent_hit(e,1);
     }
 }
-void sys_col_y_actions(ent_t* e, u8 tile_type, u8 tile_y_r){
+void sys_col_y_actions(ent_t* e, u8 tile_type, i8 remaining_movement){
     if(tile_type < solid){
         if(e->vy>0){
             e->on_ground = 1;
         }
-        e->vy = 0;
+        e->vy = remaining_movement;
     }
     else if(tile_type < half){
-        if(!e->on_ground){
+        if(e->on_ground){
             e->on_ground = 1;
-            e->vy = 0;
+            e->vy = remaining_movement;
         }
     }
     else if(tile_type < spikes){
         if(e->vy>0){
             e->on_ground = 1;
         }
-        e->vy = 0;
+        e->vy = remaining_movement;
         man_ent_hit(e, 1);
     }
 }
 
+u8 sys_col_get_next_tile(u8* p, u8 l, u8 r, i8* v){//returns next tile
+    u8 to_collide = r;
+    if(*v>0){
+        *p = *p + l;
+        if(r){
+            ++*p;
+        }
+        *v = -*v;
+    }
+    else if(*v<0){
+        *p = *p -1;
+        to_collide = -to_collide;
+    }
+    return to_collide;
+}
 
 void sys_col_one(ent_t* e){
-    u8 tile_x = e->tile_x;
-    u8 tile_y = e->tile_y;
-    u8 tile_x_r = e->tile_x_r;
-    u8 tile_y_r = e->tile_y_r;
-    u8 tile_w = e->tile_w;
-    u8 tile_h = e->tile_h;
-    
-    u8 right_tile;
-    u8 left_tile;
-    u8 bot_tile;
-    u8 top_tile; 
-    u16 tile_pointer;
+    u8 x = e->tile_x;//moded
+    u8 y = e->tile_y;
+    u8 rx = e->tile_x_r;
+    u8 ry = e->tile_y_r;
+    u8 w = e->tile_w;
+    u8 h = e->tile_h;//modded
+    i8 vx = e->vx;//modded
+    i8 vy = e->vy;
 
-    u8 changed_x = 0;
-    u8 changed_y = 0;
+    i8 to_collide = 0;
+    u8 tile_type = 0;
 
-    right_tile = tile_x + tile_w;
-    if(tile_x_r) ++right_tile;
-    left_tile = tile_x - 1;
-
-    bot_tile = tile_y + tile_h;
-    if(tile_y_r) ++bot_tile;
-    top_tile = tile_y - 1; 
-
-    if(e->vx){
-        u8 height = tile_h;
-        u8 tile_type;
-        if(tile_y_r){
-            ++height;
-        }
-
-        if(e->vx > 0){
-            if( (tile_x_r - e->vx) < 0){
-                tile_pointer = get_tile_pointer(right_tile, tile_y);
-                tile_type = get_tile_type(0, height, tile_pointer);
-                changed_x = 1;
-                sys_col_x_actions(e, tile_type, tile_x_r);
-            }
-        }
-        else{
-            if( (tile_x_r + e->vx) < 0){
-                tile_pointer = get_tile_pointer(left_tile, tile_y);
-                tile_type = get_tile_type(0, height, tile_pointer);
-                changed_x = 1;
-                sys_col_x_actions(e,tile_type, -tile_x_r);
-            }
+    if(vx){
+        to_collide = sys_col_get_next_tile(&x, w, rx, &vx);
+        if(ry) ++h;
+        if(rx + vx < 0){
+            tile_type = get_tile_type(h, x, y, get_tp_x);
+            sys_col_x_actions(e, tile_type, to_collide);
         }
     }
-    if(e->vy){
-        u8 hit_taken=0;
-        u8 width = tile_w;
-        u8 tile_type;
-        if(tile_x_r){
-            ++width;
-        }
 
-        if(e->vy>0){
-            if( (tile_y_r - e->vy) < 0){
-                tile_pointer = get_tile_pointer(tile_x, bot_tile);
-                tile_type = get_tile_type(width, 0, tile_pointer);
-                changed_y = 1;
-                sys_col_y_actions(e,tile_type, tile_pointer);
-            }
-        }
-        else{
-            if( (tile_y_r + e->vy) < 0){
-                tile_pointer = get_tile_pointer(tile_x, top_tile);
-                tile_type = get_tile_type(width, 0, tile_pointer);
-                changed_y = 1;
-                sys_col_y_actions(e,tile_type, tile_pointer);
-            }
+    x = e->tile_x;//moded
+    h = e->tile_h;//modded
+    to_collide = 0;
+    if(vy){
+        to_collide = sys_col_get_next_tile(&y, h, ry, &vy);
+        if(rx) ++w;
+        if(ry + vy < 0){
+            tile_type = get_tile_type(w, y, x, get_tp_y);
+            sys_col_y_actions(e, tile_type, to_collide);
         }
     }
 
 
-    if(e->vx && e->vy){
+
+   
+   /* if(e->vx && e->vy){
         if(changed_x && changed_y){
             u8 x_wins = 0;
             u8 tile_type;
@@ -183,7 +151,7 @@ void sys_col_one(ent_t* e){
                 }
             }
         }
-    }
+    }*/
 }
 
 void sys_col_ally_enemy(ent_t* ally, ent_t* enemy){
