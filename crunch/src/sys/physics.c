@@ -10,13 +10,12 @@
 
 void sys_phy_one(ent_t* e){
 
-    u8* tilemap = man_level_get_tilemap();
-    u8 tile_x = e->x/x_div;
-    u8 tile_y = e->y/y_div - 3;// -3 para por que el hud son 3 tiles
-    u8 tile_w = e->w/x_div;
-    u8 tile_h = e->h/y_div;
-    u8 not_exact_tile_x = e->x%x_div;
-    u8 not_exact_tile_y = e->y%y_div;
+    u8 tile_x = e->tile_x;
+    u8 tile_y = e->tile_y;
+    u8 tile_x_r = e->tile_x_r;
+    u8 tile_y_r = e->tile_y_r;
+    u8 tile_w = e->tile_w;
+    u8 tile_h = e->tile_h;
 
     u8 right_tile;
     u8 bot_tile;
@@ -45,7 +44,7 @@ void sys_phy_one(ent_t* e){
         u8 byte_tile_y;
 
         if(e->vx<0){
-            if(not_exact_tile_x){
+            if(tile_x_r){
                 tile_pointer = tile_y * tilemap_W + right_tile;
                 byte_tile_x = right_tile;
             }
@@ -59,7 +58,7 @@ void sys_phy_one(ent_t* e){
             byte_tile_x = tile_x;
         }
 
-        if( not_exact_tile_y){
+        if(tile_y_r){
             ++y_tile_num;
         }
 
@@ -67,7 +66,7 @@ void sys_phy_one(ent_t* e){
         while(y_tile_num){
             --y_tile_num;
             byte_tile_y = (tile_y + 3 + y_tile_num)*y_div;
-            sys_ren_set_tile( tilemap[tile_pointer+y_tile_num*tilemap_W], byte_tile_x, byte_tile_y);
+            sys_ren_set_tile( tilemap_start[tile_pointer+y_tile_num*tilemap_W], byte_tile_x, byte_tile_y);
         }
     }
     //redibujado de tiles
@@ -77,7 +76,7 @@ void sys_phy_one(ent_t* e){
         u8 byte_tile_y;
         
         if(e->vy<0){
-            if(not_exact_tile_y){
+            if(tile_y_r){
                 tile_pointer =  bot_tile * tilemap_W + tile_x;
                 byte_tile_y = bot_tile;
             }
@@ -91,14 +90,14 @@ void sys_phy_one(ent_t* e){
             byte_tile_y = tile_y;
         }
 
-        if( not_exact_tile_x){
+        if(tile_x_r){
             ++x_tile_num;
         }
         byte_tile_y = (byte_tile_y + 3) * y_div;
         while(x_tile_num){
             --x_tile_num;
             byte_tile_x = (tile_x + x_tile_num)*x_div;
-            sys_ren_set_tile( tilemap[tile_pointer+x_tile_num], byte_tile_x, byte_tile_y);
+            sys_ren_set_tile( tilemap_start[tile_pointer+x_tile_num], byte_tile_x, byte_tile_y);
         }
     }
 

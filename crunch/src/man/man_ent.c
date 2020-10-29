@@ -33,8 +33,10 @@ const ent_t init_player = {
    //generic
    e_t_physics | e_t_render | e_t_input | e_t_col |e_t_anim,             //u8 type;
    0,0,                                                        //u8 x, y;
-   0,0,                                                        //u8 prevx, prevy;
+   0,0,                                                        //u8 tile_x, tile_y;
+   0,0,                                                        //u8 tile_x_r, tile_y_r;
    4,24,                                                       //u8 w, h;
+   1,3,                                                         //u8 tile_w, tile_h;
    0,0,                                                        //i8 vx, vy;
    dir_right,                                                      //u8 move_dir;
    man_ent_char_death,                                         //Ptrf_v_ep death;
@@ -71,8 +73,10 @@ const ent_t init_sword = {
    //generic
    e_t_dead|e_t_render|e_t_anim,                                        //u8 type;
    0,0,                                                        //u8 x, y;
-   0,0,                                                        //u8 prevx, prevy;
+   0,0,                                                        //u8 tile_x, tile_y;
+   0,0,                                                        //u8 tile_x_r, tile_y_r;
    4,24,                                                       //u8 w, h;
+   1,3,                                                         //u8 tile_w, tile_h;
    0,0,                                                        //i8 vx, vy;
    dir_right,                                                      //u8 move_dir;
    man_ent_generic_death,                                       //Ptrf_v_ep death;
@@ -109,8 +113,10 @@ const ent_t init_knife = {
    //generic
    e_t_dead | e_t_render | e_t_physics | e_t_col|e_t_anim,               //u8 type;
    0,0,                                                        //u8 x, y;
-   0,0,                                                        //u8 prevx, prevy;
+   0,0,                                                        //u8 tile_x, tile_y;
+   0,0,                                                        //u8 tile_x_r, tile_y_r;
    4,8,                                                        //u8 w, h;
+   1,1,                                                         //u8 tile_w, tile_h;
    1,0,                                                        //i8 vx, vy;
    dir_right,                                                      //u8 move_dir;
    man_ent_generic_death,                                       //Ptrf_v_ep death;
@@ -153,8 +159,10 @@ const ent_t init_shoot = {
    //generic
    e_t_AI | e_t_render |e_t_anim,                                         //u8 type;
    0,0,                                                        //u8 x, y;
-   0,0,                                                        //u8 prevx, prevy;
+   0,0,                                                        //u8 tile_x, tile_y;
+   0,0,                                                        //u8 tile_x_r, tile_y_r;
    4,16,                                                       //u8 w, h;
+   1,2,                                                         //u8 tile_w, tile_h;
    0,0,                                                        //i8 vx, vy;
    dir_left,                                                      //u8 move_dir;
    man_ent_generic_death,                                       //Ptrf_v_ep death;
@@ -189,8 +197,10 @@ const ent_t init_shoot_son = {
    //generic
    e_t_dead | e_t_physics | e_t_render | e_t_col ,              //u8 type;
    0,0,                                                        //u8 x, y;
-   0,0,                                                        //u8 prevx, prevy;
+   0,0,                                                        //u8 tile_x, tile_y;
+   0,0,                                                        //u8 tile_x_r, tile_y_r;
    4,8,                                                        //u8 w, h;
+   1,1,                                                         //u8 tile_w, tile_h;
    -1,0,                                                       //i8 vx, vy;
    dir_left,                                                      //u8 move_dir;
    man_ent_generic_death,                                      //Ptrf_v_ep death;
@@ -218,7 +228,7 @@ const ent_t init_shoot_son = {
    //physics
    //render
    spr_p_0,                                                    //u8* sprite;                   
-   0                                                           //u8* memory_pos;                
+   0x0000                                                           //u8* memory_pos;                
 };
 //------------------------------------------------------------------
 //ZOMBI/////////////////////////////////////////////////////////////
@@ -228,8 +238,10 @@ const ent_t init_zombi = {
    //generic
    e_t_render | e_t_AI | e_t_col | e_t_physics |e_t_anim,                //u8 type;
    0,0,                                                        //u8 x, y;
-   0,0,                                                        //u8 prevx, prevy;
+   0,0,                                                        //u8 tile_x, tile_y;
+   0,0,                                                        //u8 tile_x_r, tile_y_r;
    4,16,                                                       //u8 w, h;
+   1,2,                                                         //u8 tile_w, tile_h;
    0,0,                                                        //i8 vx, vy;
    dir_left,                                                      //u8 move_dir;
    man_ent_generic_death,                                       //Ptrf_v_ep death;
@@ -267,8 +279,10 @@ const ent_t init_ghost = {
    //generic
    e_t_render | e_t_AI | e_t_physics |e_t_anim,                //u8 type;
    0,0,                                                        //u8 x, y;
-   0,0,                                                        //u8 prevx, prevy;
+   0,0,                                                        //u8 tile_x, tile_y;
+   0,0,                                                        //u8 tile_x_r, tile_y_r;
    4,16,                                                       //u8 w, h;
+   1,2,                                                         //u8 tile_w, tile_h;
    0,0,                                                        //i8 vx, vy;
    dir_left,                                                      //u8 move_dir;
    man_ent_generic_death,                                       //Ptrf_v_ep death;
@@ -306,8 +320,10 @@ const ent_t init_sonic = {
    //generic
    e_t_render | e_t_AI | e_t_col | e_t_physics|e_t_anim,                //u8 type;
    0,0,                                                        //u8 x, y;
-   0,0,                                                        //u8 prevx, prevy;
+   0,0,                                                        //u8 tile_x, tile_y;
+   0,0,                                                        //u8 tile_x_r, tile_y_r;
    4,16,                                                       //u8 w, h;
+   1,2,                                                         //u8 tile_w, tile_h;
    0,0,                                                        //i8 vx, vy;
    dir_left,                                                      //u8 move_dir;
    man_ent_generic_death,                                       //Ptrf_v_ep death;
@@ -349,8 +365,10 @@ const ent_t init_powerUp = {
    //generic
    e_t_render,                                                 //u8 type;
    0,0,                                                        //u8 x, y;
-   0,0,                                                        //u8 prevx, prevy;
+   0,0,                                                        //u8 tile_x, tile_y;
+   0,0,                                                        //u8 tile_x_r, tile_y_r;
    4,8,                                                        //u8 w, h;
+   1,1,                                                         //u8 tile_w, tile_h;
    0,0,                                                        //i8 vx, vy;
    dir_right,                                                  //u8 move_dir;
    man_ent_generic_death,                                      //Ptrf_v_ep death;
@@ -381,15 +399,15 @@ const ent_t init_powerUp = {
    0                                                           //u8* memory_pos;               
 };
 
-/*Poder arriba como Espanya---------------------------------*/
-
 /*HERE COMES THE BOSS*/
 const ent_t init_boss = {
    //generic
    e_t_physics | e_t_render | e_t_AI | e_t_anim,             //u8 type;
    0,0,                                                        //u8 x, y;
-   0,0,                                                        //u8 prevx, prevy;
+   0,0,                                                        //u8 tile_x, tile_y;
+   0,0,                                                        //u8 tile_x_r, tile_y_r;
    12,40,                                                       //u8 w, h;
+   3,5,                                                         //u8 tile_w, tile_h;
    0,0,                                                        //i8 vx, vy;
    dir_right,                                                      //u8 move_dir;
    man_ent_boss_death,
@@ -423,8 +441,10 @@ const ent_t init_boss_hor = {
    //generic
    e_t_render | e_t_dead,                                                 //u8 type;
    0,0,                                                        //u8 x, y;
-   0,0,                                                        //u8 prevx, prevy;
+   0,0,                                                        //u8 tile_x, tile_y;
+   0,0,                                                        //u8 tile_x_r, tile_y_r;
    28,8,                                                       //u8 w, h;
+   7,1,                                                         //u8 tile_w, tile_h;
    0,0,                                                        //i8 vx, vy;
    dir_right,                                                      //u8 move_dir;
    man_ent_generic_death,                                         //Ptrf_v_ep death;
@@ -458,8 +478,10 @@ const ent_t init_boss_diag = {
    //generic
    e_t_render | e_t_dead |e_t_physics,                                                 //u8 type;
    0,0,                                                        //u8 x, y;
-   0,0,                                                        //u8 prevx, prevy;
+   0,0,                                                        //u8 tile_x, tile_y;
+   0,0,                                                        //u8 tile_x_r, tile_y_r;
    4,8,                                                       //u8 w, h;
+   1,1,                                                         //u8 tile_w, tile_h;
    0,0,                                                        //i8 vx, vy;
    dir_right,                                                      //u8 move_dir;
    man_ent_generic_death,                                         //Ptrf_v_ep death;
@@ -493,8 +515,10 @@ const ent_t init_boss_pilar = {
    //generic
    e_t_render | e_t_dead,                                                 //u8 type;
    0,0,                                                        //u8 x, y;
-   0,0,                                                        //u8 prevx, prevy;
-   8,136,                                                       //u8 w, h; 136
+   0,0,                                                        //u8 tile_x, tile_y;
+   0,0,                                                        //u8 tile_x_r, tile_y_r;
+   8,136,                                                       //u8 w, h;
+   2,17,                                                         //u8 tile_w, tile_h;
    0,0,                                                        //i8 vx, vy;
    dir_right,                                                      //u8 move_dir;
    man_ent_generic_death,                                         //Ptrf_v_ep death;
@@ -627,7 +651,6 @@ void man_ent_max_mana(ent_t* ent){
 }
 
 void man_ent_max_melee(ent_t* sword){
-
    sword->damage++;
 }
 
@@ -640,21 +663,20 @@ void man_ent_max_range(ent_t* knife){
 void man_ent_generic_death(ent_t* dead_ent){
 
    if(!(dead_ent->type & e_t_dead)){
-      u8* tilemap = man_level_get_tilemap();
-      u8 tile_x = dead_ent->x/4;
-      u8 tile_y = dead_ent->y/8 - 3;// -3 para por que el hud son 3 tiles
-      u8 tile_w = dead_ent->w/4;
-      u8 tile_h = dead_ent->h/8;
-      u8 not_exact_tile_x = dead_ent->x%4;
-      u8 not_exact_tile_y = dead_ent->y%8;
+      u8 tile_x =    dead_ent->tile_x;
+      u8 tile_y =    dead_ent->tile_y;
+      u8 tile_x_r =  dead_ent->tile_x_r;
+      u8 tile_y_r =  dead_ent->tile_y_r;
+      u8 tile_w =    dead_ent->tile_w;
+      u8 tile_h =    dead_ent->tile_h;
 
       u16 tile_pointer = tile_y * tilemap_W + tile_x;
       u8 byte_tile_x;
       u8 byte_tile_y;
 
       dead_ent->type |= e_t_dead;
-      if( not_exact_tile_y) ++tile_h;
-      if( not_exact_tile_x) ++tile_w;
+      if( tile_y_r) ++tile_h;
+      if( tile_x_r) ++tile_w;
       while(tile_w){
          u8 h = tile_h;
          tile_w--;
@@ -662,7 +684,7 @@ void man_ent_generic_death(ent_t* dead_ent){
          while(h){
             h--;
             byte_tile_y = (tile_y +3 + h)*8;
-            sys_ren_set_tile( tilemap[tile_pointer + h*tilemap_W + tile_w], byte_tile_x, byte_tile_y);
+            sys_ren_set_tile( tilemap_start[tile_pointer + h*tilemap_W + tile_w], byte_tile_x, byte_tile_y);
          }
          h= tile_h;
       }
@@ -675,8 +697,11 @@ void man_ent_generic_death(ent_t* dead_ent){
 }
 
 void man_ent_update(ent_t* e){
-   e->prevx = e->x;
-   e->prevy = e->y;
+   e->tile_x = e->x/4;
+   e->tile_x_r = e->x%4;
+   e->tile_y = e->y/8 -3;
+   e->tile_y_r = e->y%8;
+
    if(e->invulnerable > 0){
       e->invulnerable--;
    }

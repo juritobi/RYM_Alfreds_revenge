@@ -44,8 +44,10 @@ typedef struct et{
    //generic
    u8 type;
    u8 x, y;
-   u8 prevx, prevy;
+   u8 tile_x, tile_y;
+   u8 tile_x_r, tile_y_r;
    u8 w, h;
+   u8 tile_w, tile_h;
    i8 vx, vy;
    u8 move_dir;
    Ptrf_v_ep death;

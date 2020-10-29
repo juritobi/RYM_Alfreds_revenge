@@ -2,14 +2,7 @@
 
 #define rate_of_fire 100
 #define move_rate 5
-u8 shoot_timer;
-u8 move_counter;
 
-
-/*const attack_t move = {
-    20,
-    att_move
-};*/
 const attack_t horizontal = {
     30,
     att_hor
@@ -345,8 +338,6 @@ void sys_AI_one(ent_t* e){
 }
 
 void sys_AI_init(){
-    shoot_timer=rate_of_fire;
-    move_counter = 0;
 
     boss_inter_attack_time = 100;
     boss_attack_timer = 0;

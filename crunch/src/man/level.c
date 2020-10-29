@@ -2,7 +2,6 @@
 #include <man/man_ent.h>
 #include <sys/render.h>
 #include <man/app.h>
-#include <constants.h>
 
 u8 final_door_open;
 
@@ -307,10 +306,6 @@ void man_level_kill_enemy(){
         level.cleared_func();
         man_level_add_mp_end_lvl();
     }
-}
-
-u8* man_level_get_tilemap(){
-    return tilemap_start;
 }
 u8 man_level_get_door(){
     return final_door_open;
