@@ -7,13 +7,17 @@
 #include <sys/anim.h>
 #include <sprites/char.h>
 #include <sprites/sword.h>
+#include <sprites/proyectile.h>
 #include <sprites/shooter.h>
 #include <sprites/zombi.h>
-#include <sprites/boss.h>
 #include <sprites/ghost.h>
 #include <sprites/dasher.h>
-#include <sprites/proyectile.h>
-#include <sprites/sword.h>
+#include <sprites/boss.h>
+#include <sprites/hor.h>
+#include <sprites/rain.h>
+#include <sprites/pilar.h>
+
+
 /*character-----------------------------------------------------*/
 //LOS VALORES DE PREV_VX Y PREV_VY DE LA IA, EN EL PLAYER SIGNIFICAN LA CANTIDAD DE VIDA MAXIMA QUE TIENE Y LA CANTIDAD DE MANA MAXIMO QUE TIENE
 const ent_t init_player = {
@@ -422,7 +426,7 @@ const ent_t init_boss_hor = {
    col_t_enemy_breaker,                                                 //u8 col_type;                  
    //physics
    //render
-   spr_boss_0,                                                 //u8* sprite;                   
+   spr_hor,                                                    //u8* sprite;                   
    0                                                          //u8* memory_pos;               
 };
 const ent_t init_boss_diag = {
@@ -457,7 +461,7 @@ const ent_t init_boss_diag = {
    col_t_enemy_breaker,                                                 //u8 col_type;                  
    //physics
    //render
-   spr_boss_0,                                                 //u8* sprite;                   
+   spr_rain,                                                 //u8* sprite;                   
    0                                                          //u8* memory_pos;               
 };
 const ent_t init_boss_pilar = {
@@ -492,7 +496,7 @@ const ent_t init_boss_pilar = {
    col_t_enemy_breaker,                                                 //u8 col_type;                  
    //physics
    //render
-   spr_boss_0,                                                 //u8* sprite;                   
+   spr_pilar,                                                 //u8* sprite;                   
    0                                                          //u8* memory_pos;               
 };
 /*HERE COMES THE BOSS*/

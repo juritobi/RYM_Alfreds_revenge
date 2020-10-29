@@ -67,6 +67,9 @@ void sys_col_y_actions(ent_t* e, u8 tile_type, u16 tile_pointer){
         }
     }
     else if(tile_type < spikes){
+        if(e->vy>0){
+            e->on_ground = 1;
+        }
         e->vy = 0;
         man_ent_hit(e, 1);
     }

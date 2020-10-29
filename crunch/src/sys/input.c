@@ -28,14 +28,14 @@ void sys_input_one(ent_t* ent){
     ent->vx = 0;
     ent->vy = 8;
     // MONYECO
-    if(cpct_isKeyPressed(Key_D)){
+    if(cpct_isKeyPressed(*right)){
         ent->vx = 2;
         ent->action |= 0x01;
         if(!swordUp){
             ent->move_dir = dir_right;
         }
     }
-    else if(cpct_isKeyPressed(Key_A)){
+    else if(cpct_isKeyPressed(*left)){
         ent->vx = -2;
         ent->action |= 0x01;
         if(!swordUp){
@@ -44,11 +44,11 @@ void sys_input_one(ent_t* ent){
     }
 
     //SALTO Y SUS MIERDAS
-    if(cpct_isKeyPressed(Key_W) && ent->on_ground && ent->jumping == -1 && jumpCont == jumpCD){
+    if(cpct_isKeyPressed(*up) && ent->on_ground && ent->jumping == -1 && jumpCont == jumpCD){
         ent->jumping = 0;
     }
     ent->on_ground = 0;
-    if(cpct_isKeyPressed(Key_S)){
+    if(cpct_isKeyPressed(*down)){
         ent->on_ground=2;
     }
 
@@ -71,7 +71,7 @@ void sys_input_one(ent_t* ent){
     }
     // PROYECTIL
 
-    if(cpct_isKeyPressed(Key_P) && PiumPiumCont == PiumPiumCD && ent->mp > 0){
+    if(cpct_isKeyPressed(*fire2) && PiumPiumCont == PiumPiumCD && ent->mp > 0){
         man_ent_resurrect(ent, 2);
         PiumPiumCont = 0;
         ent->mp = ent->mp -1;
@@ -84,7 +84,7 @@ void sys_input_one(ent_t* ent){
     }
     
     // ESPADA
-    if(cpct_isKeyPressed(Key_O) && !swordUp && !swordCooling){
+    if(cpct_isKeyPressed(*fire1) && !swordUp && !swordCooling){
         swordUp = swordDuration;
     }
     if(swordCooling){

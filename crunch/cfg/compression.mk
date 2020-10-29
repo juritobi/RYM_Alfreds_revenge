@@ -69,6 +69,12 @@ $(eval $(call PACKZX7B,boss1_pack,src/tilemaps))
 
 
 
+$(eval $(call ADD2PACK,main_screen_pack, src/sprites/main.bin))
+$(eval $(call PACKZX7B,main_screen_pack,src/tilemaps))
+
+
+
+
 ############################################################################
 ##              DETAILED INSTRUCTIONS AND PARAMETERS                      ##
 ##------------------------------------------------------------------------##
