@@ -68,7 +68,7 @@ const lvl_t i_bot_left_1 = {
     normal_room,
     0,
     {
-        {e_c_zombi, 20, 184},
+        {e_c_zombi, 24, 176},
         {0, 0, 0},
         {0, 0, 0},
         {0, 0, 0},
