@@ -113,5 +113,4 @@ void man_ent_char_death(ent_t* dead_ent);
 void man_ent_generic_death(ent_t* dead_ent);
 void man_ent_boss_death(ent_t* dead_ent);
 
-
-ent_t* man_ent_get_char();
+extern ent_t *const player;

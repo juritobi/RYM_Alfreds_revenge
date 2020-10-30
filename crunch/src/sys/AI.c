@@ -55,20 +55,20 @@ void sys_AI_zombi(ent_t* e){
 
 void sys_AI_ghost(ent_t* e){
     
-    if(e->x < man_ent_get_char()->x){
+    if(e->x < player->x){
         e->prev_vx = 1;
     }
-    else if (e->x > man_ent_get_char()->x){
+    else if (e->x > player->x){
         e->prev_vx = -1;
     }
     else{
         e->prev_vx = 0;
     }
 
-    if(e->y < man_ent_get_char()->y){
+    if(e->y < player->y){
         e->prev_vy = 4;
     }
-    else if (e->y > man_ent_get_char()->y){
+    else if (e->y > player->y){
         e->prev_vy = -4;
     }
     else{
@@ -116,7 +116,6 @@ void sys_AI_sonic(ent_t* e){
 void sys_AI_boss(ent_t* e){
 
     if(!boss_timer){
-        ent_t* player = man_ent_get_char();
         u8 rand = cpct_getRandom_lcg_u8(player->x);
         rand = rand%4;
         if(rand==boss_attack_index){
@@ -195,7 +194,6 @@ void att_none(ent_t* e){
 }
 
 void att_hor(ent_t* e){
-    ent_t* player = man_ent_get_char();
 
     /*if(boss_attack_timer==attack->total_time){// si no le voy a dar cambio de ataque
         if(player->y+player->h <= e->y  ||  player->y >= e->y+e->h){
@@ -252,7 +250,6 @@ void att_hor(ent_t* e){
 }
 
 void att_rain(ent_t* e){
-    ent_t* player = man_ent_get_char();
 
     if(boss_attack_timer==attack->total_time-1){//set entities to hit
         u8 i = 6;
@@ -312,7 +309,6 @@ void att_rain(ent_t* e){
 }
 
 void att_pilar(ent_t* e){
-    ent_t* player = man_ent_get_char();
 
     if(boss_attack_timer==attack->total_time-1){//set entities to hit
         (e + 3 + 6 + 1)->originalx = player->x - 4;  

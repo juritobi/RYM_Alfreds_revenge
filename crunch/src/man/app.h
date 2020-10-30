@@ -13,6 +13,8 @@ typedef struct player{
    u8 hp, mp, ap, ad;   
 };
 
+void app_draw_string(u8 x, u8 y, void* string);
+
 void man_app_init(); 
 void man_app_update();
 

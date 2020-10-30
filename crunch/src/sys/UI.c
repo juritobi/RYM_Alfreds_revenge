@@ -2,16 +2,16 @@
 #include <man/man_ent.h>
 #include <sprites/UI.h>
 #include <sprites/numbers.h>
+#include <man/app.h>
 
 u16 score;
-ent_t* player; 
+u8 down_score_timer;
 u8 prev_max_hp;
 u8 prev_max_mana;
 u8 prev_hp;
 u8 prev_mp;
 u8 ad;
 u8 ap;
-u8 down_score_timer;
 
 const u8* numbers[10];
 
@@ -20,23 +20,20 @@ void draw_sprite(const u8* sprite, u8 x, u8 y){
     cpct_drawSprite (sprite, pos, 2, 8);
 }
 
-void sys_UI_hp_mp_bars(u8 w, u8 h, u8* sprite_line, u8 num){
-    u8 looper;
-    u8 index;
+void sys_UI_hp_mp_bars(u8 x, u8 y, u8* sprite_line, u8 num){
 
-    draw_sprite(sprite_line, w, h);
-    looper=num;
-    index = w+2;
-    while(looper){
-        draw_sprite(sprite_line +SPR_UI_00_W*SPR_UI_00_H, index, h);
-        --looper;
-        index +=2;
+    draw_sprite(sprite_line,x, y);
+    x += 2;
+    while(num){
+        draw_sprite(sprite_line +SPR_UI_00_W*SPR_UI_00_H, x, y);
+        --num;
+        x +=2;
     }
-    draw_sprite(sprite_line+SPR_UI_00_W*SPR_UI_00_H*3, index, h);
+    draw_sprite(sprite_line+SPR_UI_00_W*SPR_UI_00_H*3, x, y);
 }
-void sys_UI_draw_damage(u8 w, u8 h, u8* sprite, u8 num){
-    draw_sprite(sprite, w, h);
-    draw_sprite(numbers[num], w+4, h);
+void sys_UI_draw_damage(u8 x, u8 y, u8* sprite, u8 num){
+    draw_sprite(sprite, x, y);
+    draw_sprite(numbers[num], x+4, y);
 }
 void draw_score(){
     u8 index = 75;
@@ -63,15 +60,12 @@ void sys_UI_pre_init(){
 }
 
 void sys_UI_init(){
-    u8* pos;
-
-    score = 60000;
-    player = man_ent_get_char();
+    score = 0;
+    down_score_timer= 0xFF;
     prev_max_hp = prev_hp = player->hp;
     prev_max_mana = prev_mp = player->mp;
     ad = (player+1)->damage;
     ap = (player+2)->damage;
-    down_score_timer= 0xFF;
     
     //background
     cpct_drawSolidBox (CPCT_VMEM_START, 0xF0, 40, 24);
@@ -86,9 +80,9 @@ void sys_UI_init(){
     sys_UI_draw_damage(40, 13, spr_UI_09, ap);
 
     //score
-    pos = cpct_getScreenPtr (CPCT_VMEM_START,67, 3);
     cpct_waitHalts(1);
-    cpct_drawStringM1 ("score", pos);
+    app_draw_string(67,3,"score");
+    draw_sprite(numbers[0], 75, 13);
     draw_score();
 }
 
@@ -133,7 +127,7 @@ void sys_UI_update(){
 
     --down_score_timer;
     if(!down_score_timer){
-        score--;
+        if(score) --score;
         draw_score();
     }
 

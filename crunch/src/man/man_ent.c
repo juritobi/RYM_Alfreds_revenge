@@ -4,6 +4,7 @@
 #include <man/level.h>
 #include <sys/render.h>
 #include <sys/AI.h>
+#include <sys/UI.h>
 #include <sys/anim.h>
 #include <sprites/char.h>
 #include <sprites/sword.h>
@@ -553,6 +554,7 @@ const ent_t init_boss_pilar = {
 ent_t ents[20];
 u8 invalid_at_end_of_ents;
 ent_t*  next_free_ent;
+ent_t *const player = ents;
 
 void man_ent_init(){
    next_free_ent = ents;
@@ -575,7 +577,7 @@ ent_t* man_ent_create(){
 //luego las crea en bucle y cambia la posicion de la entidad principal que sera siempre la primera de las 3
 void man_ent_create_class(u8 type, u8 x, u8 y, u8 PupType){
    u8 class_ents = (type & 0b11000000);
-   const ent_t* class_init = &init_player;//contents of class init should NEVER be modified
+   const ent_t* class_init = &init_player;
    class_init += (type & 0b00111111);
    class_ents = class_ents >> 6;
    if (!class_ents){
@@ -690,8 +692,9 @@ void man_ent_generic_death(ent_t* dead_ent){
          h= tile_h;
       }
       if(dead_ent->col_type == col_t_enemy){
-         if(man_ent_get_char()->mp < 5){
-            man_ent_get_char()->mp++;
+         if(player->prev_vy < 5){
+            player->mp++;
+            score+=5;
          }
       }
    }
@@ -799,8 +802,4 @@ void man_ent_move(ent_t* e, u8 displacement){
    }
 
    e_to_move->y = e->y + e_to_move->originaly;
-}
-
-ent_t* man_ent_get_char(){
-   return &ents[0];
 }
