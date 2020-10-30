@@ -37,12 +37,16 @@ void sys_AI_shoot(ent_t* e){
     }
 }
 void sys_AI_zombi(ent_t* e){
-    
+
     if(e->Ai_counter == 0 && e->vx == 0){
-        if(e->prev_vx == -1)
+        if(e->prev_vx == -1){
             e->prev_vx = 1;
-        else 
+            e->move_dir = dir_right;
+        }
+        else {
             e->prev_vx = -1;
+            e->move_dir = dir_left;
+        }
     }
     e->vy = 4;
     e->vx = 0;
@@ -55,42 +59,43 @@ void sys_AI_zombi(ent_t* e){
 
 void sys_AI_ghost(ent_t* e){
     
-    if(e->x < player->x){
-        e->prev_vx = 1;
-    }
-    else if (e->x > player->x){
-        e->prev_vx = -1;
-    }
-    else{
-        e->prev_vx = 0;
-    }
-
-    if(e->y < player->y){
-        e->prev_vy = 4;
-    }
-    else if (e->y > player->y){
-        e->prev_vy = -4;
-    }
-    else{
-        e->prev_vy = 0;
-    }
     e->vy = 0;
     e->vx = 0;
     e->Ai_counter++;
     if(e->Ai_counter == move_rate){
-        e->Ai_counter = 0;
-        e->vx = e->prev_vx;
-        e->vy = e->prev_vy;
-    }
+        if(e->x!=player->x){
+            if(e->x < player->x){
+                e->vx = 1;
+                e->move_dir = dir_right;
+            }
+            else{
+                e->vx = -1;
+                e->move_dir = dir_left;
+            }
+        }
+        if(e->y!=player->y){
+            if(e->y < player->y){
+                e->vy = 1;
+            }
+            else{
+                e->vy = -1;
+            }
+        }
 
+        e->Ai_counter = 0;
+    }
 }
 
 void sys_AI_sonic(ent_t* e){
     if(e->Ai_counter == 0 && e->vx == 0){
-        if(e->prev_vx == -1)
+        if(e->prev_vx == -1){
             e->prev_vx = 1;
-        else 
+            e->move_dir = dir_right;
+        }
+        else{
             e->prev_vx = -1;
+            e->move_dir = dir_left;
+        }
     }
     e->vy = 4;
     e->vx = 0;
@@ -164,45 +169,11 @@ void sys_AI_boss(ent_t* e){
     boss_timer--;
     attack->funct(e);// attack_function();
 }
-/*void att_move(ent_t* e){
-    e->vx = 0;
-    if(boss_attack_timer>10){
-        e->action |= 0x01;
-    }
-    else{
-        if(boss_attack_timer<10 && boss_attack_timer>8){
-            e->vx = 2;
-        }
-        else if(boss_attack_timer<8 && boss_attack_timer>4){
-            e->vx = -2;
-        }
-        else if(boss_attack_timer==4){
-            e->vx = 2;
-        }
-        else if(boss_attack_timer==3){
-            e->vx = 2;
-        }
-        else if(boss_attack_timer==0){
-            attack = &none;
-        }
-    }
-
-    boss_attack_timer--;
-}*/
 void att_none(ent_t* e){
     ent_t* en = e;
 }
 
 void att_hor(ent_t* e){
-
-    /*if(boss_attack_timer==attack->total_time){// si no le voy a dar cambio de ataque
-        if(player->y+player->h <= e->y  ||  player->y >= e->y+e->h){
-            boss_timer = 0;
-        }
-        boss_attack_timer--;
-        return;
-    }*/
-
     if(boss_attack_timer==attack->total_time-1){//set entities to hit
         u8 i = 3;
         u8 xpos;
