@@ -87,20 +87,21 @@ void sys_UI_init(){
 }
 
 void sys_UI_update(){
-    if(prev_hp > player->hp){ // pierdes vida
-        draw_sprite(spr_UI_02, 2+prev_hp*2, 3);
-        prev_hp = player->hp;
-    }
-    else if(prev_hp < player->hp) { // ganas vida
-        draw_sprite(spr_UI_01, 2+(prev_hp+1)*2, 3);
-        prev_hp = player->hp;
+    if(prev_hp != player->hp){
+        if(prev_hp > player->hp){ // pierdes vida
+            draw_sprite(spr_UI_02, 2+prev_hp*2, 3);
+            prev_hp = player->hp;
+        }
+        else{
+            draw_sprite(spr_UI_01, 2+(prev_hp+1)*2, 3);
+            prev_hp = player->hp;
+        }
     }
 
     if(prev_mp > player->mp){ // pierdes mana
         draw_sprite(spr_UI_07, 2+prev_mp*2, 13);
         prev_mp = player->mp;
     }
-     
     while(prev_mp < player->mp){// ganas mana
         draw_sprite(spr_UI_06, 2+(prev_mp+1)*2, 13);
         prev_mp++;
@@ -110,7 +111,6 @@ void sys_UI_update(){
         sys_UI_hp_mp_bars(2, 3, spr_UI_00, player->hp);
         prev_max_hp = player->hp;
     }
-
     if(prev_max_mana < player->prev_vy){
         sys_UI_hp_mp_bars(2, 13, spr_UI_05, player->mp);
         prev_max_mana = player->mp;
