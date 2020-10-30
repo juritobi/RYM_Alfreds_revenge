@@ -9,6 +9,9 @@
 const i8 knocknackX[] = {  1,  1, 1, 1, 1,1,1,1};
 const i8 knocknackY[] = { -8, -8, -8, 0, 0, 8 ,8, 8};
 
+ent_t * col_breaker[8];
+u8 col_breaker_next;
+
 #define solid 0x06
 #define half  0x08
 #define spikes 0x0c
@@ -125,56 +128,6 @@ void sys_col_one(ent_t* e){
 }
 
 
-void sys_col_ally_enemy(ent_t* ally, ent_t* enemy){
-    if( !(ally->x+ally->w <= enemy->x  ||  ally->x >= enemy->x+enemy->w) ){
-        if(!(ally->y+ally->h <= enemy->y  ||  ally->y >= enemy->y+enemy->h) ) {
-            man_ent_hit(ally, enemy->damage);
-            if(ally->x < enemy->x){
-                ally->dir = -1;
-            }
-            else{
-                ally->dir = 1;
-            }
-        }
-    }
-
-}
-void sys_col_allybreaker_enemy(ent_t* breaker, ent_t* enemy){
-    if( !(breaker->x+breaker->w <= enemy->x  ||  breaker->x >= enemy->x+enemy->w) ){
-        if(!(breaker->y+breaker->h <= enemy->y  ||  breaker->y >= enemy->y+enemy->h) ) {
-            man_ent_hit(enemy, breaker->damage);
-            breaker->death(breaker);
-            if(enemy->x < breaker->x){
-                enemy->dir = -1;
-            }
-            else{
-                enemy->dir = 1;
-            }
-        }
-    }
-}
-
-void sys_col_ally_PowerUp(ent_t* ally, ent_t* PowerUp){
-    if( !(ally->x+ally->w <= PowerUp->x  ||  ally->x >= PowerUp->x+PowerUp->w) ){
-        if(!(ally->y+ally->h <= PowerUp->y  ||  ally->y >= PowerUp->y+PowerUp->h) ) {
-            if(PowerUp->mp == 1){
-                man_ent_max_hp(ally);
-            }
-            else if(PowerUp->mp == 2){
-                man_ent_max_mana(ally);
-            }
-            else if(PowerUp->mp == 3){
-                man_ent_max_melee(ally+1);
-            }
-            else if(PowerUp->mp == 4){
-                man_ent_max_range(ally+2);
-            }
-
-            PowerUp->death(PowerUp);
-
-        }
-    }
-}
 
 void sys_col_reduceTimeInvulnerable(ent_t* e){
     i8 dire = e->dir;
@@ -190,14 +143,79 @@ void sys_col_reduceTimeInvulnerable(ent_t* e){
     }
 }
 
+void sys_col_a_e(ent_t* e1, ent_t* e2){
+    man_ent_hit(e1, e2->damage);
+    if(e1->x < e2->x) e1->dir = -1;
+    else e1->dir = 1;
+}
+void sys_col_p_pu(ent_t* p, ent_t* pu){
+    if(pu->mp == 1){
+        man_ent_max_hp(p);
+    }
+    else if(pu->mp == 2){
+        man_ent_max_mana(p);
+    }
+    else if(pu->mp == 3){
+        man_ent_max_melee(p+1);
+    }
+    else if(pu->mp == 4){
+        man_ent_max_range(p+2);
+    }
+    pu->death(pu);
+}
+
+void sys_col_e_s(ent_t* e1, ent_t* e2){//la segunda es la espada
+    man_ent_hit(e1, e2->damage);
+    if(e1->x < player->x) e1->dir = -1;
+    else e1->dir = 1;
+}
+void sys_col_e_k(ent_t* e1, ent_t* e2){//la segunda es el cuchillo
+    sys_col_a_e(e1, e2);
+    e2->death(e2);
+}
+
+void sys_col_check(ent_t* e1, ent_t* e2, void(*fun)(ent_t*, ent_t*) ){
+    if( !(e1->x+e1->w <= e2->x  ||  e1->x >= e2->x+e2->w) ){
+        if(!(e1->y+e1->h <= e2->y  ||  e1->y >= e2->y+e2->h) ) {
+            fun(e1,e2);
+        }
+    }
+}
+
+void man_col_player(ent_t* e1, ent_t* e2){
+    if(e2->col_type & (col_t_enemy|col_t_enemy_breaker)){
+        col_breaker[col_breaker_next] = e2;
+        ++col_breaker_next;
+        sys_col_check(e1,e2,sys_col_a_e);
+    }
+    else{
+        sys_col_check(e1,e2,sys_col_p_pu);
+    }
+}
+
 void sys_col_update(){
-    man_ent_forall_col_type(sys_col_ally_PowerUp, col_t_ally, col_t_powerUp);
-    man_ent_forall_col_type(sys_col_allybreaker_enemy, col_t_ally_breaker, col_t_enemy);
-    man_ent_forall_col_type(sys_col_ally_enemy, col_t_ally, col_t_enemy|col_t_enemy_breaker);
+
+    man_ent_do_for_all(man_col_player);
+    if(!((player+1)->type & e_t_dead )){
+        u8 l =  col_breaker_next;
+        while(l){
+            --l;
+            sys_col_check(col_breaker[l], player+1, sys_col_e_s);
+        }
+    }
+    if(!((player+2)->type & e_t_dead) ){
+        u8 l =  col_breaker_next;
+        while(l){
+            --l;
+            sys_col_check(col_breaker[l], player+2, sys_col_e_k);
+        }
+    }
+    col_breaker_next = 0;
     man_ent_forall_col_type_individual(sys_col_reduceTimeInvulnerable, col_t_ally|col_t_enemy);//puede que se pueda hacer con componente de fisica
     man_ent_forall_type(sys_col_one, e_t_col); //colisiones con tiles
     
 }
 
 void sys_col_init(){
+    col_breaker_next = 0;
 }

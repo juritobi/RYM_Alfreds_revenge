@@ -110,10 +110,6 @@ void sys_input_sword_move(){
     }
 }
 
-u8 sys_input_get_sword_up(){
-    return swordUp;
-}
-
 void sys_input_update(){
     sys_input_one(player);
 }

@@ -738,24 +738,13 @@ void man_ent_forall_col_type_individual( Ptrf_v_ep fun, u8 types){
    }
 }
 
-void man_ent_forall_col_type( Ptrf_v_epep fun, u8 first_type, u8 second_type){
-   ent_t* ents1 = ents;
-   ent_t* ents2 = ents;
-   while(ents1->type != e_t_invalid){
-      if((!(ents1->type & e_t_dead)) && (ents1->col_type & first_type)){
-
-         while( ents2->type != e_t_invalid ){
-            if(!(ents2->type & e_t_dead) && (ents2->col_type & second_type)) {
-               
-               fun(ents1, ents2);
-            }
-            ++ents2;
-         }
-
+void man_ent_do_for_all(Ptrf_v_epep fun){
+   ent_t* res = ents+3;
+   while(res->type != e_t_invalid){
+      if(!(res->type & e_t_dead)){
+         fun(player, res);
       }
-      
-      ++ents1;
-      ents2 = ents;
+      ++res;
    }
 }
 
