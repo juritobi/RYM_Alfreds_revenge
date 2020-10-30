@@ -124,6 +124,7 @@ void sys_col_one(ent_t* e){
     }
 }
 
+
 void sys_col_ally_enemy(ent_t* ally, ent_t* enemy){
     if( !(ally->x+ally->w <= enemy->x  ||  ally->x >= enemy->x+enemy->w) ){
         if(!(ally->y+ally->h <= enemy->y  ||  ally->y >= enemy->y+enemy->h) ) {
@@ -184,7 +185,7 @@ void sys_col_reduceTimeInvulnerable(ent_t* e){
     }
     if(e->knockback == sizeof(knocknackX)){
         e->knockback = -1;
-        e->on_ground = 0;
+        e->on_ground = 1;
     }
 }
 

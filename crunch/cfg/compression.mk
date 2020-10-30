@@ -38,20 +38,103 @@
 $(eval $(call ADD2PACK,lvl0_pack, src/tilemaps/lvl0.bin))
 $(eval $(call PACKZX7B,lvl0_pack,src/tilemaps))
 
-$(eval $(call ADD2PACK,lvl1_pack, src/tilemaps/lvl1.bin))
-$(eval $(call PACKZX7B,lvl1_pack,src/tilemaps))
-$(eval $(call ADD2PACK,lvl2_pack, src/tilemaps/lvl2.bin))
-$(eval $(call PACKZX7B,lvl2_pack,src/tilemaps))
-$(eval $(call ADD2PACK,lvl3_pack, src/tilemaps/lvl3.bin))
-$(eval $(call PACKZX7B,lvl3_pack,src/tilemaps))
-$(eval $(call ADD2PACK,lvl4_pack, src/tilemaps/lvl4.bin))
-$(eval $(call PACKZX7B,lvl4_pack,src/tilemaps))
-$(eval $(call ADD2PACK,lvl5_pack, src/tilemaps/lvl5.bin))
-$(eval $(call PACKZX7B,lvl5_pack,src/tilemaps))
+$(eval $(call ADD2PACK,lvl0_2_pack, src/tilemaps/lvl0_2.bin))
+$(eval $(call PACKZX7B,lvl0_2_pack,src/tilemaps))
+
+## BOT LEFT
+
+$(eval $(call ADD2PACK,bot_left_1_pack, src/tilemaps/bot_left_1.bin))
+$(eval $(call PACKZX7B,bot_left_1_pack,src/tilemaps))
+
+$(eval $(call ADD2PACK,bot_left_2_pack, src/tilemaps/bot_left_2.bin))
+$(eval $(call PACKZX7B,bot_left_2_pack,src/tilemaps))
+
+$(eval $(call ADD2PACK,bot_left_3_pack, src/tilemaps/bot_left_3.bin))
+$(eval $(call PACKZX7B,bot_left_3_pack,src/tilemaps))
+
+$(eval $(call ADD2PACK,bot_left_4_pack, src/tilemaps/bot_left_4.bin))
+$(eval $(call PACKZX7B,bot_left_4_pack,src/tilemaps))
+
+$(eval $(call ADD2PACK,bot_left_5_pack, src/tilemaps/bot_left_5.bin))
+$(eval $(call PACKZX7B,bot_left_5_pack,src/tilemaps))
+
+$(eval $(call ADD2PACK,bot_left_6_pack, src/tilemaps/bot_left_6.bin))
+$(eval $(call PACKZX7B,bot_left_6_pack,src/tilemaps))
+
+$(eval $(call ADD2PACK,bot_left_extra_pack, src/tilemaps/bot_left_extra.bin))
+$(eval $(call PACKZX7B,bot_left_extra_pack,src/tilemaps))
+
+## BOT RIGHT
+
+$(eval $(call ADD2PACK,bot_right_1_pack, src/tilemaps/bot_right_1.bin))
+$(eval $(call PACKZX7B,bot_right_1_pack,src/tilemaps))
+
+$(eval $(call ADD2PACK,bot_right_2_pack, src/tilemaps/bot_right_2.bin))
+$(eval $(call PACKZX7B,bot_right_2_pack,src/tilemaps))
+
+$(eval $(call ADD2PACK,bot_right_3_pack, src/tilemaps/bot_right_3.bin))
+$(eval $(call PACKZX7B,bot_right_3_pack,src/tilemaps))
+
+$(eval $(call ADD2PACK,bot_right_4_pack, src/tilemaps/bot_right_4.bin))
+$(eval $(call PACKZX7B,bot_right_4_pack,src/tilemaps))
+
+$(eval $(call ADD2PACK,bot_right_5_pack, src/tilemaps/bot_right_5.bin))
+$(eval $(call PACKZX7B,bot_right_5_pack,src/tilemaps))
+
+$(eval $(call ADD2PACK,bot_right_6_pack, src/tilemaps/bot_right_6.bin))
+$(eval $(call PACKZX7B,bot_right_6_pack,src/tilemaps))
+
+$(eval $(call ADD2PACK,bot_right_extra_pack, src/tilemaps/bot_right_extra.bin))
+$(eval $(call PACKZX7B,bot_right_extra_pack,src/tilemaps))
+
+## TOP LEFT
+
+$(eval $(call ADD2PACK,top_left_1_pack, src/tilemaps/top_left_1.bin))
+$(eval $(call PACKZX7B,top_left_1_pack,src/tilemaps))
+
+$(eval $(call ADD2PACK,top_left_2_pack, src/tilemaps/top_left_2.bin))
+$(eval $(call PACKZX7B,top_left_2_pack,src/tilemaps))
+
+$(eval $(call ADD2PACK,top_left_3_pack, src/tilemaps/top_left_3.bin))
+$(eval $(call PACKZX7B,top_left_3_pack,src/tilemaps))
+
+$(eval $(call ADD2PACK,top_left_4_pack, src/tilemaps/top_left_4.bin))
+$(eval $(call PACKZX7B,top_left_4_pack,src/tilemaps))
+
+$(eval $(call ADD2PACK,top_left_5_pack, src/tilemaps/top_left_5.bin))
+$(eval $(call PACKZX7B,top_left_5_pack,src/tilemaps))
+
+$(eval $(call ADD2PACK,top_left_6_pack, src/tilemaps/top_left_6.bin))
+$(eval $(call PACKZX7B,top_left_6_pack,src/tilemaps))
+
+$(eval $(call ADD2PACK,top_left_7_pack, src/tilemaps/top_left_7.bin))
+$(eval $(call PACKZX7B,top_left_7_pack,src/tilemaps))
+
+$(eval $(call ADD2PACK,top_left_extra_pack, src/tilemaps/top_left_extra.bin))
+$(eval $(call PACKZX7B,top_left_extra_pack,src/tilemaps))
+
+##TOP RIGHT
+
+$(eval $(call ADD2PACK,top_right_1_pack, src/tilemaps/top_right_1.bin))
+$(eval $(call PACKZX7B,top_right_1_pack,src/tilemaps))
+
+$(eval $(call ADD2PACK,top_right_2_pack, src/tilemaps/top_right_2.bin))
+$(eval $(call PACKZX7B,top_right_2_pack,src/tilemaps))
+
+$(eval $(call ADD2PACK,top_right_3_pack, src/tilemaps/top_right_3.bin))
+$(eval $(call PACKZX7B,top_right_3_pack,src/tilemaps))
+
+$(eval $(call ADD2PACK,top_right_4_pack, src/tilemaps/top_right_4.bin))
+$(eval $(call PACKZX7B,top_right_4_pack,src/tilemaps))
+
+$(eval $(call ADD2PACK,top_right_5_pack, src/tilemaps/top_right_5.bin))
+$(eval $(call PACKZX7B,top_right_5_pack,src/tilemaps))
+
+$(eval $(call ADD2PACK,top_right_extra_pack, src/tilemaps/top_right_extra.bin))
+$(eval $(call PACKZX7B,top_right_extra_pack,src/tilemaps))
 
 $(eval $(call ADD2PACK,boss1_pack, src/tilemaps/boss1.bin))
 $(eval $(call PACKZX7B,boss1_pack,src/tilemaps))
-
 
 $(eval $(call ADD2PACK,main_screen_pack, src/sprites/main.bin))
 $(eval $(call PACKZX7B,main_screen_pack,src/tilemaps))

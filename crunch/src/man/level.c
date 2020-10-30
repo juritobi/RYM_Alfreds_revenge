@@ -6,11 +6,14 @@
 u8 final_door_open;
 
 extern const lvl_t i_lvl0;
-extern const lvl_t i_lvl1;
-extern const lvl_t i_lvl2;
-extern const lvl_t i_lvl3;
-extern const lvl_t i_lvl4;
-extern const lvl_t i_lvl5;
+extern const lvl_t i_lvl0_2;
+extern const lvl_t i_bot_left_1;
+extern const lvl_t i_bot_left_2;
+extern const lvl_t i_bot_left_3;
+extern const lvl_t i_bot_left_4;
+extern const lvl_t i_bot_left_5;
+extern const lvl_t i_bot_left_6;
+extern const lvl_t i_bot_left_extra;
 
 void lt_room();
 void rt_room();
@@ -24,9 +27,9 @@ const lvl_t i_lvl0 = {//center room
     0,                  //id
     lvl0_pack_end,      //this
     0,                  //top
-    &i_lvl2,      //right
-    &i_lvl5,                  //bot
-    &i_lvl1,                  //left
+    0,                  //right
+    &i_lvl0_2,          //bot
+    0,                  //left
     final_room,
     0,
     {
@@ -37,94 +40,147 @@ const lvl_t i_lvl0 = {//center room
         {0, 0, 0}
     }
 };
-const lvl_t i_lvl1 = {//top left
-    1,                  //id
-    lvl1_pack_end,      //this
-    0,                  //top
-    &i_lvl0,      //right
-    &i_lvl0,                  //bot
-    0,                  //left
-    lt_room,
-    0,
-    {
-        {e_c_zombi, 4, 168, 0},
-        {e_c_zombi, 72, 168, 0},
-        {0, 0, 0},
-        {0, 0, 0},
-        {0, 0, 0}
-    }
-};
-const lvl_t i_lvl2 = {//right top
-    2,                  //id
-    lvl2_pack_end,      //this
-    0,                  //top
-    0,      //right
-    &i_lvl0,                  //bot
-    &i_lvl0,                  //left
-    rt_room,
-    0,
-    {
-        {e_c_ghost, 72, 168, 0},
-        {0, 0, 0},
-        {0, 0, 0},
-        {0, 0, 0},
-        {0, 0, 0}
-    }
-};
-const lvl_t i_lvl3 = {//left bottom
-    3,                  //id
-    lvl3_pack_end,      //this
-    &i_lvl0,                  //top
-    &i_lvl5,      //right
-    0,                  //bot
-    0,                  //left
-    lb_room,
-    0,
-    {
-        {e_c_powerUp, 4, 96, 4},
-        {e_c_ghost, 20, 168, 0},
-        {0, 0, 0},
-        {0, 0, 0},
-        {0, 0, 0}
-    }
-};
-const lvl_t i_lvl4 = {//right bottom
-    4,                  //id
-    lvl4_pack_end,      //this
-    &i_lvl0,                  //top
-    0,      //right
-    0,                  //bot
-    &i_lvl5,                  //left
-    rb_room,
-    0,
-    {
-        {e_c_sonic, 72, 152, 0},
-        {0, 0, 0},
-        {0, 0, 0},
-        {0, 0, 0},
-        {0, 0, 0}
-    }
-};
-const lvl_t i_lvl5 = {
-    5,                  //id
-    lvl5_pack_end,      //this
-    &i_lvl0,                  //top
-    &i_lvl4,      //right
-    0,                  //bot
-    &i_lvl3,                  //left
+const lvl_t i_lvl0_2 = {
+    1,                          //id
+    lvl0_2_pack_end,            //this
+    &i_lvl0,                    //top
+    0,                          //right
+    0,                          //bot
+    &i_bot_left_1,              //left
     normal_room,
     0,
     {
-        {e_c_shoot, 72, 64, 0},
         {0, 0, 0},
         {0, 0, 0},
+        {0, 0, 0},
+        {0, 0, 0},
+        {0, 0, 0}
+    }
+};
+const lvl_t i_bot_left_1 = {
+    2,                          //id
+    bot_left_1_pack_end,        //this
+    0,                          //top
+    &i_lvl0_2,                  //right
+    &i_bot_left_2,                          //bot
+    0,                          //left
+    normal_room,
+    0,
+    {
+        {e_c_zombi, 24, 176},
+        {0, 0, 0},
+        {0, 0, 0},
+        {0, 0, 0},
+        {0, 0, 0}
+    }
+};
+const lvl_t i_bot_left_2 = {
+    3,                          //id
+    bot_left_2_pack_end,        //this
+    &i_bot_left_1,              //top
+    0,                          //right
+    &i_bot_left_extra,          //bot
+    &i_bot_left_3,              //left
+    normal_room,
+    0,
+    {
+        {e_c_zombi, 52, 88},
+        {e_c_shoot, 68, 64},
+        {e_c_zombi, 12, 160},
+        {0, 0, 0},
+        {0, 0, 0}
+    }
+};
+
+const lvl_t i_bot_left_3 = {
+    4,                          //id
+    bot_left_3_pack_end,        //this
+    0,                           //top
+    &i_bot_left_2,              //right
+    &i_bot_left_4,              //bot
+    0,                          //left
+    normal_room,
+    0,
+    {
+        {e_c_zombi, 12, 176},
+        {e_c_zombi, 32, 80},
+        {e_c_zombi, 40, 136},
+        {0, 0, 0},
+        {0, 0, 0}
+    }
+};
+const lvl_t i_bot_left_extra = {
+    5,                          //id
+    bot_left_extra_pack_end,    //this
+    &i_bot_left_2,              //top
+    0,                          //right
+    0,                          //bot
+    &i_bot_left_4,              //left
+    normal_room,
+    0,
+    {
+        {e_c_zombi, 52, 176},
+        {e_c_zombi, 60, 56},
+        {e_c_shoot, 32, 176},
+        {e_c_ghost, 8, 24},
+        {0, 0, 0}
+    }
+};
+
+const lvl_t i_bot_left_4 = {
+    6,                          //id
+    bot_left_4_pack_end,        //this
+    &i_bot_left_3,              //top
+    &i_bot_left_extra,          //right
+    0,                          //bot
+    &i_bot_left_5,              //left
+    normal_room,
+    0,
+    {
+        {e_c_zombi, 16, 168},
+        {e_c_zombi, 52, 168},
+        {e_c_ghost, 32, 168},
+        {0, 0, 0},
+        {0, 0, 0}
+    }
+};
+const lvl_t i_bot_left_5 = {
+    7,                          //id
+    bot_left_5_pack_end,        //this
+    0,                          //top
+    &i_bot_left_4,              //right
+    0,                          //bot
+    0,                          //left
+    normal_room,
+    0,
+    {
+        {e_c_ghost, 12, 24},
+        {e_c_ghost, 12, 152},
+        {e_c_ghost, 60, 152},
+        {0, 0, 0},
+        {0, 0, 0}
+    }
+};
+const lvl_t i_bot_left_6 = {
+    8,                          //id
+    bot_left_6_pack_end,        //this
+    &i_bot_left_5,              //top
+    &i_lvl0,                   //right
+    0,                          //bot
+    0,                          //left
+    normal_room,
+    0,
+    {
+        {e_c_ghost, 12, 24},
+        {e_c_ghost, 12, 152},
+        {e_c_ghost, 60, 152},
         {0, 0, 0},
         {0, 0, 0}
     }
 };
 
 const lvl_t i_boss1 = {
-    6,                  //id
+    34,                  //id
     boss1_pack_end,      //this
     0,                  //top
     0,      //right
@@ -141,11 +197,16 @@ const lvl_t i_boss1 = {
     }
 };
 
-u8 cleared_rooms[8];
+u8 cleared_rooms[35];
 lvl_t level;
 u8 tilemap_start[tilemap_size];
 #define tilemap_end  (tilemap_start + tilemap_size - 1)
-
+/*
+void redraw_tile(u8 x, u8 y, u8 tile){
+    tilemap_start[y*tilemap_W + x] = tile;
+    sys_ren_tile(tile, x*4 (y+3)*8);
+}
+*/
 void lt_room(){
     tilemap_start[21*tilemap_W + 9] = 19;
     sys_ren_tile(19, 9*4, (21+3)*8 );
@@ -202,9 +263,10 @@ void final_room(){
         }
     }
 }
-void boss_room(){
 
+void boss_room(){
 }
+
 void normal_room(){     
 }
 

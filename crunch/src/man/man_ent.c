@@ -258,7 +258,7 @@ const ent_t init_zombi = {
    0,                                                          //AI_Counter
    0,0,                                                        //i8 prev_vx, prev_vy;
    //Input
-   0,0,                                                         //i8 on_ground, jumping;     
+   1,0,                                                         //i8 on_ground, jumping;     
    //Animation
    5,                                                          //u8 anim_timer;
    0x00,                                                       //u8 action;  //action - dir  
@@ -621,7 +621,7 @@ void man_ent_hit(ent_t* hitted, u8 damage){
          man_level_kill_enemy();
          return;
       }
-      hitted->invulnerable = 50;
+      hitted->invulnerable = 10;
       if(hitted->knockback!= -2)
          hitted->knockback = 0;
    }
