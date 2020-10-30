@@ -34,14 +34,14 @@ void sys_UI_hp_mp_bars(u8 x, u8 y, u8* sprite_line, u8 num){
 void sys_UI_draw_damage(u8 x, u8 y, u8* sprite, u8 num){
     draw_sprite(sprite, x, y);
     draw_sprite(numbers[num], x+4, y);
-}
-void draw_score(){
-    u8 index = 75;
+}//75
+void draw_score(u8 x, u8 y){
+    u8 index = x;
     u16 inscore = score;
     while(inscore){
         u8 carry = inscore%10; 
         inscore = inscore/10;
-        draw_sprite(numbers[carry], index, 13);
+        draw_sprite(numbers[carry], index, y);
         index -=2;
     }
 }
@@ -83,7 +83,7 @@ void sys_UI_init(){
     cpct_waitHalts(1);
     app_draw_string(67,3,"score");
     draw_sprite(numbers[0], 75, 13);
-    draw_score();
+    draw_score(75,13);
 }
 
 void sys_UI_update(){
@@ -128,7 +128,7 @@ void sys_UI_update(){
     --down_score_timer;
     if(!down_score_timer){
         if(score) --score;
-        draw_score();
+        draw_score(75,13);
     }
 
 
