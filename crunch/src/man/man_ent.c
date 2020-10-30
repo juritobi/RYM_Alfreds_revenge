@@ -615,6 +615,7 @@ ent_t* man_ent_create_from_template(const ent_t* template){
 
 void man_ent_hit(ent_t* hitted, u8 damage){
    if(!hitted->invulnerable){
+      cpct_akp_SFXPlay(3,0xf, 50, 0, 0, 0x04);
       hitted->hp -= damage;
       if(hitted->hp==0 || hitted->hp > 100){
          hitted->death(hitted);

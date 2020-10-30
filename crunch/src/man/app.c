@@ -315,6 +315,7 @@ void man_app_init(){
     cpct_setBorder(HW_BLACK);
 
     cpct_akp_musicInit ((u8*)intro_address);
+    cpct_akp_SFXInit ((void*) sfx_address);
     render_count = 2;
 
     left_value  = Key_A;
