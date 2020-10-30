@@ -94,7 +94,6 @@ void man_ent_res_absolute(ent_t* e, u8 displacement);
 void man_ent_resurrect(ent_t* e, u8 displacement);
 void man_ent_move(ent_t* e, u8 displacement);
 
-void man_ent_forall(Ptrf_v_ep fun);
 void man_ent_forall_type(Ptrf_v_ep fun, u8 types);
 
 void man_ent_forall_col_type_individual( Ptrf_v_ep fun, u8 types);

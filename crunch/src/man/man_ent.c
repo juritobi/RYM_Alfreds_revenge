@@ -709,13 +709,8 @@ void man_ent_update(ent_t* e){
    if(e->invulnerable > 0){
       e->invulnerable--;
    }
-}
-
-void man_ent_forall(Ptrf_v_ep fun){
-   ent_t* res = ents;
-   while(res->type != e_t_invalid){
-      fun(res);
-      ++res;
+   if((e->col_type & col_t_ally_breaker || e->col_type & col_t_enemy_breaker ) && e->type&e_t_col && e->vx ==0){
+      e->death(e);
    }
 }
 

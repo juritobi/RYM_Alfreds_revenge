@@ -33,7 +33,6 @@ void interrupt_2(){
         music_sync++;
         cpct_akp_musicPlay();
     }
-        
     cpct_setInterruptHandler(interrupt_3);
 }
 void interrupt_3(){

@@ -143,6 +143,7 @@ void sys_col_allybreaker_enemy(ent_t* breaker, ent_t* enemy){
     if( !(breaker->x+breaker->w <= enemy->x  ||  breaker->x >= enemy->x+enemy->w) ){
         if(!(breaker->y+breaker->h <= enemy->y  ||  breaker->y >= enemy->y+enemy->h) ) {
             man_ent_hit(enemy, breaker->damage);
+            breaker->death(breaker);
             if(enemy->x < breaker->x){
                 enemy->dir = -1;
             }
