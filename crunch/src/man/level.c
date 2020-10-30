@@ -2,6 +2,7 @@
 #include <man/man_ent.h>
 #include <sys/render.h>
 #include <man/app.h>
+#include <sys/UI.h>
 
 u8 final_door_open;
 
@@ -363,6 +364,7 @@ void man_level_add_mp_end_lvl(){
 void man_level_kill_enemy(){
     level.enemies--;
     if(level.enemies == 0){
+        score += 25;
         cleared_rooms[level.id]=1;
         level.cleared_func();
         man_level_add_mp_end_lvl();
