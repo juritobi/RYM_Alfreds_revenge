@@ -282,9 +282,11 @@ void man_level_load(){
     u8 it = 0;
     ent_class* class = &level.entities[it]; 
 
+    sys_ren_init();
     cpct_zx7b_decrunch_s(tilemap_end, level.self);
     sys_ren_draw_tilemap(tilemap_start);
     
+
     (player+1)->death(player+1);
     (player+2)->death(player+2);
     man_ent_reset();
