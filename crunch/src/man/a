@@ -1,0 +1,239 @@
+ç
+const lvl_t i_top_left_1 = {
+    2,                          //id
+    top_left_1_pack_end,        //this
+    0,                          //top
+    &i_lvl0_2,                  //right
+    &i_top_left_2,                          //bot
+    0,                          //left
+    normal_room,
+    0,
+    {
+        {e_c_zombi, 24, 176},
+        {0, 0, 0},
+        {0, 0, 0},
+        {0, 0, 0},
+        {0, 0, 0}
+    }
+};
+const lvl_t i_top_left_2 = {
+    3,                          //id
+    top_left_2_pack_end,        //this
+    &i_top_left_1,              //top
+    0,                          //right
+    &i_top_left_extra,          //bot
+    &i_top_left_3,              //left
+    normal_room,
+    0,
+    {
+        {e_c_zombi, 52, 88},
+        {e_c_shoot, 68, 64},
+        {e_c_zombi, 12, 160},
+        {0, 0, 0},
+        {0, 0, 0}
+    }
+};
+const lvl_t i_top_left_3 = {
+    4,                          //id
+    top_left_3_pack_end,        //this
+    0,                           //top
+    &i_top_left_2,              //right
+    &i_top_left_4,              //bot
+    0,                          //left
+    normal_room,
+    0,
+    {
+        {e_c_zombi, 12, 176},
+        {e_c_zombi, 32, 80},
+        {e_c_zombi, 40, 136},
+        {0, 0, 0},
+        {0, 0, 0}
+    }
+};
+const lvl_t i_top_left_extra = {
+    5,                          //id
+    top_left_extra_pack_end,    //this
+    &i_top_left_2,              //top
+    0,                          //right
+    0,                          //bot
+    &i_top_left_4,              //left
+    normal_room,
+    0,
+    {
+        {e_c_zombi, 52, 176},
+        {e_c_zombi, 60, 56},
+        {e_c_shoot, 32, 176},
+        {e_c_ghost, 8, 24},
+        {0, 0, 0}
+    }
+};
+const lvl_t i_top_left_4 = {
+    6,                          //id
+    top_left_4_pack_end,        //this
+    &i_top_left_3,              //top
+    &i_top_left_extra,          //right
+    0,                          //bot
+    &i_top_left_5,              //left
+    normal_room,
+    0,
+    {
+        {e_c_zombi, 16, 160},
+        {e_c_zombi, 52, 160},
+        {e_c_ghost, 32, 160},
+        {0, 0, 0},
+        {0, 0, 0}
+    }
+};
+const lvl_t i_top_left_5 = {
+    7,                          //id
+    top_left_5_pack_end,        //this
+    0,                          //top
+    &i_top_left_4,              //right
+    &i_top_left_6,               //bot
+    0,                          //left
+    normal_room,
+    0,
+    {
+        {e_c_ghost, 12, 48},
+        {e_c_ghost, 60, 176},
+        {0, 0, 0},
+        {0, 0, 0},
+        {0, 0, 0}
+    }
+};
+const lvl_t i_top_left_6 = {
+    8,                          //id
+    top_left_6_pack_end,        //this
+    &i_top_left_5,              //top
+    0,                          //right
+    &i_lvl0,                    //bot
+    0,                          //left
+    bl_room,
+    0,
+    {
+        {e_c_ghost, 68, 40},
+        {e_c_shoot, 68, 64},
+        {e_c_shoot, 68, 96},
+        {e_c_shoot, 68, 128},
+        {0, 0, 0}
+    }
+};
+const lvl_t i_top_right_1 = {
+    9,                          //id
+    top_right_1_pack_end,       //this
+    0,                          //top
+    0,                          //right
+    &i_top_right_2,             //bot
+    &i_lvl0_2,                  //left
+    normal_room,
+    0,
+    {
+        {e_c_ghost, 56, 88},
+        {0, 0, 0},
+        {0, 0, 0},
+        {0, 0, 0},
+        {0, 0, 0}
+    }
+};
+const lvl_t i_top_right_2 = {
+    10,                          //id
+    top_right_2_pack_end,        //this
+    &i_top_right_1,              //top
+    &i_top_right_3,              //right
+    &i_top_right_extra,          //bot
+    0,                           //left
+    normal_room,
+    0,
+    {
+        {e_c_ghost, 12, 56},
+        {e_c_ghost, 8,  168},
+        {e_c_zombi, 48, 176},
+        {0, 0, 0},
+        {0, 0, 0}
+    }
+};
+const lvl_t i_top_right_3 = {
+    11,                          //id
+    top_right_3_pack_end,        //this
+    &i_top_right_4,              //top
+    &i_top_right_2,              //right
+    0,                           //bot
+    0,                          //left
+    normal_room,
+    0,
+    {
+        {e_c_shoot, 72,  80},
+        {e_c_sonic, 36, 176},
+        {e_c_sonic, 60, 176},
+        {0, 0, 0},
+        {0, 0, 0}
+    }
+};
+const lvl_t i_top_right_extra = {
+    12,                         //id
+    top_right_extra_pack_end,   //this
+    &i_top_right_2,             //top
+    0,                          //right
+    0,                          //bot
+    0,                          //left
+    normal_room,
+    0,
+    {
+        {e_c_ghost, 52, 176},
+        {0, 0, 0},
+        {0, 0, 0},
+        {0, 0, 0},
+        {0, 0, 0}
+    }
+};
+const lvl_t i_top_right_4 = {
+    13,                          //id
+    top_right_4_pack_end,        //this
+    0,                           //top
+    &i_top_right_5,              //right
+    &i_top_right_3,              //bot
+    0,                           //left
+    normal_room,
+    0,
+    {
+        {e_c_ghost, 40,  72},
+        {e_c_ghost, 35, 120},
+        {0, 0, 0},
+        {0, 0, 0},
+        {0, 0, 0}
+    }
+};
+const lvl_t i_top_right_5 = {
+    14,                          //id
+    top_right_5_pack_end,        //this
+    0,                           //top
+    &i_top_right_6,              //right
+    0,                           //bot
+    &i_top_right_4,              //left
+    normal_room,
+    0,
+    {
+        {e_c_shoot, 60, 104},
+        {e_c_shoot, 60, 120},
+        {e_c_sonic, 20, 64},
+        {e_c_sonic, 48, 64},
+        {0, 0, 0}
+    }
+};
+const lvl_t i_top_right_6 = {
+    8,                          //id
+    top_right_6_pack_end,       //this
+    &i_lvl0,                    //top
+    0,                          //right
+    0,                          //bot
+    &i_top_right_5,                          //left
+    br_room,
+    0,
+    {
+        {e_c_ghost, 52, 40},
+        {e_c_shoot, 68, 128},
+        {e_c_shoot, 68, 168},
+        {0, 0, 0},
+        {0, 0, 0}
+    }
+};
