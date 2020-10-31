@@ -706,9 +706,6 @@ void man_ent_update(ent_t* e){
    e->tile_y = e->y/8 -3;
    e->tile_y_r = e->y%8;
 
-   if(e->invulnerable > 0){
-      e->invulnerable--;
-   }
    if((e->col_type & col_t_ally_breaker || e->col_type & col_t_enemy_breaker ) && e->type&e_t_col && e->vx ==0){
       e->death(e);
    }

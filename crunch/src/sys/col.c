@@ -141,6 +141,11 @@ void sys_col_reduceTimeInvulnerable(ent_t* e){
         e->knockback = -1;
         e->on_ground = 1;
     }
+
+    if(e->invulnerable&0x7f > 0){
+        e->invulnerable ^= 0x80;
+        e->invulnerable--;
+    }
 }
 
 void sys_col_a_e(ent_t* e1, ent_t* e2){
