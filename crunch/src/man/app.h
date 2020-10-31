@@ -28,8 +28,11 @@ void man_app_sel();
 void man_app_sel_update();
 void man_app_game();
 void man_app_game_update();
+void man_app_lose();
+void man_app_lose_update();
 void man_app_end();
 void man_app_end_update();
+
 
 extern cpct_keyID* left;
 extern cpct_keyID* right;
