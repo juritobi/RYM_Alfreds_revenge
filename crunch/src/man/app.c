@@ -11,6 +11,7 @@
 #include <sprites/converting1.h>
 #include <sprites/converting2.h>
 #include <sprites/cone.h>
+#include <sprites/dead.h>
 
 #include <music/sfx.h>
 #include <music/intro.h>
@@ -312,12 +313,15 @@ void man_app_lose(){
 void man_app_lose_update(){
     if(music_sync == 60){
         app_draw_sprite(32,44,spr_cone,16,112);
-        app_draw_sprite(38,44+112-16-24,spr_char_0,4,24);
+        app_draw_sprite(38,44+112-16-24,spr_death_0,4,24);
     }
     else if(music_sync == 120){
-        app_draw_sprite(38,44+112-16-24,spr_char_5,4,24);
+        app_draw_sprite(38,44+112-16-24,spr_death_1,4,24);
     }
-    else if(music_sync == 400){
+    else if(music_sync == 180){
+        app_draw_sprite(38,44+112-16-24,spr_death_2,4,24);
+    }
+    else if(music_sync == 240){
         executing_state = man_app_end;
     }   
 }
