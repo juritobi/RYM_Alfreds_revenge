@@ -12,11 +12,17 @@
 #include <sprites/converting2.h>
 #include <sprites/cone.h>
 #include <sprites/dead.h>
+#include <sprites/c_win.h>
+#include <sprites/b_win.h>
 
 #include <music/sfx.h>
 #include <music/intro.h>
 #include <music/game.h>
 #include <music/rym.h>
+
+#include <constants.h>
+#include <man/level.h>
+#include <sys/render.h>
 
 u8 render_count;
 u8 music_play;
@@ -63,7 +69,7 @@ const player_t character_sets[] = {
     {2  ,10 ,2  ,2},
 };
 
-typedef void (*Ptrf_v_v)(void);
+//typedef void (*Ptrf_v_v)(void);
 Ptrf_v_v executing_state;
 
 cpct_keyID left_value;
@@ -297,7 +303,7 @@ void man_app_game(){
 void man_app_game_update(){
     u8 next = man_game_play();
     if(next){
-        executing_state = man_app_lose;
+        executing_state = man_app_win;
     }
 }
 //GAME
@@ -306,7 +312,6 @@ void man_app_game_update(){
 void man_app_lose(){
     cpct_akp_musicInit ((u8*)intro_address);
     music_sync = 0;
-    activate = 330;
     cpct_clearScreen(0xf0);
     executing_state = man_app_lose_update;
 }
@@ -326,6 +331,34 @@ void man_app_lose_update(){
     }   
 }
 //Lose
+//Win
+void man_app_win(){
+    cpct_akp_musicInit ((u8*)intro_address);
+    music_sync = 0;
+    cpct_zx7b_decrunch_s(tilemap_start + tilemap_size - 1, boss1_pack_end);
+    sys_ren_draw_tilemap(tilemap_start);
+    app_draw_sprite(38,96,spr_c_win_0,4,32);
+    app_draw_sprite(34,128,spr_b_win_0,12,32);
+    executing_state = man_app_win_update;
+}
+void man_app_win_update(){
+    if(music_sync == 60){
+        app_draw_sprite(38,96,spr_c_win_1,4,32);
+    app_draw_sprite(34,128,spr_b_win_1,12,32);
+    }
+    else if(music_sync == 120){
+        app_draw_sprite(38,96,spr_c_win_0,4,32);
+    app_draw_sprite(34,128,spr_b_win_0,12,32);
+    }
+    else if(music_sync == 180){
+        app_draw_sprite(38,96,spr_c_win_1,4,32);
+        app_draw_sprite(34,128,spr_b_win_1,12,32);
+    }
+    else if(music_sync == 240){
+        executing_state = man_app_end;
+    }   
+}
+//Win
 
 //End
 void man_app_end(){

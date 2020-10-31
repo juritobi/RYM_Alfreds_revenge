@@ -76,6 +76,8 @@ $(eval $(call IMG2SP, CONVERT         , assets/fountain.png , 16, 13, spr_founta
 $(eval $(call IMG2SP, CONVERT         , assets/blue.png , 48, 40, spr_blue))
 $(eval $(call IMG2SP, CONVERT         , assets/cone.png , 64, 112, spr_cone))
 $(eval $(call IMG2SP, CONVERT         , assets/dead.png , 16, 24, spr_death))
+$(eval $(call IMG2SP, CONVERT         , assets/c_win.png , 16, 32, spr_c_win))
+$(eval $(call IMG2SP, CONVERT         , assets/b_win.png , 48, 32, spr_b_win))
 
 $(eval $(call IMG2SP, SET_IMG_FORMAT  , zgtiles            ))
 $(eval $(call IMG2SP, CONVERT         , assets/tileset.png , 16, 8, tileset))

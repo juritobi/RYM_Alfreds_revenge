@@ -30,6 +30,8 @@ void man_app_game();
 void man_app_game_update();
 void man_app_lose();
 void man_app_lose_update();
+void man_app_win();
+void man_app_win_update();
 void man_app_end();
 void man_app_end_update();
 
