@@ -8,6 +8,7 @@ u8 final_door_open;
 
 extern const lvl_t i_lvl0;
 extern const lvl_t i_lvl0_2;
+
 extern const lvl_t i_bot_left_1;
 extern const lvl_t i_bot_left_2;
 extern const lvl_t i_bot_left_3;
@@ -15,6 +16,30 @@ extern const lvl_t i_bot_left_4;
 extern const lvl_t i_bot_left_5;
 extern const lvl_t i_bot_left_6;
 extern const lvl_t i_bot_left_extra;
+
+extern const lvl_t i_top_left_1;
+extern const lvl_t i_top_left_2;
+extern const lvl_t i_top_left_3;
+extern const lvl_t i_top_left_4;
+extern const lvl_t i_top_left_5;
+extern const lvl_t i_top_left_6;
+extern const lvl_t i_top_left_7;
+extern const lvl_t i_top_left_extra;
+
+extern const lvl_t i_bot_right_1;
+extern const lvl_t i_bot_right_2;
+extern const lvl_t i_bot_right_3;
+extern const lvl_t i_bot_right_4;
+extern const lvl_t i_bot_right_5;
+extern const lvl_t i_bot_right_6;
+extern const lvl_t i_bot_right_extra;
+
+extern const lvl_t i_top_right_1;
+extern const lvl_t i_top_right_2;
+extern const lvl_t i_top_right_3;
+extern const lvl_t i_top_right_4;
+extern const lvl_t i_top_right_5;
+extern const lvl_t i_top_right_extra;
 
 void lt_room();
 void rt_room();
@@ -50,7 +75,7 @@ const lvl_t i_lvl0 = {//center room
     0,                  //id
     lvl0_pack_end,      //this
     0,                  //top
-    &i_top_right_1,                  //right
+    &i_top_right_1,     //right
     &i_lvl0_2,          //bot
     &i_top_left_1,      //left
     final_room,
@@ -199,6 +224,7 @@ const lvl_t i_bot_left_6 = {
         {0, 0, 0}
     }
 };
+
 const lvl_t i_bot_right_1 = {
     9,                          //id
     bot_right_1_pack_end,       //this
@@ -318,7 +344,8 @@ const lvl_t i_bot_right_6 = {
         {0, 0, 0}
     }
 };
-/*
+
+
 const lvl_t i_top_left_1 = {
     16,                          //id
     top_left_1_pack_end,        //this
@@ -455,7 +482,7 @@ const lvl_t i_top_left_7 = {
         {0, 0, 0}
     }
 };
-*/
+
 const lvl_t i_top_right_1 = {
     24,                         //id
     top_right_1_pack_end,       //this
@@ -510,7 +537,7 @@ const lvl_t i_top_right_3 = {
 const lvl_t i_top_right_extra = {
     27,                         //id
     top_right_extra_pack_end,   //this
-    0,                          //top
+    0,                      
     &i_top_right_5,             //right
     &i_top_right_3,             //bot
     &i_top_right_extra,         //left
@@ -587,7 +614,7 @@ u8 tilemap_start[tilemap_size];
 
 
 
-void final_room(){
+void final_room(){/*
     if(cleared_rooms[level.id] == 0x0F){
         tilemap_start[2*tilemap_W + 6] = 27;
         tilemap_start[2*tilemap_W + 13] = 27;
@@ -613,7 +640,7 @@ void final_room(){
             tilemap_start[15*tilemap_W + 6] = 27;
             sys_ren_tile(27, 6*4, (15+3)*8);
         }
-    }
+    }*/
 }
 
 void boss_room(){
@@ -625,7 +652,7 @@ void normal_room(){
 
 void man_level_init(){
     final_door_open = 0;
-    cpct_memcpy(&level, &i_lvl0, sizeof(lvl_t));//temporal
+    cpct_memcpy(&level, &i_lvl0, sizeof(lvl_t));
     cpct_memset(cleared_rooms, 0, sizeof(cleared_rooms));
     man_level_load();
 }
