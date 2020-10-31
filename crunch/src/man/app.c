@@ -10,6 +10,7 @@
 #include <sprites/fountain.h>
 #include <sprites/converting1.h>
 #include <sprites/converting2.h>
+#include <sprites/cone.h>
 
 #include <music/sfx.h>
 #include <music/intro.h>
@@ -33,7 +34,6 @@ void interrupt_2(){
         music_sync++;
         cpct_akp_musicPlay();
     }
-        
     cpct_setInterruptHandler(interrupt_3);
 }
 void interrupt_3(){
@@ -295,14 +295,61 @@ void man_app_game(){
 }
 void man_app_game_update(){
     u8 next = man_game_play();
-    if(next == win){
-        executing_state = man_app_main;
-    }
-    else if(next== lose){
-        executing_state = man_app_main;
+    if(next){
+        executing_state = man_app_lose;
     }
 }
 //GAME
+
+//Lose
+void man_app_lose(){
+    cpct_akp_musicInit ((u8*)intro_address);
+    music_sync = 0;
+    activate = 330;
+    cpct_clearScreen(0xf0);
+    executing_state = man_app_lose_update;
+}
+void man_app_lose_update(){
+    if(music_sync == 60){
+        app_draw_sprite(32,44,spr_cone,16,112);
+        app_draw_sprite(38,44+112-16-24,spr_char_0,4,24);
+    }
+    else if(music_sync == 120){
+        app_draw_sprite(38,44+112-16-24,spr_char_5,4,24);
+    }
+    else if(music_sync == 400){
+        executing_state = man_app_end;
+    }   
+}
+//Lose
+
+//End
+void man_app_end(){
+    
+    cpct_zx7b_decrunch_s((u8*)0xFFFF, main_screen_pack_end);
+
+    app_draw_box(22,144-4, 0xF0, 32, 24);
+
+    app_draw_box(23,146-4, 0x0F, 30, 2);
+    app_draw_box(23,164-4, 0x0F, 30, 2);
+
+    app_draw_box(22,146-4, 0xC3, 1, 20);
+    app_draw_box(53,146-4, 0x3C, 1, 20);
+
+    app_draw_string(24, 152-4,"Score:");
+    app_draw_string(40, 152-4,"000000");
+    draw_score(50, 152-4);
+
+    cpct_setDrawCharM1(3, 0);
+    app_draw_string(22, 182,"[Space] Continue");
+    executing_state = man_app_end_update;
+}
+void man_app_end_update(){
+    if(cpct_isKeyPressed(Key_Space)){
+        executing_state = man_app_main;
+    }
+}
+//End
 
 
 void man_app_init(){

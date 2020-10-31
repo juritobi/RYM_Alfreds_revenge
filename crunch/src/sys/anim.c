@@ -1,5 +1,6 @@
 #include "anim.h"
 #include <man/man_ent.h>
+#include <sprites/blue.h>
 
 spr_frame_t const * c_tset[char_sprset_W];
 spr_frame_t const * sw_tset[sword_sprset_W];
@@ -214,9 +215,14 @@ void sys_anim_one(ent_t* e){
     else{
         e->sprite = frame->frame;
     }
+
     e->action = action<<4;
     e->anim_timer = timer;
     e->frame = frame;
+
+    if(e->invulnerable&0x80){
+        e->sprite =spr_blue;
+    }
 }
 void sys_anim_update(){
     man_ent_forall_type(sys_anim_one, e_t_anim);

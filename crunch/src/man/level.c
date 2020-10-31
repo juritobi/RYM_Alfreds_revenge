@@ -2,6 +2,7 @@
 #include <man/man_ent.h>
 #include <sys/render.h>
 #include <man/app.h>
+#include <sys/UI.h>
 
 u8 final_door_open;
 
@@ -630,13 +631,14 @@ void man_level_init(){
 }
 
 void man_level_load(){
-    ent_t* player = man_ent_get_char();
     u8 it = 0;
     ent_class* class = &level.entities[it]; 
 
+    sys_ren_init();
     cpct_zx7b_decrunch_s(tilemap_end, level.self);
     sys_ren_draw_tilemap(tilemap_start);
     
+
     (player+1)->death(player+1);
     (player+2)->death(player+2);
     man_ent_reset();
@@ -666,7 +668,6 @@ void man_level_load(){
 }
 
 void man_level_update(){
-    ent_t* player = man_ent_get_char();
     if(player->x == 0){
         player->x = 72;
         cpct_memcpy(&level, level.left, sizeof(lvl_t));
@@ -702,19 +703,19 @@ void man_level_update(){
 }
 
 void man_level_add_mp_end_lvl(){
-    ent_t* player = man_ent_get_char();
-    if(man_ent_get_char()->mp == player->prev_vy -1){
-        man_ent_get_char()->mp++;
+    if(player->mp == player->prev_vy -1){
+        player->mp++;
     }
-    else if(man_ent_get_char()->mp < player->prev_vy -1){
-        man_ent_get_char()->mp++;
-        man_ent_get_char()->mp++;
+    else if(player->mp < player->prev_vy -1){
+        player->mp++;
+        player->mp++;
     }
 }
 
 void man_level_kill_enemy(){
     level.enemies--;
     if(level.enemies == 0){
+        score += 25;
         cleared_rooms[level.id]=1;
         level.cleared_func();
         man_level_add_mp_end_lvl();
