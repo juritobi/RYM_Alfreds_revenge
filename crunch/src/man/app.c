@@ -338,7 +338,10 @@ void man_app_game(){
 }
 void man_app_game_update(){
     u8 next = man_game_play();
-    if(next){
+    if(next == lose){
+        executing_state = man_app_lose;
+    }
+    else{
         executing_state = man_app_win;
     }
 }

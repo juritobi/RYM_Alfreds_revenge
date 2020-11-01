@@ -1,8 +1,10 @@
 #include "level.h"
+
 #include <man/man_ent.h>
 #include <sys/render.h>
 #include <man/app.h>
 #include <sys/UI.h>
+
 
 u8 final_door_open;
 
@@ -750,11 +752,14 @@ void man_level_init(){
     cpct_memcpy(&level, lvl_pointer, sizeof(lvl_t));
     cpct_memset(cleared_rooms, 0, sizeof(cleared_rooms));
     man_level_load();
+    
+
 }
 
 void man_level_load(){
     u8 it = 0;
     ent_class* class = &level.entities[it]; 
+    cleared_rooms[0]=0x0f;
 
     sys_ren_init();
     cpct_zx7b_decrunch_s(tilemap_end, level.self);
@@ -817,6 +822,7 @@ void man_level_update(){
                     if(cpct_isKeyPressed(Key_W)){
                         cpct_memcpy(&level, &i_boss1, sizeof(lvl_t));
                         man_level_load();
+                        cpct_akp_musicInit ((u8*)rym_address);
                     }
                 }
             }

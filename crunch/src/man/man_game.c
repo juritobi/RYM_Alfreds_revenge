@@ -68,24 +68,16 @@ u8 man_game_play(){
         
         man_ent_forall_type(man_ent_update,e_t_render);
         sys_UI_update();
-
         sys_AI_update();
-        
         sys_input_update();
-
         sys_anim_update();
-
         sys_col_update();
-
         sys_phy_update();
         sys_input_sword_move();
-
         man_level_update();
-
         sys_ren_setup();
-        
+
         wait_render_signal();
-        
         sys_ren_render();
     }
     return next_screen;
