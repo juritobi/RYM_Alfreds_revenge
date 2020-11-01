@@ -73,11 +73,14 @@ extern const spr_frame_t d_c_0;
 
 
 //BOSS----------------------------------------------------------------------------------------------------------------------------------------------------------------
-#define boss_sprset_W 2
-#define boss_sprsheet_line (SPR_BOSS_0_W * SPR_BOSS_0_H * 2)//4 number of images in right direction
+#define boss_sprset_W 3
+#define boss_sprsheet_line (SPR_BOSS_0_W * SPR_BOSS_0_H * 3)//4 number of images in right direction
 extern const spr_set_t b_spriteset;
 extern const spr_frame_t b_s_0;
+extern const spr_frame_t b_s_1;
 extern const spr_frame_t b_h_0;
+extern const spr_frame_t b_r_0;
+extern const spr_frame_t b_p_0;
 
 
 

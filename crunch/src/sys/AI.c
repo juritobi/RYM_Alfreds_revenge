@@ -24,7 +24,7 @@ const attack_t none = {
 };
 
 
-
+u8 xpos;
 u8 boss_timer;
 u8 boss_attack_timer;
 u8 boss_inter_attack_time;
@@ -188,7 +188,6 @@ void sys_AI_boss(ent_t* e){
         e->vx = e->originalvx;
         e->vy = e->originalvy;
     }
-
     boss_timer--;
     attack->funct(e);// attack_function();
 }
@@ -199,7 +198,6 @@ void att_none(ent_t* e){
 void att_hor(ent_t* e){
     if(boss_attack_timer==attack->total_time-1){//set entities to hit
         u8 i = 3;
-        u8 xpos;
         if(player->x < 40){
             xpos = -(e + i)->w;
         }
@@ -213,7 +211,10 @@ void att_hor(ent_t* e){
     }
 
     if(boss_attack_timer>10){
-        e->action |= 0x01;
+        e->action |= 0x02;
+        if(xpos>0){
+
+        }
     }
     else{
         if(boss_attack_timer == 10){

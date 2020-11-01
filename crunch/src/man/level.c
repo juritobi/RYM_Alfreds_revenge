@@ -58,6 +58,7 @@ const lvl_t i_top_bot_left_power_up;
 const lvl_t i_top_right_left_power_up;
 const lvl_t i_bot_right_left_power_up;
 
+
 const lvl_t i_lvl0 = {//center room
     0,                  //id
     lvl0_pack_end,      //this
@@ -70,6 +71,23 @@ const lvl_t i_lvl0 = {//center room
     {
         {0, 0, 0},
         {0, 0, 0},
+        {0, 0, 0},
+        {0, 0, 0},
+        {0, 0, 0}
+    }
+};
+const lvl_t i_boss1 = {
+    34,                  //id
+    boss1_pack_end,      //this
+    0,                  //top
+    0,      //right
+    0,                  //bot
+    0,                  //left
+    boss_room,
+    0,
+    {
+        {e_c_boss1_1, 32, 72, 0},
+        {e_c_boss_tools, 0, 0, 0},
         {0, 0, 0},
         {0, 0, 0},
         {0, 0, 0}
@@ -644,23 +662,7 @@ const lvl_t i_bot_right_left_power_up  = {
     }
 };
 
-const lvl_t i_boss1 = {
-    34,                  //id
-    boss1_pack_end,      //this
-    0,                  //top
-    0,      //right
-    0,                  //bot
-    0,                  //left
-    boss_room,
-    0,
-    {
-        {e_c_boss1_1, 32, 72, 0},
-        {e_c_boss_tools, 0, 0, 0},
-        {0, 0, 0},
-        {0, 0, 0},
-        {0, 0, 0}
-    }
-};
+
 
 u8 cleared_rooms[35];
 lvl_t level;
@@ -676,31 +678,31 @@ void redraw_tile(u8 x, u8 y, u8 tile){
 
 void final_room(){
     if(cleared_rooms[level.id] == 0x0F){
-        redraw_tile(9, 7, 27);
-        redraw_tile(9, 8, 27);
-        redraw_tile(9, 9, 27);
-        redraw_tile(9, 10, 31);
-        redraw_tile(9, 11, 35);
+        redraw_tile(9, 11, 27);
+        redraw_tile(9, 12, 27);
+        redraw_tile(9, 13, 27);
+        redraw_tile(9, 14, 31);
+        redraw_tile(9, 15, 35);
 
-        redraw_tile(10, 7, 27);
-        redraw_tile(10, 8, 31);
-        redraw_tile(10, 9, 35);
-        redraw_tile(10, 10, 23);
-        redraw_tile(10, 11, 35);
+        redraw_tile(10, 11, 27);
+        redraw_tile(10, 12, 31);
+        redraw_tile(10, 13, 35);
+        redraw_tile(10, 14, 23);
+        redraw_tile(10, 15, 35);
 
         final_door_open = 1;
     }
     if(cleared_rooms[level.id] & 1){
-        redraw_tile(6, 5, 12);
+        redraw_tile(6, 9, 12);
     }
     if(cleared_rooms[level.id] & 2){
-        redraw_tile(13, 5, 12);
-    }
-    if(cleared_rooms[level.id] & 4){
         redraw_tile(13, 9, 12);
     }
+    if(cleared_rooms[level.id] & 4){
+        redraw_tile(13, 13, 12);
+    }
     if(cleared_rooms[level.id] & 8){
-        redraw_tile(6, 9, 12);
+        redraw_tile(6, 13, 12);
     } 
 }
 void bl_room(){
@@ -708,11 +710,11 @@ void bl_room(){
     cleared_rooms[0] |= 8; 
 }
 void br_room(){
-    redraw_tile(10,  3, 6);
+    redraw_tile(10,  8, 6);
     cleared_rooms[0] |= 4; 
 }
 void tl_room(){
-    redraw_tile(9, 3, 6);
+    redraw_tile(9, 8, 6);
     cleared_rooms[0] |= 1; 
 }
 void tr_room(){
