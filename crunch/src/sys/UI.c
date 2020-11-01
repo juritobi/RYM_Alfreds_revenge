@@ -87,15 +87,13 @@ void sys_UI_init(){
 }
 
 void sys_UI_update(){
-    if(prev_hp != player->hp){
-        if(prev_hp > player->hp){ // pierdes vida
-            draw_sprite(spr_UI_02, 2+prev_hp*2, 3);
-            prev_hp = player->hp;
-        }
-        else{
-            draw_sprite(spr_UI_01, 2+(prev_hp+1)*2, 3);
-            prev_hp = player->hp;
-        }
+    if(prev_hp > player->hp){ // pierdes mana
+        draw_sprite(spr_UI_02, 2+prev_hp*2, 3);
+        prev_hp = player->hp;
+    }
+    while(prev_hp < player->hp){// ganas mana
+        draw_sprite(spr_UI_01, 2+(prev_hp+1)*2, 3);
+        prev_hp++;
     }
 
     if(prev_mp > player->mp){ // pierdes mana

@@ -310,7 +310,7 @@ const lvl_t i_bot_right_5 = {
         {e_c_shoot, 60, 104},
         {e_c_shoot, 60, 120},
         {e_c_sonic, 20, 64},
-        {e_c_sonic, 48, 64},
+        {0, 0, 0},
         {0, 0, 0}
     }
 };
@@ -567,7 +567,7 @@ const lvl_t i_top_right_5 = {
         {e_c_shoot, 72, 112},
         {e_c_shoot, 72, 64},
         {e_c_sonic, 56, 64},
-        {0, 0, 0},
+        {e_c_sonic, 56, 112},
         {0, 0, 0}
     }
 };
