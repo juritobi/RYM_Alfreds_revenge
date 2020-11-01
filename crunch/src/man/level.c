@@ -1,8 +1,10 @@
 #include "level.h"
+
 #include <man/man_ent.h>
 #include <sys/render.h>
 #include <man/app.h>
 #include <sys/UI.h>
+
 
 u8 final_door_open;
 
@@ -76,6 +78,7 @@ const lvl_t i_lvl0 = {//center room
         {0, 0, 0}
     }
 };
+
 const lvl_t i_boss1 = {
     34,                  //id
     boss1_pack_end,      //this
@@ -691,6 +694,8 @@ void final_room(){
         redraw_tile(10, 15, 35);
 
         final_door_open = 1;
+        score+=500;
+        score_draw=1;
     }
     if(cleared_rooms[level.id] & 1){
         redraw_tile(6, 9, 12);
@@ -707,20 +712,28 @@ void final_room(){
 }
 void bl_room(){
     redraw_tile(10, 19, 18);
+    score+=500;
+    score_draw=1;
     cleared_rooms[0] |= 8; 
 }
 void br_room(){
     redraw_tile(10,  0, 18);
     redraw_tile(11,  0, 18);
     redraw_tile(9,  0, 18);
+    score+=500;
+    score_draw=1;
     cleared_rooms[0] |= 4; 
 }
 void tl_room(){
     redraw_tile(9, 8, 6);
+    score+=500;
+    score_draw=1;
     cleared_rooms[0] |= 1; 
 }
 void tr_room(){
     redraw_tile(9, 21, 18);
+    score+=500;
+    score_draw=1;
     redraw_tile(10, 21, 18);
     cleared_rooms[0] |= 2; 
 }
@@ -751,11 +764,14 @@ void man_level_init(){
     cpct_memcpy(&level, lvl_pointer, sizeof(lvl_t));
     cpct_memset(cleared_rooms, 0, sizeof(cleared_rooms));
     man_level_load();
+    
+
 }
 
 void man_level_load(){
     u8 it = 0;
     ent_class* class = &level.entities[it]; 
+    cleared_rooms[0]=0x0f;
 
     sys_ren_init();
     cpct_zx7b_decrunch_s(tilemap_end, level.self);
@@ -814,10 +830,11 @@ void man_level_update(){
     else if(final_door_open){
         if(level.self == lvl0_pack_end){
             if( player->x+player->w > 36  &&  player->x < 44){
-                if(player->y > 140) {
+                if(player->y > 112 && player->y<144 ) {
                     if(cpct_isKeyPressed(Key_W)){
                         cpct_memcpy(&level, &i_boss1, sizeof(lvl_t));
                         man_level_load();
+                        cpct_akp_musicInit ((u8*)rym_address);
                     }
                 }
             }
@@ -839,6 +856,7 @@ void man_level_kill_enemy(){
     level.enemies--;
     if(level.enemies == 0){
         score += 25;
+        score_draw=1;
         cleared_rooms[level.id]=1;
         level.cleared_func();
         man_level_add_mp_end_lvl();

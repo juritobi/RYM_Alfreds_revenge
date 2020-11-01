@@ -7,15 +7,15 @@
 #define move_rate 5
 
 const attack_t horizontal = {
-    30,
+    35,
     att_hor
 };
 const attack_t rain = {
-    40,
+    45,
     att_rain
 };
 const attack_t pilar = {
-    30,
+    35,
     att_pilar
 };
 const attack_t none = {
@@ -23,8 +23,6 @@ const attack_t none = {
     att_none
 };
 
-
-u8 xpos;
 u8 boss_timer;
 u8 boss_attack_timer;
 u8 boss_inter_attack_time;
@@ -103,7 +101,6 @@ void sys_AI_sonic(ent_t* e){
     if(e->prev_vy){
         e->action |= 2;
     }
-
     if(e->vx){
         e->vx = e->prev_vx;
         e->action |= 1;
@@ -142,7 +139,7 @@ void sys_AI_sonic(ent_t* e){
 }
 
 void sys_AI_boss(ent_t* e){
-
+    e->move_dir = dir_right;
     if(!boss_timer){
         u8 rand = cpct_getRandom_lcg_u8(player->x);
         rand = rand%4;
@@ -197,9 +194,10 @@ void att_none(ent_t* e){
 
 void att_hor(ent_t* e){
     if(boss_attack_timer==attack->total_time-1){//set entities to hit
+        u8 xpos;
         u8 i = 3;
         if(player->x < 40){
-            xpos = -(e + i)->w;
+            xpos = -(e+i)->w;
         }
         else{
             xpos = e->w;
@@ -211,9 +209,12 @@ void att_hor(ent_t* e){
     }
 
     if(boss_attack_timer>10){
-        e->action |= 0x02;
-        if(xpos>0){
-
+        e->action |= 0x01;
+        if((e+3)->originalx < 40){
+            e->move_dir = dir_right;
+        }
+        else{
+            e->move_dir = dir_left;
         }
     }
     else{
@@ -258,7 +259,7 @@ void att_rain(ent_t* e){
             i--;
         }
     }
-    e->action |= 0x01;
+    e->action |= 0x02;
     if(boss_attack_timer==28){
         man_ent_res_absolute(e, 3+1);
     }
@@ -309,7 +310,7 @@ void att_pilar(ent_t* e){
         (e + 3 + 6 + 1)->originalx = player->x - 4;  
     }
     if(boss_attack_timer>6){
-        e->action |= 0x01;
+        e->action |= 0x03;
     }
     else if(boss_attack_timer==6){
         man_ent_res_absolute(e, 3+6+1);

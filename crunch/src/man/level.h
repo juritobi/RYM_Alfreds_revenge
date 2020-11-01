@@ -2,6 +2,7 @@
 #include <cpctelera.h>
 #include <man/man_ent.h>
 #include <constants.h>
+#include <music/rym.h>
 
 typedef void (*Ptrf_v_v)(void);
 typedef struct lvl lvl_t;

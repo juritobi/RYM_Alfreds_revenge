@@ -416,7 +416,7 @@ const ent_t init_boss = {
    0,0,                                                        //u8 originalx, originaly;
    0,0,                                                        //i8 originalvx, originalvy;
    //CHARACTERS
-   50,5,1,                                                       //u8 hp, mp, damage;
+   30,5,1,                                                       //u8 hp, mp, damage;
    0,                                                          // invulnerable
    -2,                                                           // knockback
    1,                                                           //u8 dir;//0000-*-00-*-00 anim_action-*-anim_dir-*-knockback_dir
@@ -644,6 +644,8 @@ void man_ent_char_death(ent_t* dead_ent){
 
 void man_ent_boss_death(ent_t* dead_ent){
    ent_t* e = dead_ent;
+   score+=5000;
+   score_draw=1;
    man_game_exit(win);
 }
 
@@ -701,6 +703,7 @@ void man_ent_generic_death(ent_t* dead_ent){
       }
       if(dead_ent->col_type == col_t_enemy){
          score+=5;
+         score_draw=1;
       }
    }
 }

@@ -62,9 +62,9 @@ void interrupt_6(){
 }
 
 const player_t character_sets[] = {
-    {5 ,5  ,1  ,1},
-    {10 ,2  ,1  ,1},
-    {3  ,10 ,1  ,2}
+    {10 ,3  ,1  ,1},
+    {5 ,5  ,2  ,1},
+    {3  ,3 ,2  ,2}
 };
 
 //typedef void (*Ptrf_v_v)(void);
@@ -126,19 +126,22 @@ void man_app_intro(){
     app_draw_box(20,176,0xF0, 40,2);
 
     app_draw_string(32,182,"[space]" );
-
+    cpct_setDrawCharM1(3, 1);
     cpct_akp_musicInit ((u8*)intro_address);
     executing_state = man_app_intro_update;
 }
 void man_app_intro_update(){
-    if(cpct_isKeyPressed(Key_Esc)){
+    if(cpct_isKeyPressed(Key_S)){
         executing_state = man_app_main;
+        cpct_setDrawCharM1(3, 0);
     }
     if(intro_state == 0){
         if(cpct_isKeyPressed(Key_Space)){
             music_play = 1;
             intro_state = 1;
             app_draw_box(32,182,0x00, 14,8);
+            app_draw_string(1,0,"[S]");
+            app_draw_string(0,9,"Skip");
         }
     }
     else if(intro_state == 1){
@@ -206,6 +209,7 @@ void man_app_intro_update(){
         }
         if(music_sync == 228){
             executing_state = man_app_main;
+            cpct_setDrawCharM1(3, 0);
         }
     }
 }
@@ -338,7 +342,10 @@ void man_app_game(){
 }
 void man_app_game_update(){
     u8 next = man_game_play();
-    if(next){
+    if(next == lose){
+        executing_state = man_app_lose;
+    }
+    else{
         executing_state = man_app_win;
     }
 }
@@ -466,6 +473,7 @@ void man_app_update(){
     cpct_setInterruptHandler(interrupt_1);
 
     while(1){
+        music_play=1;
         executing_state();
         cpct_waitHalts(3);
     }

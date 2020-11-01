@@ -5,6 +5,7 @@
 #include <man/app.h>
 
 u16 score;
+u8 score_draw;
 u8 down_score_timer;
 u8 prev_max_hp;
 u8 prev_max_mana;
@@ -61,7 +62,7 @@ void sys_UI_pre_init(){
 
 void sys_UI_init(){
     score = 0;
-    down_score_timer= 0xFF;
+    down_score_timer= 100;
     prev_max_hp = prev_hp = player->hp;
     prev_max_mana = prev_mp = player->mp;
     ad = (player+1)->damage;
@@ -126,8 +127,12 @@ void sys_UI_update(){
     --down_score_timer;
     if(!down_score_timer){
         if(score) --score;
-        draw_score(75,13);
+        down_score_timer = 100;
+        score_draw=1;
     }
 
-
+    if(score_draw){
+        draw_score(75,13);
+        score_draw=0;
+    }
 }
