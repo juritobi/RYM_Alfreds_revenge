@@ -222,10 +222,10 @@ const lvl_t i_bot_left_6 = {
     bl_room,
     0,
     {
-        {e_c_ghost, 68, 40},
-        {e_c_shoot, 68, 64},
-        {e_c_shoot, 68, 96},
-        {e_c_shoot, 68, 128},
+        {e_c_shoot, 72, 64},
+        {e_c_sonic, 24, 96},
+        {e_c_sonic, 24, 176},
+        {e_c_sonic, 56, 176},
         {0, 0, 0}
     }
 };
@@ -240,7 +240,7 @@ const lvl_t i_bot_right_1 = {
     normal_room,
     0,
     {
-        {e_c_ghost, 56, 88},
+        {e_c_ghost, 56, 32},
         {0, 0, 0},
         {0, 0, 0},
         {0, 0, 0},
@@ -308,8 +308,8 @@ const lvl_t i_bot_right_4 = {
     normal_room,
     0,
     {
-        {e_c_ghost, 40,  72},
-        {e_c_ghost, 35, 120},
+        {e_c_ghost, 8,  40},
+        {e_c_ghost, 24, 40},
         {0, 0, 0},
         {0, 0, 0},
         {0, 0, 0}
@@ -342,9 +342,9 @@ const lvl_t i_bot_right_6 = {
     br_room,
     0,
     {
-        {e_c_ghost, 52, 40},
-        {e_c_shoot, 68, 128},
-        {e_c_shoot, 68, 168},
+        {e_c_sonic, 16, 96},
+        {e_c_shoot, 72, 64},
+        {e_c_shoot, 72, 160},
         {0, 0, 0},
         {0, 0, 0}
     }
@@ -479,10 +479,10 @@ const lvl_t i_top_left_7 = {
     tl_room,
     0,
     {
-        {e_c_ghost,  4, 40},
-        {e_c_zombi,  4, 168},
-        {e_c_zombi, 64, 168},
-        {e_c_shoot, 68, 104},
+        {e_c_sonic, 16, 64},
+        {e_c_shoot, 72, 64},
+        {e_c_sonic, 72, 96},
+        {e_c_shoot, 72, 128},
         {0, 0, 0}
     }
 };
@@ -567,7 +567,7 @@ const lvl_t i_top_right_4 = {
     {
         {e_c_sonic, 48, 144},
         {e_c_sonic, 8,  80},
-        {e_c_sonic, 72, 48},
+        {e_c_sonic, 52, 48},
         {0, 0, 0},
         {0, 0, 0}
     }
@@ -710,7 +710,9 @@ void bl_room(){
     cleared_rooms[0] |= 8; 
 }
 void br_room(){
-    redraw_tile(10,  8, 6);
+    redraw_tile(10,  0, 18);
+    redraw_tile(11,  0, 18);
+    redraw_tile(9,  0, 18);
     cleared_rooms[0] |= 4; 
 }
 void tl_room(){
