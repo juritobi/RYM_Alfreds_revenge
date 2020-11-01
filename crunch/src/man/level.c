@@ -284,9 +284,9 @@ const lvl_t i_bot_right_3 = {
     11,                          //id
     bot_right_3_pack_end,        //this
     &i_bot_right_4,              //top
-    &i_bot_right_2,              //right
+    0,                           //right
     0,                           //bot
-    0,                          //left
+    &i_bot_right_2,              //left
     normal_room,
     0,
     {
@@ -638,7 +638,7 @@ const lvl_t i_top_bot_left_power_up = {
         {e_c_shoot, 40, 176},
         {e_c_sonic, 52, 176},
         {e_c_sonic, 68, 176},
-        {e_c_powerUp, 40, 32, 1}
+        {e_c_powerUp, 36, 40, 1}
     }
 };
 
@@ -652,11 +652,11 @@ const lvl_t i_top_right_left_power_up = {
     powerup_trl_room,
     0,
     {
-        {e_c_sonic, 24, 88},
-        {e_c_sonic, 24, 176},
-        {e_c_sonic, 48, 56},
-        {e_c_sonic, 48, 120},
-        {e_c_powerUp, 72, 176, 4}
+        {e_c_sonic, 20, 112},
+        {e_c_sonic, 68, 48},
+        {e_c_sonic, 68, 112},
+        {e_c_powerUp, 72, 176, 4},
+        {0, 0, 0}
     }
 };
 
