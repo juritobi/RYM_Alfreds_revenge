@@ -28,6 +28,7 @@ const lvl_t i_bot_left_4;
 const lvl_t i_bot_left_5;
 const lvl_t i_bot_left_6;
 const lvl_t i_bot_left_extra;
+
 const lvl_t i_top_left_1;
 const lvl_t i_top_left_2;
 const lvl_t i_top_left_3;
@@ -36,6 +37,7 @@ const lvl_t i_top_left_5;
 const lvl_t i_top_left_6;
 const lvl_t i_top_left_7;
 const lvl_t i_top_left_extra;
+
 const lvl_t i_bot_right_1;
 const lvl_t i_bot_right_2;
 const lvl_t i_bot_right_3;
@@ -43,6 +45,7 @@ const lvl_t i_bot_right_4;
 const lvl_t i_bot_right_5;
 const lvl_t i_bot_right_6;
 const lvl_t i_bot_right_extra;
+
 const lvl_t i_top_right_1;
 const lvl_t i_top_right_2;
 const lvl_t i_top_right_3;
@@ -247,9 +250,9 @@ const lvl_t i_bot_right_3 = {
     11,                          //id
     bot_right_3_pack_end,        //this
     &i_bot_right_4,              //top
-    &i_bot_right_2,              //right
+    0,                           //right
     0,                           //bot
-    0,                          //left
+    &i_bot_right_2,              //left
     normal_room,
     0,
     {
@@ -601,7 +604,7 @@ const lvl_t i_top_bot_left_power_up = {
         {e_c_shoot, 40, 176},
         {e_c_sonic, 52, 176},
         {e_c_sonic, 68, 176},
-        {e_c_powerUp, 36, 32, 1}
+        {e_c_powerUp, 36, 40, 1}
     }
 };
 
@@ -615,11 +618,11 @@ const lvl_t i_top_right_left_power_up = {
     powerup_trl_room,
     0,
     {
-        {e_c_sonic, 24, 88},
-        {e_c_sonic, 24, 176},
-        {e_c_sonic, 48, 56},
-        {e_c_sonic, 48, 120},
-        {e_c_powerUp, 72, 176, 4}
+        {e_c_sonic, 20, 112},
+        {e_c_sonic, 68, 48},
+        {e_c_sonic, 68, 112},
+        {e_c_powerUp, 72, 176, 4},
+        {0, 0, 0}
     }
 };
 
@@ -635,7 +638,7 @@ const lvl_t i_bot_right_left_power_up  = {
     {
         {e_c_zombi, 8,  48},
         {e_c_shoot, 68, 32},
-        {e_c_powerUp, 40, 32, 3},
+        {e_c_powerUp, 40, 40, 3},
         {0, 0, 0},
         {0, 0, 0}
     }
@@ -732,6 +735,7 @@ void powerup_trl_room(){
 
 void boss_room(){
 }
+
 void normal_room(){     
 }
 
@@ -836,6 +840,7 @@ void man_level_kill_enemy(){
         man_level_add_mp_end_lvl();
     }
 }
+
 u8 man_level_get_door(){
     return final_door_open;
 }

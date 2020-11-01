@@ -627,7 +627,11 @@ void man_ent_hit(ent_t* hitted, u8 damage){
          man_level_kill_enemy();
          return;
       }
-      hitted->invulnerable = 10;
+      if(hitted->col_type == col_t_ally)
+         hitted->invulnerable = 30;
+      else{
+         hitted->invulnerable = 10;
+      }   
       if(hitted->knockback!= -2)
          hitted->knockback = 0;
    }
