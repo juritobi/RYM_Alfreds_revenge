@@ -332,7 +332,7 @@ const ent_t init_sonic = {
    0,0,                                                        //u8 originalx, originaly;
    0,0,                                                        //i8 originalvx, originalvy;
    //CHARACTERS
-   3,0,1,                                                       //u8 hp, mp, damage;
+   2,0,1,                                                       //u8 hp, mp, damage;
    0,                                                          // invulnerable
    -1,                                                           // knockback
    1,                                                           //u8 dir;//0000-*-00-*-00 anim_action-*-anim_dir-*-knockback_dir
@@ -655,6 +655,7 @@ void man_ent_max_mana(ent_t* ent){
 
    ent->prev_vy++;
    ent->mp = ent->prev_vy;
+   
 }
 
 void man_ent_max_melee(ent_t* sword){

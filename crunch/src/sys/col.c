@@ -157,6 +157,13 @@ void sys_col_a_e(ent_t* e1, ent_t* e2){
     else e1->dir = 1;
 }
 void sys_col_p_pu(ent_t* p, ent_t* pu){
+    
+    u8 cont = 0;
+    for(u8 i = 0; p->hp < p->prev_vx && cont < 3; i++){
+        p->hp++;
+        cont++;
+    }
+    
     if(pu->mp == 1){
         man_ent_max_hp(p);
     }
