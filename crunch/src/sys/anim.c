@@ -172,14 +172,29 @@ const spr_set_t d_spriteset = {
 //------------------------------------------------------------------
 //******************************************************************
 const spr_frame_t b_s_0 = {
-    0xFF,
+    0x5,
     spr_boss_0,
+    &b_s_1
+};
+const spr_frame_t b_s_1 = {
+    0x5,
+    spr_boss_1,
     &b_s_0
 };
 const spr_frame_t b_h_0 = {
     0xFF,
-    spr_boss_1,
-    &b_s_0
+    spr_boss_2,
+    &b_h_0
+};
+const spr_frame_t b_r_0 = {
+    0xFF,
+    spr_boss_3,
+    &b_r_0
+};
+const spr_frame_t b_p_0 = {
+    0xFF,
+    spr_boss_4,
+    &b_p_0
 };
 const spr_set_t b_spriteset = {
     b_tset,
@@ -246,5 +261,6 @@ void sys_anim_init(){
 
     b_tset[0] = &b_s_0;
     b_tset[1] = &b_h_0;
-
+    b_tset[2] = &b_r_0;
+    b_tset[3] = &b_p_0;
 }
