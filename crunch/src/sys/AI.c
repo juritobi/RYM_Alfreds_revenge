@@ -3,7 +3,7 @@
 #define rate_of_fire 40
 #define zombi_rate 15
 #define ghost_rate 3
-#define dasher_rate 10
+#define dasher_rate 15
 #define move_rate 5
 
 const attack_t horizontal = {
@@ -94,25 +94,28 @@ void sys_AI_ghost(ent_t* e){
 
 void sys_AI_sonic(ent_t* e){
     e->vy = 4;
-    e->vx = 0;
+
+    if(e->prev_vy){
+        e->action |= 2;
+    }
 
     if(e->vx){
         e->vx = e->prev_vx;
         e->action |= 1;
     }
     else if(!e->Ai_counter){
-        if(e->x > player->x){
-            if(e->x > player->x) e->move_dir = dir_left;
-            else e->move_dir = dir_right;
-        }
+
+        if(e->x > player->x) e->move_dir = dir_left;
+        else e->move_dir = dir_right;
+
         if(e->prev_vy){
             if(e->x > player->x){
-                e->vx = -1;
-                e->prev_vx = -1;
+                e->vx = -2;
+                e->prev_vx = -2;
             }
             else{
-                e->vx = 1;
-                e->prev_vx = 1;
+                e->vx = 2;
+                e->prev_vx = 2;
             }
             e->action |= 1;
             e->prev_vy = 0;
@@ -124,8 +127,13 @@ void sys_AI_sonic(ent_t* e){
                 e->action |= 2;
                 e->prev_vy = 1;
         }
+
+        e->Ai_counter = dasher_rate;
     } 
     e->Ai_counter--;
+    if(e->Ai_counter>dasher_rate){
+        e->Ai_counter= dasher_rate;
+    }
 }
 
 void sys_AI_boss(ent_t* e){
