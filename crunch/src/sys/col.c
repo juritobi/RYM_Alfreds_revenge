@@ -5,6 +5,7 @@
 #include <sys/render.h>
 #include <sys/input.h>
 #include <constants.h>
+#include <sys/UI>
 
 const i8 knocknackX[] = {  1,  1, 1, 1, 1,1,1,1};
 const i8 knocknackY[] = { -8, -8, -8, 0, 0, 8 ,8, 8};
@@ -169,6 +170,8 @@ void sys_col_p_pu(ent_t* p, ent_t* pu){
     else if(pu->mp == 4){
         man_ent_max_range(p+2);
     }
+    score+=250;
+    score_draw = 1;
     pu->death(pu);
 }
 

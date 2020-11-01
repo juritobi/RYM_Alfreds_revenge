@@ -644,6 +644,8 @@ void man_ent_char_death(ent_t* dead_ent){
 
 void man_ent_boss_death(ent_t* dead_ent){
    ent_t* e = dead_ent;
+   score+=5000;
+   score_draw=1;
    man_game_exit(win);
 }
 
@@ -700,6 +702,7 @@ void man_ent_generic_death(ent_t* dead_ent){
       }
       if(dead_ent->col_type == col_t_enemy){
          score+=5;
+         socre_draw=1;
       }
    }
 }

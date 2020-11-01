@@ -8,3 +8,4 @@ void sys_UI_init();
 void sys_UI_update();
 void draw_score(u8 x, u8 y);
 extern u16 score;
+extern u8 score_draw;
