@@ -468,6 +468,7 @@ void man_app_update(){
     cpct_setInterruptHandler(interrupt_1);
 
     while(1){
+        music_play=1;
         executing_state();
         cpct_waitHalts(3);
     }
