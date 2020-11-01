@@ -695,9 +695,6 @@ void man_ent_generic_death(ent_t* dead_ent){
          h= tile_h;
       }
       if(dead_ent->col_type == col_t_enemy){
-         if(player->mp < player->prev_vy){
-            player->mp++;
-         }
          score+=5;
       }
    }
