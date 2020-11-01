@@ -28,14 +28,14 @@ void sys_input_one(ent_t* ent){
     ent->vy = 8;
     // MONYECO
     if(cpct_isKeyPressed(*right)){
-        ent->vx = 1;
+        ent->vx = 2;
         ent->action |= 0x01;
         if(!swordUp){
             ent->move_dir = dir_right;
         }
     }
     else if(cpct_isKeyPressed(*left)){
-        ent->vx = -1;
+        ent->vx = -2;
         ent->action |= 0x01;
         if(!swordUp){
             ent->move_dir = dir_left;

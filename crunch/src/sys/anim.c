@@ -207,6 +207,7 @@ void sys_anim_one(ent_t* e){
     if(!timer){
         frame = frame->next;
         timer = frame->time;
+        e->type |= e_t_render;
     }
 
     if(e->move_dir){
