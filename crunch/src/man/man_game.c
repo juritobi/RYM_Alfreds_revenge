@@ -33,11 +33,9 @@ void wait_render_signal(){
 }
 
 void man_game_create_player(player_t* stats){
-    ent_t* player;
     man_ent_init();
     man_ent_create_class(e_c_char, 32, 32, stats->mp);
     man_ent_create_class(e_c_tools, 0, 0, 0);
-    player = man_ent_get_char();
     player->hp = stats->hp;
     player->prev_vx = stats->hp;
     player->prev_vy = stats->mp;
@@ -49,6 +47,7 @@ void man_game_init(){
     next_screen = 0;
     render_signal=0;
     waiting_render_signal=0;
+    cpct_setDrawCharM1(3, 1);
 
     man_level_init();
     sys_UI_init();
@@ -67,38 +66,19 @@ void man_game_exit(u8 next){
 u8 man_game_play(){
     while (!next_screen){
         
-        cpct_setBorder(HW_RED);
         man_ent_forall_type(man_ent_update,e_t_render);
         sys_UI_update();
-
-        cpct_setBorder(HW_BLUE);
         sys_AI_update();
-        
-        cpct_setBorder(HW_WHITE);
         sys_input_update();
-
-        cpct_setBorder(HW_CYAN);
         sys_anim_update();
-
-        cpct_setBorder(HW_BRIGHT_RED);
         sys_col_update();
-
-        cpct_setBorder(HW_PINK);
         sys_phy_update();
         sys_input_sword_move();
-
-        cpct_setBorder(HW_YELLOW);
         man_level_update();
-
-        cpct_setBorder(HW_MAGENTA);
         sys_ren_setup();
-        cpct_setBorder(HW_BLACK);
-        
+
         wait_render_signal();
-        
-        cpct_setBorder(HW_GREEN);
         sys_ren_render();
-        cpct_setBorder(HW_BLACK);
     }
     return next_screen;
 }

@@ -44,8 +44,10 @@ typedef struct et{
    //generic
    u8 type;
    u8 x, y;
-   u8 prevx, prevy;
+   u8 tile_x, tile_y;
+   u8 tile_x_r, tile_y_r;
    u8 w, h;
+   u8 tile_w, tile_h;
    i8 vx, vy;
    u8 move_dir;
    Ptrf_v_ep death;
@@ -92,11 +94,10 @@ void man_ent_res_absolute(ent_t* e, u8 displacement);
 void man_ent_resurrect(ent_t* e, u8 displacement);
 void man_ent_move(ent_t* e, u8 displacement);
 
-void man_ent_forall(Ptrf_v_ep fun);
 void man_ent_forall_type(Ptrf_v_ep fun, u8 types);
 
 void man_ent_forall_col_type_individual( Ptrf_v_ep fun, u8 types);
-void man_ent_forall_col_type(Ptrf_v_epep fun, u8 first_type, u8 second_type);
+void man_ent_do_for_all(Ptrf_v_epep fun);
 
 void man_ent_max_hp(ent_t* ent);
 void man_ent_max_mana(ent_t* ent);
@@ -111,5 +112,4 @@ void man_ent_char_death(ent_t* dead_ent);
 void man_ent_generic_death(ent_t* dead_ent);
 void man_ent_boss_death(ent_t* dead_ent);
 
-
-ent_t* man_ent_get_char();
+extern ent_t *const player;

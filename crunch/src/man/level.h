@@ -1,6 +1,8 @@
 #pragma once
 #include <cpctelera.h>
 #include <man/man_ent.h>
+#include <constants.h>
+#include <music/rym.h>
 
 typedef void (*Ptrf_v_v)(void);
 typedef struct lvl lvl_t;
@@ -16,7 +18,8 @@ typedef struct lvl{
     ent_class entities [5];
 };
 
-u8* man_level_get_tilemap();
+extern u8 tilemap_start[tilemap_size];
+
 u8 man_level_get_door();
 
 void man_level_init();

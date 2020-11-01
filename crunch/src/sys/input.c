@@ -8,7 +8,7 @@
 #define jumpCD 10
 #define PiumPiumCD  25
 
-const i8 jumptable[] = {-8, -8, -8, -4, -4, 0, 0};
+const i8 jumptable[] = {-8, -8, -8, -8, -8, 0, 0};
 
 i8 swordUp;
 i8 swordCooling;
@@ -16,7 +16,6 @@ i8 jumpCont;
 i8 PiumPiumCont;
 
 void sys_Input_init(){
-
     swordUp = 0;
     swordCooling = 0;
     jumpCont = 1;
@@ -77,6 +76,7 @@ void sys_input_one(ent_t* ent){
         ent->mp = ent->mp -1;
         ent->action &= 0xF0;
         ent->action |= 0x03;
+        cpct_akp_SFXPlay(2,0xf, 50, 0, 0, 0x04);
     }
 
     if(PiumPiumCont < PiumPiumCD){
@@ -85,6 +85,7 @@ void sys_input_one(ent_t* ent){
     
     // ESPADA
     if(cpct_isKeyPressed(*fire1) && !swordUp && !swordCooling){
+        cpct_akp_SFXPlay(1,0xf, 50, 0, 0, 0x04);
         swordUp = swordDuration;
     }
     if(swordCooling){
@@ -103,17 +104,11 @@ void sys_input_one(ent_t* ent){
 }
 
 void sys_input_sword_move(){
-    ent_t* player = man_ent_get_char();
     if(swordUp){
         man_ent_resurrect(player, 1);
     }
 }
 
-u8 sys_input_get_sword_up(){
-    return swordUp;
-}
-
 void sys_input_update(){
-    ent_t* player = man_ent_get_char();
     sys_input_one(player);
 }

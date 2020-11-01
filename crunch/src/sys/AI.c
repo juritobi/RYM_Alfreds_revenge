@@ -1,33 +1,27 @@
 #include "AI.h"
 
-#define rate_of_fire 100
+#define rate_of_fire 40
+#define zombi_rate 15
+#define ghost_rate 3
+#define dasher_rate 15
 #define move_rate 5
-u8 shoot_timer;
-u8 move_counter;
 
-
-/*const attack_t move = {
-    20,
-    att_move
-};*/
 const attack_t horizontal = {
-    30,
+    35,
     att_hor
 };
 const attack_t rain = {
-    40,
+    45,
     att_rain
 };
 const attack_t pilar = {
-    30,
+    35,
     att_pilar
 };
 const attack_t none = {
     20,
     att_none
 };
-
-
 
 u8 boss_timer;
 u8 boss_attack_timer;
@@ -38,92 +32,115 @@ attack_t const *  attack;
 
 void sys_AI_shoot(ent_t* e){
     e->Ai_counter--;
+    e->type &= ~e_t_render;
     if(e->Ai_counter == 0){
         e->Ai_counter = rate_of_fire;
         man_ent_resurrect(e, 1);
     }
+    if(e->Ai_counter >= rate_of_fire-2){
+        e->type |= e_t_render;
+    }
+
 }
 void sys_AI_zombi(ent_t* e){
-    
-    if(e->Ai_counter == 0 && e->vx == 0){
-        if(e->prev_vx == -1)
-            e->prev_vx = 1;
-        else 
-            e->prev_vx = -1;
-    }
     e->vy = 4;
-    e->vx = 0;
-    e->Ai_counter++;
-    if(e->Ai_counter == move_rate){
-        e->Ai_counter = 0;
+
+    if(!e->Ai_counter){
+        if (!e->vx){
+            if(e->prev_vx <0 ){
+                e->prev_vx = 2;
+                e->move_dir = dir_right;
+            }
+            else {
+                e->prev_vx = -2;
+                e->move_dir = dir_left;
+            }
+        }
+        e->Ai_counter = zombi_rate;
+    }
+
+    if(e->Ai_counter==1){
         e->vx = e->prev_vx;
     }
+    else e->vx = 0;
+
+    e->Ai_counter--;
 }
 
 void sys_AI_ghost(ent_t* e){
     
-    if(e->x < man_ent_get_char()->x){
-        e->prev_vx = 1;
-    }
-    else if (e->x > man_ent_get_char()->x){
-        e->prev_vx = -1;
-    }
-    else{
-        e->prev_vx = 0;
-    }
-
-    if(e->y < man_ent_get_char()->y){
-        e->prev_vy = 4;
-    }
-    else if (e->y > man_ent_get_char()->y){
-        e->prev_vy = -4;
-    }
-    else{
-        e->prev_vy = 0;
-    }
     e->vy = 0;
     e->vx = 0;
-    e->Ai_counter++;
-    if(e->Ai_counter == move_rate){
-        e->Ai_counter = 0;
-        e->vx = e->prev_vx;
-        e->vy = e->prev_vy;
+    if(e->Ai_counter == 0){
+        if(e->x!=player->x){
+            if(e->x < player->x){
+                e->vx = 1;
+                e->move_dir = dir_right;
+            }
+            else{
+                e->vx = -1;
+                e->move_dir = dir_left;
+            }
+        }
+        if(e->y!=player->y){
+            if(e->y < player->y){
+                e->vy = 4;
+            }
+            else{
+                e->vy = -4;
+            }
+        }
+        e->Ai_counter = ghost_rate;
     }
-
+    e->Ai_counter--;
 }
 
 void sys_AI_sonic(ent_t* e){
-    if(e->Ai_counter == 0 && e->vx == 0){
-        if(e->prev_vx == -1)
-            e->prev_vx = 1;
-        else 
-            e->prev_vx = -1;
-    }
     e->vy = 4;
-    e->vx = 0;
-    e->Ai_counter++;
-    if(e->Ai_counter%move_rate == 0 || e->Ai_counter > 28){
+
+    if(e->prev_vy){
+        e->action |= 2;
+    }
+    if(e->vx){
         e->vx = e->prev_vx;
+        e->action |= 1;
+    }
+    else if(!e->Ai_counter){
 
-        if(e->Ai_counter == 20 || e->Ai_counter == 24){
-            e->vx = 0;
-        }
+        if(e->x > player->x) e->move_dir = dir_left;
+        else e->move_dir = dir_right;
 
-        else if(e->Ai_counter > 28 && e->Ai_counter < 36){
+        if(e->prev_vy){
+            if(e->x > player->x){
+                e->vx = -2;
+                e->prev_vx = -2;
+            }
+            else{
+                e->vx = 2;
+                e->prev_vx = 2;
+            }
             e->action |= 1;
+            e->prev_vy = 0;
+        }
+        else if(e->prev_vx){
+            e->prev_vx = 0;
+        }
+        else if(!(player->y+player->h <= e->y  ||  player->y >= e->y+e->h) ){
+                e->action |= 2;
+                e->prev_vy = 1;
         }
 
-        else if (e->Ai_counter == 36){
-            e->Ai_counter = 0;
-        }
-
+        e->Ai_counter = dasher_rate;
+    } 
+    e->Ai_counter--;
+    if(e->Ai_counter>dasher_rate){
+        e->Ai_counter= dasher_rate;
     }
 }
 
 void sys_AI_boss(ent_t* e){
-
+    e->move_dir = dir_right;
     if(!boss_timer){
-        ent_t* player = man_ent_get_char();
         u8 rand = cpct_getRandom_lcg_u8(player->x);
         rand = rand%4;
         if(rand==boss_attack_index){
@@ -168,55 +185,19 @@ void sys_AI_boss(ent_t* e){
         e->vx = e->originalvx;
         e->vy = e->originalvy;
     }
-
     boss_timer--;
     attack->funct(e);// attack_function();
 }
-/*void att_move(ent_t* e){
-    e->vx = 0;
-    if(boss_attack_timer>10){
-        e->action |= 0x01;
-    }
-    else{
-        if(boss_attack_timer<10 && boss_attack_timer>8){
-            e->vx = 2;
-        }
-        else if(boss_attack_timer<8 && boss_attack_timer>4){
-            e->vx = -2;
-        }
-        else if(boss_attack_timer==4){
-            e->vx = 2;
-        }
-        else if(boss_attack_timer==3){
-            e->vx = 2;
-        }
-        else if(boss_attack_timer==0){
-            attack = &none;
-        }
-    }
-
-    boss_attack_timer--;
-}*/
 void att_none(ent_t* e){
     ent_t* en = e;
 }
 
 void att_hor(ent_t* e){
-    ent_t* player = man_ent_get_char();
-
-    /*if(boss_attack_timer==attack->total_time){// si no le voy a dar cambio de ataque
-        if(player->y+player->h <= e->y  ||  player->y >= e->y+e->h){
-            boss_timer = 0;
-        }
-        boss_attack_timer--;
-        return;
-    }*/
-
     if(boss_attack_timer==attack->total_time-1){//set entities to hit
-        u8 i = 3;
         u8 xpos;
+        u8 i = 3;
         if(player->x < 40){
-            xpos = -(e + i)->w;
+            xpos = -(e+i)->w;
         }
         else{
             xpos = e->w;
@@ -229,6 +210,12 @@ void att_hor(ent_t* e){
 
     if(boss_attack_timer>10){
         e->action |= 0x01;
+        if((e+3)->originalx < 40){
+            e->move_dir = dir_right;
+        }
+        else{
+            e->move_dir = dir_left;
+        }
     }
     else{
         if(boss_attack_timer == 10){
@@ -259,7 +246,6 @@ void att_hor(ent_t* e){
 }
 
 void att_rain(ent_t* e){
-    ent_t* player = man_ent_get_char();
 
     if(boss_attack_timer==attack->total_time-1){//set entities to hit
         u8 i = 6;
@@ -273,7 +259,7 @@ void att_rain(ent_t* e){
             i--;
         }
     }
-    e->action |= 0x01;
+    e->action |= 0x02;
     if(boss_attack_timer==28){
         man_ent_res_absolute(e, 3+1);
     }
@@ -319,13 +305,12 @@ void att_rain(ent_t* e){
 }
 
 void att_pilar(ent_t* e){
-    ent_t* player = man_ent_get_char();
 
     if(boss_attack_timer==attack->total_time-1){//set entities to hit
         (e + 3 + 6 + 1)->originalx = player->x - 4;  
     }
     if(boss_attack_timer>6){
-        e->action |= 0x01;
+        e->action |= 0x03;
     }
     else if(boss_attack_timer==6){
         man_ent_res_absolute(e, 3+6+1);
@@ -345,8 +330,6 @@ void sys_AI_one(ent_t* e){
 }
 
 void sys_AI_init(){
-    shoot_timer=rate_of_fire;
-    move_counter = 0;
 
     boss_inter_attack_time = 100;
     boss_attack_timer = 0;

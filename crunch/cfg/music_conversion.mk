@@ -37,10 +37,15 @@
 
 $(eval $(call AKS2DATA, SET_FOLDER   , src/music ))
 $(eval $(call AKS2DATA, SET_OUTPUTS  , h s  ))
+
 $(eval $(call AKS2DATA, SET_SFXONLY  , no   ))
+$(eval $(call AKS2DATA, CONVERT      , assets/intro.aks , intro , 0x150 ))
+$(eval $(call AKS2DATA, CONVERT      , assets/game.aks , game , 0x308 ))
+$(eval $(call AKS2DATA, CONVERT      , assets/rym.aks , rym , 0x581 ))
 
-$(eval $(call AKS2DATA, CONVERT      , assets/music1.aks , music1 , 0x1000 ))
 
+$(eval $(call AKS2DATA, SET_SFXONLY  , yes   ))
+$(eval $(call AKS2DATA, CONVERT      , assets/sfx.aks , sfx , 0xa6b ))
 
 ##
 ## OLD MACROS (For compatibility)
