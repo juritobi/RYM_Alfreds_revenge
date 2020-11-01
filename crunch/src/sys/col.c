@@ -134,6 +134,9 @@ void sys_col_reduceTimeInvulnerable(ent_t* e){
     if(e->knockback > -1 && e->knockback < sizeof(knocknackX)){ 
         e->vx = knocknackX[e->knockback]*dire;
         e->vy = knocknackY[e->knockback];
+        if(e->vy + e->y < 24){
+            e->vy = 0;
+        }
         e->knockback++;
         e->on_ground = 2;//esto es pa que atraviese los bloques semi-solidos
     }

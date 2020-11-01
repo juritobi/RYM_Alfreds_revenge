@@ -1,3 +1,4 @@
+#pragma once
 #include <cpctelera.h>
 #include <tilemaps/lvl0.h>
 #include <tilemaps/lvl0_pack.h>
