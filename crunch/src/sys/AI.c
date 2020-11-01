@@ -39,7 +39,7 @@ void sys_AI_shoot(ent_t* e){
         e->Ai_counter = rate_of_fire;
         man_ent_resurrect(e, 1);
     }
-    if(e->Ai_counter == rate_of_fire-2){
+    if(e->Ai_counter >= rate_of_fire-2){
         e->type |= e_t_render;
     }
 
