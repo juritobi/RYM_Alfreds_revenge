@@ -37,19 +37,19 @@ void tr_room(){
 }
 
 void powerup_tbl_room(){
-    redraw_tile(9, 3, 18)
+    redraw_tile(9, 3, 18);
 }
 
 void powerup_tbr_room(){
-    redraw_tile(10, 18, 18)
+    redraw_tile(10, 18, 18);
 }
 
 void powerup_brl_room(){
-    redraw_tile(10, 8, 18)
+    redraw_tile(10, 8, 18);
 }
 
 void powerup_trl_room(){
-    redraw_tile(16, 19, 18)
+    redraw_tile(16, 19, 18);
 }
 
 const u8 crap = 0x0;
@@ -85,7 +85,7 @@ const lvl_t i_top_right_5;
 const lvl_t i_top_right_extra;
 
 const lvl_t i_top_bot_right_power_up;
-const lvl_t i_top_bot_left_power_up
+const lvl_t i_top_bot_left_power_up;
 const lvl_t i_top_right_left_power_up;
 const lvl_t i_bot_right_left_power_up;
 
@@ -416,11 +416,11 @@ const lvl_t i_top_left_3 = {
 };
 const lvl_t i_top_left_extra = {
     19,                          //id
-    top_left_extra_pack_end,    //this
-    0,                          //top
-    &i_top_right_left_power_up,                          //right
-    0,                          //bot
-    &i_top_left_3,              //left
+    top_left_extra_pack_end,     //this
+    0,                           //top
+    &i_top_right_left_power_up,  //right
+    &i_top_left_3,               //bot
+    0,                           //left
     normal_room,
     0,
     {
@@ -642,8 +642,8 @@ const lvl_t i_top_bot_left_power_up = {
 const lvl_t i_top_right_left_power_up = {
     32,
     top_right_left_power_up_pack_end,
-    0
-    0
+    0,
+    0,
     &i_top_right_extra,
     &i_top_left_extra,
     powerup_trl_room,

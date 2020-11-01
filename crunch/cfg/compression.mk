@@ -133,21 +133,18 @@ $(eval $(call PACKZX7B,top_right_5_pack,src/tilemaps))
 $(eval $(call ADD2PACK,top_right_extra_pack, src/tilemaps/top_right_extra.bin))
 $(eval $(call PACKZX7B,top_right_extra_pack,src/tilemaps))
 
+## POWER UPS
 
-
-$(eval $(call ADD2PACK,bot_right_left_power_up, src/tilemaps/bot_right_left_power_up.bin))
+$(eval $(call ADD2PACK,bot_right_left_power_up_pack, src/tilemaps/bot_right_left_power_up.bin))
 $(eval $(call PACKZX7B,bot_right_left_power_up_pack,src/tilemaps))
 
-
-$(eval $(call ADD2PACK,top_right_left_power_up, src/tilemaps/top_right_left_power_up.bin))
+$(eval $(call ADD2PACK,top_right_left_power_up_pack, src/tilemaps/top_right_left_power_up.bin))
 $(eval $(call PACKZX7B,top_right_left_power_up_pack,src/tilemaps))
 
-
-$(eval $(call ADD2PACK,top_bot_left_power_up, src/tilemaps/top_bot_left_power_up.bin))
+$(eval $(call ADD2PACK,top_bot_left_power_up_pack, src/tilemaps/top_bot_left_power_up.bin))
 $(eval $(call PACKZX7B,top_bot_left_power_up_pack,src/tilemaps))
 
-
-$(eval $(call ADD2PACK,top_bot_right_power_up, src/tilemaps/top_bot_right_power_up.bin))
+$(eval $(call ADD2PACK,top_bot_right_power_up_pack, src/tilemaps/top_bot_right_power_up.bin))
 $(eval $(call PACKZX7B,top_bot_right_power_up_pack,src/tilemaps))
 
 $(eval $(call ADD2PACK,boss1_pack, src/tilemaps/boss1.bin))
