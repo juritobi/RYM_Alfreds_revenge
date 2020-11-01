@@ -16,7 +16,6 @@ i8 jumpCont;
 i8 PiumPiumCont;
 
 void sys_Input_init(){
-
     swordUp = 0;
     swordCooling = 0;
     jumpCont = 1;

@@ -12,11 +12,17 @@
 #include <sprites/converting2.h>
 #include <sprites/cone.h>
 #include <sprites/dead.h>
+#include <sprites/c_win.h>
+#include <sprites/b_win.h>
 
 #include <music/sfx.h>
 #include <music/intro.h>
 #include <music/game.h>
 #include <music/rym.h>
+
+#include <constants.h>
+#include <man/level.h>
+#include <sys/render.h>
 
 u8 render_count;
 u8 music_play;
@@ -56,14 +62,12 @@ void interrupt_6(){
 }
 
 const player_t character_sets[] = {
-    {10 ,5  ,1  ,1},
-    {15 ,1  ,1  ,1},
-    {5  ,10 ,1  ,2},
-    {5  ,2  ,3  ,1},
-    {2  ,10 ,2  ,2},
+    {5 ,5  ,1  ,1},
+    {10 ,2  ,1  ,1},
+    {3  ,10 ,1  ,2}
 };
 
-typedef void (*Ptrf_v_v)(void);
+//typedef void (*Ptrf_v_v)(void);
 Ptrf_v_v executing_state;
 
 cpct_keyID left_value;
@@ -98,6 +102,15 @@ void app_draw_box(u8 x, u8 y, u8 color, u8 w, u8 h){
 void app_draw_string(u8 x, u8 y, void* string){
     u8* pos = cpct_getScreenPtr (CPCT_VMEM_START,x, y);
     cpct_drawStringM1(string, pos);
+}
+void app_draw_squearesquare(u8 x, u8 y, u8 w, u8 h){
+
+    app_draw_box(x,y, 0xF0, w, h);//big
+    app_draw_box(x+1,y+2, 0x0F, w-2, 2);
+    app_draw_box(x+1,y+h-4, 0x0F, w-2, 2);
+    app_draw_box(x,y+2, 0xC3, 1, h-4);
+    app_draw_box(x+w-1,y+2, 0x3C, 1, h-4);
+
 }
 
 //INTRO
@@ -220,55 +233,84 @@ void man_app_main_update(){
 //CONTROLS
 void man_app_controls(){
     
-    u8 increment= 24;
-    u8 x2 = 46;
-    cpct_clearScreen(0);
-    y = 40;
-    x = 26;
-    app_draw_string(32,16, "CONTROLS");
-    app_draw_box(32,26, 0x0f, 16, 2);
-    app_draw_string(x,y, "Left:");
-    app_draw_box(x2,y, 0xFF, 2, 8);
-    y += increment;
-    app_draw_string(x,y, "Right:");
-    app_draw_box(x2,y, 0xFF, 2, 8);
-    y += increment;
-    app_draw_string(x,y, "Up:");
-    app_draw_box(x2,y, 0xFF, 2, 8);
-    y += increment;
-    app_draw_string(x,y, "Down:");
-    app_draw_box(x2,y, 0xFF, 2, 8);
-    y += increment;
-    app_draw_string(x,y, "Sword:");
-    app_draw_box(x2,y, 0xFF, 2, 8);
-    y += increment;
-    app_draw_string(x,y, "Knife:");
-    app_draw_box(x2,y, 0xFF, 2, 8);
+    app_draw_box(10,8,0x00, 30, 184);
+    app_draw_box(40,8,0x00, 30, 184);
+    app_draw_string(32,20, "CONTROLS");
+    app_draw_box(32,29, 0x0f, 16, 2);
 
-    app_draw_string(20,190, "[Esc] Back to menu");
-    app_draw_box(x2,y, 0xFF, 2, 8);
+    cpct_setDrawCharM1(3, 1);
 
+    app_draw_squearesquare(20, 44, 40, 60);
+    app_draw_squearesquare(20, 120, 40, 60);
+
+    app_draw_string(32,52, "ORIGINAL");
+    app_draw_box(32,61, 0x0f, 16, 1);
+    app_draw_string(30,68, "OPQA: MOVE");
+    app_draw_string(28,78, "SPACE: SWORD");
+    app_draw_string(27,88, "RETURN: KNIFE");
+
+    app_draw_string(34,128, "MODERN");
+    app_draw_box(34,137, 0x0f, 12, 1);
+    app_draw_string(30,144, "WASD: MOVE");
+    app_draw_string(32,154, "O: SWORD");
+    app_draw_string(32,164, "P: KNIFE");
+
+    cpct_setDrawCharM1(3, 0);
+    app_draw_string(12,70, "[1]");
+    app_draw_string(62,70, "[1]");
+    app_draw_string(12,146, "[2]");
+    app_draw_string(62,146, "[2]");
+
+    
     executing_state = man_app_controls_update;
+    
 }
 void man_app_controls_update(){
-    executing_state = man_app_main;
+    if(cpct_isKeyPressed(Key_1)){
+        left_value  = Key_O;
+        right_value = Key_P;
+        up_value    = Key_Q;
+        down_value  = Key_A;
+        fire1_value = Key_Space;
+        fire2_value = Key_Return;
+        executing_state = man_app_main;
+    }
+    else if(cpct_isKeyPressed(Key_2)){
+        left_value  = Key_A;
+        right_value = Key_D;
+        up_value    = Key_W;
+        down_value  = Key_S;
+        fire1_value = Key_O;
+        fire2_value = Key_P;
+        executing_state = man_app_main;
+    }
 }
 //CONTROLS
 
 //CHARACTER SELECT
 void man_app_sel(){
 
-    cpct_clearScreen(0x0);
-    app_draw_string(20,8, "SELECT YOUR STATS");
-    app_draw_box(20,18, 0x0f, 34, 2);
+    app_draw_box(10,8,0x00, 30, 184);
+    app_draw_box(40,8,0x00, 30, 184);
+    app_draw_string(27,20, "INITIAL STATS");
+    app_draw_box(27,29, 0x0f, 26, 2);
 
-    app_draw_string(6,60, "[1]");
-    app_draw_string(6,116, "[2]");
-    app_draw_string(6,172, "[3]");
 
-    man_app_draw_stats(24, 55, character_sets);
-    man_app_draw_stats(24, 111, character_sets+1);
-    man_app_draw_stats(24, 167, character_sets+2);
+    app_draw_string(62,56, "[1]");
+    app_draw_string(62,104, "[2]");
+    app_draw_string(62,152, "[3]");
+
+    app_draw_string(12,56, "[1]");
+    app_draw_string(12,104, "[2]");
+    app_draw_string(12,152, "[3]");
+
+    app_draw_squearesquare(20, 44, 40, 32);
+    app_draw_squearesquare(20, 92, 40, 32);
+    app_draw_squearesquare(20, 140, 40, 32);
+
+    man_app_draw_stats(22, 51, character_sets);
+    man_app_draw_stats(22, 99, character_sets+1);
+    man_app_draw_stats(22, 147, character_sets+2);
 
     executing_state = man_app_sel_update;
 }
@@ -297,7 +339,7 @@ void man_app_game(){
 void man_app_game_update(){
     u8 next = man_game_play();
     if(next){
-        executing_state = man_app_lose;
+        executing_state = man_app_win;
     }
 }
 //GAME
@@ -306,7 +348,6 @@ void man_app_game_update(){
 void man_app_lose(){
     cpct_akp_musicInit ((u8*)intro_address);
     music_sync = 0;
-    activate = 330;
     cpct_clearScreen(0xf0);
     executing_state = man_app_lose_update;
 }
@@ -327,6 +368,34 @@ void man_app_lose_update(){
     }   
 }
 //Lose
+//Win
+void man_app_win(){
+    cpct_akp_musicInit ((u8*)intro_address);
+    music_sync = 0;
+    cpct_zx7b_decrunch_s(tilemap_start + tilemap_size - 1, boss1_pack_end);
+    sys_ren_draw_tilemap(tilemap_start);
+    app_draw_sprite(38,96,spr_c_win_0,4,32);
+    app_draw_sprite(34,128,spr_b_win_0,12,32);
+    executing_state = man_app_win_update;
+}
+void man_app_win_update(){
+    if(music_sync == 60){
+        app_draw_sprite(38,96,spr_c_win_1,4,32);
+    app_draw_sprite(34,128,spr_b_win_1,12,32);
+    }
+    else if(music_sync == 120){
+        app_draw_sprite(38,96,spr_c_win_0,4,32);
+    app_draw_sprite(34,128,spr_b_win_0,12,32);
+    }
+    else if(music_sync == 180){
+        app_draw_sprite(38,96,spr_c_win_1,4,32);
+        app_draw_sprite(34,128,spr_b_win_1,12,32);
+    }
+    else if(music_sync == 240){
+        executing_state = man_app_end;
+    }   
+}
+//Win
 
 //End
 void man_app_end(){

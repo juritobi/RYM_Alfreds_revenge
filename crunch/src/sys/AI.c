@@ -1,6 +1,9 @@
 #include "AI.h"
 
-#define rate_of_fire 100
+#define rate_of_fire 40
+#define zombi_rate 15
+#define ghost_rate 3
+#define dasher_rate 15
 #define move_rate 5
 
 const attack_t horizontal = {
@@ -31,38 +34,46 @@ attack_t const *  attack;
 
 void sys_AI_shoot(ent_t* e){
     e->Ai_counter--;
+    e->type &= ~e_t_render;
     if(e->Ai_counter == 0){
         e->Ai_counter = rate_of_fire;
         man_ent_resurrect(e, 1);
     }
+    if(e->Ai_counter >= rate_of_fire-2){
+        e->type |= e_t_render;
+    }
+
 }
 void sys_AI_zombi(ent_t* e){
-
-    if(e->Ai_counter == 0 && e->vx == 0){
-        if(e->prev_vx == -1){
-            e->prev_vx = 1;
-            e->move_dir = dir_right;
-        }
-        else {
-            e->prev_vx = -1;
-            e->move_dir = dir_left;
-        }
-    }
     e->vy = 4;
-    e->vx = 0;
-    e->Ai_counter++;
-    if(e->Ai_counter == move_rate){
-        e->Ai_counter = 0;
+
+    if(!e->Ai_counter){
+        if (!e->vx){
+            if(e->prev_vx <0 ){
+                e->prev_vx = 2;
+                e->move_dir = dir_right;
+            }
+            else {
+                e->prev_vx = -2;
+                e->move_dir = dir_left;
+            }
+        }
+        e->Ai_counter = zombi_rate;
+    }
+
+    if(e->Ai_counter==1){
         e->vx = e->prev_vx;
     }
+    else e->vx = 0;
+
+    e->Ai_counter--;
 }
 
 void sys_AI_ghost(ent_t* e){
     
     e->vy = 0;
     e->vx = 0;
-    e->Ai_counter++;
-    if(e->Ai_counter == move_rate){
+    if(e->Ai_counter == 0){
         if(e->x!=player->x){
             if(e->x < player->x){
                 e->vx = 1;
@@ -75,46 +86,58 @@ void sys_AI_ghost(ent_t* e){
         }
         if(e->y!=player->y){
             if(e->y < player->y){
-                e->vy = 1;
+                e->vy = 4;
             }
             else{
-                e->vy = -1;
+                e->vy = -4;
             }
         }
-
-        e->Ai_counter = 0;
+        e->Ai_counter = ghost_rate;
     }
+    e->Ai_counter--;
 }
 
 void sys_AI_sonic(ent_t* e){
-    if(e->Ai_counter == 0 && e->vx == 0){
-        if(e->prev_vx == -1){
-            e->prev_vx = 1;
-            e->move_dir = dir_right;
-        }
-        else{
-            e->prev_vx = -1;
-            e->move_dir = dir_left;
-        }
-    }
     e->vy = 4;
-    e->vx = 0;
-    e->Ai_counter++;
-    if(e->Ai_counter%move_rate == 0 || e->Ai_counter > 28){
+
+    if(e->prev_vy){
+        e->action |= 2;
+    }
+
+    if(e->vx){
         e->vx = e->prev_vx;
+        e->action |= 1;
+    }
+    else if(!e->Ai_counter){
 
-        if(e->Ai_counter == 20 || e->Ai_counter == 24){
-            e->vx = 0;
-        }
+        if(e->x > player->x) e->move_dir = dir_left;
+        else e->move_dir = dir_right;
 
-        else if(e->Ai_counter > 28 && e->Ai_counter < 36){
+        if(e->prev_vy){
+            if(e->x > player->x){
+                e->vx = -2;
+                e->prev_vx = -2;
+            }
+            else{
+                e->vx = 2;
+                e->prev_vx = 2;
+            }
             e->action |= 1;
+            e->prev_vy = 0;
+        }
+        else if(e->prev_vx){
+            e->prev_vx = 0;
+        }
+        else if(!(player->y+player->h <= e->y  ||  player->y >= e->y+e->h) ){
+                e->action |= 2;
+                e->prev_vy = 1;
         }
 
-        else if (e->Ai_counter == 36){
-            e->Ai_counter = 0;
-        }
-
+        e->Ai_counter = dasher_rate;
+    } 
+    e->Ai_counter--;
+    if(e->Ai_counter>dasher_rate){
+        e->Ai_counter= dasher_rate;
     }
 }
 
