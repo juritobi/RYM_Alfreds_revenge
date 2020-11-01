@@ -352,6 +352,7 @@ void man_app_lose(){
     executing_state = man_app_lose_update;
 }
 void man_app_lose_update(){
+    music_play = 1;
     if(music_sync == 60){
         app_draw_sprite(32,44,spr_cone,16,112);
         app_draw_sprite(38,44+112-16-24,spr_death_0,4,24);
