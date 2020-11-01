@@ -24,16 +24,32 @@ void bl_room(){
 }
 
 void br_room(){
-    redraw_tile(10,  3, 6);
+    redraw_tile(10,  8, 6);
 }
 
 void tl_room(){
-    redraw_tile(9, 3, 6);
+    redraw_tile(9, 8, 6);
 }
 
 void tr_room(){
     redraw_tile(9, 21, 18);
     redraw_tile(10, 21, 18);
+}
+
+void powerup_tbl_room(){
+    redraw_tile(9, 3, 18)
+}
+
+void powerup_tbr_room(){
+    redraw_tile(10, 18, 18)
+}
+
+void powerup_brl_room(){
+    redraw_tile(10, 8, 18)
+}
+
+void powerup_trl_room(){
+    redraw_tile(16, 19, 18)
 }
 
 const u8 crap = 0x0;
@@ -67,6 +83,11 @@ const lvl_t i_top_right_3;
 const lvl_t i_top_right_4;
 const lvl_t i_top_right_5;
 const lvl_t i_top_right_extra;
+
+const lvl_t i_top_bot_right_power_up;
+const lvl_t i_top_bot_left_power_up
+const lvl_t i_top_right_left_power_up;
+const lvl_t i_bot_right_left_power_up;
 
 const lvl_t i_lvl0 = {//center room
     0,                  //id
@@ -139,7 +160,7 @@ const lvl_t i_bot_left_2 = {
 const lvl_t i_bot_left_3 = {
     4,                          //id
     bot_left_3_pack_end,        //this
-    0,                           //top
+    &i_top_bot_left_power_up,                           //top
     &i_bot_left_2,              //right
     &i_bot_left_4,              //bot
     0,                          //left
@@ -157,7 +178,7 @@ const lvl_t i_bot_left_extra = {
     5,                          //id
     bot_left_extra_pack_end,    //this
     &i_bot_left_2,              //top
-    0,                          //right
+    &i_bot_right_left_power_up,                          //right
     0,                          //bot
     &i_bot_left_4,              //left
     normal_room,
@@ -279,7 +300,7 @@ const lvl_t i_bot_right_extra = {
     &i_bot_right_2,             //top
     0,                          //right
     0,                          //bot
-    0,                          //left
+    &i_bot_right_left_power_up,                          //left
     normal_room,
     0,
     {
@@ -310,7 +331,7 @@ const lvl_t i_bot_right_4 = {
 const lvl_t i_bot_right_5 = {
     14,                          //id
     bot_right_5_pack_end,        //this
-    0,                           //top
+    &i_top_bot_right_power_up,                           //top
     &i_bot_right_6,              //right
     0,                           //bot
     &i_bot_right_4,              //left
@@ -397,7 +418,7 @@ const lvl_t i_top_left_extra = {
     19,                          //id
     top_left_extra_pack_end,    //this
     0,                          //top
-    0,                          //right
+    &i_top_right_left_power_up,                          //right
     0,                          //bot
     &i_top_left_3,              //left
     normal_room,
@@ -414,8 +435,8 @@ const lvl_t i_top_left_4 = {
     20,                          //id
     top_left_4_pack_end,        //this
     &i_top_left_3,              //top
-    &i_top_left_extra,          //right
-    0,                          //bot
+    0,                          //right
+    &i_top_bot_left_power_up,                          //bot
     &i_top_left_5,              //left
     normal_room,
     0,
@@ -448,7 +469,7 @@ const lvl_t i_top_left_6 = {
     22,                          //id
     top_left_6_pack_end,        //this
     &i_top_left_5,              //top
-    0,                          //right
+    &i_top_bot_left_power_up,                          //right
     0,                          //bot
     &i_top_left_7,              //left
     normal_room,
@@ -518,7 +539,7 @@ const lvl_t i_top_right_3 = {
     top_right_3_pack_end,        //this
     &i_top_right_4,              //top
     0,                           //right
-    0,                           //bot
+    &i_top_bot_right_power_up,   //bot
     &i_top_right_2,              //left
     normal_room,
     0,
@@ -533,10 +554,10 @@ const lvl_t i_top_right_3 = {
 const lvl_t i_top_right_extra = {
     27,                         //id
     top_right_extra_pack_end,   //this
-    0,                      
-    &i_top_right_5,             //right
-    &i_top_right_3,             //bot
-    &i_top_right_extra,         //left
+    &i_top_right_left_power_up,                          //top
+    &i_top_right_4,             //right
+    &i_top_right_2,             //bot
+    0,                          //left
     normal_room,
     0,
     {
@@ -553,7 +574,7 @@ const lvl_t i_top_right_4 = {
     0,                           //top
     &i_top_right_5,              //right
     &i_top_right_3,              //bot
-    0,                           //left
+    &i_top_right_extra,          //left
     normal_room,
     0,
     {
@@ -578,6 +599,78 @@ const lvl_t i_top_right_5 = {
         {e_c_shoot, 72, 64},
         {e_c_sonic, 56, 64},
         {e_c_sonic, 56, 112},
+        {0, 0, 0}
+    }
+};
+
+const lvl_t i_top_bot_right_power_up = {
+    30,
+    top_bot_right_power_up_pack_end,
+    &i_top_right_3,
+    0,
+    &i_bot_right_5,
+    0,
+    powerup_tbr_room,
+    0,
+    {
+        {e_c_sonic, 4, 64},
+        {e_c_ghost, 40, 88},
+        {e_c_powerUp, 40, 176, 2},
+        {0, 0, 0},
+        {0, 0, 0}
+    }
+};
+
+const lvl_t i_top_bot_left_power_up = {
+    31,
+    top_bot_left_power_up_pack_end,
+    &i_top_left_4,
+    0,
+    &i_bot_left_3,
+    &i_top_left_6,
+    powerup_tbl_room,
+    0,
+    {
+        {e_c_shoot, 40, 128},
+        {e_c_shoot, 40, 176},
+        {e_c_sonic, 52, 176},
+        {e_c_sonic, 68, 176},
+        {e_c_powerUp, 36, 32, 1}
+    }
+};
+
+const lvl_t i_top_right_left_power_up = {
+    32,
+    top_right_left_power_up_pack_end,
+    0
+    0
+    &i_top_right_extra,
+    &i_top_left_extra,
+    powerup_trl_room,
+    0,
+    {
+        {e_c_sonic, 24, 88},
+        {e_c_sonic, 24, 176},
+        {e_c_sonic, 48, 56},
+        {e_c_sonic, 48, 120},
+        {e_c_powerUp, 72, 176, 4}
+    }
+};
+
+const lvl_t i_bot_right_left_power_up  = {
+    33,
+    bot_right_left_power_up_pack_end,
+    0,
+    &i_bot_right_extra,
+    0,
+    &i_bot_left_extra,
+    powerup_brl_room,
+    0,
+    {
+        {e_c_zombi, 8,  48},
+        {e_c_shoot, 68, 32},
+        {e_c_powerUp, 40, 32, 3},
+        {0, 0, 0},
         {0, 0, 0}
     }
 };

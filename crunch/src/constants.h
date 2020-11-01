@@ -31,6 +31,13 @@
 #include <tilemaps/top_right_4_pack.h>
 #include <tilemaps/top_right_5_pack.h>
 #include <tilemaps/top_right_extra_pack.h>
+
+#include <tilemaps/top_right_left_power_up_pack.h>
+#include <tilemaps/bot_right_left_power_up_pack.h>
+#include <tilemaps/top_bot_right_power_up_pack.h>
+#include <tilemaps/top_bot_left_power_up_pack.h>
+
+
 #include <tilemaps/boss1_pack.h>
 #include <sprites/tileset.h>
 

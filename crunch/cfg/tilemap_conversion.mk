@@ -75,6 +75,12 @@ $(eval $(call TMX2DATA, CONVERT, assets/top_right_4.tmx, top_right_4 ))
 $(eval $(call TMX2DATA, CONVERT, assets/top_right_5.tmx, top_right_5 )) 
 $(eval $(call TMX2DATA, CONVERT, assets/top_right_extra.tmx, top_right_extra )) 
 
+
+$(eval $(call TMX2DATA, CONVERT, assets/bot_right_left_power_up.tmx, bot_right_left_power_up )) 
+$(eval $(call TMX2DATA, CONVERT, assets/top_right_left_power_up.tmx, top_right_left_power_up )) 
+$(eval $(call TMX2DATA, CONVERT, assets/top_bot_right_power_up.tmx, top_bot_right_power_up )) 
+$(eval $(call TMX2DATA, CONVERT, assets/top_bot_left_power_up.tmx, top_bot_left_power_up )) 
+
 $(eval $(call TMX2DATA, CONVERT, assets/boss1.tmx, boss1 ))
 
 
