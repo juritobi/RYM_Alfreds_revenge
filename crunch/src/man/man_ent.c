@@ -555,21 +555,18 @@ ent_t ents[20];
 u8 invalid_at_end_of_ents;
 ent_t*  next_free_ent;
 ent_t *const player = ents;
+u8 scheduling;
 
 void man_ent_init(){
+   scheduling = 0;
    next_free_ent = ents;
    cpct_memset (ents, e_t_invalid, sizeof(ents)+1);
 }
 
 void man_ent_reset(){
+   scheduling = 0;
    next_free_ent = ents+3;
    cpct_memset ((ents+3), e_t_invalid, sizeof(ents)-sizeof(ent_t)*3);
-}
-
-ent_t* man_ent_create(){
-   ent_t* res = next_free_ent;
-   ++next_free_ent;
-   return res;
 }
 
 //tipo tiene en los 2 primeros bit el numero de entidades que crea y en los siguientes la entidad en la que empieza a crear
@@ -609,8 +606,14 @@ void man_ent_create_class(u8 type, u8 x, u8 y, u8 PupType){
 }
 
 ent_t* man_ent_create_from_template(const ent_t* template){
-   ent_t* res = man_ent_create();
+   ent_t* res = next_free_ent;
+   ++next_free_ent;
    cpct_memcpy(res, template, sizeof(ent_t));
+   if(res->type & e_t_AI){
+      res->Ai_counter+= scheduling;
+      res->anim_timer += scheduling;
+      scheduling+=1;
+   }
    return res;
 }
 

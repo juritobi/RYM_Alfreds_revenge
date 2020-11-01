@@ -40,24 +40,28 @@ void sys_AI_shoot(ent_t* e){
     }
 }
 void sys_AI_zombi(ent_t* e){
-
-    if(e->Ai_counter == 0 && e->vx == 0){
-        if(e->prev_vx <0 ){
-            e->prev_vx = 2;
-            e->move_dir = dir_right;
-        }
-        else {
-            e->prev_vx = -2;
-            e->move_dir = dir_left;
-        }
-    }
     e->vy = 4;
-    e->vx = 0;
-    e->Ai_counter++;
-    if(e->Ai_counter == zombi_rate){
-        e->Ai_counter = 0;
+
+    if(!e->Ai_counter){
+        if (!e->vx){
+            if(e->prev_vx <0 ){
+                e->prev_vx = 2;
+                e->move_dir = dir_right;
+            }
+            else {
+                e->prev_vx = -2;
+                e->move_dir = dir_left;
+            }
+        }
+        e->Ai_counter = zombi_rate;
+    }
+
+    if(e->Ai_counter==1){
         e->vx = e->prev_vx;
     }
+    else e->vx = 0;
+
+    e->Ai_counter--;
 }
 
 void sys_AI_ghost(ent_t* e){
@@ -94,21 +98,21 @@ void sys_AI_sonic(ent_t* e){
 
     if(e->vx){
         e->vx = e->prev_vx;
-        e->action |= 1
+        e->action |= 1;
     }
     else if(!e->Ai_counter){
         if(e->x > player->x){
             if(e->x > player->x) e->move_dir = dir_left;
             else e->move_dir = dir_right;
         }
-        if(e->prev_y){
+        if(e->prev_vy){
             if(e->x > player->x){
                 e->vx = -1;
-                e->perv_vx = -1;
+                e->prev_vx = -1;
             }
             else{
                 e->vx = 1;
-                e->perv_vx = 1;
+                e->prev_vx = 1;
             }
             e->action |= 1;
             e->prev_vy = 0;
@@ -121,7 +125,6 @@ void sys_AI_sonic(ent_t* e){
                 e->prev_vy = 1;
         }
     } 
-    
     e->Ai_counter--;
 }
 
