@@ -6,6 +6,8 @@
 #define dasher_rate 15
 #define move_rate 5
 
+#define boss_inter_attack_time 70
+
 const attack_t horizontal = {
     35,
     att_hor
@@ -25,7 +27,6 @@ const attack_t none = {
 
 u8 boss_timer;
 u8 boss_attack_timer;
-u8 boss_inter_attack_time;
 u8 boss_attack_index;
 attack_t const *  attacks[3];
 attack_t const *  attack;
@@ -186,6 +187,7 @@ void sys_AI_boss(ent_t* e){
         e->vy = e->originalvy;
     }
     boss_timer--;
+    if(boss_timer>boss_inter_attack_time) boss_timer =boss_inter_attack_time;
     attack->funct(e);// attack_function();
 }
 void att_none(ent_t* e){
@@ -330,8 +332,6 @@ void sys_AI_one(ent_t* e){
 }
 
 void sys_AI_init(){
-
-    boss_inter_attack_time = 100;
     boss_attack_timer = 0;
     boss_timer = boss_inter_attack_time;
     boss_attack_index = 0xFF;

@@ -694,8 +694,6 @@ void final_room(){
         redraw_tile(10, 15, 35);
 
         final_door_open = 1;
-        score+=500;
-        score_draw=1;
     }
     if(cleared_rooms[level.id] & 1){
         redraw_tile(6, 9, 12);
@@ -712,26 +710,18 @@ void final_room(){
 }
 void bl_room(){
     redraw_tile(10, 19, 18);
-    score+=500;
-    score_draw=1;
     cleared_rooms[0] |= 8; 
 }
 void br_room(){
     redraw_tile(10,  8, 6);
-    score+=500;
-    score_draw=1;
     cleared_rooms[0] |= 4; 
 }
 void tl_room(){
     redraw_tile(9, 8, 6);
-    score+=500;
-    score_draw=1;
     cleared_rooms[0] |= 1; 
 }
 void tr_room(){
     redraw_tile(9, 21, 18);
-    score+=500;
-    score_draw=1;
     redraw_tile(10, 21, 18);
     cleared_rooms[0] |= 2; 
 }
@@ -832,6 +822,8 @@ void man_level_update(){
                     if(cpct_isKeyPressed(Key_W)){
                         cpct_memcpy(&level, &i_boss1, sizeof(lvl_t));
                         man_level_load();
+                        score += 500;
+                        score_draw=1;
                         cpct_akp_musicInit ((u8*)rym_address);
                     }
                 }
@@ -855,6 +847,10 @@ void man_level_kill_enemy(){
     if(level.enemies == 0){
         score += 25;
         score_draw=1;
+        if(level.cleared_func == br_room || level.cleared_func == bl_room || level.cleared_func == tr_room || level.cleared_func == tl_room ){
+            score += 500;
+            score_draw=1;
+        }
         cleared_rooms[level.id]=1;
         level.cleared_func();
         man_level_add_mp_end_lvl();
