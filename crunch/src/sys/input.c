@@ -16,7 +16,6 @@ i8 jumpCont;
 i8 PiumPiumCont;
 
 void sys_Input_init(){
-
     swordUp = 0;
     swordCooling = 0;
     jumpCont = 1;
@@ -29,14 +28,14 @@ void sys_input_one(ent_t* ent){
     ent->vy = 8;
     // MONYECO
     if(cpct_isKeyPressed(*right)){
-        ent->vx = 2;
+        ent->vx = 1;
         ent->action |= 0x01;
         if(!swordUp){
             ent->move_dir = dir_right;
         }
     }
     else if(cpct_isKeyPressed(*left)){
-        ent->vx = -2;
+        ent->vx = -1;
         ent->action |= 0x01;
         if(!swordUp){
             ent->move_dir = dir_left;

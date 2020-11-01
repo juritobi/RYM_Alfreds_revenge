@@ -85,12 +85,12 @@ const spr_set_t kn_spriteset = {
 //SHOOTER///////////////////////////////////////////////////////////
 //------------------------------------------------------------------
 const spr_frame_t s_0 = {
-    20,
+    30,
     spr_shooter_0,
     &s_1
 };
 const spr_frame_t s_1 = {
-    4,
+    10,
     spr_shooter_1,
     &s_0
 };
@@ -102,12 +102,12 @@ const spr_set_t s_spriteset = {
 //GHOST/////////////////////////////////////////////////////////////
 //------------------------------------------------------------------
 const spr_frame_t g_0 = {
-    5,
+    3,
     spr_ghost_0,
     &g_1
 };
 const spr_frame_t g_1 = {
-    5,
+    3,
     spr_ghost_1,
     &g_0
 };
@@ -124,7 +124,7 @@ const spr_frame_t z_0 = {
     &z_1
 };
 const spr_frame_t z_1 = {
-    5,
+    10,
     spr_zombi_1,
     &z_0
 };

@@ -123,7 +123,7 @@ const ent_t init_knife = {
    man_ent_generic_death,                                       //Ptrf_v_ep death;
    //SONS
    4,8,                                                        //u8 originalx, originaly;
-   1,0,                                                        //i8 originalvx, originalvy;
+   2,0,                                                        //i8 originalvx, originalvy;
    //CHARACTERS
    1,0,1,                                                       //u8 hp, mp, damage;
    50,                                                          // invulnerable
@@ -177,12 +177,12 @@ const ent_t init_shoot = {
    1,                                                           //u8 dir;//0000-*-00-*-00 anim_action-*-anim_dir-*-knockback_dir
    //AI
    sys_AI_shoot,                                               //Ptrf_v_ep act;
-   100,                                                          //AI_Counter
+   40,                                                          //AI_Counter
    0,0,                                                        //i8 prev_vx, prev_vy;
    //Input
    0,0,                                                         //i8 on_ground, jumping;    
    //Animation
-   1,                                                          //u8 anim_timer;
+   30,                                                          //u8 anim_timer;
    0x00,                                                       //u8 action;  //action - dir  
    &s_0,                                                       //spr_frame_t* frame;      
    &s_spriteset,                                                //spr_set_t* sprite_set;  
@@ -199,7 +199,7 @@ const ent_t init_shoot_son = {
    e_t_dead | e_t_physics | e_t_render | e_t_col ,              //u8 type;
    0,0,                                                        //u8 x, y;
    0,0,                                                        //u8 tile_x, tile_y;
-   0,0,                                                        //u8 tile_x_r, tile_y_r;
+   0,0,                                                       //u8 tile_x_r, tile_y_r;
    4,8,                                                        //u8 w, h;
    1,1,                                                         //u8 tile_w, tile_h;
    -1,0,                                                       //i8 vx, vy;
@@ -207,7 +207,7 @@ const ent_t init_shoot_son = {
    man_ent_generic_death,                                      //Ptrf_v_ep death;
    //SONS
    -2,4,                                                       //u8 originalx, originaly;
-   -1,0,                                                        //i8 originalvx, originalvy;
+   -2,0,                                                        //i8 originalvx, originalvy;
    //CHARACTERS
    1,0,1,                                                       //u8 hp, mp, damage;
    50,                                                          // invulnerable
@@ -302,7 +302,7 @@ const ent_t init_ghost = {
    //Input
    0,0,                                                         //i8 on_ground, jumping;     
    //Animation
-   5,                                                          //u8 anim_timer;
+   3,                                                          //u8 anim_timer;
    0x00,                                                       //u8 action;  //action - dir  
    &g_0,                                                       //spr_frame_t* frame;      
    &g_spriteset,                                                       //spr_set_t* sprite_set;     
@@ -388,7 +388,7 @@ const ent_t init_powerUp = {
    //Input
    0,0,                                                        //i8 on_ground, jumping;        
    //Animation
-   0,                                                          //u8 anim_timer;
+   5,                                                          //u8 anim_timer;
    0x00,                                                       //u8 action;  //action - dir  
    0x00,                                                       //spr_frame_t* frame;      
    0x00,                                                       //spr_set_t* sprite_set;  
@@ -769,16 +769,16 @@ void man_ent_move(ent_t* e, u8 displacement){
 
    if(e->move_dir == dir_left){
       e_to_move->x = e->x - e_to_move->originalx;
-      if(e_to_move->originalvx != -1){
+      if(e_to_move->originalvx >= 0){
          e_to_move->move_dir = dir_left;
-         e_to_move->originalvx = e_to_move->originalvx * (-1);
+         e_to_move->originalvx = -e_to_move->originalvx;
       }
    }
    else{
       e_to_move->x = e->x + e_to_move->originalx;
-      if(e_to_move->originalvx != 1){
+      if(e_to_move->originalvx <= 0){
          e_to_move->move_dir = dir_right;
-         e_to_move->originalvx = e_to_move->originalvx * (-1);
+         e_to_move->originalvx = -e_to_move->originalvx;
       }
    }
 
