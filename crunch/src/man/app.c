@@ -379,6 +379,7 @@ void man_app_lose_update(){
 void man_app_win(){
     cpct_akp_musicInit ((u8*)intro_address);
     music_sync = 0;
+    music_play = 1;
     cpct_zx7b_decrunch_s(tilemap_start + tilemap_size - 1, boss1_pack_end);
     sys_ren_draw_tilemap(tilemap_start);
     app_draw_sprite(38,96,spr_c_win_0,4,32);

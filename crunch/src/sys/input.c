@@ -3,10 +3,10 @@
 #include <man/app.h>
 #include <sys/anim.h>
 
-#define swordCD 15
-#define swordDuration 10
+#define swordCD 7
+#define swordDuration 7
 #define jumpCD 10
-#define PiumPiumCD  25
+#define PiumPiumCD  15
 
 const i8 jumptable[] = {-8, -8, -8, -8, -8, 0, 0};
 
@@ -19,7 +19,7 @@ void sys_Input_init(){
     swordUp = 0;
     swordCooling = 0;
     jumpCont = 1;
-    PiumPiumCont = 25;
+    PiumPiumCont = 15;
 }
 
 void sys_input_one(ent_t* ent){
@@ -68,7 +68,7 @@ void sys_input_one(ent_t* ent){
             jumpCont=0;
         }
     }
-    // PROYECTIL
+    // PIUM PIUM
 
     if(cpct_isKeyPressed(*fire2) && PiumPiumCont == PiumPiumCD && ent->mp > 0){
         man_ent_resurrect(ent, 2);
