@@ -126,19 +126,22 @@ void man_app_intro(){
     app_draw_box(20,176,0xF0, 40,2);
 
     app_draw_string(32,182,"[space]" );
-
+    cpct_setDrawCharM1(3, 1);
     cpct_akp_musicInit ((u8*)intro_address);
     executing_state = man_app_intro_update;
 }
 void man_app_intro_update(){
-    if(cpct_isKeyPressed(Key_Esc)){
+    if(cpct_isKeyPressed(Key_S)){
         executing_state = man_app_main;
+        cpct_setDrawCharM1(3, 0);
     }
     if(intro_state == 0){
         if(cpct_isKeyPressed(Key_Space)){
             music_play = 1;
             intro_state = 1;
             app_draw_box(32,182,0x00, 14,8);
+            app_draw_string(1,0,"[S]");
+            app_draw_string(0,9,"Skip");
         }
     }
     else if(intro_state == 1){
@@ -206,6 +209,7 @@ void man_app_intro_update(){
         }
         if(music_sync == 228){
             executing_state = man_app_main;
+            cpct_setDrawCharM1(3, 0);
         }
     }
 }

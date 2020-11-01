@@ -5,7 +5,7 @@
 #include <sys/render.h>
 #include <sys/input.h>
 #include <constants.h>
-#include <sys/UI>
+#include <sys/UI.h>
 
 const i8 knocknackX[] = {  1,  1, 1, 1, 1,1,1,1};
 const i8 knocknackY[] = { -8, -8, -8, 0, 0, 8 ,8, 8};

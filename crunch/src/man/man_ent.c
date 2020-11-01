@@ -702,7 +702,7 @@ void man_ent_generic_death(ent_t* dead_ent){
       }
       if(dead_ent->col_type == col_t_enemy){
          score+=5;
-         socre_draw=1;
+         score_draw=1;
       }
    }
 }
