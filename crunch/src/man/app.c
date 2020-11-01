@@ -62,9 +62,9 @@ void interrupt_6(){
 }
 
 const player_t character_sets[] = {
-    {5 ,5  ,1  ,1},
-    {10 ,2  ,1  ,1},
-    {3  ,10 ,1  ,2}
+    {10 ,3  ,1  ,1},
+    {5 ,5  ,2  ,1},
+    {3  ,3 ,2  ,2}
 };
 
 //typedef void (*Ptrf_v_v)(void);

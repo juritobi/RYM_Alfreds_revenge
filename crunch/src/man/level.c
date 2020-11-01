@@ -76,6 +76,7 @@ const lvl_t i_lvl0 = {//center room
         {0, 0, 0}
     }
 };
+
 const lvl_t i_boss1 = {
     34,                  //id
     boss1_pack_end,      //this
@@ -812,7 +813,7 @@ void man_level_update(){
     else if(final_door_open){
         if(level.self == lvl0_pack_end){
             if( player->x+player->w > 36  &&  player->x < 44){
-                if(player->y > 140) {
+                if(player->y > 112 && player->y<144 ) {
                     if(cpct_isKeyPressed(Key_W)){
                         cpct_memcpy(&level, &i_boss1, sizeof(lvl_t));
                         man_level_load();

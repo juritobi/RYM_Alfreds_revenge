@@ -416,7 +416,7 @@ const ent_t init_boss = {
    0,0,                                                        //u8 originalx, originaly;
    0,0,                                                        //i8 originalvx, originalvy;
    //CHARACTERS
-   50,5,1,                                                       //u8 hp, mp, damage;
+   30,5,1,                                                       //u8 hp, mp, damage;
    0,                                                          // invulnerable
    -2,                                                           // knockback
    1,                                                           //u8 dir;//0000-*-00-*-00 anim_action-*-anim_dir-*-knockback_dir
