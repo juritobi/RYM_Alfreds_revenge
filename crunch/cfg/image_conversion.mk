@@ -55,6 +55,7 @@ $(eval $(call IMG2SP, CONVERT         , assets/UI.png , 8, 8, spr_UI))
 $(eval $(call IMG2SP, CONVERT         , assets/char.png , 16, 24, spr_char))
 $(eval $(call IMG2SP, CONVERT         , assets/sword.png , 16, 24, spr_sword))
 $(eval $(call IMG2SP, CONVERT         , assets/knife.png , 16, 8, spr_knife))
+$(eval $(call IMG2SP, CONVERT         , assets/pups.png , 16, 16, spr_pup))
 
 $(eval $(call IMG2SP, CONVERT         , assets/shooter.png , 16, 16, spr_shooter))
 $(eval $(call IMG2SP, CONVERT         , assets/proyectile.png , 16, 8, spr_p))

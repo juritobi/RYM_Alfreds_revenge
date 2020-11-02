@@ -1,5 +1,4 @@
 #include "level.h"
-
 #include <man/man_ent.h>
 #include <sys/render.h>
 #include <man/app.h>
@@ -709,24 +708,38 @@ void final_room(){
     } 
 }
 void bl_room(){
-    redraw_tile(10, 19, 18);
+    redraw_tile(10, 18, 18);
+    redraw_tile( 9, 18, 18);
+    redraw_tile( 7, 16, 12);
+    redraw_tile(12, 16, 12);
     cleared_rooms[0] |= 8; 
 }
 void br_room(){
-    redraw_tile(10,  8, 6);
+    redraw_tile(9,  3, 6);
     redraw_tile(9,  0, 18);
     redraw_tile(10,  0, 18);
-    redraw_tile(11,  0, 18);
+    redraw_tile(10,  3, 6);
+    redraw_tile(6,  3, 12);
+    redraw_tile(16,  3, 12);
     
     cleared_rooms[0] |= 4; 
 }
 void tl_room(){
-    redraw_tile(9, 8, 6);
+    
+    redraw_tile(9,  3, 6);
+    redraw_tile(9,  0, 18);
+    redraw_tile(10,  0, 18);
+    redraw_tile(10,  3, 6);
+    redraw_tile(5,  2, 12);
+    redraw_tile(14,  2, 12);
     cleared_rooms[0] |= 1; 
 }
 void tr_room(){
+
     redraw_tile(9, 21, 18);
     redraw_tile(10, 21, 18);
+    redraw_tile(8, 17, 12);
+    redraw_tile(11, 17, 12);
     cleared_rooms[0] |= 2; 
 }
 void powerup_tbl_room(){
@@ -763,7 +776,7 @@ void man_level_init(){
 void man_level_load(){
     u8 it = 0;
     ent_class* class = &level.entities[it]; 
-    cleared_rooms[0]=0x0f;
+    //cleared_rooms[0]=0x0f;
 
     sys_ren_init();
     cpct_zx7b_decrunch_s(tilemap_end, level.self);

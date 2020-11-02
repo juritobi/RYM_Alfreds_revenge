@@ -6,6 +6,7 @@
 #include <sys/AI.h>
 #include <sys/UI.h>
 #include <sys/anim.h>
+#include <sprites/pups.h>
 #include <sprites/char.h>
 #include <sprites/sword.h>
 #include <sprites/knife.h>
@@ -368,7 +369,7 @@ const ent_t init_powerUp = {
    0,0,                                                        //u8 x, y;
    0,0,                                                        //u8 tile_x, tile_y;
    0,0,                                                        //u8 tile_x_r, tile_y_r;
-   4,8,                                                        //u8 w, h;
+   4,16,                                                        //u8 w, h;
    1,1,                                                         //u8 tile_w, tile_h;
    0,0,                                                        //i8 vx, vy;
    dir_right,                                                  //u8 move_dir;
@@ -396,7 +397,7 @@ const ent_t init_powerUp = {
    col_t_powerUp,                                              //u8 col_type;                  
    //physics
    //render
-   spr_p_0,                                                    //u8* sprite;                   
+   spr_pup_2,                                                  //u8* sprite;                   
    0                                                           //u8* memory_pos;               
 };
 
@@ -600,6 +601,20 @@ void man_ent_create_class(u8 type, u8 x, u8 y, u8 PupType){
       ent_in_class->x = x;
       ent_in_class->y = y;
       ent_in_class->mp = PupType;
+      if(ent_in_class->col_type == col_t_powerUp){
+         if(ent_in_class->mp == 1){
+            ent_in_class->sprite = spr_pup_0;
+         }
+         else if(ent_in_class->mp == 2){
+             ent_in_class->sprite = spr_pup_1;
+         }
+         else if(ent_in_class->mp == 3){
+             ent_in_class->sprite = spr_pup_2;
+         }
+         else if(ent_in_class->mp == 4){
+             ent_in_class->sprite = spr_pup_3;
+         }
+      }
       class_init++;
       class_ents--;
    }
