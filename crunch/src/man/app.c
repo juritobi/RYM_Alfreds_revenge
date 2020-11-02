@@ -253,8 +253,8 @@ void man_app_controls(){
     app_draw_string(28,78, "SPACE: SWORD");
     app_draw_string(27,88, "RETURN: KNIFE");
 
-    app_draw_string(34,128, "MODERN");
-    app_draw_box(34,137, 0x0f, 12, 1);
+    app_draw_string(33,128, "TRAITOR");
+    app_draw_box(33,137, 0x0f, 14, 1);
     app_draw_string(30,144, "WASD: MOVE");
     app_draw_string(32,154, "O: SWORD");
     app_draw_string(32,164, "P: KNIFE");

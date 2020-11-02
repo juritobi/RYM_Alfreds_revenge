@@ -79,6 +79,23 @@ u8 man_game_play(){
 
         wait_render_signal();
         sys_ren_render();
+
+        if(cpct_isKeyPressed(Key_Esc)){
+            next_screen=50;
+        }
+        if(next_screen == 50){
+            cpct_setBorder(HW_WHITE);
+            cpct_waitHalts(32);
+            while(next_screen == 50){
+                if(cpct_isKeyPressed(Key_Esc)){
+                    next_screen=0;
+                }
+            }
+            cpct_setBorder(HW_BLACK);
+            cpct_waitHalts(32);
+        }
     }
+
+
     return next_screen;
 }
