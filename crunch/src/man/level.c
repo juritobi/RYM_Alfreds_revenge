@@ -848,6 +848,8 @@ void man_level_add_mp_end_lvl(){
 
 void man_level_kill_enemy(){
     level.enemies--;
+    score+=5;
+    score_draw=1;
     if(level.enemies == 0){
         score += 25;
         score_draw=1;
