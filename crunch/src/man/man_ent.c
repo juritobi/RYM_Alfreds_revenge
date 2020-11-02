@@ -652,13 +652,13 @@ void man_ent_boss_death(ent_t* dead_ent){
 
 void man_ent_max_hp(ent_t* ent){
    
-   ent->prev_vx++;
+   ent->prev_vx=ent->prev_vx+2;
    ent->hp = ent->prev_vx;
 }
 
 void man_ent_max_mana(ent_t* ent){
 
-   ent->prev_vy++;
+   ent->prev_vy=ent->prev_vy+2;
    ent->mp = ent->prev_vy;
    
 }

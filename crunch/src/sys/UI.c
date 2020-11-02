@@ -106,14 +106,17 @@ void sys_UI_update(){
         prev_mp++;
     }
 
-    if(prev_max_hp < player->prev_vx){
+    while(prev_max_hp < player->prev_vx){
         sys_UI_hp_mp_bars(2, 3, spr_UI_00, player->hp);
         prev_max_hp = player->hp;
     }
-    if(prev_max_mana < player->prev_vy){
+
+    while(prev_max_mana < player->prev_vy){
         sys_UI_hp_mp_bars(2, 13, spr_UI_05, player->mp);
         prev_max_mana = player->mp;
     }
+
+    
 
     if(ad < (player+1)->damage){
         ad = (player+1)->damage;
