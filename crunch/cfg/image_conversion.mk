@@ -73,6 +73,7 @@ $(eval $(call IMG2SP, CONVERT         , assets/mouse.png , 16, 8, spr_mouse))
 $(eval $(call IMG2SP, CONVERT         , assets/converting1.png , 16, 16, spr_converting1))
 $(eval $(call IMG2SP, CONVERT         , assets/converting2.png , 16, 24, spr_converting2))
 $(eval $(call IMG2SP, CONVERT         , assets/fountain.png , 16, 13, spr_fountain))
+$(eval $(call IMG2SP, CONVERT         , assets/statue.png , 32, 40, spr_statue))
 
 $(eval $(call IMG2SP, CONVERT         , assets/blue.png , 48, 40, spr_blue))
 $(eval $(call IMG2SP, CONVERT         , assets/cone.png , 64, 112, spr_cone))
