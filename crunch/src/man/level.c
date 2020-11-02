@@ -396,7 +396,7 @@ const lvl_t i_top_left_3 = {
     normal_room,
     0,
     {
-        {e_c_ghost, 24, 56},
+        {e_c_ghost, 40, 64},
         {e_c_zombi, 24, 176},
         {e_c_zombi, 64, 176},
         {0, 0, 0},
@@ -624,7 +624,7 @@ const lvl_t i_top_bot_left_power_up = {
         {e_c_shoot, 40, 176},
         {e_c_sonic, 52, 176},
         {e_c_sonic, 68, 176},
-        {e_c_powerUp, 36, 40, 1}
+        {e_c_powerUp, 36, 32, 1}
     }
 };
 
@@ -726,10 +726,10 @@ void br_room(){
 }
 void tl_room(){
     
-    redraw_tile(9,  3, 6);
-    redraw_tile(9,  0, 18);
-    redraw_tile(10,  0, 18);
-    redraw_tile(10,  3, 6);
+    redraw_tile(11,  3, 6);
+    redraw_tile(11,  0, 18);
+    redraw_tile(12,  0, 18);
+    redraw_tile(12,  3, 6);
     redraw_tile(5,  2, 12);
     redraw_tile(14,  2, 12);
     cleared_rooms[0] |= 1; 
