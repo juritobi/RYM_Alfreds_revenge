@@ -450,12 +450,12 @@ void man_app_init(){
     cpct_akp_SFXInit ((void*) sfx_address);
     render_count = 2;
 
-    left_value  = Key_A;
-    right_value = Key_D;
-    up_value    = Key_W;
-    down_value  = Key_S;
-    fire1_value = Key_O;
-    fire2_value = Key_P;
+    left_value  = Key_O;
+    right_value = Key_P;
+    up_value    = Key_Q;
+    down_value  = Key_A;
+    fire1_value = Key_Space;
+    fire2_value = Key_Return;
 
     left  = &left_value;
     right = &right_value;
