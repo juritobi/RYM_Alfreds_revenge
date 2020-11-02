@@ -250,9 +250,9 @@ void att_hor(ent_t* e){
 void att_rain(ent_t* e){
 
     if(boss_attack_timer==attack->total_time-1){//set entities to hit
-        u8 i = 6;
-        u8 xpos = player->x%3;
-        xpos = xpos*4 + 4;
+        u8 i = 5;
+        u8 xpos = player->x%4;
+        xpos = xpos*4 + 8;
         while(i){
             (e + 3 + i)->originaly = 24;
             (e + 3 + i)->originalx = xpos;
@@ -277,9 +277,7 @@ void att_rain(ent_t* e){
     if(boss_attack_timer==24){
         man_ent_res_absolute(e, 3+5);
     }
-    if(boss_attack_timer==23){
-        man_ent_res_absolute(e, 3+6);
-    }
+
 
     else if(boss_attack_timer==7){
         (e+3+1)->death(e+3+1);
@@ -296,9 +294,6 @@ void att_rain(ent_t* e){
     else if(boss_attack_timer==3){
         (e+3+5)->death(e+3+5);
     }
-    else if(boss_attack_timer==2){
-        (e+3+6)->death(e+3+6);
-    }
     else if(boss_attack_timer==0){
         attack = &none;
     }
@@ -309,16 +304,21 @@ void att_rain(ent_t* e){
 void att_pilar(ent_t* e){
 
     if(boss_attack_timer==attack->total_time-1){//set entities to hit
-        (e + 3 + 6 + 1)->originalx = player->x - 4;  
+        (e + 3 + 5 + 1)->originalx = player->x - 4;
+        (e + 3 + 5 + 2)->originalx = player->x - 4;  
+        man_ent_res_absolute(e, 3+5+2);
     }
     if(boss_attack_timer>6){
         e->action |= 0x03;
     }
+    if(boss_attack_timer==7){
+        (e+3+5+2)->death(e+3+5+2);
+    }
     else if(boss_attack_timer==6){
-        man_ent_res_absolute(e, 3+6+1);
+        man_ent_res_absolute(e, 3+5+1);
     }
     else if(boss_attack_timer==1){
-        (e+3+6+1)->death(e+3+6+1);
+        (e+3+5+1)->death(e+3+5+1);
     }
     else if(boss_attack_timer==0){
         attack = &none;

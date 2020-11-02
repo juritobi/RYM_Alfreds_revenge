@@ -550,6 +550,43 @@ const ent_t init_boss_pilar = {
    spr_pilar,                                                 //u8* sprite;                   
    0                                                          //u8* memory_pos;               
 };
+const ent_t init_boss_prepilar = {
+   //generic
+   e_t_render | e_t_dead,                                                 //u8 type;
+   0,0,                                                        //u8 x, y;
+   0,0,                                                        //u8 tile_x, tile_y;
+   0,0,                                                        //u8 tile_x_r, tile_y_r;
+   8,8,                                                       //u8 w, h;
+   2,1,                                                         //u8 tile_w, tile_h;
+   0,0,                                                        //i8 vx, vy;
+   dir_right,                                                      //u8 move_dir;
+   man_ent_generic_death,                                         //Ptrf_v_ep death;
+   //SONS
+   0,184,                                                        //u8 originalx, originaly;
+   0,0,                                                        //i8 originalvx, originalvy;
+   //CHARACTERS
+   1,0,1,                                                       //u8 hp, mp, damage;  
+   0,                                                          // invulnerable
+   -1,                                                           // knockback
+   1,                                                           //u8 dir;//0000-*-00-*-00 anim_action-*-anim_dir-*-knockback_dir
+   //AI
+   0x00,                                                          //Ptrf_v_ep act;
+   0,                                                          //AI_Counter
+   0,0,                                                        //i8 prev_vx, prev_vy;
+   //Input
+   0,-1,                                                        //i8 on_ground, jumping;   
+   //Animation
+   4,                                                          //u8 anim_timer;
+   0x00,                                                       //u8 action;  //action - dir  
+   &c_s_0,                                                       //spr_frame_t* frame;      
+   &c_spriteset,                                                       //spr_set_t* sprite_set;     
+   //Collisions
+   col_t_enemy_breaker,                                                 //u8 col_type;                  
+   //physics
+   //render
+   spr_pilar,                                                 //u8* sprite;                   
+   0                                                          //u8* memory_pos;               
+};
 /*HERE COMES THE BOSS*/
 
 ent_t ents[20];
@@ -591,6 +628,7 @@ void man_ent_create_class(u8 type, u8 x, u8 y, u8 PupType){
       ent_in_class = man_ent_create_from_template(class_init);
       ent_in_class = man_ent_create_from_template(class_init);
       ent_in_class = man_ent_create_from_template(class_init);
+      class_init++;
       ent_in_class = man_ent_create_from_template(class_init);
       class_init++;
       ent_in_class = man_ent_create_from_template(class_init);

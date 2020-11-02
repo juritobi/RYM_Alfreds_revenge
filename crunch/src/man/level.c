@@ -837,11 +837,14 @@ void man_level_update(){
             if( player->x+player->w > 36  &&  player->x < 44){
                 if(player->y > 112 && player->y<144 ) {
                     if(cpct_isKeyPressed(Key_W)){
+                        //cpct_akp_musicInit ((u8*)intro_address);
                         cpct_memcpy(&level, &i_boss1, sizeof(lvl_t));
+                        player->y=152;
+                        player->jumping = -1;
                         man_level_load();
                         score += 500;
                         score_draw=1;
-                        cpct_akp_musicInit ((u8*)rym_address);
+                        
                     }
                 }
             }

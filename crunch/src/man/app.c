@@ -14,6 +14,7 @@
 #include <sprites/dead.h>
 #include <sprites/c_win.h>
 #include <sprites/b_win.h>
+#include <sprites/statue.h>
 
 #include <music/sfx.h>
 #include <music/intro.h>
@@ -120,10 +121,11 @@ void man_app_intro(){
     spr = spr_mouse_1;
     cpct_zx7b_decrunch_s((u8*)0xFFFF,main_screen_pack_end);
 
-    app_draw_sprite(20,128,spr_door_0, 8,48);
-    app_draw_sprite(56,162,spr_fountain_0, 4,12);
-    app_draw_box(20,174,0xFF, 40,2);
-    app_draw_box(20,176,0xF0, 40,2);
+    app_draw_sprite(20-2,128,spr_door_0, 8,48);
+    app_draw_sprite(55-2,138,spr_statue, 8,40);
+    //app_draw_sprite(56,162,spr_fountain_0, 4,12);
+    app_draw_box(20-2,174,0xFF, 44,2);
+    app_draw_box(20-2,176,0xF0, 44,2);
 
     app_draw_string(32,182,"[space]" );
     cpct_setDrawCharM1(3, 1);
@@ -146,19 +148,19 @@ void man_app_intro_update(){
     }
     else if(intro_state == 1){
         if(music_sync == 156){
-            app_draw_sprite(20,128,spr_door_1,8,48);
+            app_draw_sprite(20-2,128,spr_door_1,8,48);
         }
         else if(music_sync == 210){
-            app_draw_sprite(20,128,spr_door_2,8,48);
+            app_draw_sprite(20-2,128,spr_door_2,8,48);
         }
         else if(music_sync == 252){
-            app_draw_sprite(20,128,spr_door_0,8,48);
-            app_draw_sprite(28,166,spr_mouse_0,4,8);
+            app_draw_sprite(20-2,128,spr_door_0,8,48);
+            app_draw_sprite(28-2,166,spr_mouse_0,4,8);
         }
         else if(music_sync>252 && music_sync < 463){
             if(music_sync == activate){
-                app_draw_box(x,166, 0x00, 4,8);
-                app_draw_sprite(x+1,166,spr,4,8);
+                app_draw_box(x-2,166, 0x00, 4,8);
+                app_draw_sprite(x+1-2,166,spr,4,8);
                 ++x;
                 if(spr == spr_mouse_1){
                     spr = spr_mouse_0;
@@ -170,19 +172,19 @@ void man_app_intro_update(){
             }
         }
         else if(music_sync == 510){
-            app_draw_sprite(51,158,spr_converting1,4,16);
-            app_draw_sprite(56,162,spr_fountain_1,4,12);
+            app_draw_sprite(51-2,158,spr_converting1,4,16);
+            //app_draw_sprite(56,162,spr_fountain_1,4,12);
         }
         else if(music_sync == 534){
-            app_draw_sprite(51,150,spr_converting2,4,24);
-            app_draw_sprite(56,162,spr_fountain_2,4,12);
+            app_draw_sprite(51-2,150,spr_converting2,4,24);
+            //app_draw_sprite(56,162,spr_fountain_2,4,12);
         }
         else if(music_sync == 558){
-            app_draw_sprite(51,150,spr_char_0,4,24);
-            app_draw_sprite(56,162,spr_fountain_3,4,12);
+            app_draw_sprite(51-2,150,spr_char_0,4,24);
+            //app_draw_sprite(56,162,spr_fountain_3,4,12);
         }
         else if(music_sync == 606){
-            app_draw_sprite(51,150,spr_char_4,4,24);
+            app_draw_sprite(51-2,150,spr_char_4,4,24);
         }
         else if(music_sync == 666){
             intro_state = 2;
@@ -195,8 +197,8 @@ void man_app_intro_update(){
     else if(intro_state == 2){
         if(music_sync < 144){
             if(music_sync == activate){
-                app_draw_box(x,150, 0x00, 4,24);
-                app_draw_sprite(x-1,150,spr,4,24);
+                app_draw_box(x-2,150, 0x00, 4,24);
+                app_draw_sprite(x-1-2,150,spr,4,24);
                 --x;
                 if(spr == spr_char_5){
                     spr = spr_char_4;
@@ -251,7 +253,7 @@ void man_app_controls(){
     app_draw_box(32,61, 0x0f, 16, 1);
     app_draw_string(30,68, "OPQA: MOVE");
     app_draw_string(28,78, "SPACE: SWORD");
-    app_draw_string(27,88, "RETURN: KNIFE");
+    app_draw_string(28,88, "ENTER: KNIFE");
 
     app_draw_string(33,128, "TRAITOR");
     app_draw_box(33,137, 0x0f, 14, 1);
@@ -450,12 +452,12 @@ void man_app_init(){
     cpct_akp_SFXInit ((void*) sfx_address);
     render_count = 2;
 
-    left_value  = Key_A;
-    right_value = Key_D;
-    up_value    = Key_W;
-    down_value  = Key_S;
-    fire1_value = Key_O;
-    fire2_value = Key_P;
+    left_value  = Key_O;
+    right_value = Key_P;
+    up_value    = Key_Q;
+    down_value  = Key_A;
+    fire1_value = Key_Space;
+    fire2_value = Key_Return;
 
     left  = &left_value;
     right = &right_value;
