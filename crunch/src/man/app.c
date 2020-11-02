@@ -251,7 +251,7 @@ void man_app_controls(){
     app_draw_box(32,61, 0x0f, 16, 1);
     app_draw_string(30,68, "OPQA: MOVE");
     app_draw_string(28,78, "SPACE: SWORD");
-    app_draw_string(27,88, "RETURN: KNIFE");
+    app_draw_string(2,88, "ENTER: KNIFE");
 
     app_draw_string(33,128, "TRAITOR");
     app_draw_box(33,137, 0x0f, 14, 1);
