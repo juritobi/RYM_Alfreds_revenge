@@ -628,7 +628,6 @@ void man_ent_create_class(u8 type, u8 x, u8 y, u8 PupType){
       ent_in_class = man_ent_create_from_template(class_init);
       ent_in_class = man_ent_create_from_template(class_init);
       ent_in_class = man_ent_create_from_template(class_init);
-      ent_in_class = man_ent_create_from_template(class_init);
       class_init++;
       ent_in_class = man_ent_create_from_template(class_init);
       class_init++;
