@@ -353,13 +353,14 @@ void man_app_game_update(){
 
 //Lose
 void man_app_lose(){
+    
     cpct_akp_musicInit ((u8*)intro_address);
+    music_play = 1;
     music_sync = 0;
     cpct_clearScreen(0xf0);
     executing_state = man_app_lose_update;
 }
 void man_app_lose_update(){
-    music_play = 1;
     if(music_sync == 60){
         app_draw_sprite(32,44,spr_cone,16,112);
         app_draw_sprite(38,44+112-16-24,spr_death_0,4,24);
@@ -377,7 +378,9 @@ void man_app_lose_update(){
 //Lose
 //Win
 void man_app_win(){
+    
     cpct_akp_musicInit ((u8*)intro_address);
+    music_play = 1;
     music_sync = 0;
     music_play = 1;
     cpct_zx7b_decrunch_s(tilemap_start + tilemap_size - 1, boss1_pack_end);
@@ -473,7 +476,6 @@ void man_app_update(){
     cpct_setInterruptHandler(interrupt_1);
 
     while(1){
-        music_play=1;
         executing_state();
         cpct_waitHalts(3);
     }

@@ -210,7 +210,7 @@ const ent_t init_shoot_son = {
    -2,0,                                                        //i8 originalvx, originalvy;
    //CHARACTERS
    1,0,1,                                                       //u8 hp, mp, damage;
-   50,                                                          // invulnerable
+   0,                                                          // invulnerable
    0,                                                           // knockback
    1,                                                           //u8 dir;//0000-*-00-*-00 anim_action-*-anim_dir-*-knockback_dir
    //AI
@@ -624,7 +624,6 @@ void man_ent_hit(ent_t* hitted, u8 damage){
       hitted->hp -= damage;
       if(hitted->hp==0 || hitted->hp > 100){
          hitted->death(hitted);
-         man_level_kill_enemy();
          return;
       }
       if(hitted->col_type == col_t_ally)
@@ -702,8 +701,7 @@ void man_ent_generic_death(ent_t* dead_ent){
          h= tile_h;
       }
       if(dead_ent->col_type == col_t_enemy){
-         score+=5;
-         score_draw=1;
+         man_level_kill_enemy();
       }
    }
 }
