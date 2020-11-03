@@ -776,7 +776,7 @@ void man_level_init(){
 void man_level_load(){
     u8 it = 0;
     ent_class* class = &level.entities[it]; 
-    //cleared_rooms[0]=0x0f;
+    cleared_rooms[0]=0x0f;
 
     sys_ren_init();
     cpct_zx7b_decrunch_s(tilemap_end, level.self);
@@ -836,15 +836,14 @@ void man_level_update(){
         if(level.self == lvl0_pack_end){
             if( player->x+player->w > 36  &&  player->x < 44){
                 if(player->y > 112 && player->y<144 ) {
-                    if(cpct_isKeyPressed(Key_W)){
-                        //cpct_akp_musicInit ((u8*)intro_address);
+                    if(cpct_isKeyPressed(*up)){
+                        cpct_akp_musicInit ((u8*)rym_address);
                         cpct_memcpy(&level, &i_boss1, sizeof(lvl_t));
                         player->y=152;
                         player->jumping = -1;
                         man_level_load();
                         score += 500;
                         score_draw=1;
-                        
                     }
                 }
             }
@@ -866,7 +865,9 @@ void man_level_kill_enemy(){
     level.enemies--;
     score+=5;
     score_draw=1;
+    cpct_akp_SFXPlay(7,0xf, 24, 0, 0, 0x04);
     if(level.enemies == 0){
+        cpct_akp_SFXPlay(5,0xf, 0, 0, 0, 0x04);
         score += 25;
         score_draw=1;
         if(level.cleared_func == br_room || level.cleared_func == bl_room || level.cleared_func == tr_room || level.cleared_func == tl_room ){

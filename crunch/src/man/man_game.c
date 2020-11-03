@@ -85,6 +85,7 @@ u8 man_game_play(){
         }
         if(next_screen == 50){
             cpct_setBorder(HW_WHITE);
+            cpct_akp_setFadeVolume (16);
             cpct_waitHalts(32);
             while(next_screen == 50){
                 if(cpct_isKeyPressed(Key_Esc)){
@@ -92,6 +93,7 @@ u8 man_game_play(){
                 }
             }
             cpct_setBorder(HW_BLACK);
+            cpct_akp_setFadeVolume (0);
             cpct_waitHalts(32);
         }
     }

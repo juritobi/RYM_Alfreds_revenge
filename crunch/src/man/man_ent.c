@@ -673,16 +673,18 @@ ent_t* man_ent_create_from_template(const ent_t* template){
 
 void man_ent_hit(ent_t* hitted, u8 damage){
    if(!hitted->invulnerable){
-      cpct_akp_SFXPlay(3,0xf, 50, 0, 0, 0x04);
       hitted->hp -= damage;
       if(hitted->hp==0 || hitted->hp > 100){
          hitted->death(hitted);
          return;
       }
-      if(hitted->col_type == col_t_ally)
+      if(hitted->col_type == col_t_ally){
          hitted->invulnerable = 30;
+         cpct_akp_SFXPlay(4,0xf, 42, 0, 0, 0x04);
+      }
       else{
          hitted->invulnerable = 10;
+         cpct_akp_SFXPlay(3,0xf, 32, 0, 0, 0x04);
       }   
       if(hitted->knockback!= -2)
          hitted->knockback = 0;

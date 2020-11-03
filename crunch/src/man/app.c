@@ -30,6 +30,9 @@ u8 music_play;
 u16 music_sync;
 u8 intro_state;
 
+u8 mute;
+u8 mute_count;
+
 u8 x,y;
 u16 activate;
 const u8* spr;
@@ -45,6 +48,22 @@ void interrupt_2(){
     cpct_setInterruptHandler(interrupt_3);
 }
 void interrupt_3(){
+    if(!mute_count){
+        if(cpct_isKeyPressed(Key_M)){
+            mute_count = 60;
+            if(mute){
+                cpct_akp_setFadeVolume (0);
+                mute=0;
+            }
+            else{
+                cpct_akp_setFadeVolume (16);
+                mute=1;
+            }
+        }
+    }
+    else{
+        mute_count--;
+    }
     cpct_setInterruptHandler(interrupt_4);
 }
 void interrupt_4(){
@@ -363,17 +382,17 @@ void man_app_lose(){
     executing_state = man_app_lose_update;
 }
 void man_app_lose_update(){
-    if(music_sync == 60){
+    if(music_sync == 0x7*6){
         app_draw_sprite(32,44,spr_cone,16,112);
         app_draw_sprite(38,44+112-16-24,spr_death_0,4,24);
     }
-    else if(music_sync == 120){
+    else if(music_sync == 0x14*6){
         app_draw_sprite(38,44+112-16-24,spr_death_1,4,24);
     }
-    else if(music_sync == 180){
+    else if(music_sync == 0x20*6){
         app_draw_sprite(38,44+112-16-24,spr_death_2,4,24);
     }
-    else if(music_sync == 240){
+    else if(music_sync == 0x36*6){
         executing_state = man_app_end;
     }   
 }
@@ -392,19 +411,19 @@ void man_app_win(){
     executing_state = man_app_win_update;
 }
 void man_app_win_update(){
-    if(music_sync == 60){
+    if(music_sync == 0x7*6){
         app_draw_sprite(38,96,spr_c_win_1,4,32);
     app_draw_sprite(34,128,spr_b_win_1,12,32);
     }
-    else if(music_sync == 120){
+    else if(music_sync == 0x14*6){
         app_draw_sprite(38,96,spr_c_win_0,4,32);
     app_draw_sprite(34,128,spr_b_win_0,12,32);
     }
-    else if(music_sync == 180){
+    else if(music_sync == 0x20*6){
         app_draw_sprite(38,96,spr_c_win_1,4,32);
         app_draw_sprite(34,128,spr_b_win_1,12,32);
     }
-    else if(music_sync == 240){
+    else if(music_sync == 0x36*6){
         executing_state = man_app_end;
     }   
 }
@@ -443,6 +462,8 @@ void man_app_init(){
     music_play=0;
     music_sync=0;
     intro_state=0;
+    mute = 0;
+    mute_count = 0;
     cpct_disableFirmware();
     cpct_setPalette(g_palette,4);
     cpct_setDrawCharM1(3, 0);

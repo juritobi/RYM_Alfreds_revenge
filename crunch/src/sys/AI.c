@@ -198,6 +198,7 @@ void att_hor(ent_t* e){
     if(boss_attack_timer==attack->total_time-1){//set entities to hit
         u8 xpos;
         u8 i = 3;
+        cpct_akp_SFXPlay(8,0xf, 25, 0, 0, 0x04);
         if(player->x < 40){
             xpos = -(e+i)->w;
         }
@@ -221,12 +222,15 @@ void att_hor(ent_t* e){
     }
     else{
         if(boss_attack_timer == 10){
+            cpct_akp_SFXPlay(11,0xf, 37, 0, 0, 0x04);
             man_ent_resurrect(e, 1);
         }
         else if(boss_attack_timer == 9){
+            cpct_akp_SFXPlay(11,0xf, 37, 0, 0, 0x04);
             man_ent_resurrect(e, 2);
         }
         else if(boss_attack_timer == 8){
+            cpct_akp_SFXPlay(11,0xf, 37, 0, 0, 0x04);
             man_ent_resurrect(e, 3);
         }
 
@@ -253,6 +257,7 @@ void att_rain(ent_t* e){
         u8 i = 5;
         u8 xpos = player->x%4;
         xpos = xpos*4 + 8;
+        cpct_akp_SFXPlay(8,0xf, 25, 0, 0, 0x04);
         while(i){
             (e + 3 + i)->originaly = 24;
             (e + 3 + i)->originalx = xpos;
@@ -263,18 +268,23 @@ void att_rain(ent_t* e){
     }
     e->action |= 0x02;
     if(boss_attack_timer==28){
+        cpct_akp_SFXPlay(9,0xf, 25, 0, 0, 0x04);
         man_ent_res_absolute(e, 3+1);
     }
     if(boss_attack_timer==27){
+        cpct_akp_SFXPlay(9,0xf, 25, 0, 0, 0x04);
         man_ent_res_absolute(e, 3+2);
     }
     if(boss_attack_timer==26){
+        cpct_akp_SFXPlay(9,0xf, 25, 0, 0, 0x04);
         man_ent_res_absolute(e, 3+3);
     }
     if(boss_attack_timer==25){
+        cpct_akp_SFXPlay(9,0xf, 25, 0, 0, 0x04);
         man_ent_res_absolute(e, 3+4);
     }
     if(boss_attack_timer==24){
+        cpct_akp_SFXPlay(9,0xf, 25, 0, 0, 0x04);
         man_ent_res_absolute(e, 3+5);
     }
 
@@ -304,6 +314,7 @@ void att_rain(ent_t* e){
 void att_pilar(ent_t* e){
 
     if(boss_attack_timer==attack->total_time-1){//set entities to hit
+        cpct_akp_SFXPlay(8,0xf, 25, 0, 0, 0x04);
         (e + 3 + 5 + 1)->originalx = player->x - 4;
         (e + 3 + 5 + 2)->originalx = player->x - 4;  
         man_ent_res_absolute(e, 3+5+2);
@@ -315,6 +326,7 @@ void att_pilar(ent_t* e){
         (e+3+5+2)->death(e+3+5+2);
     }
     else if(boss_attack_timer==6){
+        cpct_akp_SFXPlay(10,0xf, 25, 0, 0, 0x04);
         man_ent_res_absolute(e, 3+5+1);
     }
     else if(boss_attack_timer==1){

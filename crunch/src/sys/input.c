@@ -76,7 +76,7 @@ void sys_input_one(ent_t* ent){
         ent->mp = ent->mp -1;
         ent->action &= 0xF0;
         ent->action |= 0x03;
-        cpct_akp_SFXPlay(2,0xf, 50, 0, 0, 0x04);
+        cpct_akp_SFXPlay(2,0xf, 32, 0, 0, 0x04);
     }
 
     if(PiumPiumCont < PiumPiumCD){
@@ -85,7 +85,7 @@ void sys_input_one(ent_t* ent){
     
     // ESPADA
     if(cpct_isKeyPressed(*fire1) && !swordUp && !swordCooling){
-        cpct_akp_SFXPlay(1,0xf, 50, 0, 0, 0x04);
+        cpct_akp_SFXPlay(1,0xf, 0, 0, 0, 0x04);
         swordUp = swordDuration;
     }
     if(swordCooling){

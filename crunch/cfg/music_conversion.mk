@@ -40,12 +40,12 @@ $(eval $(call AKS2DATA, SET_OUTPUTS  , h s  ))
 
 $(eval $(call AKS2DATA, SET_SFXONLY  , no   ))
 $(eval $(call AKS2DATA, CONVERT      , assets/intro.aks , intro , 0x150 ))
-$(eval $(call AKS2DATA, CONVERT      , assets/game.aks , game , 0x308 ))
-$(eval $(call AKS2DATA, CONVERT      , assets/rym.aks , rym , 0x581 ))
+$(eval $(call AKS2DATA, CONVERT      , assets/game.aks , game , 0x324 ))
+$(eval $(call AKS2DATA, CONVERT      , assets/rym.aks , rym , 0x5a4 ))
 
 
 $(eval $(call AKS2DATA, SET_SFXONLY  , yes   ))
-$(eval $(call AKS2DATA, CONVERT      , assets/sfx.aks , sfx , 0xa6b ))
+$(eval $(call AKS2DATA, CONVERT      , assets/sfx.aks , sfx , 0xa91 ))
 
 ##
 ## OLD MACROS (For compatibility)
