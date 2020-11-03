@@ -775,7 +775,7 @@ void man_level_init(){
 void man_level_load(){
     u8 it = 0;
     ent_class* class = &level.entities[it]; 
-    cleared_rooms[0]=0x0f;
+    //cleared_rooms[0]=0x0f;
 
     sys_ren_init();
     cpct_zx7b_decrunch_s(tilemap_end, level.self);
