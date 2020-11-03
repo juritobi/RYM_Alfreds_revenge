@@ -140,7 +140,7 @@ const lvl_t i_bot_left_2 = {
     0,
     {
         {e_c_zombi, 52, 88},
-        {e_c_shoot, 68, 64},
+        {e_c_shoot, 66, 64},
         {e_c_zombi, 12, 160},
         {0, 0, 0},
         {0, 0, 0}
