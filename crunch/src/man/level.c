@@ -128,8 +128,7 @@ const lvl_t i_bot_left_1 = {
         {0, 0, 0},
         {0, 0, 0}
     }
-};
-const lvl_t i_bot_left_2 = {
+};const lvl_t i_bot_left_2 = {
     3,                          //id
     bot_left_2_pack_end,        //this
     &i_bot_left_1,              //top
@@ -715,10 +714,10 @@ void bl_room(){
     cleared_rooms[0] |= 8; 
 }
 void br_room(){
-    redraw_tile(9,  3, 6);
-    redraw_tile(9,  0, 18);
-    redraw_tile(10,  0, 18);
-    redraw_tile(10,  3, 6);
+    redraw_tile(12,  3, 6);
+    redraw_tile(12,  0, 18);
+    redraw_tile(11,  0, 18);
+    redraw_tile(11,  3, 6);
     redraw_tile(6,  3, 12);
     redraw_tile(16,  3, 12);
     
@@ -726,10 +725,10 @@ void br_room(){
 }
 void tl_room(){
     
-    redraw_tile(11,  3, 6);
-    redraw_tile(11,  0, 18);
-    redraw_tile(12,  0, 18);
-    redraw_tile(12,  3, 6);
+    redraw_tile(9,  3, 6);
+    redraw_tile(9,  0, 18);
+    redraw_tile(10,  0, 18);
+    redraw_tile(10,  3, 6);
     redraw_tile(5,  2, 12);
     redraw_tile(14,  2, 12);
     cleared_rooms[0] |= 1; 
