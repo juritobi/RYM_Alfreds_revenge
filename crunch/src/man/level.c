@@ -622,7 +622,7 @@ const lvl_t i_top_bot_left_power_up = {
         {e_c_shoot, 40, 128},
         {e_c_shoot, 40, 176},
         {e_c_sonic, 52, 176},
-        {e_c_powerUp, 36, 32, 1}
+        {e_c_powerUp, 36, 32, 1},
         {0, 0, 0},
     }
 };
