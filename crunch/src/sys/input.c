@@ -5,7 +5,7 @@
 
 #define swordCD 7
 #define swordDuration 7
-#define jumpCD 10
+#define jumpCD 7
 #define PiumPiumCD  15
 
 const i8 jumptable[] = {-8, -8, -8, -8, -8, 0, 0};

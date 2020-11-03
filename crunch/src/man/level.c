@@ -140,7 +140,7 @@ const lvl_t i_bot_left_2 = {
     0,
     {
         {e_c_zombi, 52, 88},
-        {e_c_shoot, 68, 64},
+        {e_c_shoot, 72, 64},
         {e_c_zombi, 12, 160},
         {0, 0, 0},
         {0, 0, 0}
@@ -175,7 +175,7 @@ const lvl_t i_bot_left_extra = {
     {
         {e_c_zombi, 52, 176},
         {e_c_zombi, 60, 56},
-        {e_c_shoot, 32, 176},
+        {e_c_shoot, 36, 176},
         {e_c_ghost, 8, 24},
         {0, 0, 0}
     }
@@ -224,7 +224,7 @@ const lvl_t i_bot_left_6 = {
     bl_room,
     0,
     {
-        {e_c_shoot, 72, 64},
+        {e_c_shoot, 76, 64},
         {e_c_sonic, 24, 96},
         {e_c_sonic, 24, 176},
         {e_c_sonic, 56, 176},
@@ -276,7 +276,7 @@ const lvl_t i_bot_right_3 = {
     normal_room,
     0,
     {
-        {e_c_shoot, 72,  80},
+        {e_c_shoot, 76,  80},
         {e_c_sonic, 36, 176},
         {e_c_sonic, 60, 176},
         {0, 0, 0},
@@ -345,8 +345,8 @@ const lvl_t i_bot_right_6 = {
     0,
     {
         {e_c_sonic, 16, 96},
-        {e_c_shoot, 72, 64},
-        {e_c_shoot, 72, 160},
+        {e_c_shoot, 76, 64},
+        {e_c_shoot, 76, 160},
         {0, 0, 0},
         {0, 0, 0}
     }
@@ -482,9 +482,9 @@ const lvl_t i_top_left_7 = {
     0,
     {
         {e_c_sonic, 16, 64},
-        {e_c_shoot, 72, 64},
+        {e_c_shoot, 76, 64},
         {e_c_sonic, 72, 96},
-        {e_c_shoot, 72, 128},
+        {e_c_shoot, 76, 128},
         {0, 0, 0}
     }
 };
@@ -517,8 +517,8 @@ const lvl_t i_top_right_2 = {
     0,
     {
         {e_c_sonic, 40, 176},
-        {e_c_shoot, 72, 104},
-        {e_c_shoot, 72, 136},
+        {e_c_shoot, 76, 104},
+        {e_c_shoot, 76, 136},
         {0, 0, 0},
         {0, 0, 0}
     }
@@ -584,8 +584,8 @@ const lvl_t i_top_right_5 = {
     tr_room,
     0,
     {
-        {e_c_shoot, 72, 112},
-        {e_c_shoot, 72, 64},
+        {e_c_shoot, 76, 112},
+        {e_c_shoot, 76, 64},
         {e_c_sonic, 56, 64},
         {e_c_sonic, 56, 112},
         {0, 0, 0}
