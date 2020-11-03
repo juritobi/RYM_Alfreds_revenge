@@ -173,7 +173,7 @@ const lvl_t i_bot_left_extra = {
     0,
     {
         {e_c_zombi, 52, 176},
-        {e_c_zombi, 60, 56},
+        {e_c_zombi, 52, 56},
         {e_c_shoot, 32, 176},
         {e_c_ghost, 8, 24},
         {0, 0, 0}
@@ -344,7 +344,7 @@ const lvl_t i_bot_right_6 = {
     0,
     {
         {e_c_sonic, 16, 96},
-        {e_c_shoot, 72, 64},
+        {e_c_shoot, 64, 64},
         {e_c_shoot, 72, 160},
         {0, 0, 0},
         {0, 0, 0}
@@ -480,7 +480,7 @@ const lvl_t i_top_left_7 = {
     tl_room,
     0,
     {
-        {e_c_sonic, 16, 64},
+        {e_c_sonic, 20, 64},
         {e_c_shoot, 72, 64},
         {e_c_sonic, 72, 96},
         {e_c_shoot, 72, 128},
@@ -622,8 +622,8 @@ const lvl_t i_top_bot_left_power_up = {
         {e_c_shoot, 40, 128},
         {e_c_shoot, 40, 176},
         {e_c_sonic, 52, 176},
-        {e_c_sonic, 68, 176},
         {e_c_powerUp, 36, 32, 1}
+        {0, 0, 0},
     }
 };
 
@@ -867,7 +867,7 @@ void man_level_kill_enemy(){
     cpct_akp_SFXPlay(7,0xf, 24, 0, 0, 0x04);
     if(level.enemies == 0){
         cpct_akp_SFXPlay(5,0xf, 0, 0, 0, 0x04);
-        score += 25;
+        score += 50;
         score_draw=1;
         if(level.cleared_func == br_room || level.cleared_func == bl_room || level.cleared_func == tr_room || level.cleared_func == tl_room ){
             score += 500;
